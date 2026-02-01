@@ -180,6 +180,96 @@ const ScoresModule = {
     },
 
     /**
+     * Demo upcoming matches data
+     */
+    demoUpcomingMatches: {
+        atp: [
+            {
+                id: 'upcoming_atp_1',
+                tour: 'ATP',
+                tournament: 'Australian Open',
+                tournament_category: 'grand_slam',
+                round: 'SF',
+                player1: { id: 1, name: 'Novak Djokovic', country: 'SRB', rank: 1 },
+                player2: { id: 2, name: 'Carlos Alcaraz', country: 'ESP', rank: 2 },
+                scheduled_time: '2026-02-02T14:00:00Z'
+            },
+            {
+                id: 'upcoming_atp_2',
+                tour: 'ATP',
+                tournament: 'Australian Open',
+                tournament_category: 'grand_slam',
+                round: 'SF',
+                player1: { id: 3, name: 'Jannik Sinner', country: 'ITA', rank: 3 },
+                player2: { id: 4, name: 'Daniil Medvedev', country: 'RUS', rank: 4 },
+                scheduled_time: '2026-02-02T10:00:00Z'
+            },
+            {
+                id: 'upcoming_atp_3',
+                tour: 'ATP',
+                tournament: 'Rotterdam Open',
+                tournament_category: 'atp_500',
+                round: 'QF',
+                player1: { id: 5, name: 'Andrey Rublev', country: 'RUS', rank: 5 },
+                player2: { id: 6, name: 'Alexander Zverev', country: 'GER', rank: 6 },
+                scheduled_time: '2026-02-03T15:30:00Z'
+            },
+            {
+                id: 'upcoming_atp_4',
+                tour: 'ATP',
+                tournament: 'Rotterdam Open',
+                tournament_category: 'atp_500',
+                round: 'QF',
+                player1: { id: 7, name: 'Holger Rune', country: 'DEN', rank: 7 },
+                player2: { id: 8, name: 'Stefanos Tsitsipas', country: 'GRE', rank: 8 },
+                scheduled_time: '2026-02-03T19:00:00Z'
+            }
+        ],
+        wta: [
+            {
+                id: 'upcoming_wta_1',
+                tour: 'WTA',
+                tournament: 'Australian Open',
+                tournament_category: 'grand_slam',
+                round: 'F',
+                player1: { id: 101, name: 'Iga Swiatek', country: 'POL', rank: 1 },
+                player2: { id: 102, name: 'Aryna Sabalenka', country: 'BLR', rank: 2 },
+                scheduled_time: '2026-02-02T08:30:00Z'
+            },
+            {
+                id: 'upcoming_wta_2',
+                tour: 'WTA',
+                tournament: 'Dubai Championships',
+                tournament_category: 'atp_500',
+                round: 'R16',
+                player1: { id: 103, name: 'Coco Gauff', country: 'USA', rank: 3 },
+                player2: { id: 104, name: 'Elena Rybakina', country: 'KAZ', rank: 4 },
+                scheduled_time: '2026-02-02T16:00:00Z'
+            },
+            {
+                id: 'upcoming_wta_3',
+                tour: 'WTA',
+                tournament: 'Dubai Championships',
+                tournament_category: 'atp_500',
+                round: 'QF',
+                player1: { id: 105, name: 'Jessica Pegula', country: 'USA', rank: 5 },
+                player2: { id: 106, name: 'Karolina Muchova', country: 'CZE', rank: 6 },
+                scheduled_time: '2026-02-03T14:00:00Z'
+            },
+            {
+                id: 'upcoming_wta_4',
+                tour: 'WTA',
+                tournament: 'Dubai Championships',
+                tournament_category: 'atp_500',
+                round: 'QF',
+                player1: { id: 107, name: 'Marketa Vondrousova', country: 'CZE', rank: 7 },
+                player2: { id: 108, name: 'Madison Keys', country: 'USA', rank: 8 },
+                scheduled_time: '2026-02-03T18:30:00Z'
+            }
+        ]
+    },
+
+    /**
      * Render live scores
      */
     renderLiveScores() {
@@ -231,11 +321,230 @@ const ScoresModule = {
     },
 
     /**
+     * Render upcoming matches
+     */
+    renderUpcomingMatches() {
+        const { AppState, Utils } = window.TennisApp;
+        const tour = AppState.currentTour;
+        
+        // Get data (use demo if empty)
+        let matches = AppState.upcomingMatches[tour];
+        if (!matches || matches.length === 0) {
+            matches = this.demoUpcomingMatches[tour] || [];
+        }
+
+        // Find or create upcoming matches section after live scores
+        let upcomingSection = document.getElementById('upcomingMatchesSection');
+        if (!upcomingSection) {
+            // Insert after live scores section
+            const liveScoresSection = document.querySelector('.live-scores-section');
+            if (liveScoresSection) {
+                const newSection = document.createElement('section');
+                newSection.className = 'upcoming-matches-section';
+                newSection.id = 'upcomingMatchesSection';
+                liveScoresSection.insertAdjacentElement('afterend', newSection);
+                upcomingSection = newSection;
+            }
+        }
+
+        if (!upcomingSection) return;
+
+        if (matches.length === 0) {
+            upcomingSection.innerHTML = `
+                <div class="section-header">
+                    <h2><i class="fas fa-calendar"></i> Upcoming Matches</h2>
+                </div>
+                <div class="no-matches-message">
+                    <p>No upcoming matches in the next 2 days</p>
+                </div>
+            `;
+            return;
+        }
+
+        const upcomingHTML = `
+            <div class="section-header">
+                <h2><i class="fas fa-calendar"></i> Upcoming Matches (Next 2 Days)</h2>
+            </div>
+            <div class="upcoming-matches-container">
+                ${matches.map(match => this.createUpcomingMatchCard(match)).join('')}
+            </div>
+        `;
+
+        upcomingSection.innerHTML = upcomingHTML;
+        this.attachUpcomingInsights(matches);
+    },
+
+    attachUpcomingInsights(matches) {
+        const cards = document.querySelectorAll('.upcoming-match-card');
+        cards.forEach(card => {
+            const matchId = card.dataset.matchId;
+            const match = matches.find(m => m.id === matchId);
+            if (!match) return;
+            const edgeBar = card.querySelector('.edge-bar');
+            if (!edgeBar) return;
+            edgeBar.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.showEdgeInsights(match);
+            });
+        });
+    },
+
+    showEdgeInsights(match) {
+        const winEdge = this.calculateWinEdge(match.player1, match.player2);
+        let modal = document.getElementById('edgeInsightsModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'edgeInsightsModal';
+            modal.className = 'modal-overlay active';
+            modal.innerHTML = `
+                <div class="modal-content edge-insights-modal">
+                    <div class="modal-header">
+                        <h3>Win Edge Insights</h3>
+                        <button class="close-modal" id="edgeInsightsClose">&times;</button>
+                    </div>
+                    <div class="modal-body" id="edgeInsightsContent"></div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.addEventListener('click', (e) => {
+                if (e.target.id === 'edgeInsightsModal') {
+                    modal.classList.remove('active');
+                }
+            });
+            modal.querySelector('#edgeInsightsClose').addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+        }
+
+        const content = document.getElementById('edgeInsightsContent');
+        content.innerHTML = `
+            <div class="edge-insights-hero">
+                <div class="edge-player">
+                    <img src="${window.TennisApp.Utils.getPlayerImage(match.player1)}" alt="${match.player1.name}">
+                    <div>${match.player1.name}</div>
+                    <div class="edge-pct">${winEdge.p1}%</div>
+                </div>
+                <div class="edge-vs">VS</div>
+                <div class="edge-player">
+                    <img src="${window.TennisApp.Utils.getPlayerImage(match.player2)}" alt="${match.player2.name}">
+                    <div>${match.player2.name}</div>
+                    <div class="edge-pct">${winEdge.p2}%</div>
+                </div>
+            </div>
+            <ul class="edge-insights-list">
+                <li>${winEdge.reason}</li>
+                <li>H2H record: ${winEdge.h2hText}</li>
+                <li>Recent form: ${winEdge.formNote}</li>
+                <li>Rank edge: #${match.player1.rank} vs #${match.player2.rank}</li>
+                <li>Surface trend: ${match.tournament_category?.replace('_',' ')} (demo)</li>
+            </ul>
+        `;
+
+        modal.classList.add('active');
+    },
+
+    /**
+     * Create an upcoming match card (simplified - only player names)
+     */
+    createUpcomingMatchCard(match) {
+        const { Utils } = window.TennisApp;
+        const categoryClass = Utils.getCategoryClass(match.tournament_category);
+        const categoryLabel = this.getCategoryLabel(match.tournament_category);
+        const surfaceClass = this.getSurfaceClass(match);
+        const scheduledTime = new Date(match.scheduled_time);
+        const timeStr = scheduledTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        const dateStr = scheduledTime.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+        const winEdge = this.calculateWinEdge(match.player1, match.player2);
+
+        return `
+            <div class="upcoming-match-card ${categoryClass} ${surfaceClass}" data-match-id="${match.id}">
+                <div class="match-header">
+                    <div class="tournament-info">
+                        <div class="tournament-name">
+                            ${match.tournament}
+                            <span class="category-badge">${categoryLabel}</span>
+                        </div>
+                        <div class="match-round">${match.round}</div>
+                    </div>
+                    <div class="scheduled-time">${dateStr} ${timeStr}</div>
+                </div>
+                <div class="match-players">
+                    <div class="player-row">
+                        <img class="player-img" src="${Utils.getPlayerImage(match.player1)}" alt="${match.player1.name}">
+                        <div class="player-info">
+                            <div class="player-name">
+                                <span class="player-rank-badge">[${match.player1.rank}]</span>
+                                <span class="country-flag">${Utils.getFlag(match.player1.country)}</span>
+                                ${Utils.formatPlayerName(match.player1.name)}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player-row">
+                        <img class="player-img" src="${Utils.getPlayerImage(match.player2)}" alt="${match.player2.name}">
+                        <div class="player-info">
+                            <div class="player-name">
+                                <span class="player-rank-badge">[${match.player2.rank}]</span>
+                                <span class="country-flag">${Utils.getFlag(match.player2.country)}</span>
+                                ${Utils.formatPlayerName(match.player2.name)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="edge-row" data-edge-id="${match.id}">
+                    <div class="h2h-chip">H2H: ${winEdge.h2hText}</div>
+                    <div class="edge-block">
+                        <div class="edge-bar" data-edge-id="${match.id}">
+                            <span class="edge-pct left">${winEdge.p1}%</span>
+                            <div class="edge-track">
+                                <div class="edge-fill left" style="width:${winEdge.p1}%"></div>
+                                <div class="edge-fill right" style="width:${winEdge.p2}%"></div>
+                            </div>
+                            <span class="edge-pct right">${winEdge.p2}%</span>
+                        </div>
+                        <div class="edge-names">
+                            <span class="edge-name left">${Utils.formatPlayerName(match.player1.name)}</span>
+                            <span class="edge-name right">${Utils.formatPlayerName(match.player2.name)}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    },
+
+    /**
+     * Calculate a lightweight win edge metric using rank and recent form (demo)
+     */
+    calculateWinEdge(p1, p2) {
+        // Lower rank number is stronger; add tiny randomness
+        const baseP1 = (p2.rank || 50) / (p1.rank || 50);
+        const noise = 0.05 * (Math.random() - 0.5);
+        let p1Prob = Math.min(0.85, Math.max(0.15, baseP1 + noise));
+        // Convert to percentage and balance
+        const p1Pct = Math.round((p1Prob / (p1Prob + 1)) * 100);
+        const p2Pct = 100 - p1Pct;
+
+        const reason = p1Pct > 55 ? 'Better recent form & rank' : p2Pct > 55 ? 'Edge on momentum' : 'Too close to call';
+        const h2hText = `${Math.floor(Math.random() * 4) + 1}-${Math.floor(Math.random() * 3)}`;
+        const formNote = p1Pct > 55 ? 'Won 4 of last 5' : p2Pct > 55 ? 'On 6-match streak' : 'Evenly matched';
+
+        return {
+            p1: p1Pct,
+            p2: p2Pct,
+            reason,
+            h2hText,
+            formNote
+        };
+    },
+
+    /**
      * Create a match card HTML
      */
     createMatchCard(match, isLive) {
         const { Utils } = window.TennisApp;
         const categoryClass = Utils.getCategoryClass(match.tournament_category);
+        const categoryLabel = this.getCategoryLabel(match.tournament_category);
+        const surfaceClass = this.getSurfaceClass(match);
         
         const player1Score = this.formatPlayerScore(match, 1, isLive);
         const player2Score = this.formatPlayerScore(match, 2, isLive);
@@ -246,10 +555,13 @@ const ScoresModule = {
         const p2Serving = isLive && match.serving === 2;
 
         return `
-            <div class="match-card ${categoryClass}" data-match-id="${match.id}">
+            <div class="match-card ${categoryClass} ${surfaceClass}" data-match-id="${match.id}">
                 <div class="match-header">
                     <div class="tournament-info">
-                        <div class="tournament-name">${match.tournament}</div>
+                        <div class="tournament-name">
+                            ${match.tournament}
+                            <span class="category-badge">${categoryLabel}</span>
+                        </div>
                         <div class="match-round">${match.round}</div>
                     </div>
                     ${isLive ? `
@@ -290,10 +602,41 @@ const ScoresModule = {
     },
 
     /**
+     * Get tournament category label
+     */
+    getCategoryLabel(category) {
+        const labels = {
+            'grand_slam': 'Grand Slam',
+            'masters_1000': '1000',
+            'atp_500': '500',
+            'atp_250': '250',
+            'atp_125': '125',
+            'finals': 'Finals',
+            'other': 'Other'
+        };
+        return labels[category] || category;
+    },
+
+    getSurfaceClass(match) {
+        const surface = (match.surface || match.tournament_surface || '').toLowerCase();
+        const name = (match.tournament || '').toLowerCase();
+        if (surface.includes('clay') || name.includes('roland') || name.includes('monte-carlo') || name.includes('madrid') || name.includes('rome')) {
+            return 'surface-clay';
+        }
+        if (surface.includes('grass') || name.includes('wimbledon') || name.includes('halle') || name.includes('queen')) {
+            return 'surface-grass';
+        }
+        if (surface.includes('indoor')) {
+            return 'surface-indoor';
+        }
+        return 'surface-hard';
+    },
+
+    /**
      * Format player score display
      */
     formatPlayerScore(match, playerNum, isLive) {
-        const score = isLive ? match.score : match.final_score;
+        const score = isLive ? match.score : (match.final_score || match.score);
         if (!score || !score.sets) return '';
 
         let html = '';
@@ -349,20 +692,21 @@ const ScoresModule = {
     /**
      * Show match statistics modal
      */
-    showMatchStats(matchId) {
-        const { AppState, Utils, DOM } = window.TennisApp;
+    showMatchStats(matchId, matchOverride = null, context = {}) {
+        const { AppState, Utils } = window.TennisApp;
         const tour = AppState.currentTour;
         
-        // Find match in live or recent matches
-        let match = AppState.liveScores[tour]?.find(m => m.id === matchId);
+        // Find match in live or recent matches, unless an override is provided
+        let match = matchOverride;
         if (!match) {
-            match = AppState.recentMatches[tour]?.find(m => m.id === matchId);
-        }
-        
-        // Also check demo data
-        if (!match) {
-            match = this.demoLiveMatches[tour]?.find(m => m.id === matchId) ||
-                   this.demoRecentMatches[tour]?.find(m => m.id === matchId);
+            match = AppState.liveScores[tour]?.find(m => m.id === matchId);
+            if (!match) {
+                match = AppState.recentMatches[tour]?.find(m => m.id === matchId);
+            }
+            if (!match) {
+                match = this.demoLiveMatches[tour]?.find(m => m.id === matchId) ||
+                       this.demoRecentMatches[tour]?.find(m => m.id === matchId);
+            }
         }
         
         if (!match) return;
@@ -375,41 +719,58 @@ const ScoresModule = {
         
         const isLive = match.status === 'live';
         const score = isLive ? match.score : match.final_score;
+        const tournamentName = context.tournament || match.tournament || 'Match Statistics';
+        const roundName = match.round || context.round || '';
+        const categoryLabel = this.getCategoryLabel(match.tournament_category);
+        const categoryClass = window.TennisApp.Utils.getCategoryClass(match.tournament_category);
+        const setLines = this.formatSetLines(score);
         
         content.innerHTML = `
-            <div class="match-stats-header">
-                <div class="match-stats-player ${match.winner === 1 ? 'winner' : ''}">
-                    <img src="${Utils.getPlayerImage(match.player1.id)}" alt="${match.player1.name}">
-                    <div>
-                        <div class="match-stats-player-name">${match.player1.name}</div>
-                        <div class="match-stats-player-country">${Utils.getFlag(match.player1.country)} ${match.player1.country}</div>
-                    </div>
+            <div class="match-stats-title">
+                <div class="match-stats-tournament">
+                    ${tournamentName}
+                    ${categoryLabel ? `<span class="category-badge ${categoryClass}">${categoryLabel}</span>` : ''}
+                    ${roundName ? `<span class="match-stats-round-tag">${roundName}</span>` : ''}
                 </div>
-                <div class="match-stats-vs">
-                    <div class="match-stats-score">
-                        <div class="sets">${score.sets.map(s => s.p1).join(' - ')}</div>
-                        ${stats.duration ? `<div class="duration">${stats.duration}</div>` : ''}
-                    </div>
+            </div>
+            <div class="match-stats-hero">
+                <div class="match-stats-player-card ${match.winner === 1 ? 'winner' : ''}">
+                    <img class="player-hero-img" src="${Utils.getPlayerImage(match.player1.id)}" alt="${match.player1.name}">
+                    <div class="player-hero-name">${match.player1.name}</div>
+                    <div class="player-hero-meta">${Utils.getFlag(match.player1.country)} ${match.player1.country} • Rank ${match.player1.rank || '-'}</div>
                 </div>
-                <div class="match-stats-player ${match.winner === 2 ? 'winner' : ''}">
-                    <img src="${Utils.getPlayerImage(match.player2.id)}" alt="${match.player2.name}">
-                    <div>
-                        <div class="match-stats-player-name">${match.player2.name}</div>
-                        <div class="match-stats-player-country">${Utils.getFlag(match.player2.country)} ${match.player2.country}</div>
+                <div class="match-stats-scoreboard">
+                    <div class="set-lines">
+                        ${setLines}
                     </div>
+                    ${stats.duration ? `<div class="duration">${stats.duration}</div>` : ''}
+                </div>
+                <div class="match-stats-player-card ${match.winner === 2 ? 'winner' : ''}">
+                    <img class="player-hero-img" src="${Utils.getPlayerImage(match.player2.id)}" alt="${match.player2.name}">
+                    <div class="player-hero-name">${match.player2.name}</div>
+                    <div class="player-hero-meta">${Utils.getFlag(match.player2.country)} ${match.player2.country} • Rank ${match.player2.rank || '-'}</div>
                 </div>
             </div>
             
-            <div class="stats-grid">
-                ${this.createStatRow('Aces', stats.aces.p1, stats.aces.p2)}
-                ${this.createStatRow('Double Faults', stats.doubleFaults.p1, stats.doubleFaults.p2)}
-                ${this.createStatRow('1st Serve %', stats.firstServe.p1 + '%', stats.firstServe.p2 + '%', stats.firstServe.p1, stats.firstServe.p2)}
-                ${this.createStatRow('1st Serve Points Won', stats.firstServeWon.p1 + '%', stats.firstServeWon.p2 + '%', stats.firstServeWon.p1, stats.firstServeWon.p2)}
-                ${this.createStatRow('2nd Serve Points Won', stats.secondServeWon.p1 + '%', stats.secondServeWon.p2 + '%', stats.secondServeWon.p1, stats.secondServeWon.p2)}
-                ${this.createStatRow('Break Points Won', `${stats.breakPointsWon.p1}/${stats.breakPointsTotal.p1}`, `${stats.breakPointsWon.p2}/${stats.breakPointsTotal.p2}`)}
-                ${this.createStatRow('Winners', stats.winners.p1, stats.winners.p2)}
-                ${this.createStatRow('Unforced Errors', stats.unforcedErrors.p1, stats.unforcedErrors.p2)}
-                ${this.createStatRow('Total Points Won', stats.totalPoints.p1, stats.totalPoints.p2, stats.totalPoints.p1, stats.totalPoints.p2)}
+            <div class="match-stats-section">
+                <h4>Serve</h4>
+                <div class="stats-grid">
+                    ${this.createStatRow('Aces', stats.aces.p1, stats.aces.p2, stats.aces.p1, stats.aces.p2, 'higher')}
+                    ${this.createStatRow('Double Faults', stats.doubleFaults.p1, stats.doubleFaults.p2, stats.doubleFaults.p1, stats.doubleFaults.p2, 'lower')}
+                    ${this.createStatRow('1st Serve %', stats.firstServe.p1 + '%', stats.firstServe.p2 + '%', stats.firstServe.p1, stats.firstServe.p2, 'higher')}
+                    ${this.createStatRow('1st Serve Points Won', stats.firstServeWon.p1 + '%', stats.firstServeWon.p2 + '%', stats.firstServeWon.p1, stats.firstServeWon.p2, 'higher')}
+                    ${this.createStatRow('2nd Serve Points Won', stats.secondServeWon.p1 + '%', stats.secondServeWon.p2 + '%', stats.secondServeWon.p1, stats.secondServeWon.p2, 'higher')}
+                </div>
+            </div>
+
+            <div class="match-stats-section">
+                <h4>Return & Pressure</h4>
+                <div class="stats-grid">
+                    ${this.createStatRow('Break Points Converted', `${stats.breakPointsWon.p1}/${stats.breakPointsTotal.p1} (${stats.breakPointsRate.p1}%)`, `${stats.breakPointsWon.p2}/${stats.breakPointsTotal.p2} (${stats.breakPointsRate.p2}%)`, stats.breakPointsRate.p1, stats.breakPointsRate.p2, 'higher')}
+                    ${this.createStatRow('Winners', stats.winners.p1, stats.winners.p2, stats.winners.p1, stats.winners.p2, 'higher')}
+                    ${this.createStatRow('Unforced Errors', stats.unforcedErrors.p1, stats.unforcedErrors.p2, stats.unforcedErrors.p1, stats.unforcedErrors.p2, 'lower')}
+                    ${this.createStatRow('Total Points Won', stats.totalPoints.p1, stats.totalPoints.p2, stats.totalPoints.p1, stats.totalPoints.p2, 'higher')}
+                </div>
             </div>
         `;
         
@@ -419,21 +780,23 @@ const ScoresModule = {
     /**
      * Create a statistics row
      */
-    createStatRow(label, val1, val2, num1 = null, num2 = null) {
+    createStatRow(label, val1, val2, num1 = null, num2 = null, better = 'higher') {
         // If num1 and num2 are provided, show bar graph
         if (num1 !== null && num2 !== null) {
             const total = num1 + num2;
-            const percent1 = (num1 / total * 100).toFixed(1);
-            const percent2 = (num2 / total * 100).toFixed(1);
+            const percent1 = total > 0 ? (num1 / total * 100).toFixed(1) : 50;
+            const percent2 = total > 0 ? (num2 / total * 100).toFixed(1) : 50;
+            const p1Wins = better === 'lower' ? num1 < num2 : num1 > num2;
+            const p2Wins = better === 'lower' ? num2 < num1 : num2 > num1;
             
             return `
                 <div class="stat-row">
-                    <div class="stat-value left">${val1}</div>
+                    <div class="stat-value left ${p1Wins ? 'winner' : ''}">${val1}</div>
                     <div class="stat-label">${label}</div>
-                    <div class="stat-value right">${val2}</div>
-                    <div class="stat-bar">
-                        <div class="stat-bar-fill left" style="width: ${percent1}%"></div>
-                        <div class="stat-bar-fill right" style="width: ${percent2}%"></div>
+                    <div class="stat-value right ${p2Wins ? 'winner' : ''}">${val2}</div>
+                    <div class="stat-bar dual">
+                        <div class="stat-bar-left" style="width: ${percent1}%"></div>
+                        <div class="stat-bar-right" style="width: ${percent2}%"></div>
                     </div>
                 </div>
             `;
@@ -453,6 +816,10 @@ const ScoresModule = {
      */
     generateMatchStats(match) {
         // Generate realistic demo statistics
+        const breakP1Total = Math.floor(Math.random() * 8) + 4;
+        const breakP2Total = Math.floor(Math.random() * 8) + 4;
+        const breakP1Won = Math.floor(Math.random() * Math.max(2, breakP1Total - 1)) + 1;
+        const breakP2Won = Math.floor(Math.random() * Math.max(2, breakP2Total - 1)) + 1;
         return {
             duration: '2h 34m',
             aces: { p1: Math.floor(Math.random() * 12) + 3, p2: Math.floor(Math.random() * 12) + 3 },
@@ -460,12 +827,33 @@ const ScoresModule = {
             firstServe: { p1: Math.floor(Math.random() * 15) + 55, p2: Math.floor(Math.random() * 15) + 55 },
             firstServeWon: { p1: Math.floor(Math.random() * 15) + 65, p2: Math.floor(Math.random() * 15) + 65 },
             secondServeWon: { p1: Math.floor(Math.random() * 20) + 40, p2: Math.floor(Math.random() * 20) + 40 },
-            breakPointsWon: { p1: Math.floor(Math.random() * 5) + 1, p2: Math.floor(Math.random() * 5) + 1 },
-            breakPointsTotal: { p1: Math.floor(Math.random() * 8) + 4, p2: Math.floor(Math.random() * 8) + 4 },
+            breakPointsWon: { p1: breakP1Won, p2: breakP2Won },
+            breakPointsTotal: { p1: breakP1Total, p2: breakP2Total },
+            breakPointsRate: {
+                p1: Math.round((breakP1Won / breakP1Total) * 100),
+                p2: Math.round((breakP2Won / breakP2Total) * 100)
+            },
             winners: { p1: Math.floor(Math.random() * 20) + 20, p2: Math.floor(Math.random() * 20) + 20 },
             unforcedErrors: { p1: Math.floor(Math.random() * 15) + 15, p2: Math.floor(Math.random() * 15) + 15 },
             totalPoints: { p1: Math.floor(Math.random() * 30) + 80, p2: Math.floor(Math.random() * 30) + 80 }
         };
+    },
+
+    formatSetLines(score) {
+        if (!score || !score.sets) return '';
+        return score.sets.map(set => {
+            const p1 = set.p1;
+            const p2 = set.p2;
+            const p1Win = p1 > p2;
+            const p2Win = p2 > p1;
+            return `
+                <div class="set-line">
+                    <span class="${p1Win ? 'winner' : ''}">${p1}</span>
+                    <span class="dash">-</span>
+                    <span class="${p2Win ? 'winner' : ''}">${p2}</span>
+                </div>
+            `;
+        }).join('');
     },
 
     /**

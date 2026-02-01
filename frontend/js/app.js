@@ -20,12 +20,55 @@ const CONFIG = {
     }
 };
 
+// Lightweight player image map (real photos for headline names)
+const PLAYER_IMAGE_MAP = {
+    // ITF/WTA official headshots where possible
+    'Novak Djokovic': 'https://www.itftennis.com/remote.axd/media.itftennis.com/assetbank-itf/servlet/display?cropmode=percentage&file=22137ab7cf680b76887ffd08.jpg%3Fcrop%3D0.28944414909327193%2C0.073837793136038762%2C0.27934313899226171%2C0.09327190028944396&height=420&rnd=133452065080000000&width=340',
+    'Carlos Alcaraz': 'https://www.itftennis.com/remote.axd/media.itftennis.com/assetbank-itf/servlet/display?cropmode=percentage&file=22137ab7e56b0948907afd2e.jpg%3Fcrop%3D0.0000000000000001297794951160%2C0.016257472481415305%2C0%2C0.06682107956676149&height=420&rnd=133353580110000000&width=340',
+    'Jannik Sinner': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Jannik_Sinner_Queen%27s_Club_Championships_2023_%28cropped%29.jpg/320px-Jannik_Sinner_Queen%27s_Club_Championships_2023_%28cropped%29.jpg',
+    'Daniil Medvedev': 'https://www.itftennis.com/remote.axd/media.itftennis.com/asset-bank/servlet/display?cropmode=percentage&file=221379a7c3240858ba7c.jpg%3Fcrop%3D0.34884103089493274%2C0.034261496040929283%2C0.29415583921461341%2C0.27618451334874194&height=420&rnd=133353579380000000&width=340',
+    'Andrey Rublev': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Rublev_RG21_%2823%29_%2848134080902%29.jpg/320px-Rublev_RG21_%2823%29_%2848134080902%29.jpg',
+    'Alexander Zverev': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Zverev_RG21_%2828%29_%2848132302537%29.jpg/320px-Zverev_RG21_%2828%29_%2848132302537%29.jpg',
+    'Holger Rune': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Rune_RG22_%2819%29_%2852082101786%29.jpg/320px-Rune_RG22_%2819%29_%2852082101786%29.jpg',
+    'Stefanos Tsitsipas': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Tsitsipas_RG21_%2827%29_%2848132382667%29.jpg/320px-Tsitsipas_RG21_%2827%29_%2848132382667%29.jpg',
+    'Hubert Hurkacz': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Hubert_Hurkacz_%28Roland_Garros_2023%29_11_%28cropped%29.jpg/320px-Hubert_Hurkacz_%28Roland_Garros_2023%29_11_%28cropped%29.jpg',
+    'Felix Auger-Aliassime': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Auger-Aliassime_RG19_%2817%29_%2842891621052%29.jpg/320px-Auger-Aliassime_RG19_%2817%29_%2842891621052%29.jpg',
+    'Iga Swiatek': 'https://photoresources.wtatennis.com/photo-resources/2025/04/14/d5c9d3a0-1235-40c8-973e-b5799b629b98/Swiatek-Torso_326408.png?height=740&width=790',
+    'Aryna Sabalenka': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Aryna_Sabalenka_%282023_US_Open_%29_06_%28cropped%29.jpg/320px-Aryna_Sabalenka_%282023_US_Open_%29_06_%28cropped%29.jpg',
+    'Coco Gauff': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Coco_Gauff_%2852448773887%29_%28cropped%29.jpg/320px-Coco_Gauff_%2852448773887%29_%28cropped%29.jpg',
+    'Elena Rybakina': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Elena_Rybakina_2023_%28cropped%29.jpg/320px-Elena_Rybakina_2023_%28cropped%29.jpg',
+    'Jessica Pegula': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Jessica_Pegula_%2852315011098%29_%28cropped%29.jpg/320px-Jessica_Pegula_%2852315011098%29_%28cropped%29.jpg',
+    'Ons Jabeur': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Ons_Jabeur_%2852683211099%29_%28cropped%29.jpg/320px-Ons_Jabeur_%2852683211099%29_%28cropped%29.jpg',
+    'Jannik Sinner (alt)': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Jannik_Sinner_2023_US_Open.jpg/320px-Jannik_Sinner_2023_US_Open.jpg'
+};
+
+// Map demo IDs to names so Utils can resolve images when only id is provided
+const PLAYER_ID_MAP = {
+    1: 'Novak Djokovic',
+    2: 'Carlos Alcaraz',
+    3: 'Jannik Sinner',
+    4: 'Daniil Medvedev',
+    5: 'Andrey Rublev',
+    6: 'Alexander Zverev',
+    7: 'Holger Rune',
+    8: 'Stefanos Tsitsipas',
+    9: 'Hubert Hurkacz',
+    15: 'Felix Auger-Aliassime',
+    101: 'Iga Swiatek',
+    102: 'Aryna Sabalenka',
+    103: 'Coco Gauff',
+    104: 'Elena Rybakina',
+    105: 'Jessica Pegula',
+    106: 'Ons Jabeur'
+};
+
 // ============================================
 // Application State
 // ============================================
 const AppState = {
     currentTour: 'atp',
     liveScores: { atp: [], wta: [] },
+    upcomingMatches: { atp: [], wta: [] },
     recentMatches: { atp: [], wta: [] },
     rankings: { atp: [], wta: [] },
     tournaments: { atp: [], wta: [] },
@@ -124,12 +167,24 @@ const Utils = {
     /**
      * Generate player image placeholder URL
      */
-    getPlayerImage(playerId, tour = 'atp') {
-        // Use placeholder service that works reliably
-        // Generate unique color based on player ID
-        const colors = ['3498db', '9b59b6', 'e74c3c', 'f39c12', '1abc9c', '34495e', '16a085', 'd35400'];
-        const color = colors[playerId % colors.length];
-        return `https://via.placeholder.com/150/${color}/ffffff?text=P${playerId}`;
+    getPlayerImage(player, tour = 'atp') {
+        // Resolve known names first
+        const name = player?.name || PLAYER_ID_MAP[player] || null;
+        if (name && PLAYER_IMAGE_MAP[name]) {
+            return PLAYER_IMAGE_MAP[name];
+        }
+
+        // Explicit image_url from API
+        if (player && player.image_url) {
+            return player.image_url;
+        }
+        
+        // Fallback to a clean placeholder with initials
+        const displayName = name || '??';
+        const initials = displayName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        const colors = ['d1e8ff', 'e8f5e9', 'fff4e6', 'f3e5f5', 'e0f7fa', 'fce4ec'];
+        const color = colors[((player && player.id) || Math.floor(Math.random() * colors.length)) % colors.length];
+        return `https://via.placeholder.com/200/${color}/0f172a?text=${initials}`;
     },
 
     /**
@@ -174,21 +229,27 @@ const Utils = {
 // ============================================
 const API = {
     /**
-     * Fetch data from API
+     * Fetch data from API with timeout
      */
     async fetch(endpoint, params = {}) {
         try {
             const url = new URL(`${CONFIG.API_BASE_URL}${endpoint}`);
             Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
             
-            const response = await fetch(url);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+            
+            const response = await fetch(url, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            
             const data = await response.json();
             
-            if (data.success) {
-                return data.data;
-            } else {
+            // Handle both {success: true, data: ...} and direct data response
+            if (data.success === false) {
                 throw new Error(data.error || 'API Error');
             }
+            
+            return data.data || data;
         } catch (error) {
             console.error(`API Error (${endpoint}):`, error);
             throw error;
@@ -200,6 +261,13 @@ const API = {
      */
     async getLiveScores(tour = 'both') {
         return await this.fetch('/live-scores', { tour });
+    },
+
+    /**
+     * Get upcoming matches
+     */
+    async getUpcomingMatches(tour = 'both') {
+        return await this.fetch('/upcoming-matches', { tour });
     },
 
     /**
@@ -237,6 +305,23 @@ const API = {
     async getPlayer(playerId) {
         return await this.fetch(`/player/${playerId}`);
     }
+};
+
+// ============================================
+// Global App Object
+// ============================================
+// Define the global object early so modules can access it.
+window.TennisApp = {
+    CONFIG,
+    AppState,
+    Utils,
+    API,
+    DOM,
+    // Modules will be attached later
+    Scores: null,
+    Bracket: null,
+    H2H: null,
+    Player: null
 };
 
 // ============================================
@@ -370,6 +455,17 @@ const EventHandlers = {
             if (e.target.id === 'matchStatsModal') {
                 ScoresModule.closeMatchStats();
             }
+            if (e.target.id === 'playerStatsModal') {
+                PlayerModule.close();
+            }
+        });
+
+        // Player click handler
+        document.addEventListener('click', (e) => {
+            const playerElement = e.target.closest('.ranking-item');
+            if (playerElement && playerElement.dataset.playerId) {
+                PlayerModule.showPlayerStats(playerElement.dataset.playerId);
+            }
         });
 
         // Keyboard shortcuts
@@ -378,6 +474,7 @@ const EventHandlers = {
                 DOM.tournamentDetailsPanel.classList.remove('visible');
                 DOM.matchPopup.classList.remove('visible');
                 ScoresModule.closeMatchStats();
+                PlayerModule.close();
             }
         });
     },
@@ -438,33 +535,48 @@ const App = {
      */
     async loadInitialData() {
         try {
+            console.log('Fetching initial data from API...');
             // Load data in parallel
-            const [atpScores, wtaScores, atpRecent, wtaRecent, atpRankings, wtaRankings, atpTournaments, wtaTournaments] = await Promise.all([
-                API.getLiveScores('atp').catch(() => []),
-                API.getLiveScores('wta').catch(() => []),
-                API.getRecentMatches('atp', 15).catch(() => []),
-                API.getRecentMatches('wta', 15).catch(() => []),
-                API.getRankings('atp', 200).catch(() => []),
-                API.getRankings('wta', 200).catch(() => []),
-                API.getTournaments('atp').catch(() => []),
-                API.getTournaments('wta').catch(() => [])
-            ]);
+            const [atpScores, wtaScores, atpUpcoming, wtaUpcoming, atpRecent, wtaRecent, atpRankings, wtaRankings, atpTournaments, wtaTournaments] = await Promise.all([
+                API.getLiveScores('atp'),
+                API.getLiveScores('wta'),
+                API.getUpcomingMatches('atp'),
+                API.getUpcomingMatches('wta'),
+                API.getRecentMatches('atp', 15),
+                API.getRecentMatches('wta', 15),
+                API.getRankings('atp', 200),
+                API.getRankings('wta', 200),
+                API.getTournaments('atp'),
+                API.getTournaments('wta')
+            ]).catch(err => {
+                console.error("One or more API calls failed:", err);
+                throw err; // Re-throw to be caught by the outer try/catch
+            });
+
+            console.log('Data fetched successfully. Raw data:', { atpScores, wtaScores, atpRankings, wtaRankings, atpTournaments, wtaTournaments });
 
             // Update state
-            AppState.liveScores.atp = atpScores;
-            AppState.liveScores.wta = wtaScores;
-            AppState.recentMatches.atp = atpRecent;
-            AppState.recentMatches.wta = wtaRecent;
-            AppState.rankings.atp = atpRankings;
-            AppState.rankings.wta = wtaRankings;
-            AppState.tournaments.atp = atpTournaments;
-            AppState.tournaments.wta = wtaTournaments;
+            AppState.liveScores.atp = atpScores || [];
+            AppState.liveScores.wta = wtaScores || [];
+            AppState.upcomingMatches.atp = atpUpcoming || [];
+            AppState.upcomingMatches.wta = wtaUpcoming || [];
+            AppState.recentMatches.atp = atpRecent || [];
+            AppState.recentMatches.wta = wtaRecent || [];
+            AppState.rankings.atp = atpRankings || [];
+            AppState.rankings.wta = wtaRankings || [];
+            AppState.tournaments.atp = atpTournaments || [];
+            AppState.tournaments.wta = wtaTournaments || [];
+
+            console.log('Application state updated:', AppState);
 
             // Render all components
+            console.log('Rendering all modules...');
             ScoresModule.renderLiveScores();
+            ScoresModule.renderUpcomingMatches();
             ScoresModule.renderRecentMatches();
             RankingsModule.render();
             TournamentsModule.render();
+            console.log('All modules rendered.');
 
             Socket.updateLastUpdated();
         } catch (error) {
@@ -481,6 +593,7 @@ const App = {
         console.log('Loading demo data...');
         // Demo data will be loaded from the modules
         ScoresModule.renderLiveScores();
+        ScoresModule.renderUpcomingMatches();
         ScoresModule.renderRecentMatches();
         RankingsModule.render();
         TournamentsModule.render();
@@ -516,16 +629,13 @@ document.addEventListener('DOMContentLoaded', () => {
     App.init();
 });
 
-// Export for module use
-window.TennisApp = {
-    CONFIG,
-    AppState,
-    Utils,
-    API,
-    DOM,
-    Scores: ScoresModule,
-    BracketModule: BracketModule,
-    H2HModule: H2HModule,
-    openH2HModal: App.openH2HModal,
-    closeH2HModal: App.closeH2HModal
-};
+// ============================================
+// Finalize App Object
+// ============================================
+// Attach modules and final methods to the global App object
+window.TennisApp.Scores = window.ScoresModule;
+window.TennisApp.BracketModule = window.BracketModule;
+window.TennisApp.H2HModule = window.H2HModule;
+window.TennisApp.PlayerModule = window.PlayerModule;
+window.TennisApp.openH2HModal = App.openH2HModal;
+window.TennisApp.closeH2HModal = App.closeH2HModal;

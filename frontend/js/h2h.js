@@ -148,37 +148,45 @@ const H2HModule = {
         // Generate demo H2H data
         const h2h = this.generateH2HData(p1, p2);
 
+        const recentP1Wins = h2h.recentMatches.filter(m => m.winnerId === p1.id).length;
+        const recentP2Wins = h2h.recentMatches.filter(m => m.winnerId === p2.id).length;
+
         const resultsDiv = document.getElementById('h2hResults');
         resultsDiv.innerHTML = `
-            <div class="h2h-header">
-                <div class="h2h-player-card">
+            <div class="h2h-hero">
+                <div class="h2h-hero-card">
                     <img src="${Utils.getPlayerImage(p1.id)}" alt="${p1.name}">
-                    <div class="h2h-player-name">${p1.name}</div>
-                    <div class="h2h-player-rank">${Utils.getFlag(p1.country)} Rank: ${p1.rank}</div>
+                    <div class="h2h-hero-meta">
+                        <div class="h2h-hero-name">${p1.name}</div>
+                        <div class="h2h-hero-rank">${Utils.getFlag(p1.country)} Rank #${p1.rank}</div>
+                    </div>
                 </div>
-                <div class="h2h-record">
+                <div class="h2h-hero-center">
                     <div class="h2h-record-score">${h2h.p1Wins} - ${h2h.p2Wins}</div>
                     <div class="h2h-record-label">Career H2H</div>
+                    <div class="h2h-record-sub">Last 5: ${recentP1Wins} - ${recentP2Wins}</div>
                 </div>
-                <div class="h2h-player-card">
+                <div class="h2h-hero-card">
                     <img src="${Utils.getPlayerImage(p2.id)}" alt="${p2.name}">
-                    <div class="h2h-player-name">${p2.name}</div>
-                    <div class="h2h-player-rank">${Utils.getFlag(p2.country)} Rank: ${p2.rank}</div>
+                    <div class="h2h-hero-meta">
+                        <div class="h2h-hero-name">${p2.name}</div>
+                        <div class="h2h-hero-rank">${Utils.getFlag(p2.country)} Rank #${p2.rank}</div>
+                    </div>
                 </div>
             </div>
 
             <div class="h2h-stats-section">
                 <h4>Career Statistics</h4>
-                <div class="stats-grid">
+                <div class="stats-grid h2h-stats-grid">
                     ${this.createComparisonStat('Career Titles', h2h.p1Stats.titles, h2h.p2Stats.titles)}
                     ${this.createComparisonStat('Grand Slam Titles', h2h.p1Stats.grandSlams, h2h.p2Stats.grandSlams)}
-                    ${this.createComparisonStat('Win %', h2h.p1Stats.winPercent + '%', h2h.p2Stats.winPercent + '%', h2h.p1Stats.winPercent, h2h.p2Stats.winPercent)}
+                    ${this.createComparisonStat('Win %', h2h.p1Stats.winPercent + '%', h2h.p2Stats.winPercent + '%', h2h.p1Stats.winPercent, h2h.p2Stats.winPercent, 'independent')}
                     ${this.createComparisonStat('Prize Money', h2h.p1Stats.prizeMoney, h2h.p2Stats.prizeMoney)}
                 </div>
             </div>
 
             <div class="h2h-matches-section">
-                <h4>Last 5 Matches Between Players</h4>
+                <h4>Recent Meetings</h4>
                 <div class="h2h-matches-list">
                     ${h2h.recentMatches.map(m => this.createMatchItem(m, p1, p2)).join('')}
                 </div>
@@ -189,7 +197,7 @@ const H2HModule = {
     /**
      * Create comparison stat row
      */
-    createComparisonStat(label, val1, val2, num1 = null, num2 = null) {
+    createComparisonStat(label, val1, val2, num1 = null, num2 = null, mode = 'stacked') {
         if (num1 !== null && num2 !== null) {
             const total = num1 + num2;
             const percent1 = total > 0 ? (num1 / total * 100).toFixed(1) : 50;
@@ -200,10 +208,21 @@ const H2HModule = {
                     <div class="stat-value left">${val1}</div>
                     <div class="stat-label">${label}</div>
                     <div class="stat-value right">${val2}</div>
-                    <div class="stat-bar">
-                        <div class="stat-bar-fill left" style="width: ${percent1}%"></div>
-                        <div class="stat-bar-fill right" style="width: ${percent2}%"></div>
-                    </div>
+                    ${mode === 'independent' ? `
+                        <div class="stat-bar independent">
+                            <div class="stat-bar-track">
+                                <div class="stat-bar-fill left" style="width:${num1}%"></div>
+                            </div>
+                            <div class="stat-bar-track">
+                                <div class="stat-bar-fill right" style="width:${num2}%"></div>
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill left" style="width: ${percent1}%"></div>
+                            <div class="stat-bar-fill right" style="width: ${percent2}%"></div>
+                        </div>
+                    `}
                 </div>
             `;
         } else {
@@ -225,13 +244,15 @@ const H2HModule = {
         return `
             <div class="h2h-match-item">
                 <div class="h2h-match-date">${match.date}</div>
-                <div class="h2h-match-tournament">${match.tournament}</div>
+                <div class="h2h-match-meta">
+                    <div class="h2h-match-tournament">${match.tournament}</div>
+                    <div class="h2h-match-surface">${match.surface}</div>
+                </div>
                 <div class="h2h-match-score">
                     <span class="${winnerId === p1.id ? 'winner' : ''}">${p1.name}</span>
                     <span class="score-detail">${match.score}</span>
                     <span class="${winnerId === p2.id ? 'winner' : ''}">${p2.name}</span>
                 </div>
-                <div class="h2h-match-surface">${match.surface}</div>
             </div>
         `;
     },

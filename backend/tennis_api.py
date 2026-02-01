@@ -165,6 +165,15 @@ class TennisDataFetcher:
         # Generate sample recent matches
         return self._generate_sample_recent_matches(tour, limit)
     
+    def fetch_upcoming_matches(self, tour='both', days=2):
+        """
+        Fetch upcoming matches in the next N days
+        tour: 'atp', 'wta', or 'both'
+        days: number of days to look ahead (default 2)
+        """
+        # Generate sample upcoming matches
+        return self._generate_sample_upcoming_matches(tour, days)
+    
     def fetch_rankings(self, tour='atp', limit=200):
         """
         Fetch ATP or WTA rankings
@@ -370,6 +379,49 @@ class TennisDataFetcher:
         
         return matches
     
+    def _generate_sample_upcoming_matches(self, tour, days=2):
+        """Generate sample upcoming matches for the next N days"""
+        matches = []
+        atp_players = self._get_sample_atp_players()
+        wta_players = self._get_sample_wta_players()
+        
+        tournaments = [
+            {'name': 'Australian Open', 'category': 'grand_slam'},
+            {'name': 'Rotterdam Open', 'category': 'atp_500'},
+            {'name': 'Dubai Championships', 'category': 'atp_500'},
+            {'name': 'Qatar Open', 'category': 'atp_250'},
+        ]
+        
+        # Generate 2-4 upcoming matches
+        for i in range(random.randint(2, 4)):
+            if tour == 'atp' or (tour == 'both' and i % 2 == 0):
+                players = atp_players
+                tour_name = 'ATP'
+            else:
+                players = wta_players
+                tour_name = 'WTA'
+            
+            p1_idx = random.randint(0, len(players) - 1)
+            p2_idx = random.randint(0, len(players) - 1)
+            while p2_idx == p1_idx:
+                p2_idx = random.randint(0, len(players) - 1)
+            
+            tournament = random.choice(tournaments)
+            scheduled_time = datetime.now() + timedelta(hours=random.randint(1, days * 24))
+            
+            matches.append({
+                'id': f'upcoming_{i}',
+                'tour': tour_name,
+                'tournament': tournament['name'],
+                'tournament_category': tournament['category'],
+                'round': random.choice(['R32', 'R16', 'QF', 'SF', 'F']),
+                'player1': players[p1_idx],
+                'player2': players[p2_idx],
+                'scheduled_time': scheduled_time.isoformat() + 'Z'
+            })
+        
+        return matches
+    
     def _generate_final_score(self, best_of=5):
         """Generate a realistic final score"""
         sets = []
@@ -403,66 +455,73 @@ class TennisDataFetcher:
         return players[:limit]
     
     def _get_sample_atp_players(self):
-        """Get sample ATP players"""
-        return [
-            {'id': 1, 'name': 'Novak Djokovic', 'country': 'SRB', 'rank': 1},
-            {'id': 2, 'name': 'Carlos Alcaraz', 'country': 'ESP', 'rank': 2},
-            {'id': 3, 'name': 'Jannik Sinner', 'country': 'ITA', 'rank': 3},
-            {'id': 4, 'name': 'Daniil Medvedev', 'country': 'RUS', 'rank': 4},
-            {'id': 5, 'name': 'Andrey Rublev', 'country': 'RUS', 'rank': 5},
-            {'id': 6, 'name': 'Alexander Zverev', 'country': 'GER', 'rank': 6},
-            {'id': 7, 'name': 'Holger Rune', 'country': 'DEN', 'rank': 7},
-            {'id': 8, 'name': 'Stefanos Tsitsipas', 'country': 'GRE', 'rank': 8},
-            {'id': 9, 'name': 'Hubert Hurkacz', 'country': 'POL', 'rank': 9},
-            {'id': 10, 'name': 'Casper Ruud', 'country': 'NOR', 'rank': 10},
+        """Get sample ATP players with real IDs and image URLs"""
+        players = [
+            {'id': 4878, 'name': 'Novak Djokovic', 'country': 'SRB', 'rank': 1},
+            {'id': 216431, 'name': 'Carlos Alcaraz', 'country': 'ESP', 'rank': 2},
+            {'id': 139170, 'name': 'Jannik Sinner', 'country': 'ITA', 'rank': 3},
+            {'id': 38758, 'name': 'Daniil Medvedev', 'country': 'RUS', 'rank': 4},
+            {'id': 39667, 'name': 'Andrey Rublev', 'country': 'RUS', 'rank': 5},
+            {'id': 40285, 'name': 'Alexander Zverev', 'country': 'GER', 'rank': 6},
+            {'id': 124335, 'name': 'Holger Rune', 'country': 'DEN', 'rank': 7},
+            {'id': 41379, 'name': 'Stefanos Tsitsipas', 'country': 'GRE', 'rank': 8},
+            {'id': 59642, 'name': 'Hubert Hurkacz', 'country': 'POL', 'rank': 9},
+            {'id': 63343, 'name': 'Casper Ruud', 'country': 'NOR', 'rank': 10},
         ]
+        for player in players:
+            player['image_url'] = f'https://api.sofascore.com/api/v1/player/{player["id"]}/image'
+        return players
     
     def _get_sample_wta_players(self):
-        """Get sample WTA players"""
-        return [
-            {'id': 101, 'name': 'Iga Swiatek', 'country': 'POL', 'rank': 1},
-            {'id': 102, 'name': 'Aryna Sabalenka', 'country': 'BLR', 'rank': 2},
-            {'id': 103, 'name': 'Coco Gauff', 'country': 'USA', 'rank': 3},
-            {'id': 104, 'name': 'Elena Rybakina', 'country': 'KAZ', 'rank': 4},
-            {'id': 105, 'name': 'Jessica Pegula', 'country': 'USA', 'rank': 5},
-            {'id': 106, 'name': 'Ons Jabeur', 'country': 'TUN', 'rank': 6},
-            {'id': 107, 'name': 'Marketa Vondrousova', 'country': 'CZE', 'rank': 7},
-            {'id': 108, 'name': 'Qinwen Zheng', 'country': 'CHN', 'rank': 8},
-            {'id': 109, 'name': 'Maria Sakkari', 'country': 'GRE', 'rank': 9},
-            {'id': 110, 'name': 'Jelena Ostapenko', 'country': 'LAT', 'rank': 10},
+        """Get sample WTA players with real IDs and image URLs"""
+        players = [
+            {'id': 126388, 'name': 'Iga Swiatek', 'country': 'POL', 'rank': 1},
+            {'id': 83528, 'name': 'Aryna Sabalenka', 'country': 'BLR', 'rank': 2},
+            {'id': 198151, 'name': 'Coco Gauff', 'country': 'USA', 'rank': 3},
+            {'id': 98622, 'name': 'Elena Rybakina', 'country': 'KAZ', 'rank': 4},
+            {'id': 56223, 'name': 'Jessica Pegula', 'country': 'USA', 'rank': 5},
+            {'id': 47320, 'name': 'Ons Jabeur', 'country': 'TUN', 'rank': 6},
+            {'id': 97090, 'name': 'Marketa Vondrousova', 'country': 'CZE', 'rank': 7},
+            {'id': 137839, 'name': 'Qinwen Zheng', 'country': 'CHN', 'rank': 8},
+            {'id': 42043, 'name': 'Maria Sakkari', 'country': 'GRE', 'rank': 9},
+            {'id': 33634, 'name': 'Jelena Ostapenko', 'country': 'LAT', 'rank': 10},
         ]
+        for player in players:
+            player['image_url'] = f'https://api.sofascore.com/api/v1/player/{player["id"]}/image'
+        return players
     
     def _get_full_atp_rankings(self):
         """Generate full ATP rankings (top 200)"""
         top_players = [
-            ('Novak Djokovic', 'SRB', 36, 11245, 1, True),
-            ('Carlos Alcaraz', 'ESP', 20, 9255, 1, True),
-            ('Jannik Sinner', 'ITA', 22, 8710, 3, True),
-            ('Daniil Medvedev', 'RUS', 27, 7165, 1, False),
-            ('Andrey Rublev', 'RUS', 26, 5110, 5, True),
-            ('Alexander Zverev', 'GER', 26, 5085, 2, False),
-            ('Holger Rune', 'DEN', 20, 4210, 4, False),
-            ('Stefanos Tsitsipas', 'GRE', 25, 4175, 3, False),
-            ('Hubert Hurkacz', 'POL', 26, 3955, 9, True),
-            ('Casper Ruud', 'NOR', 25, 3825, 2, False),
-            ('Taylor Fritz', 'USA', 26, 3505, 11, True),
-            ('Tommy Paul', 'USA', 26, 3170, 12, True),
-            ('Ben Shelton', 'USA', 21, 2920, 13, True),
-            ('Grigor Dimitrov', 'BUL', 32, 2885, 3, False),
-            ('Felix Auger-Aliassime', 'CAN', 23, 2660, 6, False),
-            ('Karen Khachanov', 'RUS', 27, 2605, 8, False),
-            ('Frances Tiafoe', 'USA', 25, 2505, 10, False),
-            ('Ugo Humbert', 'FRA', 25, 2490, 18, True),
-            ('Sebastian Korda', 'USA', 23, 2385, 19, True),
-            ('Nicolas Jarry', 'CHI', 28, 2330, 20, True),
+            # id, name, country, age, points, career_high, is_career_high
+            (4878, 'Novak Djokovic', 'SRB', 36, 11245, 1, True),
+            (216431, 'Carlos Alcaraz', 'ESP', 20, 9255, 1, True),
+            (139170, 'Jannik Sinner', 'ITA', 22, 8710, 3, True),
+            (38758, 'Daniil Medvedev', 'RUS', 27, 7165, 1, False),
+            (39667, 'Andrey Rublev', 'RUS', 26, 5110, 5, True),
+            (40285, 'Alexander Zverev', 'GER', 26, 5085, 2, False),
+            (124335, 'Holger Rune', 'DEN', 20, 4210, 4, False),
+            (41379, 'Stefanos Tsitsipas', 'GRE', 25, 4175, 3, False),
+            (59642, 'Hubert Hurkacz', 'POL', 26, 3955, 9, True),
+            (63343, 'Casper Ruud', 'NOR', 25, 3825, 2, False),
+            (59333, 'Taylor Fritz', 'USA', 26, 3505, 11, True),
+            (67580, 'Tommy Paul', 'USA', 26, 3170, 12, True),
+            (247511, 'Ben Shelton', 'USA', 21, 2920, 13, True),
+            (17869, 'Grigor Dimitrov', 'BUL', 32, 2885, 3, False),
+            (67581, 'Felix Auger-Aliassime', 'CAN', 23, 2660, 6, False),
+            (43187, 'Karen Khachanov', 'RUS', 27, 2605, 8, False),
+            (67578, 'Frances Tiafoe', 'USA', 25, 2505, 10, False),
+            (56447, 'Ugo Humbert', 'FRA', 25, 2490, 18, True),
+            (107537, 'Sebastian Korda', 'USA', 23, 2385, 19, True),
+            (60121, 'Nicolas Jarry', 'CHI', 28, 2330, 20, True),
         ]
         
         rankings = []
-        for i, (name, country, age, points, career_high, is_career_high) in enumerate(top_players, 1):
+        for i, (player_id, name, country, age, points, career_high, is_career_high) in enumerate(top_players, 1):
             movement = random.choice([-2, -1, 0, 0, 0, 1, 1, 2])
             rankings.append({
                 'rank': i,
-                'id': i,
+                'id': player_id,
                 'name': name,
                 'country': country,
                 'age': age,
@@ -470,7 +529,7 @@ class TennisDataFetcher:
                 'career_high': career_high,
                 'is_career_high': is_career_high,
                 'movement': movement,
-                'image': f'/assets/images/atp/{i}.png'
+                'image_url': f'https://api.sofascore.com/api/v1/player/{player_id}/image'
             })
         
         # Generate remaining players
@@ -479,9 +538,10 @@ class TennisDataFetcher:
         last_names = ['Smith', 'Garcia', 'Muller', 'Martin', 'Johnson', 'Williams', 'Brown', 'Jones', 'Miller', 'Davis']
         
         for i in range(len(top_players) + 1, 201):
+            player_id = i + 5000 # Use a high, random ID
             rankings.append({
                 'rank': i,
-                'id': i,
+                'id': player_id,
                 'name': f'{random.choice(first_names)} {random.choice(last_names)}',
                 'country': random.choice(countries),
                 'age': random.randint(19, 35),
@@ -489,7 +549,7 @@ class TennisDataFetcher:
                 'career_high': random.randint(max(1, i - 50), i),
                 'is_career_high': random.random() > 0.9,
                 'movement': random.choice([-3, -2, -1, 0, 0, 1, 2, 3]),
-                'image': f'/assets/images/atp/{i}.png' if i <= 200 else None
+                'image_url': f'https://api.sofascore.com/api/v1/player/{player_id}/image'
             })
         
         return rankings
@@ -497,34 +557,35 @@ class TennisDataFetcher:
     def _get_full_wta_rankings(self):
         """Generate full WTA rankings (top 200)"""
         top_players = [
-            ('Iga Swiatek', 'POL', 22, 10715, 1, True),
-            ('Aryna Sabalenka', 'BLR', 25, 8725, 1, True),
-            ('Coco Gauff', 'USA', 19, 6770, 3, True),
-            ('Elena Rybakina', 'KAZ', 24, 5973, 3, True),
-            ('Jessica Pegula', 'USA', 29, 5580, 3, False),
-            ('Ons Jabeur', 'TUN', 29, 4316, 2, False),
-            ('Marketa Vondrousova', 'CZE', 24, 4075, 7, True),
-            ('Qinwen Zheng', 'CHN', 21, 4005, 8, True),
-            ('Maria Sakkari', 'GRE', 28, 3835, 3, False),
-            ('Jelena Ostapenko', 'LAT', 26, 3438, 5, False),
-            ('Daria Kasatkina', 'RUS', 26, 3130, 8, False),
-            ('Madison Keys', 'USA', 28, 2993, 7, False),
-            ('Liudmila Samsonova', 'RUS', 24, 2985, 11, False),
-            ('Beatriz Haddad Maia', 'BRA', 27, 2956, 10, False),
-            ('Karolina Muchova', 'CZE', 27, 2905, 8, False),
-            ('Ekaterina Alexandrova', 'RUS', 29, 2625, 12, False),
-            ('Caroline Garcia', 'FRA', 30, 2605, 4, False),
-            ('Veronika Kudermetova', 'RUS', 26, 2501, 9, False),
-            ('Barbora Krejcikova', 'CZE', 27, 2436, 2, False),
-            ('Emma Navarro', 'USA', 22, 2380, 20, True),
+            # id, name, country, age, points, career_high, is_career_high
+            (126388, 'Iga Swiatek', 'POL', 22, 10715, 1, True),
+            (83528, 'Aryna Sabalenka', 'BLR', 25, 8725, 1, True),
+            (198151, 'Coco Gauff', 'USA', 19, 6770, 3, True),
+            (98622, 'Elena Rybakina', 'KAZ', 24, 5973, 3, True),
+            (56223, 'Jessica Pegula', 'USA', 29, 5580, 3, False),
+            (47320, 'Ons Jabeur', 'TUN', 29, 4316, 2, False),
+            (97090, 'Marketa Vondrousova', 'CZE', 24, 4075, 7, True),
+            (137839, 'Qinwen Zheng', 'CHN', 21, 4005, 8, True),
+            (42043, 'Maria Sakkari', 'GRE', 28, 3835, 3, False),
+            (42043, 'Jelena Ostapenko', 'LAT', 26, 3438, 5, False),
+            (68979, 'Daria Kasatkina', 'RUS', 26, 3130, 8, False),
+            (24452, 'Madison Keys', 'USA', 28, 2993, 7, False),
+            (82992, 'Liudmila Samsonova', 'RUS', 24, 2985, 11, False),
+            (82992, 'Beatriz Haddad Maia', 'BRA', 27, 2956, 10, False),
+            (88591, 'Karolina Muchova', 'CZE', 27, 2905, 8, False),
+            (64951, 'Ekaterina Alexandrova', 'RUS', 29, 2625, 12, False),
+            (24438, 'Caroline Garcia', 'FRA', 30, 2605, 4, False),
+            (68978, 'Veronika Kudermetova', 'RUS', 26, 2501, 9, False),
+            (88589, 'Barbora Krejcikova', 'CZE', 27, 2436, 2, False),
+            (242137, 'Emma Navarro', 'USA', 22, 2380, 20, True),
         ]
         
         rankings = []
-        for i, (name, country, age, points, career_high, is_career_high) in enumerate(top_players, 1):
+        for i, (player_id, name, country, age, points, career_high, is_career_high) in enumerate(top_players, 1):
             movement = random.choice([-2, -1, 0, 0, 0, 1, 1, 2])
             rankings.append({
                 'rank': i,
-                'id': 100 + i,
+                'id': player_id,
                 'name': name,
                 'country': country,
                 'age': age,
@@ -532,7 +593,7 @@ class TennisDataFetcher:
                 'career_high': career_high,
                 'is_career_high': is_career_high,
                 'movement': movement,
-                'image': f'/assets/images/wta/{i}.png'
+                'image_url': f'https://api.sofascore.com/api/v1/player/{player_id}/image'
             })
         
         # Generate remaining players
@@ -541,9 +602,10 @@ class TennisDataFetcher:
         last_names = ['Smith', 'Garcia', 'Muller', 'Martin', 'Johnson', 'Williams', 'Brown', 'Jones', 'Miller', 'Davis']
         
         for i in range(len(top_players) + 1, 201):
+            player_id = i + 10000 # Use a high, random ID
             rankings.append({
                 'rank': i,
-                'id': 100 + i,
+                'id': player_id,
                 'name': f'{random.choice(first_names)} {random.choice(last_names)}',
                 'country': random.choice(countries),
                 'age': random.randint(17, 34),
@@ -551,7 +613,7 @@ class TennisDataFetcher:
                 'career_high': random.randint(max(1, i - 50), i),
                 'is_career_high': random.random() > 0.9,
                 'movement': random.choice([-3, -2, -1, 0, 0, 1, 2, 3]),
-                'image': f'/assets/images/wta/{i}.png' if i <= 200 else None
+                'image_url': f'https://api.sofascore.com/api/v1/player/{player_id}/image'
             })
         
         return rankings
@@ -801,7 +863,8 @@ class TennisDataFetcher:
             'turned_pro': random.randint(2010, 2022),
             'titles': random.randint(0, 30),
             'prize_money': f"${random.randint(1, 150)},{random.randint(100, 999)},{random.randint(100, 999)}",
-            'biography': f"Professional tennis player from {player['country']}."
+            'biography': f"Professional tennis player from {player['country']}.",
+            'image_url': f'https://api.sofascore.com/api/v1/player/{player_id}/image'
         }
 
 

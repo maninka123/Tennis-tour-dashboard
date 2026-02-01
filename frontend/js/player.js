@@ -1,0 +1,345 @@
+/**
+ * Tennis Live Dashboard - Player Stats Module
+ * Handles displaying detailed player statistics in a modal.
+ */
+
+const PlayerModule = {
+    /**
+     * Initialize the module
+     */
+    init() {
+        // Event listeners can be added here if needed, e.g., for year/career tabs
+    },
+
+    /**
+     * Show player stats modal
+     * @param {number} playerId - The ID of the player
+     */
+    async showPlayerStats(playerId) {
+        const { API, DOM } = window.TennisApp;
+
+        try {
+            // Show loading state in modal if necessary
+            this.renderLoading();
+
+            let player = await API.getPlayer(playerId).catch(() => null);
+            
+            if (!player) {
+                // Fallback to rankings data if API isn't available
+                const { AppState } = window.TennisApp;
+                const tour = AppState.currentTour;
+                player = AppState.rankings[tour]?.find(p => String(p.id) === String(playerId));
+                if (!player) {
+                    this.renderError();
+                    return;
+                }
+            }
+
+            // For demo, we'll generate some stats. In a real app, this would be part of the API response.
+            const stats = this.generateDemoStats();
+            const profile = this.generateDemoProfile(player);
+            const performance = this.generateDemoPerformance(player);
+
+            this.render(player, stats, profile, performance);
+
+        } catch (error) {
+            console.error('Error loading player stats:', error);
+            this.renderError();
+        }
+    },
+
+    /**
+     * Render the player stats modal content
+     * @param {object} player - Player's personal data
+     * @param {object} stats - Player's statistics
+     */
+    render(player, stats, profile, performance) {
+        const { Utils } = window.TennisApp;
+        const modal = document.getElementById('playerStatsModal');
+        if (!modal) return;
+
+        let html = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>${player.name} — Performance Snapshot</h3>
+                    <button class="close-modal" onclick="PlayerModule.close()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="player-profile">
+                        <div class="player-hero">
+                            <img src="${Utils.getPlayerImage(player)}" alt="${player.name}">
+                            <div class="player-info">
+                                <h4>${player.name}</h4>
+                                <p>${Utils.getFlag(player.country)} ${player.country} • Rank ${player.rank}</p>
+                            </div>
+                        </div>
+                        <div class="stats-toggle pill-toggle">
+                            <button class="toggle-btn active" data-period="2026">2026 Season</button>
+                            <button class="toggle-btn" data-period="career">Career</button>
+                        </div>
+                    </div>
+                    <div class="player-info-cards">
+                        ${this.getInfoCardsHTML(profile)}
+                    </div>
+                    <div class="player-bars">
+                        <h4>Service & Return Efficiency</h4>
+                        ${this.getBarStatsHTML(stats)}
+                    </div>
+                    <div class="stats-container two-col">
+                        ${this.getStatsHTML(stats)}
+                    </div>
+                    <div class="player-performance">
+                        <h4>Major Events Performance (2020–2025)</h4>
+                        ${this.getPerformanceTableHTML(performance)}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        modal.innerHTML = html;
+        modal.classList.add('active');
+        this.addToggleListeners();
+    },
+
+    /**
+     * Generate HTML for the statistics grid
+     */
+    getStatsHTML(stats) {
+        return `
+            <div class="stats-grid">
+                <div class="stats-column">
+                    <h4>Service</h4>
+                    ${this.statRow('Aces', stats.service.aces)}
+                    ${this.statRow('Double Faults', stats.service.double_faults)}
+                    ${this.statRow('1st Serve %', `${stats.service.first_serve_pct}%`)}
+                    ${this.statRow('1st Serve Won', `${stats.service.first_serve_won}%`)}
+                    ${this.statRow('2nd Serve Won', `${stats.service.second_serve_won}%`)}
+                    ${this.statRow('Break Points Saved', `${stats.service.bp_saved}%`)}
+                    ${this.statRow('Service Points Won %', `${stats.service.service_pts_won_pct}%`)}
+                    ${this.statRow('Service Games Won', `${stats.service.service_games_won}%`)}
+                    ${this.statRow('Service Games Played', stats.service.service_games_played)}
+                </div>
+                <div class="stats-column">
+                    <h4>Return</h4>
+                    ${this.statRow('Return Points Won', `${stats.return.return_pts_won}%`)}
+                    ${this.statRow('1st Return Points Won %', `${stats.return.first_return_pts_won_pct}%`)}
+                    ${this.statRow('2nd Return Points Won %', `${stats.return.second_return_pts_won_pct}%`)}
+                    ${this.statRow('Break Points Converted', `${stats.return.bp_converted}%`)}
+                    ${this.statRow('Return Games Won', `${stats.return.return_games_won}%`)}
+                    ${this.statRow('Return Games Played', stats.return.return_games_played)}
+                </div>
+            </div>
+        `;
+    },
+
+    statRow(label, value) {
+        return `<div class="stat-item"><span>${label}</span><span>${value}</span></div>`;
+    },
+
+    getInfoCardsHTML(profile) {
+        return `
+            <div class="info-card">
+                <span class="label">Age</span>
+                <span class="value">${profile.age}</span>
+            </div>
+            <div class="info-card">
+                <span class="label">Height</span>
+                <span class="value">${profile.height}</span>
+            </div>
+            <div class="info-card">
+                <span class="label">Plays</span>
+                <span class="value">${profile.hand}</span>
+            </div>
+            <div class="info-card">
+                <span class="label">Career High</span>
+                <span class="value">#${profile.careerHigh}</span>
+            </div>
+            <div class="info-card">
+                <span class="label">Titles</span>
+                <span class="value">${profile.titles}</span>
+            </div>
+        `;
+    },
+
+    getBarStatsHTML(stats) {
+        const makeBar = (label, value) => `
+            <div class="bar-row">
+                <div class="bar-label">${label}</div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width:${value}%"></div>
+                </div>
+                <div class="bar-value">${value}%</div>
+            </div>
+        `;
+        return `
+            ${makeBar('1st Serve %', stats.service.first_serve_pct)}
+            ${makeBar('1st Serve Won', stats.service.first_serve_won)}
+            ${makeBar('2nd Serve Won', stats.service.second_serve_won)}
+            ${makeBar('Return Points Won', stats.return.return_pts_won)}
+            ${makeBar('Break Points Converted', stats.return.bp_converted)}
+        `;
+    },
+
+    getPerformanceTableHTML(performance) {
+        const years = ['2020','2021','2022','2023','2024','2025'];
+        return `
+            <div class="performance-table-grid">
+                <div class="perf-head event">Event</div>
+                ${years.map(y => `<div class="perf-head year">${y}</div>`).join('')}
+                ${performance.map(row => `
+                    <div class="perf-row surface-${row.surface}">
+                        <div class="event">${row.event}</div>
+                        ${years.map(y => {
+                            const val = row.results[y] || '-';
+                            const winnerClass = val === 'W' ? ' winner' : '';
+                            return `<div class="perf-cell${winnerClass}">${val}</div>`;
+                        }).join('')}
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    },
+
+    /**
+     * Render a loading state
+     */
+    renderLoading() {
+        const modal = document.getElementById('playerStatsModal');
+        if (!modal) return;
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="loading-placeholder">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Loading player stats...</span>
+                </div>
+            </div>
+        `;
+        modal.classList.add('active');
+    },
+
+    /**
+     * Render an error state
+     */
+    renderError() {
+        const modal = document.getElementById('playerStatsModal');
+        if (!modal) return;
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Error</h3>
+                    <button class="close-modal" onclick="PlayerModule.close()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Could not load player statistics. Please try again later.</p>
+                </div>
+            </div>
+        `;
+        modal.classList.add('active');
+    },
+
+    /**
+     * Close the modal
+     */
+    close() {
+        const modal = document.getElementById('playerStatsModal');
+        if (modal) {
+            modal.classList.remove('active');
+        }
+    },
+
+    /**
+     * Add listeners for the stats toggle buttons
+     */
+    addToggleListeners() {
+        const modal = document.getElementById('playerStatsModal');
+        if (!modal) return;
+
+        const toggleButtons = modal.querySelectorAll('.toggle-btn');
+        toggleButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                toggleButtons.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const period = btn.dataset.period;
+                // Swap stats view
+                const stats = this.generateDemoStats(period);
+                const profile = this.generateDemoProfile(null, period);
+                const performance = this.generateDemoPerformance(null, period);
+                modal.querySelector('.stats-container').innerHTML = this.getStatsHTML(stats);
+                modal.querySelector('.player-info-cards').innerHTML = this.getInfoCardsHTML(profile);
+                modal.querySelector('.player-bars').innerHTML = `
+                    <h4>Service & Return Efficiency</h4>
+                    ${this.getBarStatsHTML(stats)}
+                `;
+                modal.querySelector('.player-performance').innerHTML = `
+                    <h4>Major Events Performance (2020–2025)</h4>
+                    ${this.getPerformanceTableHTML(performance)}
+                `;
+            });
+        });
+    },
+
+    /**
+     * Generate demo stats
+     * @param {string} period - '2026' or 'career'
+     */
+    generateDemoStats(period = '2026') {
+        const base = (period === 'career') ? 1.15 : 1;
+        return {
+            service: {
+                aces: Math.floor(17 * base),
+                double_faults: Math.floor(8 * base),
+                first_serve_pct: 64.9,
+                first_serve_won: 61.1,
+                second_serve_won: 50.4,
+                bp_saved: 50.0,
+                service_pts_won_pct: 57.4,
+                service_games_won: 62.7,
+                service_games_played: Math.floor(51 * base),
+            },
+            return: {
+                return_pts_won: 46.6,
+                first_return_pts_won_pct: 38.6,
+                second_return_pts_won_pct: 62.9,
+                bp_converted: 46.8,
+                return_games_won: 44.0,
+                return_games_played: Math.floor(50 * base),
+            }
+        };
+    },
+
+    generateDemoProfile(player, period = '2026') {
+        return {
+            age: period === 'career' ? 29 : 27,
+            height: '188 cm',
+            hand: 'Right-Handed',
+            titles: period === 'career' ? 52 : 4,
+            careerHigh: 1
+        };
+    },
+
+    generateDemoPerformance(player, period = '2026') {
+        const { AppState } = window.TennisApp;
+        const tour = AppState.currentTour;
+        const finalsLabel = tour === 'wta' ? 'WTA Finals' : 'ATP Finals';
+        const sample = (vals) => ({
+            '2020': vals[0],
+            '2021': vals[1],
+            '2022': vals[2],
+            '2023': vals[3],
+            '2024': vals[4],
+            '2025': vals[5]
+        });
+        return [
+            { event: 'Australian Open', surface: 'hard', results: sample(['R16','QF','SF','SF','F','W']) },
+            { event: 'Roland Garros', surface: 'clay', results: sample(['R32','R16','QF','F','W','SF']) },
+            { event: 'Wimbledon', surface: 'grass', results: sample(['R32','R16','QF','SF','QF','F']) },
+            { event: 'US Open', surface: 'hard', results: sample(['R16','QF','SF','W','SF','W']) },
+            { event: finalsLabel, surface: 'indoor', results: sample(['DNQ','RR','SF','F','SF','W']) }
+        ];
+    }
+};
+
+window.PlayerModule = PlayerModule;

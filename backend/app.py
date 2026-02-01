@@ -13,8 +13,8 @@ from config import Config
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'tennis_dashboard_secret_2024'
-CORS(app, origins="*")
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
+CORS(app, origins="*", resources={r"/api/*": {"origins": "*"}})
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet', ping_timeout=60, ping_interval=25)
 
 # Background scheduler for real-time updates
 scheduler = BackgroundScheduler()
@@ -33,9 +33,13 @@ def broadcast_live_scores():
     except Exception as e:
         print(f"Error broadcasting live scores: {e}")
 
-# Start scheduler for live score updates
-scheduler.add_job(broadcast_live_scores, 'interval', seconds=30, id='live_scores_job')
-scheduler.start()
+# Start scheduler for live score updates (after routes are initialized)
+if not scheduler.running:
+    scheduler.add_job(broadcast_live_scores, 'interval', seconds=30, id='live_scores_job')
+    try:
+        scheduler.start()
+    except:
+        pass  # Scheduler might already be running
 
 
 # ============== REST API Routes ==============
@@ -70,6 +74,22 @@ def get_recent_matches():
     
     try:
         matches = tennis_fetcher.fetch_recent_matches(tour, limit)
+        return jsonify({
+            'success': True,
+            'data': matches,
+            'count': len(matches)
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/upcoming-matches', methods=['GET'])
+def get_upcoming_matches():
+    """Get upcoming matches in the next 2 days"""
+    tour = request.args.get('tour', 'both')
+    
+    try:
+        matches = tennis_fetcher.fetch_upcoming_matches(tour, days=2)
         return jsonify({
             'success': True,
             'data': matches,
@@ -214,5 +234,4 @@ if __name__ == '__main__':
     print(f"Starting server on http://{Config.HOST}:{Config.PORT}")
     print("WebSocket enabled for real-time updates")
     print("=" * 50)
-    
     socketio.run(app, host=Config.HOST, port=Config.PORT, debug=Config.DEBUG)

@@ -260,7 +260,7 @@ const TournamentsModule = {
         else if (surfaceLower.includes('indoor')) surfaceClass = 'indoor';
 
         return `
-            <div class="tournament-item ${categoryClass} ${tournament.status}" data-tournament-id="${tournament.id}" data-category="${tournament.category}">
+            <div class="tournament-item ${categoryClass} ${tournament.status}" data-tournament-id="${tournament.id}" data-category="${tournament.category}" data-name="${tournament.name}" data-surface="${tournament.surface}">
                 <div class="tournament-date">
                     <div class="date-month">${date.month}</div>
                     <div class="date-day">${date.day}</div>
@@ -291,13 +291,17 @@ const TournamentsModule = {
             item.addEventListener('click', async () => {
                 const tournamentId = item.dataset.tournamentId;
                 const category = item.dataset.category;
+                const tournamentName = item.dataset.name || item.querySelector('.tournament-title')?.childNodes[0]?.textContent?.trim();
+                const tournamentSurface = item.dataset.surface || '';
                 AppState.selectedTournament = tournamentId;
+                AppState.selectedTournamentName = tournamentName || null;
+                AppState.selectedTournamentSurface = tournamentSurface;
                 
                 // Show bracket panel
                 DOM.tournamentDetailsPanel.classList.add('visible');
                 
                 // Load and render bracket (special handling for finals)
-                await BracketModule.loadAndRender(tournamentId, category);
+                await BracketModule.loadAndRender(tournamentId, category, tournamentName, tournamentSurface);
             });
         });
     }

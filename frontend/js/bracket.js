@@ -8,6 +8,8 @@ const BracketModule = {
      * Current bracket data
      */
     currentBracket: null,
+    resizeHandler: null,
+    loadToken: 0,
 
     /**
      * Points by round for different tournament categories
@@ -386,10 +388,23 @@ const BracketModule = {
         
         for (let i = 0; i < maxSets; i++) {
             const winner = Math.random() > 0.5;
+            const tbChance = Math.random() > 0.7;
             if (winner) {
-                sets.push({ p1: 6, p2: Math.floor(Math.random() * 5) });
+                const oppGames = tbChance ? 6 : Math.floor(Math.random() * 5);
+                const p1Games = tbChance ? 7 : 6;
+                const set = { p1: p1Games, p2: oppGames };
+                if (tbChance) {
+                    set.tiebreak = { p1: 7, p2: Math.max(5, Math.floor(Math.random() * 6)) };
+                }
+                sets.push(set);
             } else {
-                sets.push({ p1: Math.floor(Math.random() * 5), p2: 6 });
+                const oppGames = tbChance ? 6 : Math.floor(Math.random() * 5);
+                const p2Games = tbChance ? 7 : 6;
+                const set = { p1: oppGames, p2: p2Games };
+                if (tbChance) {
+                    set.tiebreak = { p1: Math.max(5, Math.floor(Math.random() * 6)), p2: 7 };
+                }
+                sets.push(set);
             }
         }
         
@@ -399,8 +414,10 @@ const BracketModule = {
     /**
      * Load and render bracket
      */
-    async loadAndRender(tournamentId, category) {
-        const { DOM, API } = window.TennisApp;
+    async loadAndRender(tournamentId, category, tournamentName = null, tournamentSurface = null) {
+        const { DOM, API, AppState } = window.TennisApp;
+        const requestToken = ++this.loadToken;
+        const selectedId = `${tournamentId}`;
         
         // Show loading
         DOM.tournamentBracket.innerHTML = `
@@ -413,16 +430,34 @@ const BracketModule = {
         try {
             // Try to fetch from API
             let bracket = await API.getTournamentBracket(tournamentId).catch(() => null);
+
+            // Ignore stale responses
+            if (requestToken !== this.loadToken || `${AppState.selectedTournament}` !== selectedId) {
+                return;
+            }
+
+            if (bracket) {
+                bracket = this.normalizeBracketData(bracket, category, tournamentName, tournamentId);
+            }
             
             // Fall back to demo data
-            if (!bracket) {
+            if (!bracket || !Array.isArray(bracket.matches) || bracket.matches.length === 0) {
                 bracket = this.generateDemoBracket(tournamentId, category);
+            } else {
+                bracket.tournament_name = tournamentName || bracket.tournament_name || `Tournament ${tournamentId}`;
+                bracket.tournament_surface = tournamentSurface || bracket.tournament_surface || '';
+                if (!bracket.tournament_category) {
+                    bracket.tournament_category = category || 'atp_250';
+                }
             }
 
             this.currentBracket = bracket;
             this.render();
         } catch (error) {
             console.error('Error loading bracket:', error);
+            if (requestToken !== this.loadToken || `${AppState.selectedTournament}` !== selectedId) {
+                return;
+            }
             // Use demo data on error
             this.currentBracket = this.generateDemoBracket(tournamentId, category);
             this.render();
@@ -447,15 +482,39 @@ const BracketModule = {
 
         const bracket = this.currentBracket;
         const category = bracket.tournament_category || 'atp_250';
+        const titleEl = document.getElementById('bracketTitle');
+        if (titleEl) {
+            titleEl.textContent = 'Tournament Draw';
+        }
         
         // Check if tournament is completed (has a champion)
         const finalMatch = bracket.matches[bracket.matches.length - 1]?.matches[0];
         const hasChampion = finalMatch && finalMatch.winner;
         
+        const categoryNames = {
+            'grand_slam': 'Grand Slam',
+            'masters_1000': 'Masters 1000',
+            'atp_500': 'ATP 500',
+            'atp_250': 'ATP 250',
+            'finals': 'Finals'
+        };
+
+        const badgeClass = category.replace(/_/g, '-');
+        const drawMeta = this.getDrawMeta(bracket.draw_size);
+        const surfaceClass = this.getSurfaceClass(bracket.tournament_surface || '');
         let html = `
             <div class="bracket-info">
-                <h3>${bracket.tournament_name || 'Tournament Draw'}</h3>
-                <span class="bracket-draw-size">${bracket.draw_size} Players</span>
+                <div class="bracket-title-row">
+                    <h3 class="bracket-title">
+                        ${bracket.tournament_name || 'Tournament Draw'}
+                        <span class="tournament-category-badge ${badgeClass}">${categoryNames[category] || category}</span>
+                        ${bracket.tournament_surface ? `<span class="tournament-surface-tag ${surfaceClass}">${bracket.tournament_surface}</span>` : ''}
+                    </h3>
+                </div>
+                <div class="bracket-subtitle">
+                    ${bracket.draw_size} Players
+                    <span class="bracket-meta">(${drawMeta.seeds} seeds, ${drawMeta.qualifiers} Q, ${drawMeta.wildcards} WC)</span>
+                </div>
                 ${hasChampion ? `
                     <button class="champion-btn" onclick="window.TennisApp.BracketModule.showChampionCelebration(
                         '${bracket.tournament_name}',
@@ -474,38 +533,282 @@ const BracketModule = {
             html += this.renderFinalsGroups(bracket.groups);
         }
 
-        html += '<div class="bracket-container">';
-
-        // Render each round
-        bracket.matches.forEach((roundData, roundIdx) => {
+        const roundHeaders = bracket.matches.map((roundData) => {
             const roundPoints = this.getPointsForRound(roundData.round, category);
             const prizeMoney = this.getPrizeMoneyForRound(roundData.round, category);
+            return `
+                <div class="round-header neutral">
+                    ${this.getRoundDisplayName(roundData.round)}
+                    ${roundPoints > 0 ? `<span class="round-points">${roundPoints} pts</span>` : ''}
+                    ${prizeMoney ? `<span class="round-prize-money">${prizeMoney}</span>` : ''}
+                </div>
+            `;
+        }).join('');
+
+        html += `
+            <div class="bracket-round-headers">
+                ${roundHeaders}
+            </div>
+            <div class="brackets-viewer-container" id="bracketsViewerContainer"></div>
+        `;
+
+        DOM.tournamentBracket.innerHTML = html;
+
+        // Render bracket using brackets-viewer for proper connector layout
+        this.renderWithViewer(bracket);
+    },
+
+    renderWithViewer(bracket) {
+        if (!window.bracketsViewer && !window.BracketsViewer) {
+            const container = document.getElementById('bracketsViewerContainer');
+            if (container) {
+                container.innerHTML = this.renderColumnBracket(bracket);
+                this.attachMatchListeners();
+            }
+            return;
+        }
+
+        const participantsMap = new Map();
+        bracket.matches.forEach(roundData => {
+            roundData.matches.forEach(match => {
+                if (match.player1 && !participantsMap.has(match.player1.id)) {
+                    participantsMap.set(match.player1.id, { id: match.player1.id, name: match.player1.name });
+                }
+                if (match.player2 && !participantsMap.has(match.player2.id)) {
+                    participantsMap.set(match.player2.id, { id: match.player2.id, name: match.player2.name });
+                }
+            });
+        });
+
+        const participants = Array.from(participantsMap.values());
+
+        const stageId = 0;
+        const stages = [{
+            id: stageId,
+            tournament_id: bracket.tournament_id || 0,
+            name: bracket.tournament_name || 'Tournament',
+            type: 'single_elimination',
+            number: 1,
+            settings: {
+                size: bracket.draw_size || 32,
+                seedOrdering: ['natural'],
+                grandFinal: 'simple'
+            }
+        }];
+
+        const groups = [{
+            id: 0,
+            stage_id: stageId,
+            number: 1
+        }];
+
+        const rounds = bracket.matches.map((roundData, idx) => ({
+            id: idx,
+            stage_id: stageId,
+            group_id: 0,
+            number: idx + 1
+        }));
+
+        const matches = [];
+        bracket.matches.forEach((roundData, roundIdx) => {
+            roundData.matches.forEach(match => {
+                const score = match.score?.sets || [];
+                const p1Sets = score.filter(s => s.p1 > s.p2).length;
+                const p2Sets = score.filter(s => s.p2 > s.p1).length;
+                const p1Win = match.winner && match.player1 && match.winner.id === match.player1.id;
+                const p2Win = match.winner && match.player2 && match.winner.id === match.player2.id;
+
+                const status = match.status === 'finished' ? 4 : match.status === 'live' ? 3 : 0;
+                matches.push({
+                    id: match.id,
+                    stage_id: stageId,
+                    group_id: 0,
+                    round_id: roundIdx,
+                    number: match.match_number || 0,
+                    status,
+                    opponent1: match.player1 ? {
+                        id: match.player1.id,
+                        position: match.player1.seed || match.player1.rank || 0,
+                        score: p1Sets || 0,
+                        result: p1Win ? 'win' : p2Win ? 'loss' : null
+                    } : null,
+                    opponent2: match.player2 ? {
+                        id: match.player2.id,
+                        position: match.player2.seed || match.player2.rank || 0,
+                        score: p2Sets || 0,
+                        result: p2Win ? 'win' : p1Win ? 'loss' : null
+                    } : null
+                });
+            });
+        });
+
+        const data = {
+            stages,
+            groups,
+            rounds,
+            participants,
+            matches,
+            matchGames: []
+        };
+
+        const ViewerCtor = window.bracketsViewer?.BracketsViewer || window.BracketsViewer;
+        try {
+            if (ViewerCtor) {
+                if (!this.viewerInstance) {
+                    this.viewerInstance = new ViewerCtor();
+                }
+                this.viewerInstance.render(data, {
+                    selector: '#bracketsViewerContainer',
+                    clear: true
+                });
+                this.viewerInstance.onMatchClicked = (match) => {
+                    const originalMatch = this.findMatch(match.id);
+                    if (originalMatch && window.TennisApp?.Scores?.showMatchStats) {
+                        window.TennisApp.Scores.showMatchStats(null, originalMatch, {
+                            tournament: bracket.tournament_name,
+                            round: this.getRoundDisplayName(originalMatch.round)
+                        });
+                    }
+                };
+            } else if (window.bracketsViewer.render) {
+                window.bracketsViewer.render(data, {
+                    selector: '#bracketsViewerContainer',
+                    clear: true
+                });
+            }
+            const container = document.getElementById('bracketsViewerContainer');
+            if (container && container.children.length === 0) {
+                container.innerHTML = this.renderColumnBracket(bracket);
+                this.attachMatchListeners();
+            }
+        } catch (error) {
+            console.error('Bracket viewer render failed:', error);
+            const container = document.getElementById('bracketsViewerContainer');
+            if (container) {
+                container.innerHTML = this.renderColumnBracket(bracket);
+                this.attachMatchListeners();
+            }
+        }
+    },
+
+    /**
+     * Column-style bracket rendering (no external viewer)
+     */
+    renderColumnBracket(bracket) {
+        const category = bracket.tournament_category || 'atp_250';
+        const categoryClass = window.TennisApp?.Utils?.getCategoryClass
+            ? window.TennisApp.Utils.getCategoryClass(category)
+            : category.replace(/_/g, '-');
+        const rounds = bracket.matches || [];
+        if (!rounds.length) {
+            return `<div class="placeholder-message"><i class="fas fa-exclamation-circle"></i><p>No bracket data available.</p></div>`;
+        }
+
+        let html = `<div class="bracket-container ${categoryClass}"><div class="bracket-graph">`;
+        
+        // Calculate spacing based on number of matches in current and next round
+        rounds.forEach((roundData, roundIdx) => {
+            const nextRound = rounds[roundIdx + 1];
+            const matchesInRound = roundData.matches ? roundData.matches.length : 0;
+            const matchesInNext = nextRound && nextRound.matches ? nextRound.matches.length : 0;
+            
+            // Vertical spacing multiplier: if next round has half the matches, we need more space
+            const spacingMultiplier = matchesInNext > 0 ? Math.ceil(matchesInRound / matchesInNext) : 1;
+            
+            const roundName = this.getRoundDisplayName(roundData.round);
+            const points = this.getPointsForRound(roundData.round, category);
+            const prize = this.getPrizeMoneyForRound(roundData.round, category);
+            
             html += `
-                <div class="bracket-round" data-round="${roundData.round}">
+                <div class="bracket-round">
                     <div class="round-header">
-                        ${this.getRoundDisplayName(roundData.round)}
-                        ${roundPoints > 0 ? `<span class="round-points">${roundPoints} pts</span>` : ''}
-                        ${prizeMoney ? `<span class="round-prize-money">${prizeMoney}</span>` : ''}
+                        ${roundName}
+                        ${points ? `<span class="round-points">${points} pts</span>` : ''}
+                        ${prize ? `<span class="round-prize-money">${prize}</span>` : ''}
                     </div>
-                    <div class="round-matches">
+                    <div class="round-matches" style="gap: calc(var(--space-lg) * ${spacingMultiplier});">
             `;
 
             roundData.matches.forEach(match => {
                 html += this.createMatchHTML(match, roundIdx, category);
             });
 
-            html += `
-                    </div>
-                </div>
-            `;
+            html += '</div></div>';
         });
-
-        html += '</div>';
-
-        DOM.tournamentBracket.innerHTML = html;
         
-        // Add event listeners for match click
-        this.attachMatchListeners();
+        html += '</div></div>';
+        return html;
+    },
+
+    /**
+     * Normalize API bracket shape to the UI format
+     */
+    normalizeBracketData(bracket, category, tournamentName, tournamentId) {
+        const normalized = { ...bracket };
+
+        // Ensure tournament metadata
+        normalized.tournament_id = normalized.tournament_id || tournamentId;
+        normalized.tournament_name = tournamentName || normalized.tournament_name || `Tournament ${tournamentId}`;
+        normalized.tournament_category = normalized.tournament_category || category || 'atp_250';
+
+        // If matches is already in round-grouped format, keep it
+        if (Array.isArray(normalized.matches) && normalized.matches.length > 0 && normalized.matches[0]?.matches) {
+            return normalized;
+        }
+
+        // If matches is a flat list, group by round
+        if (Array.isArray(normalized.matches) && normalized.matches.length > 0) {
+            const roundsOrder = Array.isArray(normalized.rounds) && normalized.rounds.length > 0
+                ? normalized.rounds
+                : Array.from(new Set(normalized.matches.map(m => m.round))).filter(Boolean);
+
+            const grouped = roundsOrder.map(roundName => {
+                const roundMatches = normalized.matches
+                    .filter(m => m.round === roundName)
+                    .sort((a, b) => (a.match_number || 0) - (b.match_number || 0));
+                return { round: roundName, matches: roundMatches };
+            });
+
+            normalized.matches = grouped;
+            return normalized;
+        }
+
+        return normalized;
+    },
+
+    /**
+     * Fallback bracket rendering (simple list view)
+     */
+    renderFallbackBracket(bracket) {
+        const rounds = bracket.matches || [];
+        if (!rounds.length) {
+            return `<div class="placeholder-message"><i class="fas fa-exclamation-circle"></i><p>No bracket data available.</p></div>`;
+        }
+
+        let html = '<div class="fallback-bracket">';
+        rounds.forEach(roundData => {
+            html += `
+                <div class="fallback-round">
+                    <h4>${this.getRoundDisplayName(roundData.round)}</h4>
+                    <div class="fallback-matches">
+            `;
+            roundData.matches.forEach(match => {
+                const p1 = match.player1?.name || 'TBD';
+                const p2 = match.player2?.name || 'TBD';
+                const score = match.score?.sets ? match.score.sets.map(s => `${s.p1}-${s.p2}`).join(' ') : '';
+                html += `
+                    <div class="fallback-match">
+                        <span class="fallback-player">${p1}</span>
+                        <span class="fallback-vs">vs</span>
+                        <span class="fallback-player">${p2}</span>
+                        ${score ? `<span class="fallback-score">${score}</span>` : ''}
+                    </div>
+                `;
+            });
+            html += '</div></div>';
+        });
+        html += '</div>';
+        return html;
     },
 
     /**
@@ -557,6 +860,21 @@ const BracketModule = {
         return displayNames[round] || round;
     },
 
+    getDrawMeta(drawSize = 32) {
+        const seeds = drawSize >= 128 ? 32 : drawSize >= 64 ? 16 : 8;
+        const qualifiers = Math.max(2, Math.round(drawSize * 0.125));
+        const wildcards = Math.max(2, Math.round(drawSize * 0.03125));
+        return { seeds, qualifiers, wildcards };
+    },
+
+    getSurfaceClass(surface) {
+        const lower = surface.toLowerCase();
+        if (lower.includes('clay')) return 'surface-clay';
+        if (lower.includes('grass')) return 'surface-grass';
+        if (lower.includes('indoor')) return 'surface-indoor';
+        return 'surface-hard';
+    },
+
     /**
      * Create match HTML for bracket
      */
@@ -568,31 +886,45 @@ const BracketModule = {
         const isP1Winner = match.winner && p1 && match.winner.id === p1.id;
         const isP2Winner = match.winner && p2 && match.winner.id === p2.id;
 
-        // Format score
-        let scoreHTML = '';
+        // Build set score boxes
+        let p1SetScores = [];
+        let p2SetScores = [];
+        let tooltipSets = '';
+        
         if (match.score && match.score.sets) {
-            scoreHTML = match.score.sets.map(s => `${s.p1}-${s.p2}`).join(' ');
+            match.score.sets.forEach((set, idx) => {
+                const p1Wins = set.p1 > set.p2;
+                const p2Wins = set.p2 > set.p1;
+                let p1Box = `<span class="set-box ${p1Wins ? 'bold' : ''}">${set.p1}${set.tiebreak ? `<sup class="tb">tb${set.tiebreak.p1}</sup>` : ''}</span>`;
+                let p2Box = `<span class="set-box ${p2Wins ? 'bold' : ''}">${set.p2}${set.tiebreak ? `<sup class="tb">tb${set.tiebreak.p2}</sup>` : ''}</span>`;
+                p1SetScores.push(p1Box);
+                p2SetScores.push(p2Box);
+                tooltipSets += `Set ${idx + 1}: ${set.p1}-${set.p2}${set.tiebreak ? ` (tb ${set.tiebreak.p1}-${set.tiebreak.p2})` : ''}\n`;
+            });
         }
 
+        const tooltipText = p1 && p2
+            ? `${p1.name} vs ${p2.name}${tooltipSets ? `\n${tooltipSets.trim()}` : ''}`
+            : '';
+
+        const setsHTML = p1SetScores.length > 0
+            ? `<div class="bracket-sets">${p1SetScores.join('')}</div><div class="bracket-sets">${p2SetScores.join('')}</div>`
+            : '';
+
+        const p1DisplayName = p1 ? `${p1.seed ? `[${p1.seed}] ` : ''}${p1.name}` : 'TBD';
+        const p2DisplayName = p2 ? `${p2.seed ? `[${p2.seed}] ` : ''}${p2.name}` : 'TBD';
+
         return `
-            <div class="bracket-match clickable ${match.status}" data-match-id="${match.id}" data-points="${match.points || this.getPointsForRound(match.round, category)}">
-                <div class="bracket-player ${isP1Winner ? 'winner' : ''}">
-                    ${p1 ? `
-                        <img class="bracket-player-img" src="${Utils.getPlayerImage(p1.id)}" alt="">
-                        ${p1.seed ? `<span class="bracket-seed">[${p1.seed}]</span>` : ''}
-                        <span class="bracket-player-name">${p1.name}</span>
-                        <span class="bracket-player-rank">${p1.rank}</span>
-                    ` : '<span class="bracket-player-name tbd">TBD</span>'}
-                    ${isP1Winner ? `<span class="bracket-score">${scoreHTML}</span>` : ''}
-                </div>
-                <div class="bracket-player ${isP2Winner ? 'winner' : ''}">
-                    ${p2 ? `
-                        <img class="bracket-player-img" src="${Utils.getPlayerImage(p2.id)}" alt="">
-                        ${p2.seed ? `<span class="bracket-seed">[${p2.seed}]</span>` : ''}
-                        <span class="bracket-player-name">${p2.name}</span>
-                        <span class="bracket-player-rank">${p2.rank}</span>
-                    ` : '<span class="bracket-player-name tbd">TBD</span>'}
-                    ${isP2Winner ? `<span class="bracket-score">${scoreHTML}</span>` : ''}
+            <div class="bracket-match clickable ${match.status}" data-match-id="${match.id}" data-round="${match.round}" data-match-number="${match.match_number}" data-points="${match.points || this.getPointsForRound(match.round, category)}">
+                <div class="match-content">
+                    <div class="player-row ${isP1Winner ? 'winner' : ''}">
+                        <span class="player-name">${p1DisplayName}</span>
+                        ${setsHTML ? `<div class="sets-group">${p1SetScores.join('')}</div>` : ''}
+                    </div>
+                    <div class="player-row ${isP2Winner ? 'winner' : ''}">
+                        <span class="player-name">${p2DisplayName}</span>
+                        ${setsHTML ? `<div class="sets-group">${p2SetScores.join('')}</div>` : ''}
+                    </div>
                 </div>
             </div>
         `;
@@ -626,6 +958,50 @@ const BracketModule = {
     },
 
     /**
+     * Draw connector lines to show knockout flow
+     */
+    drawConnectors() {
+        const container = document.querySelector('.bracket-graph');
+        const svg = container?.querySelector('.bracket-connectors');
+        if (!container || !svg || !this.currentBracket) return;
+
+        const containerRect = container.getBoundingClientRect();
+        svg.setAttribute('width', container.scrollWidth);
+        svg.setAttribute('height', container.scrollHeight);
+        svg.innerHTML = '';
+
+        const rounds = this.currentBracket.matches;
+
+        rounds.forEach((roundData, roundIdx) => {
+            const nextRound = rounds[roundIdx + 1];
+            if (!nextRound) return;
+
+            roundData.matches.forEach((match, idx) => {
+                const fromEl = container.querySelector(`.bracket-match[data-match-id="${match.id}"]`);
+                const targetIdx = Math.floor(idx / 2);
+                const nextMatch = nextRound.matches[targetIdx];
+                const toEl = nextMatch ? container.querySelector(`.bracket-match[data-match-id="${nextMatch.id}"]`) : null;
+                
+                if (!fromEl || !toEl) return;
+
+                const fromBox = fromEl.getBoundingClientRect();
+                const toBox = toEl.getBoundingClientRect();
+
+                const startX = fromBox.right - containerRect.left;
+                const startY = fromBox.top + fromBox.height / 2 - containerRect.top;
+                const endX = toBox.left - containerRect.left;
+                const endY = toBox.top + toBox.height / 2 - containerRect.top;
+                const midX = (startX + endX) / 2;
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', `M${startX} ${startY} L${midX} ${startY} L${midX} ${endY} L${endX} ${endY}`);
+                path.setAttribute('class', 'connector-path');
+                svg.appendChild(path);
+            });
+        });
+    },
+
+    /**
      * Find match by ID
      */
     findMatch(matchId) {
@@ -643,6 +1019,16 @@ const BracketModule = {
      */
     showMatchModal(match, points) {
         const { Utils } = window.TennisApp;
+
+        // Use the detailed match stats modal for bracket matches
+        if (window.TennisApp?.Scores?.showMatchStats) {
+            window.TennisApp.Scores.showMatchStats(null, match, {
+                tournament: this.currentBracket?.tournament_name,
+                round: this.getRoundDisplayName(match.round)
+            });
+            return;
+        }
+
         const modal = document.getElementById('matchModal');
         
         const p1 = match.player1;
