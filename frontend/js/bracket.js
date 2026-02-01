@@ -549,7 +549,7 @@ const BracketModule = {
             <div class="bracket-round-headers">
                 ${roundHeaders}
             </div>
-            <div class="brackets-viewer-container" id="bracketsViewerContainer"></div>
+            <div class="brackets-viewer brackets-viewer-container" id="bracketsViewerContainer"></div>
         `;
 
         DOM.tournamentBracket.innerHTML = html;
