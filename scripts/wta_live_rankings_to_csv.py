@@ -4,7 +4,7 @@ import csv
 import datetime as dt
 import re
 import sys
-from typing import List, Dict
+from typing import Dict, List, Optional, Tuple
 
 try:
     import requests
@@ -28,6 +28,34 @@ def fetch_text(url: str) -> str:
 
 def normalize_whitespace(text: str) -> str:
     return text.replace("\xa0", " ")
+
+
+def _parse_signed(value: str) -> Optional[int]:
+    if not value:
+        return None
+    m = re.match(r"^([+-]\d+)$", value.strip())
+    if not m:
+        return None
+    try:
+        return int(m.group(1))
+    except ValueError:
+        return None
+
+
+def _assign_rank_points_change(rank_change: str, points_change: str) -> Tuple[str, str]:
+    rank_val = _parse_signed(rank_change)
+    points_val = _parse_signed(points_change)
+
+    # If only one value provided, treat it as points change (rank change should be in its column)
+    if rank_val is not None and points_val is None:
+        return "", rank_change
+    if rank_val is None and points_val is not None:
+        return "", points_change
+    # If both provided but rank change looks like points (very large), swap
+    if rank_val is not None and points_val is not None:
+        if abs(rank_val) >= 100 and abs(points_val) < 100:
+            return points_change, rank_change
+    return rank_change, points_change
 
 
 def parse_rankings_inline(text: str) -> List[Dict[str, str]]:
@@ -80,6 +108,7 @@ def parse_rankings_inline(text: str) -> List[Dict[str, str]]:
             rank_change = change_match.group(1) or ""
             points_change = change_match.group(2) or ""
             tail = (change_match.group(3) or "").strip()
+        rank_change, points_change = _assign_rank_points_change(rank_change, points_change)
 
         # Split current/previous using "Lost in" marker
         previous = ""
@@ -221,6 +250,9 @@ def parse_rankings(text: str) -> List[Dict[str, str]]:
             previous = data_parts[6]
             next_pts = data_parts[7]
             max_pts = data_parts[8]
+
+            # Fix cases where only points change exists (rank change stays 0/blank)
+            rank_change, current = _assign_rank_points_change(rank_change, current)
 
             career_high = ""
             ch_norm = ch_raw.strip()

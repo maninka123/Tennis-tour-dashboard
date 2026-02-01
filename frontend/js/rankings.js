@@ -184,7 +184,7 @@ const RankingsModule = {
                 </div>
                 ${showImage ? `
                     <img class="ranking-player-img ${imageClass}" 
-                         src="${Utils.getPlayerImage(player.id, tour)}" 
+                         src="${Utils.getPlayerImage(player, tour)}" 
                          alt="${player.name}">
                 ` : `
                     <div class="ranking-player-img" style="display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem;">

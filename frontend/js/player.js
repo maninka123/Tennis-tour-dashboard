@@ -4,6 +4,7 @@
  */
 
 const PlayerModule = {
+    currentPlayer: null,
     /**
      * Initialize the module
      */
@@ -36,10 +37,15 @@ const PlayerModule = {
             }
 
             // For demo, we'll generate some stats. In a real app, this would be part of the API response.
-            const stats = this.generateDemoStats();
-            const profile = this.generateDemoProfile(player);
-            const performance = this.generateDemoPerformance(player);
+            const stats = player?.stats_2026 && Object.keys(player.stats_2026).length
+                ? this.buildStatsFromScraped(player.stats_2026)
+                : this.generateDemoStats();
+            const profile = this.generateDemoProfile(player, '2026', player?.stats_2026 || {});
+            const performance = player?.records?.length
+                ? this.buildPerformanceFromRecords(player.records, player.records_summary || [])
+                : this.generateDemoPerformance(player);
 
+            this.currentPlayer = player;
             this.render(player, stats, profile, performance);
 
         } catch (error) {
@@ -74,6 +80,10 @@ const PlayerModule = {
         const playingText = player.is_playing && player.previous ? `${player.previous}` : '';
         const rankBadge = player.rank ? `<div class="rank-badge">#${player.rank}</div>` : '';
 
+        const wonLost = this.parseWonLost(player?.stats_2026?.won_lost || profile.wonLost || '');
+        const winsValue = wonLost.wins ?? stats?.wins ?? 0;
+        const lossesValue = wonLost.losses ?? stats?.losses ?? 0;
+
         let html = `
             <div class="modal-content">
                 <div class="modal-header">
@@ -98,9 +108,18 @@ const PlayerModule = {
                                 ${playingText ? `<div class="player-status playing-text">${playingText}</div>` : ''}
                             </div>
                         </div>
-                        <div class="stats-toggle pill-toggle">
-                            <button class="toggle-btn active" data-period="2026">2026 Season</button>
-                            <button class="toggle-btn" data-period="career">Career</button>
+                    </div>
+                    <div class="season-summary">
+                        <div class="season-label">2026 Season</div>
+                        <div class="season-record">
+                            <div class="record-card wins">
+                                <span class="record-label">Wins</span>
+                                <span class="record-value">${winsValue}</span>
+                            </div>
+                            <div class="record-card losses">
+                                <span class="record-label">Losses</span>
+                                <span class="record-value">${lossesValue}</span>
+                            </div>
                         </div>
                     </div>
                     <div class="player-info-cards">
@@ -123,7 +142,7 @@ const PlayerModule = {
 
         modal.innerHTML = html;
         modal.classList.add('active');
-        this.addToggleListeners();
+        // No toggle for season/career (2026 only)
     },
 
     /**
@@ -164,9 +183,16 @@ const PlayerModule = {
     getInfoCardsHTML(profile) {
         const pointsCard = profile.points !== null && profile.points !== undefined
             ? `
-            <div class="info-card">
+            <div class="info-card points-card">
                 <span class="label">Points</span>
                 <span class="value">${profile.points.toLocaleString()}</span>
+            </div>
+        ` : '';
+        const prizeCard = profile.prizeMoney
+            ? `
+            <div class="info-card money-card">
+                <span class="label">Prize Money</span>
+                <span class="value">${this.formatMoneyK(profile.prizeMoney)}</span>
             </div>
         ` : '';
         const playingCard = profile.playing ? `<div class="subtext playing-text">${profile.playing}</div>` : '';
@@ -186,10 +212,11 @@ const PlayerModule = {
                 <span class="value">${profile.hand}</span>
             </div>
             ${pointsCard}
-            <div class="info-card">
+            <div class="info-card titles-card">
                 <span class="label">Titles</span>
                 <span class="value">${profile.titles}</span>
             </div>
+            ${prizeCard}
         `;
     },
 
@@ -220,7 +247,15 @@ const PlayerModule = {
                 ${years.map(y => `<div class="perf-head year">${y}</div>`).join('')}
                 ${performance.map(row => `
                     <div class="perf-row surface-${row.surface}">
-                        <div class="event">${row.event}</div>
+                        <div class="event">
+                            <div class="event-name">${row.event}</div>
+                            ${row.summary ? `
+                                <div class="event-summary">
+                                    ${row.summary.best_result ? `<span>${row.summary.best_result}</span>` : ''}
+                                    ${row.summary.total_wl ? `<span>W/L ${row.summary.total_wl}</span>` : ''}
+                                </div>
+                            ` : ''}
+                        </div>
                         ${years.map(y => {
                             const val = row.results[y] || '-';
                             const winnerClass = val === 'W' ? ' winner' : '';
@@ -282,36 +317,7 @@ const PlayerModule = {
     /**
      * Add listeners for the stats toggle buttons
      */
-    addToggleListeners() {
-        const modal = document.getElementById('playerStatsModal');
-        if (!modal) return;
-
-        const toggleButtons = modal.querySelectorAll('.toggle-btn');
-        toggleButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons
-                toggleButtons.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
-                btn.classList.add('active');
-
-                const period = btn.dataset.period;
-                // Swap stats view
-                const stats = this.generateDemoStats(period);
-                const profile = this.generateDemoProfile(null, period);
-                const performance = this.generateDemoPerformance(null, period);
-                modal.querySelector('.stats-container').innerHTML = this.getStatsHTML(stats);
-                modal.querySelector('.player-info-cards').innerHTML = this.getInfoCardsHTML(profile);
-                modal.querySelector('.player-bars').innerHTML = `
-                    <h4>Service & Return Efficiency</h4>
-                    ${this.getBarStatsHTML(stats)}
-                `;
-                modal.querySelector('.player-performance').innerHTML = `
-                    <h4>Major Events Performance (2020–2025)</h4>
-                    ${this.getPerformanceTableHTML(performance)}
-                `;
-            });
-        });
-    },
+    addToggleListeners() {},
 
     /**
      * Generate demo stats
@@ -342,22 +348,109 @@ const PlayerModule = {
         };
     },
 
-    generateDemoProfile(player, period = '2026') {
+    generateDemoProfile(player, period = '2026', statsData = {}) {
         const pointsValue = typeof player?.points === 'number' ? player.points : null;
         const rankChangeValue = typeof player?.rank_change === 'number'
             ? player.rank_change
             : (typeof player?.movement === 'number' ? player.movement : null);
         const playingValue = player?.is_playing && player?.previous ? player.previous : null;
+        const prizeMoney = player?.prize_money || statsData?.prize_money || null;
+        const titlesValue = player?.titles || statsData?.singles_titles || (period === 'career' ? 52 : 4);
+        const wonLostValue = statsData?.won_lost || '';
         return {
             age: player?.age || (period === 'career' ? 29 : 27),
-            height: '188 cm',
-            hand: 'Right-Handed',
-            titles: period === 'career' ? 52 : 4,
+            height: player?.height || '188 cm',
+            hand: player?.plays || 'Right-Handed',
+            titles: titlesValue,
+            prizeMoney,
             careerHigh: player?.career_high || 1,
             points: pointsValue,
             rankChange: rankChangeValue,
-            playing: playingValue
+            playing: playingValue,
+            wonLost: wonLostValue
         };
+    },
+
+    buildStatsFromScraped(statsData) {
+        const num = (value) => {
+            const parsed = parseFloat(String(value || '').replace('%', ''));
+            return Number.isFinite(parsed) ? parsed : 0;
+        };
+        const intVal = (value) => {
+            const parsed = parseInt(String(value || '').replace(/[^\d]/g, ''), 10);
+            return Number.isFinite(parsed) ? parsed : 0;
+        };
+        const service = statsData?.singles_serving_stats || {};
+        const ret = statsData?.singles_return_stats || {};
+        return {
+            service: {
+                aces: intVal(service.aces || statsData.aces),
+                double_faults: intVal(service.double_faults),
+                first_serve_pct: num(service.first_serve_pct),
+                first_serve_won: num(service.first_serve_won),
+                second_serve_won: num(service.second_serve_won),
+                bp_saved: num(service.break_points_saved),
+                service_pts_won_pct: num(service.service_points_won_pct),
+                service_games_won: num(service.service_games_won),
+                service_games_played: intVal(service.service_games_played),
+            },
+            return: {
+                return_pts_won: num(ret.return_points_won),
+                first_return_pts_won_pct: num(ret.first_return_points_won_pct),
+                second_return_pts_won_pct: num(ret.second_return_points_won_pct),
+                bp_converted: num(ret.break_points_converted),
+                return_games_won: num(ret.return_games_won),
+                return_games_played: intVal(ret.return_games_played),
+            }
+        };
+    },
+
+    buildPerformanceFromRecords(records, summary = []) {
+        const years = ['2020','2021','2022','2023','2024','2025'];
+        const byYear = {};
+        records.forEach(row => {
+            if (row && row.year) {
+                byYear[String(row.year)] = row;
+            }
+        });
+        const summaryByEvent = {};
+        summary.forEach(item => {
+            if (item && item.event) {
+                summaryByEvent[item.event] = item;
+            }
+        });
+        const buildResults = (key) => {
+            const results = {};
+            years.forEach(year => {
+                const row = byYear[year] || {};
+                results[year] = row[key] || '-';
+            });
+            return results;
+        };
+        return [
+            { event: 'Australian Open', surface: 'hard', results: buildResults('australian_open'), summary: summaryByEvent['Australian Open'] },
+            { event: 'Roland Garros', surface: 'clay', results: buildResults('french_open'), summary: summaryByEvent['Roland Garros'] },
+            { event: 'Wimbledon', surface: 'grass', results: buildResults('wimbledon'), summary: summaryByEvent['Wimbledon'] },
+            { event: 'US Open', surface: 'hard', results: buildResults('us_open'), summary: summaryByEvent['US Open'] }
+        ];
+    },
+
+    formatMoneyK(value) {
+        if (!value) return '-';
+        const raw = String(value);
+        const digits = raw.replace(/[^\d]/g, '');
+        if (!digits) return raw;
+        const number = parseInt(digits, 10);
+        if (!Number.isFinite(number)) return raw;
+        const k = Math.round(number / 1000);
+        return `${k.toLocaleString()}K`;
+    },
+
+    parseWonLost(value) {
+        if (!value) return { wins: 0, losses: 0 };
+        const match = String(value).match(/(\d+)\s*\/\s*(\d+)/);
+        if (!match) return { wins: 0, losses: 0 };
+        return { wins: parseInt(match[1], 10), losses: parseInt(match[2], 10) };
     },
 
     formatDeltaPill(value, label) {
@@ -367,9 +460,6 @@ const PlayerModule = {
     },
 
     generateDemoPerformance(player, period = '2026') {
-        const { AppState } = window.TennisApp;
-        const tour = AppState.currentTour;
-        const finalsLabel = tour === 'wta' ? 'WTA Finals' : 'ATP Finals';
         const sample = (vals) => ({
             '2020': vals[0],
             '2021': vals[1],
@@ -382,8 +472,7 @@ const PlayerModule = {
             { event: 'Australian Open', surface: 'hard', results: sample(['R16','QF','SF','SF','F','W']) },
             { event: 'Roland Garros', surface: 'clay', results: sample(['R32','R16','QF','F','W','SF']) },
             { event: 'Wimbledon', surface: 'grass', results: sample(['R32','R16','QF','SF','QF','F']) },
-            { event: 'US Open', surface: 'hard', results: sample(['R16','QF','SF','W','SF','W']) },
-            { event: finalsLabel, surface: 'indoor', results: sample(['DNQ','RR','SF','F','SF','W']) }
+            { event: 'US Open', surface: 'hard', results: sample(['R16','QF','SF','W','SF','W']) }
         ];
     }
 };

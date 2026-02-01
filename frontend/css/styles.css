@@ -2757,16 +2757,73 @@ body {
 
 .player-info-cards {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: 1fr 1fr 1fr 0.8fr 0.5fr 1fr;
     gap: var(--space-sm);
     margin-bottom: var(--space-md);
+}
+
+.season-summary {
+    background: var(--bg-card);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm);
+    margin-bottom: var(--space-md);
+    display: grid;
+    gap: var(--space-sm);
+}
+
+.season-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.season-record {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm);
+}
+
+.record-card {
+    border-radius: var(--radius-md);
+    padding: calc(var(--space-sm) * 0.8);
+    display: grid;
+    gap: 6px;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.record-card .record-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.record-card .record-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.record-card.wins {
+    background: #e8f6ef;
+    border-color: #b9e2cd;
+    color: #1a7f37;
+}
+
+.record-card.losses {
+    background: #fdecec;
+    border-color: #f6c6c6;
+    color: #b42318;
 }
 
 .info-card {
     background: var(--bg-card);
     border: 1px solid var(--bg-tertiary);
     border-radius: var(--radius-md);
-    padding: var(--space-sm);
+    padding: calc(var(--space-sm) * 0.7);
     display: grid;
     gap: 4px;
 }
@@ -2779,8 +2836,16 @@ body {
 }
 
 .info-card .value {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 700;
+}
+
+.info-card.points-card .value {
+    font-size: 0.85rem;
+}
+
+.info-card.titles-card .value {
+    font-size: 0.75rem;
 }
 
 .player-bars {
@@ -2882,6 +2947,20 @@ body {
 .perf-row .event {
     text-align: left;
     font-weight: 700;
+}
+
+.perf-row .event .event-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.perf-row .event .event-summary {
+    margin-top: 4px;
+    display: grid;
+    gap: 2px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 600;
 }
 
 .performance-row {

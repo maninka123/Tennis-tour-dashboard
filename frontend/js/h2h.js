@@ -103,7 +103,7 @@ const H2HModule = {
         const { Utils } = window.TennisApp;
         resultsDiv.innerHTML = filtered.map(p => `
             <div class="search-result-item" onclick="window.TennisApp.H2HModule.selectPlayer(${playerNum}, ${p.id})">
-                <img src="${Utils.getPlayerImage(p.id)}" alt="${p.name}">
+                <img src="${Utils.getPlayerImage(p)}" alt="${p.name}">
                 <div class="search-result-info">
                     <div class="search-result-name">${Utils.getFlag(p.country)} ${p.name}</div>
                     <div class="search-result-rank">Rank: ${p.rank}</div>
@@ -155,7 +155,7 @@ const H2HModule = {
         resultsDiv.innerHTML = `
             <div class="h2h-hero">
                 <div class="h2h-hero-card">
-                    <img src="${Utils.getPlayerImage(p1.id)}" alt="${p1.name}">
+                    <img src="${Utils.getPlayerImage(p1)}" alt="${p1.name}">
                     <div class="h2h-hero-meta">
                         <div class="h2h-hero-name">${p1.name}</div>
                         <div class="h2h-hero-rank">${Utils.getFlag(p1.country)} Rank #${p1.rank}</div>
@@ -167,7 +167,7 @@ const H2HModule = {
                     <div class="h2h-record-sub">Last 5: ${recentP1Wins} - ${recentP2Wins}</div>
                 </div>
                 <div class="h2h-hero-card">
-                    <img src="${Utils.getPlayerImage(p2.id)}" alt="${p2.name}">
+                    <img src="${Utils.getPlayerImage(p2)}" alt="${p2.name}">
                     <div class="h2h-hero-meta">
                         <div class="h2h-hero-name">${p2.name}</div>
                         <div class="h2h-hero-rank">${Utils.getFlag(p2.country)} Rank #${p2.rank}</div>

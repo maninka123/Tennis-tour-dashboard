@@ -171,15 +171,15 @@ const Utils = {
      * Generate player image placeholder URL
      */
     getPlayerImage(player, tour = 'atp') {
-        // Resolve known names first
-        const name = player?.name || PLAYER_ID_MAP[player] || null;
-        if (name && PLAYER_IMAGE_MAP[name]) {
-            return PLAYER_IMAGE_MAP[name];
-        }
-
         // Explicit image_url from API
         if (player && player.image_url) {
             return player.image_url;
+        }
+
+        // Resolve known names next
+        const name = player?.name || PLAYER_ID_MAP[player] || null;
+        if (name && PLAYER_IMAGE_MAP[name]) {
+            return PLAYER_IMAGE_MAP[name];
         }
         
         // Fallback to a clean placeholder with initials

@@ -103,6 +103,8 @@ import random
 import json
 import csv
 import re
+import unicodedata
+import difflib
 from pathlib import Path
 from config import Config
 
@@ -120,6 +122,103 @@ class TennisDataFetcher:
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         })
+
+        self._wta_scraped_index = None
+
+    def _normalize_player_name(self, name):
+        if not name:
+            return ""
+        cleaned = unicodedata.normalize("NFKD", name)
+        cleaned = cleaned.encode("ascii", "ignore").decode("ascii")
+        cleaned = re.sub(r"[^A-Za-z\s]", " ", cleaned)
+        cleaned = re.sub(r"\s+", " ", cleaned).strip().lower()
+        return cleaned
+
+    def _load_wta_scraped_index(self):
+        if self._wta_scraped_index is not None:
+            return self._wta_scraped_index
+
+        base_dir = Path(__file__).resolve().parent.parent / 'data' / 'wta'
+        index = {
+            'by_full': {},
+            'by_last_first': {},
+            'by_last': {},
+            'players': []
+        }
+        if not base_dir.exists():
+            self._wta_scraped_index = index
+            return index
+
+        for folder in base_dir.iterdir():
+            if not folder.is_dir():
+                continue
+            profile_path = folder / 'profile.json'
+            if not profile_path.exists():
+                continue
+            try:
+                profile = json.loads(profile_path.read_text(encoding='utf-8'))
+            except Exception:
+                continue
+            stats_path = folder / 'stats_2026.json'
+            stats = {}
+            if stats_path.exists():
+                try:
+                    stats = json.loads(stats_path.read_text(encoding='utf-8'))
+                except Exception:
+                    stats = {}
+
+            name = (profile.get('name') or '').strip()
+            if not name:
+                continue
+            norm = self._normalize_player_name(name)
+            tokens = norm.split()
+            first = tokens[0] if tokens else ""
+            last = tokens[-1] if tokens else ""
+            entry = {
+                'name': name,
+                'norm': norm,
+                'first': first,
+                'last': last,
+                'profile': profile,
+                'stats': stats,
+                'folder': str(folder)
+            }
+            index['players'].append(entry)
+            if norm and norm not in index['by_full']:
+                index['by_full'][norm] = entry
+            if first and last:
+                key = f"{last}_{first[0]}"
+                index['by_last_first'][key] = entry
+            if last:
+                index['by_last'].setdefault(last, []).append(entry)
+
+        self._wta_scraped_index = index
+        return index
+
+    def _match_wta_scraped(self, name):
+        index = self._load_wta_scraped_index()
+        if not name:
+            return None
+        norm = self._normalize_player_name(name)
+        if norm in index['by_full']:
+            return index['by_full'][norm]
+
+        tokens = norm.split()
+        if tokens:
+            last = tokens[-1]
+            first = tokens[0]
+            key = f"{last}_{first[0]}"
+            if key in index['by_last_first']:
+                return index['by_last_first'][key]
+            if last in index['by_last'] and len(index['by_last'][last]) == 1:
+                return index['by_last'][last][0]
+
+        choices = list(index['by_full'].keys())
+        if choices:
+            match = difflib.get_close_matches(norm, choices, n=1, cutoff=0.82)
+            if match:
+                return index['by_full'][match[0]]
+        return None
     
     def get_tournament_category(self, tournament_name):
         """Determine tournament category based on name"""
@@ -233,17 +332,26 @@ class TennisDataFetcher:
         player = next((p for p in rankings if p.get('rank') == rank), None)
         if not player:
             return None
+        height = player.get('height') or f"{random.randint(170, 190)} cm"
+        plays = player.get('plays') or random.choice(['Right-Handed', 'Left-Handed'])
+        titles = player.get('titles') or random.randint(0, 15)
+        prize_money = player.get('prize_money') or f"${random.randint(1, 50)},{random.randint(100, 999)},{random.randint(100, 999)}"
+        image_url = player.get('image_url') or f'https://api.sofascore.com/api/v1/player/{player_id}/image'
+
         return {
             **player,
             'id': player_id,
             'tour': 'WTA',
-            'height': f"{random.randint(170, 190)} cm",
-            'plays': random.choice(['Right-Handed', 'Left-Handed']),
+            'height': height,
+            'plays': plays,
             'turned_pro': random.randint(2010, 2022),
-            'titles': random.randint(0, 15),
-            'prize_money': f"${random.randint(1, 50)},{random.randint(100, 999)},{random.randint(100, 999)}",
+            'titles': titles,
+            'prize_money': prize_money,
             'biography': f"Professional tennis player from {player.get('country', '')}.",
-            'image_url': f'https://api.sofascore.com/api/v1/player/{player_id}/image'
+            'image_url': image_url,
+            'stats_2026': player.get('stats_2026') or {},
+            'records': player.get('records') or [],
+            'records_summary': player.get('records_summary') or []
         }
     
     # Sample data generators (would be replaced with real API calls)
@@ -538,10 +646,17 @@ class TennisDataFetcher:
                 if not name:
                     continue
 
+                scraped = self._match_wta_scraped(name)
+                profile_data = scraped.get('profile') if scraped else {}
+                stats_data = scraped.get('stats') if scraped else {}
+
                 points_raw = re.sub(r'[^\d]', '', row.get('points') or '')
                 points = int(points_raw) if points_raw else 0
                 age_raw = re.sub(r'[^\d]', '', row.get('age') or '')
                 age = int(age_raw) if age_raw else None
+                if age is None:
+                    profile_age = re.sub(r'[^\d]', '', str(profile_data.get('age') or ''))
+                    age = int(profile_age) if profile_age else None
 
                 ch_raw = re.sub(r'[^\d]', '', row.get('career_high') or '')
                 career_high = int(ch_raw) if ch_raw else rank
@@ -557,10 +672,25 @@ class TennisDataFetcher:
                 if re.match(r'^[+-]\d+$', current_raw):
                     points_change = int(current_raw)
 
+                # If rank change looks like points change, move it over
+                if abs(rank_change) >= 100:
+                    if points_change == 0:
+                        points_change = rank_change
+                    rank_change = 0
+
                 movement = rank_change
 
-                country = (row.get('country') or '').strip() or 'WHITE'
+                country = (row.get('country') or '').strip() or profile_data.get('country') or 'WHITE'
                 is_playing = (row.get('is_playing') or '').strip().lower() == 'yes'
+
+                image_url = profile_data.get('image_url') or ''
+                height = profile_data.get('height') or ''
+                plays = profile_data.get('plays') or ''
+                prize_money = stats_data.get('prize_money') or ''
+                singles_titles = stats_data.get('singles_titles') or ''
+                records_tab = stats_data.get('records_tab') or {}
+                records = records_tab.get('yearly') or stats_data.get('records') or []
+                records_summary = records_tab.get('summary') or []
 
                 rankings.append({
                     'rank': rank,
@@ -579,7 +709,15 @@ class TennisDataFetcher:
                     'current': (row.get('current') or '').strip(),
                     'previous': (row.get('previous') or '').strip(),
                     'next': (row.get('next') or '').strip(),
-                    'max': (row.get('max') or '').strip()
+                    'max': (row.get('max') or '').strip(),
+                    'image_url': image_url,
+                    'height': height,
+                    'plays': plays,
+                    'prize_money': prize_money,
+                    'titles': singles_titles,
+                    'stats_2026': stats_data,
+                    'records': records,
+                    'records_summary': records_summary
                 })
 
         return rankings
@@ -617,7 +755,7 @@ class TennisDataFetcher:
                     'points': player.get('points'),
                     'career_high': player.get('career_high'),
                     'is_career_high': player.get('is_career_high'),
-                    'image_url': f'https://api.sofascore.com/api/v1/player/{player["id"]}/image'
+                    'image_url': player.get('image_url') or f'https://api.sofascore.com/api/v1/player/{player["id"]}/image'
                 })
             return players
 

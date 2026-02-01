@@ -661,7 +661,7 @@ const ScoresModule = {
                 </div>
                 <div class="match-players">
                     <div class="player-row ${p1IsWinner ? 'winner' : ''} ${p1Serving ? 'serving' : ''}">
-                        <img class="player-img" src="${Utils.getPlayerImage(match.player1.id)}" alt="${match.player1.name}">
+                        <img class="player-img" src="${Utils.getPlayerImage(match.player1)}" alt="${match.player1.name}">
                         <div class="player-info">
                             <div class="player-name">
                                 <span class="player-rank-badge">[${match.player1.rank}]</span>
@@ -672,7 +672,7 @@ const ScoresModule = {
                         <div class="player-score">${player1Score}</div>
                     </div>
                     <div class="player-row ${p2IsWinner ? 'winner' : ''} ${p2Serving ? 'serving' : ''}">
-                        <img class="player-img" src="${Utils.getPlayerImage(match.player2.id)}" alt="${match.player2.name}">
+                        <img class="player-img" src="${Utils.getPlayerImage(match.player2)}" alt="${match.player2.name}">
                         <div class="player-info">
                             <div class="player-name">
                                 <span class="player-rank-badge">[${match.player2.rank}]</span>
@@ -869,7 +869,7 @@ const ScoresModule = {
             </div>
             <div class="match-stats-hero">
                 <div class="match-stats-player-card ${resolvedWinner === 1 ? 'winner' : ''}">
-                    <img class="player-hero-img" src="${Utils.getPlayerImage(match.player1.id)}" alt="${match.player1.name}">
+                    <img class="player-hero-img" src="${Utils.getPlayerImage(match.player1)}" alt="${match.player1.name}">
                     <div class="player-hero-name">${match.player1.name}</div>
                     <div class="player-hero-meta">${Utils.getFlag(match.player1.country)} ${match.player1.country} • Rank ${match.player1.rank || '-'}</div>
                 </div>
@@ -880,7 +880,7 @@ const ScoresModule = {
                     ${stats.duration ? `<div class="duration">${stats.duration}</div>` : ''}
                 </div>
                 <div class="match-stats-player-card ${resolvedWinner === 2 ? 'winner' : ''}">
-                    <img class="player-hero-img" src="${Utils.getPlayerImage(match.player2.id)}" alt="${match.player2.name}">
+                    <img class="player-hero-img" src="${Utils.getPlayerImage(match.player2)}" alt="${match.player2.name}">
                     <div class="player-hero-name">${match.player2.name}</div>
                     <div class="player-hero-meta">${Utils.getFlag(match.player2.country)} ${match.player2.country} • Rank ${match.player2.rank || '-'}</div>
                 </div>

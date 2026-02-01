@@ -1053,7 +1053,7 @@ const BracketModule = {
                 const qualified = playerIdx < 2;
                 html += `
                     <div class="group-player ${qualified ? 'qualified' : ''}">
-                        <img src="${Utils.getPlayerImage(player.id)}" alt="">
+                        <img src="${Utils.getPlayerImage(player)}" alt="">
                         ${Utils.getFlag(player.country)} ${player.name}
                         ${qualified ? '<i class="fas fa-check" style="margin-left:auto; color: var(--accent-success);"></i>' : ''}
                     </div>
@@ -1292,14 +1292,14 @@ const BracketModule = {
         // Player 1
         const p1El = modal.querySelector('#modalPlayer1');
         p1El.className = `modal-player ${isP1Winner ? 'winner' : ''}`;
-        p1El.querySelector('.modal-player-img').src = Utils.getPlayerImage(p1.id);
+        p1El.querySelector('.modal-player-img').src = Utils.getPlayerImage(p1);
         p1El.querySelector('.modal-player-name').innerHTML = `${Utils.getFlag(p1.country)} ${p1.name}`;
         p1El.querySelector('.modal-player-details').textContent = `Rank: ${p1.rank}${p1.seed ? ` [${p1.seed}]` : ''}`;
         
         // Player 2
         const p2El = modal.querySelector('#modalPlayer2');
         p2El.className = `modal-player ${isP2Winner ? 'winner' : ''}`;
-        p2El.querySelector('.modal-player-img').src = Utils.getPlayerImage(p2.id);
+        p2El.querySelector('.modal-player-img').src = Utils.getPlayerImage(p2);
         p2El.querySelector('.modal-player-name').innerHTML = `${Utils.getFlag(p2.country)} ${p2.name}`;
         p2El.querySelector('.modal-player-details').textContent = `Rank: ${p2.rank}${p2.seed ? ` [${p2.seed}]` : ''}`;
         
@@ -1342,7 +1342,7 @@ const BracketModule = {
             <div class="champion-title">🎉 CHAMPION! 🎉</div>
             <div class="champion-tournament">${tournamentName}</div>
             <div class="champion-player">
-                <img src="${Utils.getPlayerImage(winner.id)}" alt="${winner.name}">
+                <img src="${Utils.getPlayerImage(winner)}" alt="${winner.name}">
                 <div class="champion-player-name">${Utils.getFlag(winner.country)} ${winner.name}</div>
                 <div class="champion-player-rank">World #${winner.rank}</div>
             </div>
