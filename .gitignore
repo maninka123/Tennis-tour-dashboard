@@ -1,0 +1,49 @@
+# Tennis Dashboard - Git Ignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+*.local
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (if adding any npm packages later)
+node_modules/
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# Cache
+.cache/
+*.cache
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tennis Live Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header with Tour Tabs -->
+        <header class="main-header">
+            <div class="logo">
+                <i class="fas fa-tennis-ball"></i>
+                <h1>Tennis Live</h1>
+            </div>
+            <div class="tour-tabs">
+                <button class="tour-tab active" data-tour="atp">ATP Tour</button>
+                <button class="tour-tab" data-tour="wta">WTA Tour</button>
+            </div>
+            <div class="header-actions">
+                <span class="live-indicator">
+                    <span class="live-dot"></span>
+                    LIVE
+                </span>
+                <span class="last-updated" id="lastUpdated">Updated: --:--</span>
+            </div>
+        </header>
+
+        <!-- Live Scores Bar (Top Scrollable) -->
+        <section class="live-scores-section">
+            <div class="section-header">
+                <h2><i class="fas fa-bolt"></i> Live Matches</h2>
+                <div class="scroll-controls">
+                    <button class="scroll-btn scroll-left" id="scrollLiveLeft">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="scroll-btn scroll-right" id="scrollLiveRight">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="live-scores-container" id="liveScoresContainer">
+                <div class="live-scores-wrapper" id="liveScoresWrapper">
+                    <!-- Live match cards will be inserted here -->
+                    <div class="loading-placeholder">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Loading live matches...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recently Finished Matches -->
+        <section class="recent-matches-section">
+            <div class="section-header">
+                <h2><i class="fas fa-check-circle"></i> Recently Finished</h2>
+                <div class="scroll-controls">
+                    <button class="scroll-btn scroll-left" id="scrollRecentLeft">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="scroll-btn scroll-right" id="scrollRecentRight">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="recent-matches-container" id="recentMatchesContainer">
+                <div class="recent-matches-wrapper" id="recentMatchesWrapper">
+                    <!-- Recent match cards will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Left Sidebar - Rankings -->
+            <aside class="rankings-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-trophy"></i> <span id="rankingsTitle">ATP</span> Rankings</h2>
+                    <span class="subtitle">Top 200 Players</span>
+                </div>
+                <div class="rankings-list" id="rankingsList">
+                    <!-- Rankings will be inserted here -->
+                    <div class="loading-placeholder">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Loading rankings...</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Center - Tournament Calendar/Tree -->
+            <div class="center-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-calendar-alt"></i> Tournament Calendar</h2>
+                    <span class="year-display" id="yearDisplay">2026</span>
+                </div>
+                <div class="tournament-calendar" id="tournamentCalendar">
+                    <!-- Tournament list will be inserted here -->
+                    <div class="loading-placeholder">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Loading tournaments...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Tournament Details/Bracket -->
+            <aside class="tournament-details-panel" id="tournamentDetailsPanel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-sitemap"></i> Tournament Draw</h2>
+                    <button class="close-panel" id="closeBracket">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="tournament-bracket-container" id="tournamentBracket">
+                    <div class="placeholder-message">
+                        <i class="fas fa-hand-pointer"></i>
+                        <p>Select a tournament to view its draw</p>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Match Details Popup -->
+        <div class="match-popup" id="matchPopup">
+            <div class="popup-content">
+                <div class="popup-header">
+                    <span class="popup-tournament"></span>
+                    <span class="popup-round"></span>
+                    <button class="popup-close"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="popup-players">
+                    <div class="popup-player">
+                        <img class="popup-player-img" src="" alt="">
+                        <span class="popup-player-name"></span>
+                        <span class="popup-player-rank"></span>
+                    </div>
+                    <span class="vs-text">VS</span>
+                    <div class="popup-player">
+                        <img class="popup-player-img" src="" alt="">
+                        <span class="popup-player-name"></span>
+                        <span class="popup-player-rank"></span>
+                    </div>
+                </div>
+                <div class="popup-score"></div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loader">
+                <i class="fas fa-tennis-ball fa-spin"></i>
+                <span>Loading Tennis Dashboard...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/app.js"></script>
+    <script src="js/scores.js"></script>
+    <script src="js/rankings.js"></script>
+    <script src="js/tournaments.js"></script>
+    <script src="js/bracket.js"></script>
+</body>
+</html>

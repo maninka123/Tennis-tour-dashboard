@@ -1,0 +1,341 @@
+/**
+ * Tennis Live Dashboard - Live Scores Module
+ * Handles rendering and updating of live and recent match scores
+ */
+
+const ScoresModule = {
+    /**
+     * Demo live matches data (used when API is unavailable)
+     */
+    demoLiveMatches: {
+        atp: [
+            {
+                id: 'demo_atp_1',
+                tour: 'ATP',
+                tournament: 'Australian Open',
+                tournament_category: 'grand_slam',
+                location: 'Melbourne, Australia',
+                round: 'SF',
+                court: 'Rod Laver Arena',
+                player1: { id: 1, name: 'Novak Djokovic', country: 'SRB', rank: 1 },
+                player2: { id: 2, name: 'Carlos Alcaraz', country: 'ESP', rank: 2 },
+                score: {
+                    sets: [{ p1: 6, p2: 4 }, { p1: 4, p2: 6 }, { p1: 5, p2: 4 }],
+                    current_game: { p1: '30', p2: '15' },
+                    p1_sets: 1,
+                    p2_sets: 1
+                },
+                status: 'live',
+                serving: 1
+            },
+            {
+                id: 'demo_atp_2',
+                tour: 'ATP',
+                tournament: 'Australian Open',
+                tournament_category: 'grand_slam',
+                location: 'Melbourne, Australia',
+                round: 'SF',
+                court: 'Margaret Court Arena',
+                player1: { id: 3, name: 'Jannik Sinner', country: 'ITA', rank: 3 },
+                player2: { id: 4, name: 'Daniil Medvedev', country: 'RUS', rank: 4 },
+                score: {
+                    sets: [{ p1: 7, p2: 5 }, { p1: 3, p2: 2 }],
+                    current_game: { p1: '40', p2: '30' },
+                    p1_sets: 1,
+                    p2_sets: 0
+                },
+                status: 'live',
+                serving: 2
+            },
+            {
+                id: 'demo_atp_3',
+                tour: 'ATP',
+                tournament: 'Rotterdam Open',
+                tournament_category: 'atp_500',
+                location: 'Rotterdam, Netherlands',
+                round: 'QF',
+                court: 'Centre Court',
+                player1: { id: 5, name: 'Andrey Rublev', country: 'RUS', rank: 5 },
+                player2: { id: 6, name: 'Alexander Zverev', country: 'GER', rank: 6 },
+                score: {
+                    sets: [{ p1: 6, p2: 3 }, { p1: 4, p2: 5 }],
+                    current_game: { p1: '15', p2: '40' },
+                    p1_sets: 1,
+                    p2_sets: 0
+                },
+                status: 'live',
+                serving: 1
+            }
+        ],
+        wta: [
+            {
+                id: 'demo_wta_1',
+                tour: 'WTA',
+                tournament: 'Australian Open',
+                tournament_category: 'grand_slam',
+                location: 'Melbourne, Australia',
+                round: 'F',
+                court: 'Rod Laver Arena',
+                player1: { id: 101, name: 'Iga Swiatek', country: 'POL', rank: 1 },
+                player2: { id: 102, name: 'Aryna Sabalenka', country: 'BLR', rank: 2 },
+                score: {
+                    sets: [{ p1: 4, p2: 6 }, { p1: 6, p2: 3 }, { p1: 3, p2: 2 }],
+                    current_game: { p1: 'AD', p2: '40' },
+                    p1_sets: 1,
+                    p2_sets: 1
+                },
+                status: 'live',
+                serving: 1
+            },
+            {
+                id: 'demo_wta_2',
+                tour: 'WTA',
+                tournament: 'Dubai Championships',
+                tournament_category: 'atp_500',
+                location: 'Dubai, UAE',
+                round: 'R16',
+                court: 'Centre Court',
+                player1: { id: 103, name: 'Coco Gauff', country: 'USA', rank: 3 },
+                player2: { id: 104, name: 'Elena Rybakina', country: 'KAZ', rank: 4 },
+                score: {
+                    sets: [{ p1: 2, p2: 3 }],
+                    current_game: { p1: '0', p2: '30' },
+                    p1_sets: 0,
+                    p2_sets: 0
+                },
+                status: 'live',
+                serving: 2
+            }
+        ]
+    },
+
+    /**
+     * Demo recent matches data
+     */
+    demoRecentMatches: {
+        atp: [
+            {
+                id: 'recent_atp_1',
+                tour: 'ATP',
+                tournament: 'Australian Open',
+                tournament_category: 'grand_slam',
+                round: 'QF',
+                player1: { id: 1, name: 'Novak Djokovic', country: 'SRB', rank: 1 },
+                player2: { id: 7, name: 'Holger Rune', country: 'DEN', rank: 7 },
+                winner: 1,
+                final_score: { sets: [{ p1: 6, p2: 4 }, { p1: 6, p2: 2 }, { p1: 6, p2: 3 }] },
+                status: 'finished'
+            },
+            {
+                id: 'recent_atp_2',
+                tour: 'ATP',
+                tournament: 'Australian Open',
+                tournament_category: 'grand_slam',
+                round: 'QF',
+                player1: { id: 2, name: 'Carlos Alcaraz', country: 'ESP', rank: 2 },
+                player2: { id: 8, name: 'Stefanos Tsitsipas', country: 'GRE', rank: 8 },
+                winner: 1,
+                final_score: { sets: [{ p1: 7, p2: 6 }, { p1: 6, p2: 4 }, { p1: 6, p2: 2 }] },
+                status: 'finished'
+            },
+            {
+                id: 'recent_atp_3',
+                tour: 'ATP',
+                tournament: 'Rotterdam Open',
+                tournament_category: 'atp_500',
+                round: 'R16',
+                player1: { id: 9, name: 'Hubert Hurkacz', country: 'POL', rank: 9 },
+                player2: { id: 15, name: 'Felix Auger-Aliassime', country: 'CAN', rank: 15 },
+                winner: 2,
+                final_score: { sets: [{ p1: 4, p2: 6 }, { p1: 6, p2: 7 }] },
+                status: 'finished'
+            }
+        ],
+        wta: [
+            {
+                id: 'recent_wta_1',
+                tour: 'WTA',
+                tournament: 'Australian Open',
+                tournament_category: 'grand_slam',
+                round: 'SF',
+                player1: { id: 101, name: 'Iga Swiatek', country: 'POL', rank: 1 },
+                player2: { id: 105, name: 'Jessica Pegula', country: 'USA', rank: 5 },
+                winner: 1,
+                final_score: { sets: [{ p1: 6, p2: 2 }, { p1: 6, p2: 3 }] },
+                status: 'finished'
+            },
+            {
+                id: 'recent_wta_2',
+                tour: 'WTA',
+                tournament: 'Australian Open',
+                tournament_category: 'grand_slam',
+                round: 'SF',
+                player1: { id: 102, name: 'Aryna Sabalenka', country: 'BLR', rank: 2 },
+                player2: { id: 103, name: 'Coco Gauff', country: 'USA', rank: 3 },
+                winner: 1,
+                final_score: { sets: [{ p1: 6, p2: 4 }, { p1: 7, p2: 5 }] },
+                status: 'finished'
+            }
+        ]
+    },
+
+    /**
+     * Render live scores
+     */
+    renderLiveScores() {
+        const { AppState, Utils, DOM } = window.TennisApp;
+        const tour = AppState.currentTour;
+        
+        // Get data (use demo if empty)
+        let matches = AppState.liveScores[tour];
+        if (!matches || matches.length === 0) {
+            matches = this.demoLiveMatches[tour] || [];
+        }
+
+        if (matches.length === 0) {
+            DOM.liveScoresWrapper.innerHTML = `
+                <div class="no-matches-message">
+                    <i class="fas fa-moon"></i>
+                    <p>No live matches at the moment</p>
+                </div>
+            `;
+            return;
+        }
+
+        DOM.liveScoresWrapper.innerHTML = matches.map(match => this.createMatchCard(match, true)).join('');
+    },
+
+    /**
+     * Render recent matches
+     */
+    renderRecentMatches() {
+        const { AppState, Utils, DOM } = window.TennisApp;
+        const tour = AppState.currentTour;
+        
+        // Get data (use demo if empty)
+        let matches = AppState.recentMatches[tour];
+        if (!matches || matches.length === 0) {
+            matches = this.demoRecentMatches[tour] || [];
+        }
+
+        if (matches.length === 0) {
+            DOM.recentMatchesWrapper.innerHTML = `
+                <div class="no-matches-message">
+                    <p>No recent matches</p>
+                </div>
+            `;
+            return;
+        }
+
+        DOM.recentMatchesWrapper.innerHTML = matches.map(match => this.createMatchCard(match, false)).join('');
+    },
+
+    /**
+     * Create a match card HTML
+     */
+    createMatchCard(match, isLive) {
+        const { Utils } = window.TennisApp;
+        const categoryClass = Utils.getCategoryClass(match.tournament_category);
+        
+        const player1Score = this.formatPlayerScore(match, 1, isLive);
+        const player2Score = this.formatPlayerScore(match, 2, isLive);
+        
+        const p1IsWinner = !isLive && match.winner === 1;
+        const p2IsWinner = !isLive && match.winner === 2;
+        const p1Serving = isLive && match.serving === 1;
+        const p2Serving = isLive && match.serving === 2;
+
+        return `
+            <div class="match-card ${categoryClass}" data-match-id="${match.id}">
+                <div class="match-header">
+                    <div class="tournament-info">
+                        <div class="tournament-name">${match.tournament}</div>
+                        <div class="match-round">${match.round}</div>
+                    </div>
+                    ${isLive ? `
+                        <div class="live-badge">
+                            <span class="live-dot"></span>
+                            LIVE
+                        </div>
+                    ` : `
+                        <div class="finished-badge">FT</div>
+                    `}
+                </div>
+                <div class="match-players">
+                    <div class="player-row ${p1IsWinner ? 'winner' : ''} ${p1Serving ? 'serving' : ''}">
+                        <img class="player-img" src="${Utils.getPlayerImage(match.player1.id)}" alt="${match.player1.name}">
+                        <div class="player-info">
+                            <div class="player-name">
+                                <span class="country-flag">${Utils.getFlag(match.player1.country)}</span>
+                                ${match.player1.name}
+                            </div>
+                        </div>
+                        <span class="player-rank">${match.player1.rank}</span>
+                        <div class="player-score">${player1Score}</div>
+                    </div>
+                    <div class="player-row ${p2IsWinner ? 'winner' : ''} ${p2Serving ? 'serving' : ''}">
+                        <img class="player-img" src="${Utils.getPlayerImage(match.player2.id)}" alt="${match.player2.name}">
+                        <div class="player-info">
+                            <div class="player-name">
+                                <span class="country-flag">${Utils.getFlag(match.player2.country)}</span>
+                                ${match.player2.name}
+                            </div>
+                        </div>
+                        <span class="player-rank">${match.player2.rank}</span>
+                        <div class="player-score">${player2Score}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    },
+
+    /**
+     * Format player score display
+     */
+    formatPlayerScore(match, playerNum, isLive) {
+        const score = isLive ? match.score : match.final_score;
+        if (!score || !score.sets) return '';
+
+        let html = '';
+        
+        // Set scores
+        score.sets.forEach((set, idx) => {
+            const games = playerNum === 1 ? set.p1 : set.p2;
+            const isCurrentSet = isLive && idx === score.sets.length - 1;
+            html += `<span class="set-score ${isCurrentSet ? 'current' : ''}">${games}</span>`;
+        });
+
+        // Current game score (only for live matches)
+        if (isLive && score.current_game) {
+            const gameScore = playerNum === 1 ? score.current_game.p1 : score.current_game.p2;
+            html += `<span class="game-score">${gameScore}</span>`;
+        }
+
+        return html;
+    },
+
+    /**
+     * Update a single match score (for real-time updates)
+     */
+    updateMatchScore(matchId, newScore) {
+        const matchCard = document.querySelector(`[data-match-id="${matchId}"]`);
+        if (!matchCard) return;
+
+        // Update player scores
+        const playerRows = matchCard.querySelectorAll('.player-row');
+        if (playerRows.length >= 2) {
+            playerRows[0].querySelector('.player-score').innerHTML = this.formatPlayerScore({ score: newScore }, 1, true);
+            playerRows[1].querySelector('.player-score').innerHTML = this.formatPlayerScore({ score: newScore }, 2, true);
+        }
+
+        // Update serving indicator
+        if (newScore.serving) {
+            playerRows.forEach((row, idx) => {
+                row.classList.toggle('serving', newScore.serving === idx + 1);
+            });
+        }
+    }
+};
+
+// Export module
+window.ScoresModule = ScoresModule;
