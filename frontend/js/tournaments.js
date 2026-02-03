@@ -212,20 +212,52 @@ const TournamentsModule = {
         const { Utils } = window.TennisApp;
         const categoryClass = Utils.getCategoryClass(tournament.category);
         const date = Utils.formatDate(tournament.start_date);
+        const startDate = new Date(tournament.start_date);
+        const endDate = new Date(tournament.end_date || tournament.start_date);
+        const startMonth = startDate.toLocaleDateString('en-US', { month: 'short' });
+        const startDay = startDate.toLocaleDateString('en-US', { day: 'numeric' });
+        const endMonth = endDate.toLocaleDateString('en-US', { month: 'short' });
+        const endDay = endDate.toLocaleDateString('en-US', { day: 'numeric' });
+        let dateRange = `${startMonth} ${startDay}`;
+        if (tournament.end_date && (startMonth !== endMonth || startDay !== endDay)) {
+            dateRange = startMonth === endMonth
+                ? `${startMonth} ${startDay} - ${endDay}`
+                : `${startMonth} ${startDay} - ${endMonth} ${endDay}`;
+        }
+        dateRange = dateRange.replace(/,?\s*\d{4}/g, '').trim();
+
+        const formatLocation = (value) => {
+            if (!value) return '';
+            const parts = value.split(',').map(p => p.trim()).filter(Boolean);
+            if (parts.length === 1) return parts[0];
+            const rawCity = parts[0];
+            const rawCountry = parts[parts.length - 1];
+            if (rawCity.length <= 2 && parts.length >= 2) {
+                return `${parts.join(', ')}`;
+            }
+            return `${rawCity}, ${rawCountry}`;
+        };
+        const locationText = formatLocation(tournament.location);
 
         // Results section
         let resultsHTML = '';
+        const formatShortName = (name) => {
+            if (!name) return '';
+            const parts = name.trim().split(/\s+/);
+            return parts[parts.length - 1];
+        };
+
         if (tournament.status === 'finished' && tournament.winner) {
             resultsHTML = `
                 <div class="tournament-results">
                     <div class="result-label">Champion</div>
                     <div class="result-player">
                         <i class="fas fa-trophy"></i>
-                        ${Utils.getFlag(tournament.winner.country)} ${tournament.winner.name}
+                        <span class="result-name">${Utils.getFlag(tournament.winner.country)} ${formatShortName(tournament.winner.name)}</span>
                     </div>
                     <div class="result-player runner-up">
                         <i class="fas fa-medal"></i>
-                        ${Utils.getFlag(tournament.runner_up.country)} ${tournament.runner_up.name}
+                        <span class="result-name">${Utils.getFlag(tournament.runner_up.country)} ${formatShortName(tournament.runner_up.name)}</span>
                     </div>
                 </div>
             `;
@@ -235,20 +267,21 @@ const TournamentsModule = {
                     <div class="result-label">2025 Champion</div>
                     <div class="result-player" style="opacity: 0.7;">
                         <i class="fas fa-trophy"></i>
-                        ${Utils.getFlag(tournament.winner.country)} ${tournament.winner.name}
+                        <span class="result-name">${Utils.getFlag(tournament.winner.country)} ${formatShortName(tournament.winner.name)}</span>
                     </div>
                 </div>
             `;
         }
 
         // Category badge name
+        const tour = window.TennisApp?.AppState?.currentTour || 'atp';
         const categoryNames = {
             'grand_slam': 'Grand Slam',
-            'masters_1000': 'Masters 1000',
-            'atp_500': '500',
-            'atp_250': '250',
-            'atp_125': '125',
-            'finals': 'Finals',
+            'masters_1000': tour === 'wta' ? 'WTA 1000' : 'Masters 1000',
+            'atp_500': tour === 'wta' ? 'WTA 500' : 'ATP 500',
+            'atp_250': tour === 'wta' ? 'WTA 250' : 'ATP 250',
+            'atp_125': tour === 'wta' ? 'WTA 125' : 'ATP 125',
+            'finals': tour === 'wta' ? 'WTA Finals' : 'ATP Finals',
             'other': 'Other'
         };
 
@@ -259,20 +292,31 @@ const TournamentsModule = {
         else if (surfaceLower.includes('grass')) surfaceClass = 'grass';
         else if (surfaceLower.includes('indoor')) surfaceClass = 'indoor';
 
+        const isSelected = `${window.TennisApp?.AppState?.selectedTournament}` === `${tournament.id}`;
+        const statusClass = (tournament.status || '').replace(/_/g, '-');
+        const liveBadge = tournament.status === 'in_progress'
+            ? '<span class="tournament-status-badge live">Live</span>'
+            : '';
+
         return `
-            <div class="tournament-item ${categoryClass} ${tournament.status}" data-tournament-id="${tournament.id}" data-category="${tournament.category}" data-name="${tournament.name}" data-surface="${tournament.surface}">
+            <div class="tournament-item ${categoryClass} ${statusClass} ${isSelected ? 'selected' : ''}" data-tournament-id="${tournament.id}" data-category="${tournament.category}" data-name="${tournament.name}" data-surface="${tournament.surface}" data-status="${tournament.status}">
                 <div class="tournament-date">
                     <div class="date-month">${date.month}</div>
                     <div class="date-day">${date.day}</div>
                 </div>
                 <div class="tournament-main">
                     <div class="tournament-title">
-                        ${tournament.name}
+                        <span class="tournament-name-text">${tournament.name}</span>
                         <span class="tournament-category-badge ${categoryClass}">${categoryNames[tournament.category] || tournament.category}</span>
+                        ${liveBadge}
                     </div>
-                    <div class="tournament-location">
+                    <div class="tournament-location" title="${locationText}">
                         <i class="fas fa-map-marker-alt"></i>
-                        ${tournament.location}
+                        ${locationText}
+                    </div>
+                    <div class="tournament-date-range">
+                        <i class="fas fa-calendar-day"></i>
+                        ${dateRange}
                     </div>
                     <span class="tournament-surface ${surfaceClass}">${tournament.surface}</span>
                 </div>
@@ -293,15 +337,19 @@ const TournamentsModule = {
                 const category = item.dataset.category;
                 const tournamentName = item.dataset.name || item.querySelector('.tournament-title')?.childNodes[0]?.textContent?.trim();
                 const tournamentSurface = item.dataset.surface || '';
+                const tournamentStatus = item.dataset.status || '';
                 AppState.selectedTournament = tournamentId;
                 AppState.selectedTournamentName = tournamentName || null;
                 AppState.selectedTournamentSurface = tournamentSurface;
+
+                document.querySelectorAll('.tournament-item.selected').forEach(el => el.classList.remove('selected'));
+                item.classList.add('selected');
                 
                 // Show bracket panel
                 DOM.tournamentDetailsPanel.classList.add('visible');
                 
                 // Load and render bracket (special handling for finals)
-                await BracketModule.loadAndRender(tournamentId, category, tournamentName, tournamentSurface);
+                await BracketModule.loadAndRender(tournamentId, category, tournamentName, tournamentSurface, tournamentStatus);
             });
         });
     }

@@ -909,9 +909,14 @@ body {
 }
 
 .set-score {
-    min-width: 18px;
+    min-width: 22px;
     text-align: center;
     font-size: 0.85rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: #f1eee7;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    line-height: 1.1;
 }
 
 .set-score sup {
@@ -927,6 +932,13 @@ body {
 
 .set-score.current {
     color: var(--accent-primary);
+}
+
+.set-score.set-win {
+    background: rgba(46, 204, 113, 0.18);
+    border-color: rgba(46, 204, 113, 0.5);
+    color: #1f8f53;
+    font-weight: 700;
 }
 
 .game-score {
@@ -1241,8 +1253,8 @@ body {
 
 .tournament-item {
     display: flex;
-    align-items: center;
-    gap: var(--space-md);
+    align-items: flex-start;
+    gap: var(--space-sm);
     padding: var(--space-md);
     background: var(--bg-card);
     border-radius: var(--radius-lg);
@@ -1251,6 +1263,7 @@ body {
     transition: all var(--transition-normal);
     border-left: 4px solid var(--bg-tertiary);
     position: relative;
+    overflow: hidden;
 }
 
 .tournament-item:hover {
@@ -1274,7 +1287,7 @@ body {
 .tournament-item.upcoming::after {
     content: 'UPCOMING';
     position: absolute;
-    top: var(--space-sm);
+    top: var(--space-xs);
     right: var(--space-sm);
     font-size: 0.6rem;
     background: var(--bg-tertiary);
@@ -1282,6 +1295,10 @@ body {
     padding: 2px 6px;
     border-radius: var(--radius-sm);
     font-weight: 600;
+}
+
+.tournament-item.upcoming .tournament-results {
+    padding-top: 18px;
 }
 
 .tournament-item.in-progress {
@@ -1304,8 +1321,12 @@ body {
 }
 
 .tournament-date {
-    min-width: 60px;
+    min-width: 78px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2px;
 }
 
 .date-month {
@@ -1319,8 +1340,19 @@ body {
     font-weight: 700;
 }
 
+.tournament-date .date-range {
+    font-size: 0.62rem;
+    color: #8a6b3e;
+    margin-top: 4px;
+    line-height: 1.25;
+    display: block;
+    font-weight: 600;
+}
+
 .tournament-main {
     flex: 1;
+    min-width: 0;
+    margin-top: 2px;
 }
 
 .tournament-title {
@@ -1330,6 +1362,34 @@ body {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    flex-wrap: wrap;
+    line-height: 1.2;
+}
+
+.tournament-name-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: normal;
+    word-break: normal;
+}
+
+.tournament-status-badge {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.tournament-status-badge.live {
+    background: var(--accent-live);
+    color: #fff;
+}
+
+.tournament-status-badge.ongoing {
+    background: rgba(46, 204, 113, 0.2);
+    color: #1f8f53;
+    border: 1px solid rgba(46, 204, 113, 0.5);
 }
 
 .tournament-category-badge {
@@ -1347,16 +1407,45 @@ body {
 .tournament-category-badge.atp-125 { background: var(--atp-125); }
 .tournament-category-badge.finals { background: var(--finals); }
 
+.tournament-year-badge {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    background: #f2e6d2;
+    color: #7a5a2e;
+}
+
 .tournament-location {
     font-size: 0.75rem;
     color: var(--text-muted);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-xs);
+    flex-wrap: wrap;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
 }
 
 .tournament-location i {
     font-size: 0.7rem;
+}
+
+.tournament-date-range {
+    font-size: 0.75rem;
+    color: #8a6b3e;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: 2px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.tournament-date-range i {
+    font-size: 0.65rem;
 }
 
 .tournament-surface {
@@ -1385,9 +1474,27 @@ body {
     background: var(--surface-indoor);
 }
 
+.tournament-item.selected {
+    box-shadow: 0 0 0 2px #d8a55b inset;
+    background: #fff6e4;
+    border-left-width: 6px;
+}
+
+.tournament-item.selected .tournament-title {
+    color: #7a4f1b;
+}
+
+.tournament-item.selected .tournament-date {
+    background: rgba(216, 165, 91, 0.12);
+    border-radius: 10px;
+    padding: 4px 0;
+}
+
 .tournament-results {
     text-align: right;
-    min-width: 150px;
+    flex: 0 0 200px;
+    max-width: 200px;
+    padding-top: 12px;
 }
 
 .result-label {
@@ -1400,15 +1507,25 @@ body {
 .result-player {
     font-size: 0.8rem;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-xs);
     justify-content: flex-end;
     margin-bottom: 2px;
+    min-width: 0;
+    flex-wrap: wrap;
+    line-height: 1.2;
 }
 
 .result-player i {
     color: var(--masters-1000);
     font-size: 0.7rem;
+}
+
+.result-name {
+    white-space: normal;
+    min-width: 0;
+    display: block;
+    word-break: break-word;
 }
 
 .result-player.runner-up {
@@ -1549,6 +1666,52 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: var(--space-md);
+}
+
+.bracket-title-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.bracket-champion-summary {
+    display: grid;
+    grid-template-columns: auto;
+    align-items: center;
+    gap: 4px;
+    text-align: right;
+    min-width: 140px;
+}
+
+.bracket-champion-summary .champion-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.bracket-champion-summary .champion-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #f2d6a8;
+    background: #fff3d8;
+    justify-self: end;
+}
+
+.bracket-champion-summary .champion-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bracket-champion-summary .champion-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
 }
 
 .bracket-expand-btn {
@@ -1826,6 +1989,11 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.round-emoji {
+    margin-right: 6px;
+    font-size: 0.9rem;
 }
 
 .bracket-container.grand-slam .round-header { background: rgba(142, 68, 173, 0.18); color: #6b2f85; border-left: 4px solid #8e44ad; }
