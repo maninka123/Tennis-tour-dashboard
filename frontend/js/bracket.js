@@ -15,20 +15,45 @@ const BracketModule = {
      * Points by round for different tournament categories
      */
     pointsByRound: {
-        grand_slam: {
-            'R128': 10, 'R64': 45, 'R32': 90, 'R16': 180, 'QF': 360, 'SF': 720, 'F': 1200, 'W': 2000
+        atp: {
+            grand_slam: {
+                'R128': 10, 'R64': 45, 'R32': 90, 'R16': 180, 'QF': 360, 'SF': 720, 'F': 1200, 'W': 2000
+            },
+            masters_1000: {
+                'R64': 25, 'R32': 45, 'R16': 90, 'QF': 180, 'SF': 360, 'F': 600, 'W': 1000
+            },
+            atp_500: {
+                'R32': 20, 'R16': 45, 'QF': 90, 'SF': 180, 'F': 300, 'W': 500
+            },
+            atp_250: {
+                'R32': 10, 'R16': 20, 'QF': 45, 'SF': 90, 'F': 150, 'W': 250
+            },
+            atp_125: {
+                'R32': 7, 'R16': 13, 'QF': 25, 'SF': 45, 'F': 75, 'W': 125
+            },
+            finals: {
+                'RR': 200, 'SF': 400, 'F': 500, 'W': 1500
+            }
         },
-        masters_1000: {
-            'R64': 10, 'R32': 45, 'R16': 90, 'QF': 180, 'SF': 360, 'F': 600, 'W': 1000
-        },
-        atp_500: {
-            'R32': 0, 'R16': 25, 'QF': 50, 'SF': 100, 'F': 200, 'W': 500
-        },
-        atp_250: {
-            'R32': 0, 'R16': 13, 'QF': 25, 'SF': 50, 'F': 100, 'W': 250
-        },
-        finals: {
-            'RR': 200, 'SF': 400, 'F': 500, 'W': 1500
+        wta: {
+            grand_slam: {
+                'R128': 10, 'R64': 45, 'R32': 90, 'R16': 180, 'QF': 360, 'SF': 720, 'F': 1200, 'W': 2000
+            },
+            masters_1000: {
+                'R64': 35, 'R32': 65, 'R16': 120, 'QF': 215, 'SF': 390, 'F': 650, 'W': 1000
+            },
+            atp_500: {
+                'R32': 30, 'R16': 60, 'QF': 108, 'SF': 195, 'F': 325, 'W': 500
+            },
+            atp_250: {
+                'R32': 18, 'R16': 30, 'QF': 54, 'SF': 98, 'F': 163, 'W': 250
+            },
+            atp_125: {
+                'R32': 1, 'R16': 18, 'QF': 30, 'SF': 57, 'F': 95, 'W': 160
+            },
+            finals: {
+                'RR': 200, 'SF': 400, 'F': 500, 'W': 1500
+            }
         }
     },
 
@@ -378,8 +403,10 @@ const BracketModule = {
      */
     getPointsForRound(round, category) {
         const cat = category || 'atp_250';
-        const roundPoints = this.pointsByRound[cat] || this.pointsByRound.atp_250;
-        return roundPoints[round] || 0;
+        const tour = (window.TennisApp?.AppState?.currentTour || 'atp').toLowerCase();
+        const tourPoints = this.pointsByRound[tour] || this.pointsByRound.atp;
+        const roundPoints = tourPoints[cat] || tourPoints.atp_250;
+        return Object.prototype.hasOwnProperty.call(roundPoints, round) ? roundPoints[round] : null;
     },
 
     /**
@@ -423,9 +450,10 @@ const BracketModule = {
 
     resolveMatchWinner(match, category) {
         if (!match) return null;
+        if (match.winner) return match.winner;
         const score = match.score || match.final_score;
         const computed = this.getWinnerFromScore(score, match.player1, match.player2, category);
-        return computed || match.winner || null;
+        return computed || null;
     },
 
     /**
@@ -476,7 +504,7 @@ const BracketModule = {
     /**
      * Load and render bracket
      */
-    async loadAndRender(tournamentId, category, tournamentName = null, tournamentSurface = null) {
+    async loadAndRender(tournamentId, category, tournamentName = null, tournamentSurface = null, tournamentStatus = '') {
         const { DOM, API, AppState } = window.TennisApp;
         const requestToken = ++this.loadToken;
         const selectedId = `${tournamentId}`;
@@ -500,14 +528,25 @@ const BracketModule = {
 
             if (bracket) {
                 bracket = this.normalizeBracketData(bracket, category, tournamentName, tournamentId);
+                if (tournamentStatus) {
+                    bracket.tournament_status = tournamentStatus;
+                }
             }
             
             // Fall back to demo data
             if (!bracket || !Array.isArray(bracket.matches) || bracket.matches.length === 0) {
+                if (bracket && bracket.source === 'wta') {
+                    this.currentBracket = bracket;
+                    this.render();
+                    return;
+                }
                 bracket = this.generateDemoBracket(tournamentId, category);
             } else {
                 bracket.tournament_name = tournamentName || bracket.tournament_name || `Tournament ${tournamentId}`;
                 bracket.tournament_surface = tournamentSurface || bracket.tournament_surface || '';
+                if (tournamentStatus) {
+                    bracket.tournament_status = tournamentStatus;
+                }
                 if (!bracket.tournament_category) {
                     bracket.tournament_category = category || 'atp_250';
                 }
@@ -546,52 +585,69 @@ const BracketModule = {
         const category = bracket.tournament_category || 'atp_250';
         const titleEl = document.getElementById('bracketTitle');
         if (titleEl) {
-            titleEl.textContent = 'Tournament Draw';
+            titleEl.textContent = bracket.tournament_name || 'Tournament Draw';
         }
         
         // Check if tournament is completed (has a champion)
         const finalMatch = bracket.matches[bracket.matches.length - 1]?.matches[0];
         const finalWinner = finalMatch ? this.resolveMatchWinner(finalMatch, category) : null;
-        const hasChampion = !!finalWinner;
+        const championCandidate = finalWinner || bracket.champion || null;
+        const hasChampion = !!championCandidate;
         
+        const tourLabel = bracket.tournament_tour || window.TennisApp?.AppState?.currentTour || 'atp';
         const categoryNames = {
             'grand_slam': 'Grand Slam',
-            'masters_1000': 'Masters 1000',
-            'atp_500': 'ATP 500',
-            'atp_250': 'ATP 250',
-            'finals': 'Finals'
+            'masters_1000': tourLabel === 'wta' ? 'WTA 1000' : 'Masters 1000',
+            'atp_500': tourLabel === 'wta' ? 'WTA 500' : 'ATP 500',
+            'atp_250': tourLabel === 'wta' ? 'WTA 250' : 'ATP 250',
+            'atp_125': tourLabel === 'wta' ? 'WTA 125' : 'ATP 125',
+            'finals': tourLabel === 'wta' ? 'WTA Finals' : 'ATP Finals'
         };
 
         const badgeClass = category.replace(/_/g, '-');
         const drawMeta = this.getDrawMeta(bracket.draw_size);
         const surfaceClass = this.getSurfaceClass(bracket.tournament_surface || '');
+        const rawYear = bracket.tournament_year;
+        const bracketStatus = (bracket.tournament_status || '').toLowerCase();
+        let displayYear = rawYear;
+        if (rawYear && bracketStatus === 'upcoming') {
+            const parsedYear = parseInt(rawYear, 10);
+            if (!Number.isNaN(parsedYear)) {
+                displayYear = parsedYear - 1;
+            }
+        }
+        const yearBadge = displayYear ? `<span class="tournament-year-badge">${displayYear}</span>` : '';
+        const championHtml = hasChampion ? `
+            <div class="bracket-champion-summary">
+                <div class="champion-label">Championship</div>
+                <div class="champion-avatar">
+                    <img src="${Utils.getPlayerImage(championCandidate)}" alt="${championCandidate.name || 'Champion'}" onerror="this.src='data:image/svg+xml;utf8,${encodeURIComponent('<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"80\" height=\"80\" viewBox=\"0 0 80 80\"><rect width=\"80\" height=\"80\" fill=\"#f5e6cf\"/><text x=\"40\" y=\"46\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"28\" fill=\"#b07a2a\">🏆</text></svg>')}'">
+                </div>
+                <div class="champion-name">${Utils.getFlag(championCandidate.country)} ${championCandidate.name || ''}</div>
+            </div>
+        ` : '';
+
         let html = `
             <div class="bracket-info">
                 <div class="bracket-title-row">
                     <h3 class="bracket-title">
                         ${bracket.tournament_name || 'Tournament Draw'}
                         <span class="tournament-category-badge ${badgeClass}">${categoryNames[category] || category}</span>
+                        ${yearBadge}
                         ${bracket.tournament_surface ? `<span class="tournament-surface-tag ${surfaceClass}">${bracket.tournament_surface}</span>` : ''}
                     </h3>
-                    <button class="bracket-expand-btn" type="button" aria-label="Open bracket in large view">
-                        <i class="fas fa-up-right-and-down-left-from-center"></i>
-                        Expand
-                    </button>
+                    <div class="bracket-title-actions">
+                        ${championHtml}
+                        <button class="bracket-expand-btn" type="button" aria-label="Open bracket in large view">
+                            <i class="fas fa-up-right-and-down-left-from-center"></i>
+                            Expand
+                        </button>
+                    </div>
                 </div>
                 <div class="bracket-subtitle">
                     ${bracket.draw_size} Players
                     <span class="bracket-meta">(${drawMeta.seeds} seeds, ${drawMeta.qualifiers} Q, ${drawMeta.wildcards} WC)</span>
                 </div>
-                ${hasChampion ? `
-                    <button class="champion-btn" onclick="window.TennisApp.BracketModule.showChampionCelebration(
-                        '${bracket.tournament_name}',
-                        ${JSON.stringify(finalWinner).replace(/"/g, '&quot;')},
-                        '${category}',
-                        ${this.getPointsForRound('W', category)}
-                    )">
-                        <i class="fas fa-trophy"></i> View Champion
-                    </button>
-                ` : ''}
             </div>
         `;
 
@@ -939,16 +995,24 @@ const BracketModule = {
             const matchesInNext = nextRound && nextRound.matches ? nextRound.matches.length : 0;
             
             const layout = roundLayouts[roundIdx] || { gap: baseGap, offset: 0 };
+            const roundEmoji = this.getRoundEmoji(roundData.round);
             const roundName = this.getRoundDisplayName(roundData.round);
-            const points = this.getPointsForRound(roundData.round, category);
-            const prize = this.getPrizeMoneyForRound(roundData.round, category);
+            const roundLabel = roundEmoji ? `${roundName} ${roundEmoji}` : roundName;
+            const roundPoints = bracket.round_points || {};
+            const roundPrize = bracket.round_prize || {};
+            const points = roundPoints[roundData.round] !== undefined
+                ? roundPoints[roundData.round]
+                : this.getPointsForRound(roundData.round, category);
+            const prize = roundPrize[roundData.round] !== undefined
+                ? roundPrize[roundData.round]
+                : this.getPrizeMoneyForRound(roundData.round, category);
             
             html += `
                 <div class="bracket-round">
                     <div class="round-header">
-                        ${roundName}
-                        ${points ? `<span class="round-points">${points} pts</span>` : ''}
-                        ${prize ? `<span class="round-prize-money">${prize}</span>` : ''}
+                        ${roundLabel}
+                        ${points !== null && points !== undefined && points !== '' ? `<span class="round-points">🏅 ${points} pts</span>` : ''}
+                        ${prize ? `<span class="round-prize-money">💰 ${prize}</span>` : ''}
                     </div>
                     <div class="round-matches" style="gap:${layout.gap}px; padding-top:${layout.offset}px;">
             `;
@@ -1084,11 +1148,80 @@ const BracketModule = {
         return displayNames[round] || round;
     },
 
+    /**
+     * Emoji hint for round importance
+     */
+    getRoundEmoji(round) {
+        const emojis = {
+            'R128': '🔹',
+            'R64': '🔸',
+            'R32': '🥉',
+            'R16': '🥈',
+            'QF': '🔥',
+            'SF': '🚀',
+            'F': '🏆',
+            'RR': '🧩',
+            'W': '🏆'
+        };
+        return emojis[round] || '';
+    },
+
     getDrawMeta(drawSize = 32) {
-        const seeds = drawSize >= 128 ? 32 : drawSize >= 64 ? 16 : 8;
-        const qualifiers = Math.max(2, Math.round(drawSize * 0.125));
-        const wildcards = Math.max(2, Math.round(drawSize * 0.03125));
-        return { seeds, qualifiers, wildcards };
+        const tour = (window.TennisApp?.AppState?.currentTour || 'atp').toLowerCase();
+        const category = (this.currentBracket?.tournament_category || '').toLowerCase();
+
+        const atpTable = {
+            128: { seeds: 32, qualifiers: 16, wildcards: 8 }, // Grand Slam
+            96: { seeds: 32, qualifiers: 12, wildcards: 5 },  // Masters 1000 (96)
+            56: { seeds: 16, qualifiers: 7, wildcards: 4 },   // Masters 1000 (56)
+            32: { seeds: 8, qualifiers: 4, wildcards: 3 },    // ATP 500/250/Challenger 125
+            28: { seeds: 8, qualifiers: 4, wildcards: 3 }     // ATP 250 (28)
+        };
+
+        const wtaTable = {
+            128: { seeds: 32, qualifiers: 16, wildcards: 8 }, // Grand Slam
+            96: { seeds: 32, qualifiers: 12, wildcards: 8 },  // WTA 1000 (96)
+            56: { seeds: 16, qualifiers: 12, wildcards: 8 },  // WTA 1000 (56)
+            32: { seeds: 8, qualifiers: 6, wildcards: 4 }     // WTA 500/250/125
+        };
+
+        const isGrandSlam = category === 'grand_slam';
+        const isMasters = category === 'masters_1000';
+        const is250 = category === 'atp_250';
+
+        let meta = null;
+        if (tour === 'wta') {
+            if (isGrandSlam) {
+                meta = wtaTable[128];
+            } else if (isMasters) {
+                meta = drawSize >= 96 ? wtaTable[96] : wtaTable[56];
+            } else if (category === 'atp_500' || category === 'atp_250' || category === 'atp_125' || category === 'finals') {
+                meta = wtaTable[32];
+            } else {
+                meta = wtaTable[drawSize];
+            }
+        } else {
+            if (isGrandSlam) {
+                meta = atpTable[128];
+            } else if (isMasters) {
+                meta = drawSize >= 96 ? atpTable[96] : atpTable[56];
+            } else if (category === 'atp_500') {
+                meta = atpTable[32];
+            } else if (category === 'atp_250') {
+                meta = atpTable[drawSize] || atpTable[28] || atpTable[32];
+            } else if (category === 'atp_125') {
+                meta = atpTable[32];
+            } else {
+                meta = atpTable[drawSize];
+            }
+        }
+
+        if (meta) return meta;
+
+        const fallbackSeeds = drawSize >= 128 ? 32 : drawSize >= 64 ? 16 : 8;
+        const fallbackQualifiers = Math.max(2, Math.round(drawSize * 0.125));
+        const fallbackWildcards = Math.max(2, Math.round(drawSize * 0.03125));
+        return { seeds: fallbackSeeds, qualifiers: fallbackQualifiers, wildcards: fallbackWildcards };
     },
 
     getSurfaceClass(surface) {
@@ -1106,8 +1239,20 @@ const BracketModule = {
         const p1 = match.player1;
         const p2 = match.player2;
         const resolvedWinner = this.resolveMatchWinner(match, category);
-        const isP1Winner = resolvedWinner && p1 && resolvedWinner.id === p1.id;
-        const isP2Winner = resolvedWinner && p2 && resolvedWinner.id === p2.id;
+        const winnerId = resolvedWinner?.id !== undefined && resolvedWinner?.id !== null
+            ? `${resolvedWinner.id}`
+            : null;
+        const winnerName = resolvedWinner?.name || resolvedWinner?.display_name || '';
+        const p1Id = p1?.id !== undefined && p1?.id !== null ? `${p1.id}` : null;
+        const p2Id = p2?.id !== undefined && p2?.id !== null ? `${p2.id}` : null;
+        const isP1Winner = resolvedWinner && p1 && (
+            (winnerId && p1Id && winnerId === p1Id) ||
+            (!winnerId && winnerName && (p1.name === winnerName || p1.display_name === winnerName))
+        );
+        const isP2Winner = resolvedWinner && p2 && (
+            (winnerId && p2Id && winnerId === p2Id) ||
+            (!winnerId && winnerName && (p2.name === winnerName || p2.display_name === winnerName))
+        );
 
         // Build set score boxes
         let p1SetScores = [];
@@ -1134,8 +1279,10 @@ const BracketModule = {
             ? `<div class="bracket-sets">${p1SetScores.join('')}</div><div class="bracket-sets">${p2SetScores.join('')}</div>`
             : '';
 
-        const p1DisplayName = p1 ? `${p1.seed ? `[${p1.seed}] ` : ''}${p1.name}` : 'TBD';
-        const p2DisplayName = p2 ? `${p2.seed ? `[${p2.seed}] ` : ''}${p2.name}` : 'TBD';
+        const p1Display = p1?.display_name || p1?.name || '';
+        const p2Display = p2?.display_name || p2?.name || '';
+        const p1DisplayName = p1 ? `${p1.seed ? `[${p1.seed}] ` : ''}${p1Display}` : 'TBD';
+        const p2DisplayName = p2 ? `${p2.seed ? `[${p2.seed}] ` : ''}${p2Display}` : 'TBD';
 
         return `
             <div class="bracket-match clickable ${match.status}" data-match-id="${match.id}" data-round="${match.round}" data-match-number="${match.match_number}" data-points="${match.points || this.getPointsForRound(match.round, category)}">

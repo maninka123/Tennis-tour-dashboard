@@ -776,14 +776,16 @@ const ScoresModule = {
             // Check for tiebreak (7-6 or 6-7)
             const isTiebreak = (games === 7 && opponentGames === 6) || (games === 6 && opponentGames === 7);
             
+            const isSetWinner = games > opponentGames;
+
             if (isTiebreak && set.tiebreak) {
                 const tiebreakScore = playerNum === 1 ? set.tiebreak.p1 : set.tiebreak.p2;
-                html += `<span class="set-score ${isCurrentSet ? 'current' : ''}">${games}<sup class="tb">(${tiebreakScore})</sup></span>`;
+                html += `<span class="set-score ${isSetWinner ? 'set-win' : ''} ${isCurrentSet ? 'current' : ''}">${games}<sup class="tb">(${tiebreakScore})</sup></span>`;
             } else if (isTiebreak) {
                 const fallbackTb = games === 7 ? 7 : 6;
-                html += `<span class="set-score ${isCurrentSet ? 'current' : ''}">${games}<sup class="tb">(${fallbackTb})</sup></span>`;
+                html += `<span class="set-score ${isSetWinner ? 'set-win' : ''} ${isCurrentSet ? 'current' : ''}">${games}<sup class="tb">(${fallbackTb})</sup></span>`;
             } else {
-                html += `<span class="set-score ${isCurrentSet ? 'current' : ''}">${games}</span>`;
+                html += `<span class="set-score ${isSetWinner ? 'set-win' : ''} ${isCurrentSet ? 'current' : ''}">${games}</span>`;
             }
         });
 

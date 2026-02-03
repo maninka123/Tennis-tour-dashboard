@@ -124,6 +124,7 @@ class TennisDataFetcher:
         })
 
         self._wta_scraped_index = None
+        self._wta_tournament_index = None
 
     def _normalize_player_name(self, name):
         if not name:
@@ -305,13 +306,22 @@ class TennisDataFetcher:
         cache_key = f'tournaments_{tour}_{year}'
         if cache_key in tournaments_cache:
             return tournaments_cache[cache_key]
-        
-        tournaments = self._generate_sample_tournaments(tour, year)
+
+        tournaments = []
+        if tour == 'wta':
+            tournaments = self._load_wta_tournaments_from_files(year)
+
+        if not tournaments:
+            tournaments = self._generate_sample_tournaments(tour, year)
         tournaments_cache[cache_key] = tournaments
         return tournaments
     
     def fetch_tournament_bracket(self, tournament_id, tour='atp'):
         """Fetch tournament bracket/draw"""
+        if tour == 'wta':
+            bracket = self._build_wta_bracket_from_files(tournament_id)
+            if bracket:
+                return bracket
         return self._generate_sample_bracket(tournament_id, tour)
     
     def fetch_player_details(self, player_id):
@@ -353,6 +363,641 @@ class TennisDataFetcher:
             'records': player.get('records') or [],
             'records_summary': player.get('records_summary') or []
         }
+
+    def _load_wta_tournaments_index(self):
+        if self._wta_tournament_index is not None:
+            return self._wta_tournament_index
+
+        base_dir = Path(__file__).resolve().parent.parent / 'data' / 'wta' / 'tournaments'
+        index = {}
+        if not base_dir.exists():
+            self._wta_tournament_index = index
+            return index
+
+        for file_path in base_dir.glob("*.json"):
+            try:
+                tournament = json.loads(file_path.read_text(encoding='utf-8'))
+            except Exception:
+                continue
+            tid = tournament.get('tournament_group_id') or tournament.get('id') or tournament.get('order')
+            if tid is None:
+                continue
+            index[str(tid)] = tournament
+        self._wta_tournament_index = index
+        return index
+
+    def _build_wta_bracket_from_files(self, tournament_id):
+        index = self._load_wta_tournaments_index()
+        tournament = index.get(str(tournament_id))
+        if not tournament:
+            return None
+
+        matches = tournament.get('matches') or []
+        draw = tournament.get('draw') or {}
+        draw_size = draw.get('draw_size') or tournament.get('draw_size_singles') or 0
+        if not draw_size:
+            draw_lines = draw.get('draw_lines') or []
+            if draw_lines:
+                draw_size = len(draw_lines)
+        if not draw_size:
+            draw_size = 32
+
+        rankings = self._load_wta_rankings_csv()
+        rank_map = {}
+        for player in rankings or []:
+            norm = self._normalize_player_name(player.get('name') or '')
+            if norm and player.get('rank'):
+                rank_map[norm] = player.get('rank')
+
+        # Seed lookup from draw lines
+        seed_map = {}
+        for line in draw.get('draw_lines') or []:
+            player = line.get('player') or {}
+            pid = player.get('id')
+            seed = line.get('seed')
+            if pid and seed:
+                seed_map[str(pid)] = seed
+
+        def round_labels_for_draw(size):
+            if size >= 128:
+                return ['R128', 'R64', 'R32', 'R16']
+            if size >= 64:
+                return ['R64', 'R32', 'R16']
+            if size >= 48:
+                return ['R64', 'R32', 'R16']
+            if size >= 32:
+                return ['R32', 'R16']
+            if size >= 16:
+                return ['R16']
+            return []
+
+        # Build round mapping
+        numeric_rounds = sorted({int(r) for r in [m.get('round_id') for m in matches] if isinstance(r, str) and r.isdigit()})
+        labels = round_labels_for_draw(draw_size)
+        round_map = {}
+        for idx, rid in enumerate(numeric_rounds):
+            if idx < len(labels):
+                round_map[str(rid)] = labels[idx]
+            else:
+                round_map[str(rid)] = f"R{max(2, draw_size // (2 ** idx))}"
+        round_map['Q'] = 'QF'
+        round_map['S'] = 'SF'
+        round_map['F'] = 'F'
+        round_map['R'] = 'RR'
+        round_map['RR'] = 'RR'
+
+        def _short_name(name):
+            if not name:
+                return ''
+            parts = name.strip().split()
+            if len(parts) >= 2:
+                return f"{parts[0][0]}. {parts[-1]}"
+            return name
+
+        def _winner_tb(loser_tb):
+            try:
+                loser_val = int(loser_tb)
+            except Exception:
+                return None
+            return max(7, loser_val + 2)
+
+        def parse_sets(score_string):
+            if score_string is None or score_string == '':
+                return []
+            normalized = str(score_string).replace(",", " ").strip()
+            parts = normalized.split()
+            rebuilt = []
+            for part in parts:
+                match = re.match(r"^(\d)(\d)(\(\d+\))?$", part)
+                if match:
+                    rebuilt.append(f"{match.group(1)}-{match.group(2)}{match.group(3) or ''}")
+                else:
+                    rebuilt.append(part)
+            normalized = " ".join(rebuilt)
+            tokens = re.findall(r"(\d+)-(\d+)(?:\((\d+)\))?", normalized)
+            sets = []
+            for a, b, tb in tokens:
+                entry = {'p1': int(a), 'p2': int(b)}
+                if tb:
+                    winner_tb = _winner_tb(tb)
+                    if winner_tb is not None:
+                        if int(a) > int(b):
+                            entry['tiebreak'] = {'p1': winner_tb, 'p2': int(tb)}
+                        else:
+                            entry['tiebreak'] = {'p1': int(tb), 'p2': winner_tb}
+                sets.append(entry)
+            return sets
+
+        def _align_sets_to_side(sets, winner_side):
+            if not sets or winner_side not in ('A', 'B'):
+                return sets
+            p1_sets = sum(1 for s in sets if s['p1'] > s['p2'])
+            p2_sets = sum(1 for s in sets if s['p2'] > s['p1'])
+            winner = 'A' if p1_sets > p2_sets else 'B' if p2_sets > p1_sets else None
+            if winner and winner != winner_side:
+                swapped = []
+                for s in sets:
+                    entry = {'p1': s['p2'], 'p2': s['p1']}
+                    if s.get('tiebreak'):
+                        entry['tiebreak'] = {
+                            'p1': s['tiebreak'].get('p2'),
+                            'p2': s['tiebreak'].get('p1')
+                        }
+                    swapped.append(entry)
+                return swapped
+            return sets
+
+        def add_player_details(player):
+            if not player:
+                return None
+            name = player.get('name') or ''
+            entry = self._match_wta_scraped(name)
+            image_url = entry.get('profile', {}).get('image_url') if entry else None
+            pid = player.get('id')
+            seed = seed_map.get(str(pid))
+            norm_name = self._normalize_player_name(name)
+            rank = rank_map.get(norm_name)
+            display_name = _short_name(name)
+            if not seed and rank:
+                seed = rank
+            return {
+                'id': pid,
+                'name': name,
+                'display_name': display_name,
+                'country': player.get('country'),
+                'seed': seed,
+                'rank': rank,
+                'image_url': image_url
+            }
+
+        def _build_round_maps(breakdown):
+            points_map = {}
+            prize_map = {}
+            for place in breakdown or []:
+                name = (place.get('name') or '').lower()
+                points = place.get('points')
+                prize = place.get('prize')
+                round_key = None
+                if 'winner' in name:
+                    round_key = 'W'
+                elif 'final' in name and 'semi' not in name:
+                    round_key = 'F'
+                elif 'semi' in name:
+                    round_key = 'SF'
+                elif 'quarter' in name:
+                    round_key = 'QF'
+                elif 'round of 16' in name:
+                    round_key = 'R16'
+                elif 'round of 32' in name:
+                    round_key = 'R32'
+                elif 'round of 64' in name:
+                    round_key = 'R64'
+                elif 'round of 128' in name:
+                    round_key = 'R128'
+
+                if round_key:
+                    if points is not None:
+                        points_map[round_key] = points
+                    if prize:
+                        prize_map[round_key] = prize
+            return points_map, prize_map
+
+        round_points, round_prize = _build_round_maps(draw.get('breakdown') or [])
+
+        draw_results = draw.get('results') or []
+
+        def _parse_date(value):
+            try:
+                return datetime.strptime(value, "%Y-%m-%d").date()
+            except Exception:
+                return None
+
+        def _tournament_status():
+            status_raw = (tournament.get('status') or '').lower()
+            if status_raw in ['past', 'completed', 'complete', 'finished']:
+                return 'finished'
+            if status_raw in ['current', 'in_progress', 'in progress', 'live', 'running']:
+                return 'in_progress'
+            start_dt = _parse_date(tournament.get('start_date') or '')
+            end_dt = _parse_date(tournament.get('end_date') or '')
+            today = datetime.now().date()
+            if start_dt and end_dt:
+                if end_dt < today:
+                    return 'finished'
+                if start_dt <= today <= end_dt:
+                    return 'in_progress'
+                return 'upcoming'
+            return 'upcoming'
+        champion_info = tournament.get('champion') or {}
+        champion_name = champion_info.get('name') if isinstance(champion_info, dict) else None
+        champion_entry = self._match_wta_scraped(champion_name) if champion_name else None
+        champion = None
+        if champion_name:
+            champion = {
+                'name': champion_name,
+                'country': champion_info.get('country'),
+                'image_url': champion_entry.get('profile', {}).get('image_url') if champion_entry else None
+            }
+        if draw_results:
+            full_rounds = []
+            if draw_size >= 128:
+                full_rounds = ['R128', 'R64', 'R32', 'R16', 'QF', 'SF', 'F']
+            elif draw_size >= 64 or draw_size >= 48:
+                full_rounds = ['R64', 'R32', 'R16', 'QF', 'SF', 'F']
+            elif draw_size >= 32:
+                full_rounds = ['R32', 'R16', 'QF', 'SF', 'F']
+            elif draw_size >= 16:
+                full_rounds = ['R16', 'QF', 'SF', 'F']
+            else:
+                full_rounds = ['QF', 'SF', 'F']
+
+            round_ids = [r.get('round_id') for r in draw_results if r.get('round_id') is not None]
+            def _round_sort(val):
+                try:
+                    return int(val)
+                except Exception:
+                    return 0
+            ordered_round_ids = sorted(set(round_ids), key=_round_sort, reverse=True)
+            round_map = {}
+            for idx, rid in enumerate(ordered_round_ids):
+                if idx < len(full_rounds):
+                    round_map[str(rid)] = full_rounds[idx]
+
+            bracket_matches = []
+            for round_block in draw_results:
+                round_id = round_block.get('round_id')
+                round_label = round_map.get(str(round_id))
+                if not round_label:
+                    continue
+                round_matches = []
+                matches_list = round_block.get('matches') or []
+                def _match_sort_key(item):
+                    match_id = item.get('id') if isinstance(item, dict) else ''
+                    nums = re.findall(r"(\\d+)", match_id or '')
+                    return int(nums[-1]) if nums else 0
+                matches_list = sorted(matches_list, key=_match_sort_key)
+
+                for idx, match in enumerate(matches_list, start=1):
+                    players = match.get('players') or []
+                    player_a = players[0] if len(players) > 0 else {}
+                    player_b = players[1] if len(players) > 1 else {}
+
+                    def _to_player(slot):
+                        p = slot.get('player') if isinstance(slot, dict) else None
+                        if not isinstance(p, dict):
+                            return None
+                        return {
+                            'id': p.get('id') or None,
+                            'name': " ".join([p.get('first_name') or '', p.get('last_name') or '']).strip() or slot.get('display') or 'TBD',
+                            'country': p.get('country') or None
+                        }
+
+                    p1 = _to_player(player_a)
+                    p2 = _to_player(player_b)
+                    def _normalize_bye(player):
+                        if not player:
+                            return player
+                        name = (player.get('name') or '').lower()
+                        if 'bye' in name:
+                            player['name'] = 'Bye'
+                        return player
+                    p1 = _normalize_bye(p1)
+                    p2 = _normalize_bye(p2)
+
+                    p1 = add_player_details(p1 or {})
+                    p2 = add_player_details(p2 or {})
+
+                    score_text = match.get('result_score')
+                    score_sets = parse_sets(score_text)
+
+                    score_sets = _align_sets_to_side(score_sets, match.get('winner_slot'))
+                    status = 'scheduled'
+                    if score_sets or match.get('winner_slot'):
+                        status = 'finished'
+
+                    def _decide_winner_slot(match_obj, sets):
+                        slot = match_obj.get('winner_slot')
+                        if slot in ('A', 'B'):
+                            return slot
+                        if not sets:
+                            return None
+                        p1_sets = sum(1 for s in sets if s['p1'] > s['p2'])
+                        p2_sets = sum(1 for s in sets if s['p2'] > s['p1'])
+                        if p1_sets > p2_sets:
+                            return 'A'
+                        if p2_sets > p1_sets:
+                            return 'B'
+                        return None
+
+                    winner_slot = _decide_winner_slot(match, score_sets)
+                    winner = None
+                    if winner_slot == 'A':
+                        winner = p1
+                    elif winner_slot == 'B':
+                        winner = p2
+
+                    round_matches.append({
+                        'id': match.get('id') or f"{round_label}_{idx}",
+                        'round': round_label,
+                        'match_number': idx,
+                        'player1': p1,
+                        'player2': p2,
+                        'score': {'sets': score_sets} if score_sets else None,
+                        'status': status,
+                        'points': round_points.get(round_label),
+                        'prize_money': round_prize.get(round_label),
+                        'winner': winner
+                    })
+                bracket_matches.append({'round': round_label, 'matches': round_matches})
+
+            def _build_match_from_scores(match_obj, round_label, idx):
+                player1 = add_player_details(match_obj.get('player_a') or {})
+                player2 = add_player_details(match_obj.get('player_b') or {})
+                score_sets = parse_sets(match_obj.get('score_string') or '')
+                score_sets = _align_sets_to_side(score_sets, match_obj.get('winner_side') or match_obj.get('winner_slot'))
+                status = 'scheduled'
+                if match_obj.get('match_state') == 'F':
+                    status = 'finished'
+                elif match_obj.get('match_state') in ['L', 'IP', 'P']:
+                    status = 'live'
+                winner = None
+                winner_side = match_obj.get('winner_side') or match_obj.get('winner_slot')
+                if winner_side == 'A':
+                    winner = player1
+                elif winner_side == 'B':
+                    winner = player2
+                elif status == 'finished' and score_sets:
+                    p1_sets = sum(1 for s in score_sets if s['p1'] > s['p2'])
+                    p2_sets = sum(1 for s in score_sets if s['p2'] > s['p1'])
+                    if p1_sets > p2_sets:
+                        winner = player1
+                    elif p2_sets > p1_sets:
+                        winner = player2
+                return {
+                    'id': match_obj.get('match_id') or f"{round_label}_{idx}",
+                    'round': round_label,
+                    'match_number': idx,
+                    'player1': player1,
+                    'player2': player2,
+                    'score': {'sets': score_sets} if score_sets else None,
+                    'status': status,
+                    'points': round_points.get(round_label),
+                    'prize_money': round_prize.get(round_label),
+                    'winner': winner
+                }
+
+            final_round = next((r for r in bracket_matches if r.get('round') == 'F'), None)
+            if not final_round or not final_round.get('matches'):
+                finals = [
+                    m for m in matches
+                    if m.get('round_id') == 'F' and m.get('draw_match_type') == 'S'
+                ]
+                if finals:
+                    final_match = _build_match_from_scores(finals[0], 'F', 1)
+                    if final_round:
+                        final_round['matches'] = [final_match]
+                    else:
+                        bracket_matches.append({'round': 'F', 'matches': [final_match]})
+
+            return {
+                'tournament_id': tournament_id,
+                'tournament_name': tournament.get('name') or tournament.get('title') or f'Tournament {tournament_id}',
+                'tournament_category': self._normalize_wta_level(tournament.get('level') or ''),
+                'tournament_surface': tournament.get('surface') or '',
+                'tournament_year': tournament.get('year'),
+                'tournament_status': _tournament_status(),
+                'tournament_tour': 'wta',
+                'draw_size': draw_size,
+                'rounds': [r['round'] for r in bracket_matches],
+                'matches': bracket_matches,
+                'round_points': round_points,
+                'round_prize': round_prize,
+                'champion': champion,
+                'source': 'wta'
+            }
+
+        filtered = []
+        for match in matches:
+            if match.get('draw_match_type') != 'S':
+                continue
+            if match.get('draw_level_type') and match.get('draw_level_type') != 'M':
+                continue
+            filtered.append(match)
+
+        if not filtered:
+            return {
+                'tournament_id': tournament_id,
+                'tournament_name': tournament.get('name') or tournament.get('title') or f'Tournament {tournament_id}',
+                'tournament_category': self._normalize_wta_level(tournament.get('level') or ''),
+                'tournament_surface': tournament.get('surface') or '',
+                'tournament_year': tournament.get('year'),
+                'tournament_status': _tournament_status(),
+                'tournament_tour': 'wta',
+                'draw_size': draw_size,
+                'rounds': [],
+                'matches': [],
+                'source': 'wta'
+            }
+
+        grouped = {}
+        for match in filtered:
+            round_id = match.get('round_id')
+            round_label = round_map.get(str(round_id))
+            if not round_label:
+                continue
+            grouped.setdefault(round_label, []).append(match)
+
+        rounds_order = [label for label in labels if label in grouped]
+        if 'QF' in grouped:
+            rounds_order.append('QF')
+        if 'SF' in grouped:
+            rounds_order.append('SF')
+        if 'F' in grouped:
+            rounds_order.append('F')
+        if 'RR' in grouped:
+            rounds_order = ['RR'] + [r for r in rounds_order if r != 'RR']
+
+        bracket_matches = []
+        for round_label in rounds_order:
+            round_matches = []
+            for idx, match in enumerate(sorted(grouped.get(round_label, []), key=lambda m: m.get('match_id') or ''), start=1):
+                player1 = add_player_details(match.get('player_a') or {})
+                player2 = add_player_details(match.get('player_b') or {})
+                score_sets = parse_sets(match.get('score_string') or '')
+                score_sets = _align_sets_to_side(score_sets, match.get('winner_side'))
+                status = 'scheduled'
+                if match.get('match_state') == 'F':
+                    status = 'finished'
+                elif match.get('match_state') in ['L', 'IP', 'P']:
+                    status = 'live'
+                winner = None
+                if match.get('winner_side') == 'A':
+                    winner = player1
+                elif match.get('winner_side') == 'B':
+                    winner = player2
+                elif status == 'finished' and score_sets:
+                    p1_sets = sum(1 for s in score_sets if s['p1'] > s['p2'])
+                    p2_sets = sum(1 for s in score_sets if s['p2'] > s['p1'])
+                    if p1_sets > p2_sets:
+                        winner = player1
+                    elif p2_sets > p1_sets:
+                        winner = player2
+                round_matches.append({
+                    'id': match.get('match_id') or f"{round_label}_{idx}",
+                    'round': round_label,
+                    'match_number': idx,
+                    'player1': player1,
+                    'player2': player2,
+                    'score': {'sets': score_sets} if score_sets else None,
+                    'status': status,
+                    'points': round_points.get(round_label),
+                    'prize_money': round_prize.get(round_label),
+                    'winner': winner
+                })
+            bracket_matches.append({'round': round_label, 'matches': round_matches})
+
+        return {
+            'tournament_id': tournament_id,
+            'tournament_name': tournament.get('name') or tournament.get('title') or f'Tournament {tournament_id}',
+            'tournament_category': self._normalize_wta_level(tournament.get('level') or ''),
+            'tournament_surface': tournament.get('surface') or '',
+            'tournament_year': tournament.get('year'),
+            'tournament_status': _tournament_status(),
+            'tournament_tour': 'wta',
+            'draw_size': draw_size,
+            'rounds': rounds_order,
+            'matches': bracket_matches,
+            'round_points': round_points,
+            'round_prize': round_prize,
+            'champion': champion,
+            'source': 'wta'
+        }
+
+    def _normalize_wta_level(self, level):
+        upper = (level or "").upper()
+        if "GRAND SLAM" in upper:
+            return 'grand_slam'
+        if "1000" in upper:
+            return 'masters_1000'
+        if "500" in upper:
+            return 'atp_500'
+        if "250" in upper:
+            return 'atp_250'
+        if "125" in upper:
+            return 'atp_125'
+        if "FINALS" in upper:
+            return 'finals'
+        return 'other'
+
+    def _load_wta_tournaments_from_files(self, year):
+        base_dir = Path(__file__).resolve().parent.parent / 'data' / 'wta' / 'tournaments'
+        if not base_dir.exists():
+            return []
+
+        def _normalize_level(level, name):
+            upper = (level or "").upper()
+            if "GRAND SLAM" in upper or (name in Config.GRAND_SLAMS):
+                return 'grand_slam'
+            if "1000" in upper:
+                return 'masters_1000'
+            if "500" in upper:
+                return 'atp_500'
+            if "250" in upper:
+                return 'atp_250'
+            if "125" in upper:
+                return 'atp_125'
+            if "FINAL" in upper or "FINALS" in upper or "WTA FINALS" in (name or "").upper():
+                return 'finals'
+            return 'other'
+
+        def _title_case(value):
+            if not value:
+                return ''
+            if value.isupper():
+                return value.title()
+            return value
+
+        def _parse_date(value):
+            try:
+                return datetime.strptime(value, "%Y-%m-%d").date()
+            except Exception:
+                return None
+
+        today = datetime.now().date()
+        tournaments = []
+        files = sorted(base_dir.glob("*.json"))
+        for file_path in files:
+            try:
+                tournament = json.loads(file_path.read_text(encoding='utf-8'))
+            except Exception:
+                continue
+
+            if year and tournament.get('year') and tournament.get('year') != year:
+                continue
+
+            title = tournament.get('title') or ''
+            if ' - ' in title:
+                name = title.split(' - ')[0].strip()
+            else:
+                name = tournament.get('name') or title or 'Tournament'
+            name = _title_case(name)
+            level = tournament.get('level') or ''
+            category = _normalize_level(level, name)
+
+            start_date = tournament.get('start_date') or ''
+            end_date = tournament.get('end_date') or ''
+            start_dt = _parse_date(start_date)
+            end_dt = _parse_date(end_date)
+
+            status_raw = (tournament.get('status') or '').lower()
+            if status_raw in ['past', 'completed', 'complete', 'finished']:
+                status = 'finished'
+            elif status_raw in ['current', 'in_progress', 'in progress', 'live', 'running']:
+                status = 'in_progress'
+            else:
+                if start_dt and end_dt:
+                    if end_dt < today:
+                        status = 'finished'
+                    elif start_dt <= today <= end_dt:
+                        status = 'in_progress'
+                    else:
+                        status = 'upcoming'
+                else:
+                    status = 'upcoming'
+
+            city = _title_case(tournament.get('city'))
+            country = _title_case(tournament.get('country'))
+            location = ", ".join([p for p in [city, country] if p])
+
+            surface = tournament.get('surface') or ''
+            if tournament.get('indoor_outdoor') == 'I' and surface and 'Indoor' not in surface:
+                surface = f"{surface} (Indoor)"
+
+            champion = tournament.get('champion') or {}
+            runner_up = tournament.get('runner_up') or {}
+
+            tournaments.append({
+                'id': tournament.get('tournament_group_id') or tournament.get('order'),
+                'name': name,
+                'category': category,
+                'location': location or tournament.get('title', ''),
+                'start_date': start_date,
+                'end_date': end_date,
+                'surface': surface or 'Hard',
+                'status': status,
+                'year': tournament.get('year'),
+                'winner': {
+                    'name': champion.get('name'),
+                    'country': champion.get('country')
+                } if champion else None,
+                'runner_up': {
+                    'name': runner_up.get('name'),
+                    'country': runner_up.get('country')
+                } if runner_up else None,
+            })
+
+        tournaments.sort(key=lambda x: x.get('start_date') or '')
+        return tournaments
     
     # Sample data generators (would be replaced with real API calls)
     
