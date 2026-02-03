@@ -237,14 +237,16 @@ const TournamentsModule = {
             }
             return `${rawCity}, ${rawCountry}`;
         };
-        const locationText = formatLocation(tournament.location);
+        const rawLocation = formatLocation(tournament.location);
+        const locationText = rawLocation ? rawLocation.replace(/\s+/g, ' ').trim() : '';
 
         // Results section
         let resultsHTML = '';
         const formatShortName = (name) => {
             if (!name) return '';
             const parts = name.trim().split(/\s+/);
-            return parts[parts.length - 1];
+            if (parts.length === 1) return parts[0];
+            return `${parts[0][0]}. ${parts[parts.length - 1]}`;
         };
 
         if (tournament.status === 'finished' && tournament.winner) {
@@ -293,8 +295,10 @@ const TournamentsModule = {
         else if (surfaceLower.includes('indoor')) surfaceClass = 'indoor';
 
         const isSelected = `${window.TennisApp?.AppState?.selectedTournament}` === `${tournament.id}`;
-        const statusClass = (tournament.status || '').replace(/_/g, '-');
-        const liveBadge = tournament.status === 'in_progress'
+        const rawStatus = (tournament.status || '').toLowerCase();
+        const statusClass = rawStatus.replace(/_/g, '-');
+        const isLive = rawStatus === 'in_progress' || rawStatus === 'live' || rawStatus === 'current' || rawStatus === 'running';
+        const liveBadge = isLive
             ? '<span class="tournament-status-badge live">Live</span>'
             : '';
 
@@ -307,13 +311,16 @@ const TournamentsModule = {
                 <div class="tournament-main">
                     <div class="tournament-title">
                         <span class="tournament-name-text">${tournament.name}</span>
-                        <span class="tournament-category-badge ${categoryClass}">${categoryNames[tournament.category] || tournament.category}</span>
-                        ${liveBadge}
+                        <div class="tournament-badges">
+                            <span class="tournament-category-badge ${categoryClass}">${categoryNames[tournament.category] || tournament.category}</span>
+                            ${liveBadge}
+                        </div>
                     </div>
+                    ${locationText ? `
                     <div class="tournament-location" title="${locationText}">
                         <i class="fas fa-map-marker-alt"></i>
-                        ${locationText}
-                    </div>
+                        <span class="location-text">${locationText}</span>
+                    </div>` : ''}
                     <div class="tournament-date-range">
                         <i class="fas fa-calendar-day"></i>
                         ${dateRange}

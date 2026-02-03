@@ -42,9 +42,9 @@ sleep 2
 # Navigate to frontend directory
 cd "$DIR/frontend"
 
-# Start a simple HTTP server for frontend
+# Start a no-cache HTTP server for frontend
 echo "🌐 Starting frontend server..."
-python3 -m http.server 8080 &
+python3 no_cache_server.py &
 FRONTEND_PID=$!
 
 echo ""

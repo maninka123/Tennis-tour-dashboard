@@ -8,6 +8,8 @@ from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
+import sys
+import eventlet.wsgi
 from tennis_api import tennis_fetcher
 from config import Config
 
@@ -15,6 +17,16 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'tennis_dashboard_secret_2024'
 CORS(app, origins="*", resources={r"/api/*": {"origins": "*"}})
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet', ping_timeout=60, ping_interval=25)
+
+# Suppress noisy BrokenPipe/connection reset logs from client disconnects
+class QuietHttpProtocol(eventlet.wsgi.HttpProtocol):
+    def handle_error(self, *args, **kwargs):
+        exc = sys.exc_info()[1]
+        if isinstance(exc, (BrokenPipeError, ConnectionResetError)):
+            return
+        return super().handle_error(*args, **kwargs)
+
+eventlet.wsgi.HttpProtocol = QuietHttpProtocol
 
 # Background scheduler for real-time updates
 scheduler = BackgroundScheduler()

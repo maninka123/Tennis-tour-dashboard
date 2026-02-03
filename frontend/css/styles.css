@@ -1287,8 +1287,8 @@ body {
 .tournament-item.upcoming::after {
     content: 'UPCOMING';
     position: absolute;
-    top: var(--space-xs);
-    right: var(--space-sm);
+    top: calc(var(--space-md) + 2px);
+    right: var(--space-md);
     font-size: 0.6rem;
     background: var(--bg-tertiary);
     color: var(--text-muted);
@@ -1298,26 +1298,12 @@ body {
 }
 
 .tournament-item.upcoming .tournament-results {
-    padding-top: 18px;
+    padding-top: 22px;
 }
 
 .tournament-item.in-progress {
     background: rgba(0, 184, 148, 0.08);
     border: 1px solid rgba(0, 184, 148, 0.3);
-}
-
-.tournament-item.in-progress::after {
-    content: 'LIVE';
-    position: absolute;
-    top: var(--space-sm);
-    right: var(--space-sm);
-    font-size: 0.6rem;
-    background: var(--accent-live);
-    color: white;
-    padding: 2px 6px;
-    border-radius: var(--radius-sm);
-    font-weight: 600;
-    animation: pulse 1.5s ease infinite;
 }
 
 .tournament-date {
@@ -1350,7 +1336,8 @@ body {
 }
 
 .tournament-main {
-    flex: 1;
+    flex: 0 1 65%;
+    max-width: 65%;
     min-width: 0;
     margin-top: 2px;
 }
@@ -1360,17 +1347,28 @@ body {
     font-size: 0.9rem;
     margin-bottom: var(--space-xs);
     display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
     line-height: 1.2;
 }
 
 .tournament-name-text {
-    flex: 1 1 auto;
-    min-width: 0;
-    white-space: normal;
+    width: 100%;
+    display: block;
+    overflow: visible;
+    line-height: 1.25;
     word-break: normal;
+    overflow-wrap: normal;
+    white-space: normal;
+    hyphens: none;
+}
+
+.tournament-badges {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
 }
 
 .tournament-status-badge {
@@ -1422,11 +1420,20 @@ body {
     color: var(--text-muted);
     display: flex;
     align-items: flex-start;
-    gap: var(--space-xs);
-    flex-wrap: wrap;
+    gap: 6px;
+    flex-wrap: nowrap;
     white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
+    line-height: 1.2;
+}
+
+.tournament-location .location-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: normal;
+}
+
+.tournament-location i {
+    flex: 0 0 auto;
 }
 
 .tournament-location i {
@@ -1492,8 +1499,8 @@ body {
 
 .tournament-results {
     text-align: right;
-    flex: 0 0 200px;
-    max-width: 200px;
+    flex: 0 0 35%;
+    max-width: 35%;
     padding-top: 12px;
 }
 
