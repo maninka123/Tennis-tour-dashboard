@@ -402,11 +402,20 @@ const BracketModule = {
      * Get points for a round
      */
     getPointsForRound(round, category) {
-        const cat = category || 'atp_250';
+        const cat = (category || 'atp_250').toLowerCase();
         const tour = (window.TennisApp?.AppState?.currentTour || 'atp').toLowerCase();
         const tourPoints = this.pointsByRound[tour] || this.pointsByRound.atp;
         const roundPoints = tourPoints[cat] || tourPoints.atp_250;
-        return Object.prototype.hasOwnProperty.call(roundPoints, round) ? roundPoints[round] : null;
+        if (Object.prototype.hasOwnProperty.call(roundPoints, round)) {
+            return roundPoints[round];
+        }
+        if (round === 'R128') {
+            return roundPoints.R64 ?? roundPoints.R32 ?? null;
+        }
+        if (round === 'R64') {
+            return roundPoints.R32 ?? null;
+        }
+        return null;
     },
 
     /**
@@ -998,11 +1007,8 @@ const BracketModule = {
             const roundEmoji = this.getRoundEmoji(roundData.round);
             const roundName = this.getRoundDisplayName(roundData.round);
             const roundLabel = roundEmoji ? `${roundName} ${roundEmoji}` : roundName;
-            const roundPoints = bracket.round_points || {};
             const roundPrize = bracket.round_prize || {};
-            const points = roundPoints[roundData.round] !== undefined
-                ? roundPoints[roundData.round]
-                : this.getPointsForRound(roundData.round, category);
+            const points = this.getPointsForRound(roundData.round, category);
             const prize = roundPrize[roundData.round] !== undefined
                 ? roundPrize[roundData.round]
                 : this.getPrizeMoneyForRound(roundData.round, category);
@@ -1169,50 +1175,51 @@ const BracketModule = {
     getDrawMeta(drawSize = 32) {
         const tour = (window.TennisApp?.AppState?.currentTour || 'atp').toLowerCase();
         const category = (this.currentBracket?.tournament_category || '').toLowerCase();
+        const size = Number(drawSize) || 32;
 
         const atpTable = {
-            128: { seeds: 32, qualifiers: 16, wildcards: 8 }, // Grand Slam
-            96: { seeds: 32, qualifiers: 12, wildcards: 5 },  // Masters 1000 (96)
-            56: { seeds: 16, qualifiers: 7, wildcards: 4 },   // Masters 1000 (56)
-            32: { seeds: 8, qualifiers: 4, wildcards: 3 },    // ATP 500/250/Challenger 125
-            28: { seeds: 8, qualifiers: 4, wildcards: 3 }     // ATP 250 (28)
+            grand_slam: { seeds: 32, qualifiers: 16, wildcards: 8 },
+            masters_1000_96: { seeds: 32, qualifiers: 12, wildcards: 5 },
+            masters_1000_56: { seeds: 16, qualifiers: 7, wildcards: 4 },
+            atp_500_32: { seeds: 8, qualifiers: 4, wildcards: 3 },
+            atp_250_32: { seeds: 8, qualifiers: 4, wildcards: 3 },
+            atp_250_28: { seeds: 8, qualifiers: 4, wildcards: 3 },
+            atp_125_32: { seeds: 8, qualifiers: 4, wildcards: 3 }
         };
 
         const wtaTable = {
-            128: { seeds: 32, qualifiers: 16, wildcards: 8 }, // Grand Slam
-            96: { seeds: 32, qualifiers: 12, wildcards: 8 },  // WTA 1000 (96)
-            56: { seeds: 16, qualifiers: 12, wildcards: 8 },  // WTA 1000 (56)
-            32: { seeds: 8, qualifiers: 6, wildcards: 4 }     // WTA 500/250/125
+            grand_slam: { seeds: 32, qualifiers: 16, wildcards: 8 },
+            wta_1000_96: { seeds: 32, qualifiers: 12, wildcards: 8 },
+            wta_1000_56: { seeds: 16, qualifiers: 12, wildcards: 8 },
+            wta_500_32: { seeds: 8, qualifiers: 6, wildcards: 4 },
+            wta_250_32: { seeds: 8, qualifiers: 6, wildcards: 4 },
+            wta_125_32: { seeds: 8, qualifiers: 6, wildcards: 4 }
         };
-
-        const isGrandSlam = category === 'grand_slam';
-        const isMasters = category === 'masters_1000';
-        const is250 = category === 'atp_250';
 
         let meta = null;
         if (tour === 'wta') {
-            if (isGrandSlam) {
-                meta = wtaTable[128];
-            } else if (isMasters) {
-                meta = drawSize >= 96 ? wtaTable[96] : wtaTable[56];
-            } else if (category === 'atp_500' || category === 'atp_250' || category === 'atp_125' || category === 'finals') {
-                meta = wtaTable[32];
-            } else {
-                meta = wtaTable[drawSize];
+            if (category === 'grand_slam') {
+                meta = wtaTable.grand_slam;
+            } else if (category === 'masters_1000') {
+                meta = size >= 96 ? wtaTable.wta_1000_96 : wtaTable.wta_1000_56;
+            } else if (category === 'atp_500') {
+                meta = wtaTable.wta_500_32;
+            } else if (category === 'atp_250') {
+                meta = wtaTable.wta_250_32;
+            } else if (category === 'atp_125') {
+                meta = wtaTable.wta_125_32;
             }
         } else {
-            if (isGrandSlam) {
-                meta = atpTable[128];
-            } else if (isMasters) {
-                meta = drawSize >= 96 ? atpTable[96] : atpTable[56];
+            if (category === 'grand_slam') {
+                meta = atpTable.grand_slam;
+            } else if (category === 'masters_1000') {
+                meta = size >= 96 ? atpTable.masters_1000_96 : atpTable.masters_1000_56;
             } else if (category === 'atp_500') {
-                meta = atpTable[32];
+                meta = atpTable.atp_500_32;
             } else if (category === 'atp_250') {
-                meta = atpTable[drawSize] || atpTable[28] || atpTable[32];
+                meta = size <= 28 ? atpTable.atp_250_28 : atpTable.atp_250_32;
             } else if (category === 'atp_125') {
-                meta = atpTable[32];
-            } else {
-                meta = atpTable[drawSize];
+                meta = atpTable.atp_125_32;
             }
         }
 
@@ -1285,7 +1292,7 @@ const BracketModule = {
         const p2DisplayName = p2 ? `${p2.seed ? `[${p2.seed}] ` : ''}${p2Display}` : 'TBD';
 
         return `
-            <div class="bracket-match clickable ${match.status}" data-match-id="${match.id}" data-round="${match.round}" data-match-number="${match.match_number}" data-points="${match.points || this.getPointsForRound(match.round, category)}">
+            <div class="bracket-match clickable ${match.status}" data-match-id="${match.id}" data-round="${match.round}" data-match-number="${match.match_number}" data-points="${this.getPointsForRound(match.round, category)}">
                 <div class="match-content">
                     <div class="player-row ${isP1Winner ? 'winner' : ''}">
                         <span class="player-name">${p1DisplayName}</span>
