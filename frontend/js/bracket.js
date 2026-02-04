@@ -10,6 +10,35 @@ const BracketModule = {
     currentBracket: null,
     resizeHandler: null,
     loadToken: 0,
+    debug: true,
+
+    getActiveTour() {
+        return (this.currentBracket?.tournament_tour || window.TennisApp?.AppState?.currentTour || 'atp').toLowerCase();
+    },
+
+    logBracketDebug(bracket, category, drawMeta, drawSizeDisplay) {
+        if (!this.debug) return;
+        try {
+            const tour = this.getActiveTour();
+            const pointsTable = (this.pointsByRound[tour] || {})[category] || {};
+            console.log('[Bracket Debug]', {
+                tournament: bracket.tournament_name,
+                tour,
+                category,
+                draw_size_raw: bracket.draw_size,
+                draw_size_display: drawSizeDisplay,
+                seeds_qualifiers_wildcards: drawMeta,
+                points_table: pointsTable,
+                rounds_in_data: (bracket.matches || []).map(r => r.round),
+                round_points_used: (bracket.matches || []).reduce((acc, r) => {
+                    acc[r.round] = this.getPointsForRound(r.round, category);
+                    return acc;
+                }, {})
+            });
+        } catch (err) {
+            console.warn('[Bracket Debug] failed', err);
+        }
+    },
 
     /**
      * Points by round for different tournament categories
@@ -402,27 +431,18 @@ const BracketModule = {
      * Get points for a round
      */
     getPointsForRound(round, category) {
-        const cat = (category || 'atp_250').toLowerCase();
-        const tour = (window.TennisApp?.AppState?.currentTour || 'atp').toLowerCase();
+        const cat = this.normalizeCategoryKey(category || 'atp_250');
+        const tour = this.getActiveTour();
         const tourPoints = this.pointsByRound[tour] || this.pointsByRound.atp;
         const roundPoints = tourPoints[cat] || tourPoints.atp_250;
-        if (Object.prototype.hasOwnProperty.call(roundPoints, round)) {
-            return roundPoints[round];
-        }
-        if (round === 'R128') {
-            return roundPoints.R64 ?? roundPoints.R32 ?? null;
-        }
-        if (round === 'R64') {
-            return roundPoints.R32 ?? null;
-        }
-        return null;
+        return Object.prototype.hasOwnProperty.call(roundPoints, round) ? roundPoints[round] : null;
     },
 
     /**
      * Best-of format by category/tour
      */
     getBestOfForCategory(category) {
-        const tour = (window.TennisApp?.AppState?.currentTour || 'atp').toLowerCase();
+        const tour = this.getActiveTour();
         if (category === 'grand_slam' && tour === 'atp') {
             return 5;
         }
@@ -556,9 +576,9 @@ const BracketModule = {
                 if (tournamentStatus) {
                     bracket.tournament_status = tournamentStatus;
                 }
-                if (!bracket.tournament_category) {
-                    bracket.tournament_category = category || 'atp_250';
-                }
+                bracket.tournament_category = this.normalizeCategoryKey(
+                    bracket.tournament_category || category || 'atp_250'
+                );
             }
 
             this.currentBracket = bracket;
@@ -591,7 +611,7 @@ const BracketModule = {
         }
 
         const bracket = this.currentBracket;
-        const category = bracket.tournament_category || 'atp_250';
+        const category = this.normalizeCategoryKey(bracket.tournament_category || 'atp_250');
         const titleEl = document.getElementById('bracketTitle');
         if (titleEl) {
             titleEl.textContent = bracket.tournament_name || 'Tournament Draw';
@@ -615,6 +635,13 @@ const BracketModule = {
 
         const badgeClass = category.replace(/_/g, '-');
         const drawMeta = this.getDrawMeta(bracket.draw_size);
+        const drawSizeDisplay = this.getDrawDisplaySize(bracket.draw_size, category);
+        const daLabel = drawMeta.direct_acceptances !== undefined && drawMeta.direct_acceptances !== null
+            ? `DA ${drawMeta.direct_acceptances}`
+            : '';
+        const metaText = tourLabel === 'atp'
+            ? `${daLabel}${drawMeta.seeds ? ` (${drawMeta.seeds} seeds)` : ''}, ${drawMeta.qualifiers} Q, ${drawMeta.wildcards} WC${drawMeta.special_exempt ? `, ${drawMeta.special_exempt} SE` : ''}`
+            : `${daLabel}${drawMeta.seeds ? ` (${drawMeta.seeds} seeds)` : ''}, ${drawMeta.qualifiers} Q, ${drawMeta.wildcards} WC`;
         const surfaceClass = this.getSurfaceClass(bracket.tournament_surface || '');
         const rawYear = bracket.tournament_year;
         const bracketStatus = (bracket.tournament_status || '').toLowerCase();
@@ -636,6 +663,8 @@ const BracketModule = {
             </div>
         ` : '';
 
+        this.logBracketDebug(bracket, category, drawMeta, drawSizeDisplay);
+
         let html = `
             <div class="bracket-info">
                 <div class="bracket-title-row">
@@ -654,8 +683,8 @@ const BracketModule = {
                     </div>
                 </div>
                 <div class="bracket-subtitle">
-                    ${bracket.draw_size} Players
-                    <span class="bracket-meta">(${drawMeta.seeds} seeds, ${drawMeta.qualifiers} Q, ${drawMeta.wildcards} WC)</span>
+                    ${drawSizeDisplay} Players
+                    <span class="bracket-meta">(${metaText})</span>
                 </div>
             </div>
         `;
@@ -1009,16 +1038,32 @@ const BracketModule = {
             const roundLabel = roundEmoji ? `${roundName} ${roundEmoji}` : roundName;
             const roundPrize = bracket.round_prize || {};
             const points = this.getPointsForRound(roundData.round, category);
+            const winnerPoints = roundData.round === 'F' ? this.getPointsForRound('W', category) : null;
             const prize = roundPrize[roundData.round] !== undefined
                 ? roundPrize[roundData.round]
                 : this.getPrizeMoneyForRound(roundData.round, category);
+            const winnerPrize = roundData.round === 'F'
+                ? (roundPrize['W'] !== undefined ? roundPrize['W'] : this.getPrizeMoneyForRound('W', category))
+                : null;
+            const hasFinalPoints = roundData.round === 'F' && points !== null && winnerPoints;
+            const hasFinalPrize = roundData.round === 'F' && prize && winnerPrize;
             
             html += `
                 <div class="bracket-round">
                     <div class="round-header">
                         ${roundLabel}
-                        ${points !== null && points !== undefined && points !== '' ? `<span class="round-points">🏅 ${points} pts</span>` : ''}
-                        ${prize ? `<span class="round-prize-money">💰 ${prize}</span>` : ''}
+                        ${hasFinalPoints ? `
+                            <div class="round-final-row">
+                                <span class="round-points runner-up-points">🥈 ${points} pts</span>
+                                <span class="round-points winner-points">🏆 ${winnerPoints} pts</span>
+                            </div>
+                        ` : points !== null && points !== undefined && points !== '' ? `<span class="round-points">🏅 ${points} pts</span>` : ''}
+                        ${hasFinalPrize ? `
+                            <div class="round-final-row">
+                                <span class="round-prize-money runner-up-prize">💰 ${prize}</span>
+                                <span class="round-prize-money winner-prize">👑 ${winnerPrize}</span>
+                            </div>
+                        ` : prize ? `<span class="round-prize-money">💰 ${prize}</span>` : ''}
                     </div>
                     <div class="round-matches" style="gap:${layout.gap}px; padding-top:${layout.offset}px;">
             `;
@@ -1043,7 +1088,8 @@ const BracketModule = {
         // Ensure tournament metadata
         normalized.tournament_id = normalized.tournament_id || tournamentId;
         normalized.tournament_name = tournamentName || normalized.tournament_name || `Tournament ${tournamentId}`;
-        normalized.tournament_category = normalized.tournament_category || category || 'atp_250';
+        const categoryCandidate = normalized.tournament_category || category || 'atp_250';
+        normalized.tournament_category = this.normalizeCategoryKey(categoryCandidate);
 
         // If matches is already in round-grouped format, keep it
         if (Array.isArray(normalized.matches) && normalized.matches.length > 0 && normalized.matches[0]?.matches) {
@@ -1173,27 +1219,27 @@ const BracketModule = {
     },
 
     getDrawMeta(drawSize = 32) {
-        const tour = (window.TennisApp?.AppState?.currentTour || 'atp').toLowerCase();
-        const category = (this.currentBracket?.tournament_category || '').toLowerCase();
+        const tour = this.getActiveTour();
+        const category = this.normalizeCategoryKey(this.currentBracket?.tournament_category || '');
         const size = Number(drawSize) || 32;
 
         const atpTable = {
-            grand_slam: { seeds: 32, qualifiers: 16, wildcards: 8 },
-            masters_1000_96: { seeds: 32, qualifiers: 12, wildcards: 5 },
-            masters_1000_56: { seeds: 16, qualifiers: 7, wildcards: 4 },
-            atp_500_32: { seeds: 8, qualifiers: 4, wildcards: 3 },
-            atp_250_32: { seeds: 8, qualifiers: 4, wildcards: 3 },
-            atp_250_28: { seeds: 8, qualifiers: 4, wildcards: 3 },
-            atp_125_32: { seeds: 8, qualifiers: 4, wildcards: 3 }
+            grand_slam: { total: 128, seeds: 32, qualifiers: 16, wildcards: 8, special_exempt: 0 },
+            masters_1000_96: { total: 96, seeds: 32, qualifiers: 12, wildcards: 5, special_exempt: 0 },
+            masters_1000_56: { total: 56, seeds: 16, qualifiers: 7, wildcards: 4, special_exempt: 1 },
+            atp_500_32: { total: 32, seeds: 8, qualifiers: 4, wildcards: 3, special_exempt: 1 },
+            atp_250_32: { total: 32, seeds: 8, qualifiers: 4, wildcards: 3, special_exempt: 1 },
+            atp_250_28: { total: 28, seeds: 8, qualifiers: 4, wildcards: 3, special_exempt: 2 },
+            atp_125_32: { total: 32, seeds: 8, qualifiers: 4, wildcards: 3, special_exempt: 1 }
         };
 
         const wtaTable = {
-            grand_slam: { seeds: 32, qualifiers: 16, wildcards: 8 },
-            wta_1000_96: { seeds: 32, qualifiers: 12, wildcards: 8 },
-            wta_1000_56: { seeds: 16, qualifiers: 12, wildcards: 8 },
-            wta_500_32: { seeds: 8, qualifiers: 6, wildcards: 4 },
-            wta_250_32: { seeds: 8, qualifiers: 6, wildcards: 4 },
-            wta_125_32: { seeds: 8, qualifiers: 6, wildcards: 4 }
+            grand_slam: { total: 128, seeds: 32, qualifiers: 16, wildcards: 8 },
+            wta_1000_96: { total: 96, seeds: 32, qualifiers: 12, wildcards: 8 },
+            wta_1000_56: { total: 56, seeds: 16, qualifiers: 12, wildcards: 8 },
+            wta_500_32: { total: 32, seeds: 8, qualifiers: 6, wildcards: 4 },
+            wta_250_32: { total: 32, seeds: 8, qualifiers: 6, wildcards: 4 },
+            wta_125_32: { total: 32, seeds: 8, qualifiers: 6, wildcards: 4 }
         };
 
         let meta = null;
@@ -1223,12 +1269,48 @@ const BracketModule = {
             }
         }
 
-        if (meta) return meta;
+        if (meta) {
+            const total = meta.total || size;
+            if (tour === 'atp') {
+                const direct = total - (meta.qualifiers || 0) - (meta.wildcards || 0) - (meta.special_exempt || 0);
+                return { ...meta, direct_acceptances: direct };
+            }
+            const direct = total - (meta.qualifiers || 0) - (meta.wildcards || 0);
+            return { ...meta, direct_acceptances: direct };
+        }
 
         const fallbackSeeds = drawSize >= 128 ? 32 : drawSize >= 64 ? 16 : 8;
         const fallbackQualifiers = Math.max(2, Math.round(drawSize * 0.125));
         const fallbackWildcards = Math.max(2, Math.round(drawSize * 0.03125));
-        return { seeds: fallbackSeeds, qualifiers: fallbackQualifiers, wildcards: fallbackWildcards };
+        if (tour === 'atp') {
+            const total = size || drawSize;
+            const direct = total - fallbackQualifiers - fallbackWildcards;
+            return { seeds: fallbackSeeds, qualifiers: fallbackQualifiers, wildcards: fallbackWildcards, special_exempt: 0, direct_acceptances: direct };
+        }
+        const total = size || drawSize;
+        const direct = total - fallbackQualifiers - fallbackWildcards;
+        return { seeds: fallbackSeeds, qualifiers: fallbackQualifiers, wildcards: fallbackWildcards, direct_acceptances: direct };
+    },
+
+    getDrawDisplaySize(drawSize = 32, category = '') {
+        const tour = this.getActiveTour();
+        const size = Number(drawSize) || 32;
+        const cat = this.normalizeCategoryKey(category || '');
+
+        if (cat === 'finals') return size || 8;
+        if (cat === 'grand_slam') return 128;
+        if (cat === 'masters_1000') return size >= 96 ? 96 : 56;
+
+        if (tour === 'wta') {
+            if (cat === 'atp_500' || cat === 'atp_250' || cat === 'atp_125') {
+                return 32;
+            }
+        } else {
+            if (cat === 'atp_500' || cat === 'atp_125') return 32;
+            if (cat === 'atp_250') return size <= 28 ? 28 : 32;
+        }
+
+        return size || 32;
     },
 
     getSurfaceClass(surface) {
@@ -1311,8 +1393,23 @@ const BracketModule = {
      * Get prize money for a round
      */
     getPrizeMoneyForRound(round, category) {
-        const prizes = this.prizeMoneyByRound[category];
+        const prizes = this.prizeMoneyByRound[this.normalizeCategoryKey(category || '')];
         return prizes ? prizes[round] || '' : '';
+    },
+
+    normalizeCategoryKey(category = '') {
+        const raw = `${category}`.toLowerCase().replace(/-/g, '_');
+        if (raw.includes('wta 1000') || raw.includes('wta_1000')) return 'masters_1000';
+        if (raw.includes('wta 500') || raw.includes('wta_500')) return 'atp_500';
+        if (raw.includes('wta 250') || raw.includes('wta_250')) return 'atp_250';
+        if (raw.includes('wta 125') || raw.includes('wta_125')) return 'atp_125';
+        if (raw.includes('grand')) return 'grand_slam';
+        if (raw.includes('final')) return 'finals';
+        if (raw.includes('1000')) return 'masters_1000';
+        if (raw.includes('500')) return 'atp_500';
+        if (raw.includes('250')) return 'atp_250';
+        if (raw.includes('125')) return 'atp_125';
+        return raw || 'atp_250';
     },
 
     /**
