@@ -2021,6 +2021,16 @@ body {
     text-transform: none;
 }
 
+.round-points.winner-points {
+    background: rgba(255, 213, 140, 0.45);
+    border-radius: 999px;
+    display: inline-flex;
+    width: auto;
+    padding: 2px 8px;
+    margin: 4px auto 0;
+    font-weight: 700;
+}
+
 .round-prize-money {
     display: block;
     width: 100%;
@@ -2029,6 +2039,30 @@ body {
     color: inherit;
     font-weight: 600;
     margin-top: 2px;
+}
+
+.round-final-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+
+.round-points.runner-up-points,
+.round-prize-money.runner-up-prize {
+    opacity: 0.8;
+}
+
+.round-points.winner-points,
+.round-prize-money.winner-prize {
+    background: rgba(255, 213, 140, 0.45);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    width: auto;
 }
 
 .round-matches {
