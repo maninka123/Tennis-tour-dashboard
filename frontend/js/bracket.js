@@ -1047,23 +1047,25 @@ const BracketModule = {
                 : null;
             const hasFinalPoints = roundData.round === 'F' && points !== null && winnerPoints;
             const hasFinalPrize = roundData.round === 'F' && prize && winnerPrize;
+            const hasFinalSummary = hasFinalPoints && hasFinalPrize;
             
             html += `
                 <div class="bracket-round">
                     <div class="round-header">
                         ${roundLabel}
-                        ${hasFinalPoints ? `
-                            <div class="round-final-row">
-                                <span class="round-points runner-up-points">🥈 ${points} pts</span>
-                                <span class="round-points winner-points">🏆 ${winnerPoints} pts</span>
+                        ${hasFinalSummary ? `
+                            <div class="round-final-summary">
+                                <div class="final-line winner-line">
+                                    <span class="final-badge">🏆 ${winnerPoints} pts</span>
+                                    <span class="final-badge">👑 ${winnerPrize}</span>
+                                </div>
+                                <div class="final-line runner-line">
+                                    <span class="final-badge">🥈 ${points} pts</span>
+                                    <span class="final-badge">💰 ${prize}</span>
+                                </div>
                             </div>
                         ` : points !== null && points !== undefined && points !== '' ? `<span class="round-points">🏅 ${points} pts</span>` : ''}
-                        ${hasFinalPrize ? `
-                            <div class="round-final-row">
-                                <span class="round-prize-money runner-up-prize">💰 ${prize}</span>
-                                <span class="round-prize-money winner-prize">👑 ${winnerPrize}</span>
-                            </div>
-                        ` : prize ? `<span class="round-prize-money">💰 ${prize}</span>` : ''}
+                        ${!hasFinalSummary && prize ? `<span class="round-prize-money">💰 ${prize}</span>` : ''}
                     </div>
                     <div class="round-matches" style="gap:${layout.gap}px; padding-top:${layout.offset}px;">
             `;

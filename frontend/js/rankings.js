@@ -175,6 +175,15 @@ const RankingsModule = {
         const imageClass = `${playingClass}`;
 
         const ageValue = player.age ? player.age : '-';
+        const pointsRaw = typeof player.points === 'number'
+            ? player.points
+            : parseInt(String(player.points || '').replace(/[^\d]/g, ''), 10);
+        const pointsValue = Number.isFinite(pointsRaw) ? pointsRaw : null;
+        const pointsChangeRaw = typeof player.points_change === 'number'
+            ? player.points_change
+            : parseInt(String(player.points_change || '').replace(/[^\d-]/g, ''), 10);
+        const pointsChangeValue = Number.isFinite(pointsChangeRaw) ? pointsChangeRaw : 0;
+        const pointsClass = pointsChangeValue > 0 ? 'points-up' : pointsChangeValue < 0 ? 'points-down' : 'points-same';
 
         return `
             <div class="ranking-item" data-player-id="${player.id}">
@@ -199,6 +208,8 @@ const RankingsModule = {
                     </div>
                     <div class="ranking-details">
                         <span>Age: ${ageValue}</span>
+                        <span>•</span>
+                        <span>Pts: <span class="ranking-points-value ${pointsClass}">${pointsValue !== null ? pointsValue.toLocaleString() : '-'}</span></span>
                         <span>•</span>
                         <span>CH: <span class="${careerHighClass}">${player.career_high}</span></span>
                     </div>

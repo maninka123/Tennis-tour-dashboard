@@ -1168,6 +1168,23 @@ body {
     color: var(--text-muted);
 }
 
+.ranking-points-value {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.ranking-points-value.points-up {
+    color: var(--accent-success);
+}
+
+.ranking-points-value.points-down {
+    color: var(--accent-live);
+}
+
+.ranking-points-value.points-same {
+    color: var(--text-primary);
+}
+
 .playing-badge {
     font-size: 0.55rem;
     background: rgba(34, 197, 94, 0.15);
@@ -2041,28 +2058,34 @@ body {
     margin-top: 2px;
 }
 
-.round-final-row {
+.round-final-summary {
     display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 4px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 2px;
+    align-items: center;
 }
 
-.round-points.runner-up-points,
-.round-prize-money.runner-up-prize {
-    opacity: 0.8;
+.round-final-summary .final-line {
+    display: inline-flex;
+    gap: 6px;
+    margin-top: 2px;
+    flex-wrap: nowrap;
 }
 
-.round-points.winner-points,
-.round-prize-money.winner-prize {
-    background: rgba(255, 213, 140, 0.45);
+.round-final-summary .final-badge {
+    background: rgba(255, 213, 140, 0.35);
     border-radius: 999px;
     padding: 2px 8px;
     font-weight: 700;
+    font-size: 0.68rem;
     display: inline-flex;
     align-items: center;
-    width: auto;
+}
+
+.round-final-summary .runner-line .final-badge {
+    background: transparent;
+    font-weight: 600;
 }
 
 .round-matches {
