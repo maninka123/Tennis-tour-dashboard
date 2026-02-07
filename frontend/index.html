@@ -65,7 +65,10 @@
         <!-- Recently Finished Matches -->
         <section class="recent-matches-section">
             <div class="section-header">
-                <h2><i class="fas fa-check-circle"></i> Recently Finished</h2>
+                <div class="section-title-stack">
+                    <h2><i class="fas fa-check-circle"></i> Recently Finished</h2>
+                    <span class="section-updated-ago" id="recentUpdatedAgo">Updated --</span>
+                </div>
                 <div class="scroll-controls">
                     <button class="scroll-btn scroll-left" id="scrollRecentLeft">
                         <i class="fas fa-chevron-left"></i>
@@ -86,9 +89,18 @@
         <main class="main-content">
             <!-- Left Sidebar - Rankings -->
             <aside class="rankings-panel">
-                <div class="panel-header">
-                    <h2><i class="fas fa-trophy"></i> <span id="rankingsTitle">ATP</span> Rankings</h2>
-                    <span class="subtitle" id="rankingsSubtitle">Top 200 Players</span>
+                <div class="panel-header rankings-panel-header">
+                    <div class="rankings-title-row">
+                        <div class="rankings-title-stack">
+                            <h2 class="rankings-title-main"><i class="fas fa-trophy"></i> <span id="rankingsTitle">ATP</span> Rankings</h2>
+                            <span class="rankings-updated-ago" id="rankingsUpdatedAgo">Updated --</span>
+                        </div>
+                        <div class="rankings-title-meta">
+                            <button class="rankings-update-btn" id="rankingsUpdateBtn" type="button" aria-label="Update rankings" title="Update rankings" hidden>
+                                <i class="fas fa-rotate-right"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="rankings-list" id="rankingsList">
                     <!-- Rankings will be inserted here -->

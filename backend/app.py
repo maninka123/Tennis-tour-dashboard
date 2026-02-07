@@ -47,7 +47,7 @@ def broadcast_live_scores():
 
 # Start scheduler for live score updates (after routes are initialized)
 if not scheduler.running:
-    scheduler.add_job(broadcast_live_scores, 'interval', seconds=300, id='live_scores_job')
+    scheduler.add_job(broadcast_live_scores, 'interval', seconds=30, id='live_scores_job')
     try:
         scheduler.start()
     except:
@@ -115,14 +115,47 @@ def get_upcoming_matches():
 def get_rankings(tour):
     """Get ATP or WTA rankings"""
     limit = request.args.get('limit', 200, type=int)
-    limit = min(limit, 200)  # Cap at 200
+    limit = min(limit, 400 if tour == 'wta' else 200)
     
     try:
         rankings = tennis_fetcher.fetch_rankings(tour, limit)
-        return jsonify({
+        payload = {
             'success': True,
             'data': rankings,
             'count': len(rankings)
+        }
+        if tour == 'wta':
+            payload['meta'] = tennis_fetcher.get_wta_rankings_status()
+        return jsonify(payload)
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/rankings/wta/status', methods=['GET'])
+def get_wta_rankings_status():
+    """Get WTA rankings file metadata."""
+    try:
+        return jsonify({
+            'success': True,
+            'data': tennis_fetcher.get_wta_rankings_status()
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/rankings/wta/refresh', methods=['POST'])
+def refresh_wta_rankings():
+    """Refresh WTA rankings CSV and archive previous file."""
+    try:
+        status = tennis_fetcher.refresh_wta_rankings_csv()
+        # Broadcast scoreboard/rankings refresh event.
+        socketio.emit('rankings_update', {
+            'tour': 'wta',
+            'timestamp': time.time()
+        })
+        return jsonify({
+            'success': True,
+            'data': status
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
