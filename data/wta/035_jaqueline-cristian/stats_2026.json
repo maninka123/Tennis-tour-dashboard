@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n34.0%\n1st Return Points Won %\n24.3%\n2nd Return Points Won %\n56.2%\nBreak Points Converted\n66.7%\nReturn Games Won\n22.2%\nReturn Games Played\n9\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:05:38.977590+00:00",
+  "updated_at": "2026-02-07T11:53:29.144207+00:00",
   "records_tab": {
     "summary": [
       {
@@ -102,5 +102,150 @@
         "us_open": "R128"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 35,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Karolina Muchova",
+            "opponent_country": "CZE",
+            "opponent_seed": 19,
+            "opponent_entry": "",
+            "score": "6-3, 7-6(6)",
+            "opponent_rank": 19
+          }
+        ],
+        "summary": {
+          "rank": 35,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "ADELAIDE",
+        "location": "Adelaide \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 37,
+        "seed": 1,
+        "wta_points_gain": 133.0,
+        "prize_money_won": 33475.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Anastasia Potapova",
+            "opponent_country": "AUT",
+            "opponent_seed": 7,
+            "opponent_entry": "",
+            "score": "6-1, 6-3",
+            "opponent_rank": 54
+          },
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Daria Kasatkina",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-0",
+            "opponent_rank": 48
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Sarah Mildren",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "7-6(4), 6-2",
+            "opponent_rank": 1078
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Ekaterina Alexandrova",
+            "opponent_country": "RUS",
+            "opponent_seed": 4,
+            "opponent_entry": "",
+            "score": "6-4, 6-4",
+            "opponent_rank": 11
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Kimberly Birrell",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "5-7, 6-1, 7-5",
+            "opponent_rank": 107
+          }
+        ],
+        "summary": {
+          "rank": 37,
+          "seed": 1,
+          "wta_points_gain": "+133",
+          "prize_money_won": "+$33,475",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 38,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 11920.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "result": "L",
+            "opponent_name": "Marie Bouzkova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 46
+          }
+        ],
+        "summary": {
+          "rank": 38,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$11,920",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:53:29.144188+00:00"
   }
 }

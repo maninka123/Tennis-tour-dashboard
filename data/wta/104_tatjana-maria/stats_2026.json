@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n45.0%\n1st Return Points Won %\n37.8%\n2nd Return Points Won %\n56.5%\nBreak Points Converted\n60.0%\nReturn Games Won\n33.3%\nReturn Games Played\n9\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:14:41.055834+00:00",
+  "updated_at": "2026-02-07T12:01:20.817419+00:00",
   "records_tab": {
     "summary": [
       {
@@ -222,5 +222,163 @@
         "us_open": "R128"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "MANILA 125",
+        "location": "Manila \u2022 Philippines",
+        "date_range": "26 Jan - 31 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 42,
+        "seed": 1,
+        "wta_points_gain": 15.0,
+        "prize_money_won": 2000.0,
+        "draw": "32M/16Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Tatiana Prozorova",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(2), 6-4",
+            "opponent_rank": 174
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Leolia Jeanjean",
+            "opponent_country": "FRA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(5), 6-4",
+            "opponent_rank": 103
+          }
+        ],
+        "summary": {
+          "rank": 42,
+          "seed": 1,
+          "wta_points_gain": "+15",
+          "prize_money_won": "+$2,000",
+          "draw": "32M/16Q/16D"
+        }
+      },
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 42,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Petra Marcinko",
+            "opponent_country": "CRO",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 7-5",
+            "opponent_rank": 81
+          }
+        ],
+        "summary": {
+          "rank": 42,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 42,
+        "seed": 6,
+        "wta_points_gain": 30.0,
+        "prize_money_won": 4285.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Anna Bondar",
+            "opponent_country": "HUN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(7), 7-5",
+            "opponent_rank": 75
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Venus Williams",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-4, 6-3",
+            "opponent_rank": 576
+          }
+        ],
+        "summary": {
+          "rank": 42,
+          "seed": 6,
+          "wta_points_gain": "+30",
+          "prize_money_won": "+$4,285",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 43,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 11920.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "result": "L",
+            "opponent_name": "Emerson Jones",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-3, 6-3",
+            "opponent_rank": 147
+          }
+        ],
+        "summary": {
+          "rank": 43,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$11,920",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:01:20.817376+00:00"
   }
 }

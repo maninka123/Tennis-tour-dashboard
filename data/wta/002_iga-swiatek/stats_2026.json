@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n46.6%\n1st Return Points Won %\n38.6%\n2nd Return Points Won %\n62.9%\nBreak Points Converted\n46.8%\nReturn Games Won\n44.0%\nReturn Games Played\n50\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:01:36.445415+00:00",
+  "updated_at": "2026-02-07T11:50:15.835981+00:00",
   "records_tab": {
     "summary": [
       {
@@ -126,5 +126,157 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 2,
+        "seed": 2,
+        "wta_points_gain": 430.0,
+        "prize_money_won": 485565.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Maddison Inglis",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-0, 6-3",
+            "opponent_rank": 168
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Anna Kalinskaya",
+            "opponent_country": "RUS",
+            "opponent_seed": 31,
+            "opponent_entry": "",
+            "score": "6-1, 1-6, 6-1",
+            "opponent_rank": 33
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Marie Bouzkova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 6-3",
+            "opponent_rank": 44
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Yue Yuan",
+            "opponent_country": "CHN",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "7-6(5), 6-3",
+            "opponent_rank": 130
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Elena Rybakina",
+            "opponent_country": "KAZ",
+            "opponent_seed": 5,
+            "opponent_entry": "",
+            "score": "7-5, 6-1",
+            "opponent_rank": 5
+          }
+        ],
+        "summary": {
+          "rank": 2,
+          "seed": 2,
+          "wta_points_gain": "+430",
+          "prize_money_won": "+$485,565",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "UNITED CUP",
+        "location": "Perth + Sydney \u2022 Australia",
+        "date_range": "2 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 2,
+        "seed": 9,
+        "wta_points_gain": 150.0,
+        "prize_money_won": 486900.0,
+        "draw": "0M/0Q/0D",
+        "matches": [
+          {
+            "round": "Round 9",
+            "result": "W",
+            "opponent_name": "Eva Lys",
+            "opponent_country": "GER",
+            "opponent_seed": 6,
+            "opponent_entry": "",
+            "score": "3-6, 6-3, 6-4",
+            "opponent_rank": 39
+          },
+          {
+            "round": "Round 9",
+            "result": "W",
+            "opponent_name": "Suzan Lamens",
+            "opponent_country": "NED",
+            "opponent_seed": 15,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 97
+          },
+          {
+            "round": "Round 3",
+            "result": "W",
+            "opponent_name": "Maya Joint",
+            "opponent_country": "AUS",
+            "opponent_seed": 4,
+            "opponent_entry": "",
+            "score": "6-1, 6-1",
+            "opponent_rank": 32
+          },
+          {
+            "round": "Round 2",
+            "result": "L",
+            "opponent_name": "Coco Gauff",
+            "opponent_country": "USA",
+            "opponent_seed": 1,
+            "opponent_entry": "",
+            "score": "6-4, 6-2",
+            "opponent_rank": 4
+          },
+          {
+            "round": "Round 1",
+            "result": "L",
+            "opponent_name": "Belinda Bencic",
+            "opponent_country": "SUI",
+            "opponent_seed": 16,
+            "opponent_entry": "",
+            "score": "3-6, 6-0, 6-3",
+            "opponent_rank": 11
+          }
+        ],
+        "summary": {
+          "rank": 2,
+          "seed": 9,
+          "wta_points_gain": "+150",
+          "prize_money_won": "+$486,900",
+          "draw": "0M/0Q/0D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:50:15.835962+00:00"
   }
 }

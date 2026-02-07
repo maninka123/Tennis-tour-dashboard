@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n47.6%\n1st Return Points Won %\n38.1%\n2nd Return Points Won %\n60.6%\nBreak Points Converted\n68.4%\nReturn Games Won\n48.1%\nReturn Games Played\n27\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:06:35.724026+00:00",
+  "updated_at": "2026-02-07T11:54:12.459964+00:00",
   "records_tab": {
     "summary": [
       {
@@ -94,5 +94,120 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 40,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Storm Hunter",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-4, 6-4",
+            "opponent_rank": 367
+          }
+        ],
+        "summary": {
+          "rank": 40,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 40,
+        "seed": 5,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 3065.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Taylah Preston",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-4, 7-6(4)",
+            "opponent_rank": 204
+          }
+        ],
+        "summary": {
+          "rank": 40,
+          "seed": 5,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$3,065",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "UNITED CUP",
+        "location": "Perth + Sydney \u2022 Australia",
+        "date_range": "2 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 42,
+        "seed": 10,
+        "wta_points_gain": 32.0,
+        "prize_money_won": 105000.0,
+        "draw": "0M/0Q/0D",
+        "matches": [
+          {
+            "round": "Round 9",
+            "result": "L",
+            "opponent_name": "Solana Sierra",
+            "opponent_country": "ARG",
+            "opponent_seed": 14,
+            "opponent_entry": "",
+            "score": "6-4, 5-7, 6-0",
+            "opponent_rank": 66
+          },
+          {
+            "round": "Round 9",
+            "result": "W",
+            "opponent_name": "Coco Gauff",
+            "opponent_country": "USA",
+            "opponent_seed": 1,
+            "opponent_entry": "",
+            "score": "6-1, 6-7(3), 6-0",
+            "opponent_rank": 4
+          }
+        ],
+        "summary": {
+          "rank": 42,
+          "seed": 10,
+          "wta_points_gain": "+32",
+          "prize_money_won": "+$105,000",
+          "draw": "0M/0Q/0D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:54:12.459949+00:00"
   }
 }

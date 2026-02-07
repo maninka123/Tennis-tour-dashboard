@@ -411,6 +411,9 @@ const ScoresModule = {
         const { Utils } = window.TennisApp;
         const categoryClass = Utils.getCategoryClass(group.category);
         const categoryLabel = this.getCategoryLabel(group.category);
+        const sampleMatch = Array.isArray(group.matches) && group.matches.length > 0 ? group.matches[0] : null;
+        const surfaceClass = sampleMatch ? this.getSurfaceClass(sampleMatch) : '';
+        const surfaceLabel = sampleMatch ? this.getSurfaceLabel(sampleMatch) : '';
         const cardRenderer = renderFn || ((match) => this.createMatchCard(match, isLive));
 
         return `
@@ -419,6 +422,7 @@ const ScoresModule = {
                     <div class="tournament-group-title">
                         <span class="tournament-group-name">${group.tournament}</span>
                         <span class="category-badge ${categoryClass}">${categoryLabel}</span>
+                        ${surfaceLabel ? `<span class="match-surface-pill ${surfaceClass}">${surfaceLabel}</span>` : ''}
                     </div>
                 </div>
                 <div class="tournament-group-row">
@@ -841,6 +845,7 @@ const ScoresModule = {
         const categoryClass = Utils.getCategoryClass(match.tournament_category);
         const categoryLabel = this.getCategoryLabel(match.tournament_category);
         const surfaceClass = this.getSurfaceClass(match);
+        const matchKey = this.getMatchKey(match);
         const tournamentName = this.sanitizeTournamentName(match.tournament);
         const roundLabel = this.getRoundLabelWithPoints(match);
         const courtLabel = match.court || match.court_name || '';
@@ -858,7 +863,7 @@ const ScoresModule = {
         const p2RankBadge = match.player2.rank ? `<span class="player-rank-badge">[${match.player2.rank}]</span>` : '';
 
         return `
-            <div class="match-card ${categoryClass} ${surfaceClass}" data-match-id="${match.id}">
+            <div class="match-card ${categoryClass} ${surfaceClass}" data-match-id="${match.id}" data-match-key="${matchKey}">
                 <div class="match-header">
                     <div class="tournament-info">
                         <div class="tournament-name">
@@ -941,6 +946,17 @@ const ScoresModule = {
             return 'surface-indoor';
         }
         return 'surface-hard';
+    },
+
+    getSurfaceLabel(match) {
+        const surfaceClass = this.getSurfaceClass(match);
+        const labels = {
+            'surface-hard': 'Hard',
+            'surface-clay': 'Clay',
+            'surface-grass': 'Grass',
+            'surface-indoor': 'Indoor'
+        };
+        return labels[surfaceClass] || 'Hard';
     },
 
     /**
@@ -1055,23 +1071,45 @@ const ScoresModule = {
         // Find match in live or recent matches, unless an override is provided
         let match = matchOverride;
         if (!match) {
-            match = AppState.liveScores[tour]?.find(m => m.id === matchId);
-            if (!match) {
-                match = AppState.recentMatches[tour]?.find(m => m.id === matchId);
+            const live = AppState.liveScores[tour] || [];
+            const recent = AppState.recentMatches[tour] || [];
+            const upcoming = AppState.upcomingMatches[tour] || [];
+            const demoLive = this.demoLiveMatches[tour] || [];
+            const demoRecent = this.demoRecentMatches[tour] || [];
+            const demoUpcoming = this.demoUpcomingMatches[tour] || [];
+            const allMatches = [...live, ...recent, ...upcoming, ...demoLive, ...demoRecent, ...demoUpcoming];
+            const source = String(context?.source || '').trim().toLowerCase();
+            const sourceMap = {
+                live: [...live, ...demoLive],
+                recent: [...recent, ...demoRecent],
+                upcoming: [...upcoming, ...demoUpcoming],
+            };
+
+            const key = String(context?.matchKey || '').trim();
+            if (key) {
+                if (sourceMap[source]) {
+                    match = sourceMap[source].find((m) => this.getMatchKey(m) === key);
+                }
+                if (!match) {
+                    match = allMatches.find((m) => this.getMatchKey(m) === key);
+                }
             }
+
             if (!match) {
-                match = AppState.upcomingMatches[tour]?.find(m => m.id === matchId);
-            }
-            if (!match) {
-                match = this.demoLiveMatches[tour]?.find(m => m.id === matchId) ||
-                       this.demoRecentMatches[tour]?.find(m => m.id === matchId) ||
-                       this.demoUpcomingMatches[tour]?.find(m => m.id === matchId);
+                const sourceList = sourceMap[source] || [];
+                match = sourceList.find((m) => String(m.id) === String(matchId))
+                    || live.find((m) => String(m.id) === String(matchId))
+                    || recent.find((m) => String(m.id) === String(matchId))
+                    || upcoming.find((m) => String(m.id) === String(matchId))
+                    || demoLive.find((m) => String(m.id) === String(matchId))
+                    || demoRecent.find((m) => String(m.id) === String(matchId))
+                    || demoUpcoming.find((m) => String(m.id) === String(matchId));
             }
         }
         
         if (!match) return;
         
-        // Generate match statistics (demo data)
+        // Generate match statistics (demo data for metrics only)
         const stats = this.generateMatchStats(match);
         
         const modal = document.getElementById('matchStatsModal');
@@ -1079,12 +1117,21 @@ const ScoresModule = {
         
         const isLive = match.status === 'live';
         const score = isLive ? match.score : (match.final_score || match.score);
+        stats.duration = this.resolveMatchTimeLabel(match, isLive);
         const resolvedWinner = !isLive ? this.getWinnerFromScore(match, score) : null;
         const tournamentName = context.tournament || match.tournament || 'Match Statistics';
         const roundName = match.round || context.round || '';
         const categoryLabel = this.getCategoryLabel(match.tournament_category);
         const categoryClass = window.TennisApp.Utils.getCategoryClass(match.tournament_category);
         const setLines = this.formatSetLines(score);
+        const player1ModalId = this.resolvePlayerModalId(match.player1);
+        const player2ModalId = this.resolvePlayerModalId(match.player2);
+        const radarP1Label = Utils?.formatPlayerName
+            ? Utils.formatPlayerName(match.player1?.name || 'Player 1')
+            : (match.player1?.name || 'Player 1');
+        const radarP2Label = Utils?.formatPlayerName
+            ? Utils.formatPlayerName(match.player2?.name || 'Player 2')
+            : (match.player2?.name || 'Player 2');
         
         content.innerHTML = `
             <div class="match-stats-title">
@@ -1095,7 +1142,7 @@ const ScoresModule = {
                 </div>
             </div>
             <div class="match-stats-hero">
-                <div class="match-stats-player-card ${resolvedWinner === 1 ? 'winner' : ''}">
+                <div class="match-stats-player-card ${resolvedWinner === 1 ? 'winner' : ''} ${player1ModalId ? 'clickable' : ''}" ${player1ModalId ? `data-player-id="${player1ModalId}" role="button" tabindex="0" title="Open player details"` : ''}>
                     <img class="player-hero-img" src="${Utils.getPlayerImage(match.player1)}" alt="${match.player1.name}">
                     <div class="player-hero-name">${match.player1.name}</div>
                     <div class="player-hero-meta">${Utils.getFlag(match.player1.country)} ${match.player1.country} • Rank ${match.player1.rank || '-'}</div>
@@ -1106,7 +1153,7 @@ const ScoresModule = {
                     </div>
                     ${stats.duration ? `<div class="duration">${stats.duration}</div>` : ''}
                 </div>
-                <div class="match-stats-player-card ${resolvedWinner === 2 ? 'winner' : ''}">
+                <div class="match-stats-player-card ${resolvedWinner === 2 ? 'winner' : ''} ${player2ModalId ? 'clickable' : ''}" ${player2ModalId ? `data-player-id="${player2ModalId}" role="button" tabindex="0" title="Open player details"` : ''}>
                     <img class="player-hero-img" src="${Utils.getPlayerImage(match.player2)}" alt="${match.player2.name}">
                     <div class="player-hero-name">${match.player2.name}</div>
                     <div class="player-hero-meta">${Utils.getFlag(match.player2.country)} ${match.player2.country} • Rank ${match.player2.rank || '-'}</div>
@@ -1133,9 +1180,57 @@ const ScoresModule = {
                     ${this.createStatRow('Total Points Won', stats.totalPoints.p1, stats.totalPoints.p2, stats.totalPoints.p1, stats.totalPoints.p2, 'higher')}
                 </div>
             </div>
+
+            <div class="match-stats-section match-radar-section">
+                <h4>Visual Comparison</h4>
+                <div class="match-radar-grid">
+                    <div class="match-radar-card">
+                        <div class="match-radar-head">
+                            <div class="match-radar-heading">Serve Radar</div>
+                            <div class="match-radar-legend">
+                                <span class="match-radar-legend-item p1"><span class="swatch"></span>${radarP1Label}</span>
+                                <span class="match-radar-legend-item p2"><span class="swatch"></span>${radarP2Label}</span>
+                            </div>
+                        </div>
+                        <div id="matchServeRadar" class="match-radar-canvas">
+                            <div class="match-radar-fallback">Loading radar...</div>
+                        </div>
+                    </div>
+                    <div class="match-radar-card">
+                        <div class="match-radar-head">
+                            <div class="match-radar-heading">Return Radar</div>
+                            <div class="match-radar-legend">
+                                <span class="match-radar-legend-item p1"><span class="swatch"></span>${radarP1Label}</span>
+                                <span class="match-radar-legend-item p2"><span class="swatch"></span>${radarP2Label}</span>
+                            </div>
+                        </div>
+                        <div id="matchReturnRadar" class="match-radar-canvas">
+                            <div class="match-radar-fallback">Loading radar...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         `;
+
+        content.querySelectorAll('.match-stats-player-card.clickable').forEach((card) => {
+            const openPlayer = () => {
+                const playerId = card.dataset.playerId;
+                const playerModule = window.TennisApp?.PlayerModule || window.PlayerModule;
+                if (playerId && playerModule?.showPlayerStats) {
+                    playerModule.showPlayerStats(playerId);
+                }
+            };
+            card.addEventListener('click', openPlayer);
+            card.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openPlayer();
+                }
+            });
+        });
         
         modal.classList.add('active');
+        this.renderMatchStatsRadars(match, stats);
     },
 
     /**
@@ -1156,8 +1251,10 @@ const ScoresModule = {
                     <div class="stat-label">${label}</div>
                     <div class="stat-value right ${p2Wins ? 'winner' : ''}">${val2}</div>
                     <div class="stat-bar dual">
-                        <div class="stat-bar-left" style="width: ${percent1}%"></div>
-                        <div class="stat-bar-right" style="width: ${percent2}%"></div>
+                        <div class="stat-bar-track">
+                            <div class="stat-bar-left" style="width: ${percent1}%"></div>
+                            <div class="stat-bar-right" style="width: ${percent2}%"></div>
+                        </div>
                     </div>
                 </div>
             `;
@@ -1172,6 +1269,202 @@ const ScoresModule = {
         }
     },
 
+    resolvePlayerModalId(player) {
+        const directId = player?.id
+            ?? player?.player_id
+            ?? player?.playerId
+            ?? player?.profile_id
+            ?? player?.profileId;
+        if (directId !== null && directId !== undefined && directId !== '') {
+            return String(directId);
+        }
+        const { AppState } = window.TennisApp || {};
+        const list = AppState?.rankings?.[AppState?.currentTour] || [];
+        if (!Array.isArray(list) || !player?.name) return '';
+        const normalize = (value) => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+        const targetName = normalize(player.name);
+        const targetCountry = normalize(player.country);
+        const exact = list.find((row) => normalize(row.name) === targetName && (!targetCountry || normalize(row.country) === targetCountry));
+        if (exact?.id !== undefined && exact?.id !== null) return String(exact.id);
+        const nameOnly = list.find((row) => normalize(row.name) === targetName);
+        if (nameOnly?.id !== undefined && nameOnly?.id !== null) return String(nameOnly.id);
+        return '';
+    },
+
+    getMatchKey(match) {
+        const normalize = (value) => String(value ?? '').trim().toLowerCase();
+        return [
+            normalize(match?.id),
+            normalize(match?.status),
+            normalize(this.sanitizeTournamentName(match?.tournament || '')),
+            normalize(match?.round),
+            normalize(match?.player1?.name),
+            normalize(match?.player2?.name),
+            normalize(match?.player1?.rank),
+            normalize(match?.player2?.rank),
+            normalize(match?.scheduled_time || match?.match_time || '')
+        ].join('|');
+    },
+
+    async ensurePlotly() {
+        if (window.Plotly) {
+            return window.Plotly;
+        }
+        if (this.plotlyLoadPromise) {
+            return this.plotlyLoadPromise;
+        }
+        this.plotlyLoadPromise = new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.plot.ly/plotly-2.35.2.min.js';
+            script.async = true;
+            script.onload = () => resolve(window.Plotly);
+            script.onerror = () => reject(new Error('Failed to load Plotly'));
+            document.head.appendChild(script);
+        });
+        return this.plotlyLoadPromise;
+    },
+
+    async renderMatchStatsRadars(match, stats) {
+        const { Utils } = window.TennisApp || {};
+        const p1NameRaw = match.player1?.name || 'Player 1';
+        const p2NameRaw = match.player2?.name || 'Player 2';
+        const p1Label = Utils?.formatPlayerName ? Utils.formatPlayerName(p1NameRaw) : p1NameRaw;
+        const p2Label = Utils?.formatPlayerName ? Utils.formatPlayerName(p2NameRaw) : p2NameRaw;
+
+        const serveMetrics = [
+            { label: 'Aces', p1: stats.aces.p1, p2: stats.aces.p2, better: 'higher', suffix: '' },
+            { label: 'Double Faults', p1: stats.doubleFaults.p1, p2: stats.doubleFaults.p2, better: 'lower', suffix: '' },
+            { label: '1st Serve %', p1: stats.firstServe.p1, p2: stats.firstServe.p2, better: 'higher', suffix: '%' },
+            { label: '1st Serve Pts Won', p1: stats.firstServeWon.p1, p2: stats.firstServeWon.p2, better: 'higher', suffix: '%' },
+            { label: '2nd Serve Pts Won', p1: stats.secondServeWon.p1, p2: stats.secondServeWon.p2, better: 'higher', suffix: '%' }
+        ];
+        const returnMetrics = [
+            { label: 'Break Pts Conv %', p1: stats.breakPointsRate.p1, p2: stats.breakPointsRate.p2, better: 'higher', suffix: '%' },
+            { label: 'Break Pts Won', p1: stats.breakPointsWon.p1, p2: stats.breakPointsWon.p2, better: 'higher', suffix: '' },
+            { label: 'Winners', p1: stats.winners.p1, p2: stats.winners.p2, better: 'higher', suffix: '' },
+            { label: 'Unforced Errors', p1: stats.unforcedErrors.p1, p2: stats.unforcedErrors.p2, better: 'lower', suffix: '' },
+            { label: 'Total Points', p1: stats.totalPoints.p1, p2: stats.totalPoints.p2, better: 'higher', suffix: '' }
+        ];
+
+        try {
+            const plotly = await this.ensurePlotly();
+            this.renderMatchRadarChart(plotly, 'matchServeRadar', serveMetrics, p1Label, p2Label);
+            this.renderMatchRadarChart(plotly, 'matchReturnRadar', returnMetrics, p1Label, p2Label);
+        } catch (error) {
+            console.error('Match radar rendering failed:', error);
+            ['matchServeRadar', 'matchReturnRadar'].forEach((id) => {
+                const container = document.getElementById(id);
+                if (container) {
+                    container.innerHTML = '<div class="match-radar-fallback">Radar unavailable</div>';
+                }
+            });
+        }
+    },
+
+    renderMatchRadarChart(plotly, containerId, metrics, player1Name, player2Name) {
+        const container = document.getElementById(containerId);
+        if (!container || !Array.isArray(metrics) || metrics.length === 0) {
+            return;
+        }
+        container.innerHTML = '';
+
+        const normalizePair = (aRaw, bRaw, better) => {
+            const a = Number(aRaw);
+            const b = Number(bRaw);
+            if (!Number.isFinite(a) || !Number.isFinite(b)) return [50, 50];
+            if (better === 'lower') {
+                const invA = 1 / (a + 1);
+                const invB = 1 / (b + 1);
+                const invTotal = invA + invB;
+                if (invTotal <= 0) return [50, 50];
+                return [
+                    Number(((invA / invTotal) * 100).toFixed(1)),
+                    Number(((invB / invTotal) * 100).toFixed(1))
+                ];
+            }
+            const total = a + b;
+            if (total <= 0) return [50, 50];
+            return [
+                Number(((a / total) * 100).toFixed(1)),
+                Number(((b / total) * 100).toFixed(1))
+            ];
+        };
+
+        const labels = metrics.map((metric) => metric.label);
+        const p1Display = metrics.map((metric) => `${metric.p1}${metric.suffix || ''}`);
+        const p2Display = metrics.map((metric) => `${metric.p2}${metric.suffix || ''}`);
+        const p1Norm = [];
+        const p2Norm = [];
+        metrics.forEach((metric) => {
+            const [n1, n2] = normalizePair(metric.p1, metric.p2, metric.better);
+            p1Norm.push(n1);
+            p2Norm.push(n2);
+        });
+
+        const closedLabels = labels.concat(labels[0]);
+        const p1Closed = p1Norm.concat(p1Norm[0]);
+        const p2Closed = p2Norm.concat(p2Norm[0]);
+        const p1DisplayClosed = p1Display.concat(p1Display[0]);
+        const p2DisplayClosed = p2Display.concat(p2Display[0]);
+
+        const traces = [
+            {
+                type: 'scatterpolar',
+                r: p1Closed,
+                theta: closedLabels,
+                name: player1Name,
+                line: { color: '#1E78C3', width: 3 },
+                marker: { color: '#1E78C3', size: 6 },
+                fill: 'toself',
+                fillcolor: 'rgba(30, 120, 195, 0.16)',
+                customdata: p1DisplayClosed,
+                hovertemplate: '%{theta}: %{customdata}<extra>' + player1Name + '</extra>'
+            },
+            {
+                type: 'scatterpolar',
+                r: p2Closed,
+                theta: closedLabels,
+                name: player2Name,
+                line: { color: '#15B294', width: 3 },
+                marker: { color: '#15B294', size: 6 },
+                fill: 'toself',
+                fillcolor: 'rgba(21, 178, 148, 0.15)',
+                customdata: p2DisplayClosed,
+                hovertemplate: '%{theta}: %{customdata}<extra>' + player2Name + '</extra>'
+            }
+        ];
+
+        const layout = {
+            autosize: true,
+            height: 370,
+            margin: { l: 36, r: 36, t: 4, b: 10 },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            showlegend: false,
+            polar: {
+                domain: { x: [0.08, 0.92], y: [0.04, 0.96] },
+                bgcolor: 'rgba(0,0,0,0)',
+                radialaxis: {
+                    visible: true,
+                    range: [0, 100],
+                    showticklabels: false,
+                    gridcolor: 'rgba(141, 199, 223, 0.38)',
+                    gridwidth: 1
+                },
+                angularaxis: {
+                    tickfont: { size: 9, color: '#ECF6FC' },
+                    gridcolor: 'rgba(141, 199, 223, 0.32)',
+                    linecolor: 'rgba(141, 199, 223, 0.32)'
+                }
+            }
+        };
+
+        plotly.react(container, traces, layout, { responsive: true, displayModeBar: false });
+        if (plotly.Plots && typeof plotly.Plots.resize === 'function') {
+            requestAnimationFrame(() => plotly.Plots.resize(container));
+        }
+    },
+
     /**
      * Generate demo match statistics
      */
@@ -1182,7 +1475,7 @@ const ScoresModule = {
         const breakP1Won = Math.floor(Math.random() * Math.max(2, breakP1Total - 1)) + 1;
         const breakP2Won = Math.floor(Math.random() * Math.max(2, breakP2Total - 1)) + 1;
         return {
-            duration: '2h 34m',
+            duration: '',
             aces: { p1: Math.floor(Math.random() * 12) + 3, p2: Math.floor(Math.random() * 12) + 3 },
             doubleFaults: { p1: Math.floor(Math.random() * 5), p2: Math.floor(Math.random() * 5) },
             firstServe: { p1: Math.floor(Math.random() * 15) + 55, p2: Math.floor(Math.random() * 15) + 55 },
@@ -1198,6 +1491,33 @@ const ScoresModule = {
             unforcedErrors: { p1: Math.floor(Math.random() * 15) + 15, p2: Math.floor(Math.random() * 15) + 15 },
             totalPoints: { p1: Math.floor(Math.random() * 30) + 80, p2: Math.floor(Math.random() * 30) + 80 }
         };
+    },
+
+    resolveMatchTimeLabel(match, isLive) {
+        const readText = (...values) => {
+            for (const value of values) {
+                if (value === null || value === undefined) continue;
+                const text = String(value).trim();
+                if (text) return text;
+            }
+            return '';
+        };
+
+        if (isLive) {
+            return readText(
+                match.match_time,
+                match.live_time,
+                match.elapsed_time,
+                match.time
+            );
+        }
+
+        return readText(
+            match.match_duration,
+            match.duration,
+            match.duration_text,
+            match.time
+        );
     },
 
     formatSetLines(score) {

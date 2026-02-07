@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n48.4%\n1st Return Points Won %\n36.0%\n2nd Return Points Won %\n65.2%\nBreak Points Converted\n55.6%\nReturn Games Won\n43.5%\nReturn Games Played\n23\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:11:17.169399+00:00",
+  "updated_at": "2026-02-07T11:58:07.120918+00:00",
   "records_tab": {
     "summary": [
       {
@@ -70,5 +70,170 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "MANILA 125",
+        "location": "Manila \u2022 Philippines",
+        "date_range": "26 Jan - 31 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 131,
+        "seed": null,
+        "wta_points_gain": 27.0,
+        "prize_money_won": 3450.0,
+        "draw": "32M/16Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Polina Kudermetova",
+            "opponent_country": "UZB",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-4",
+            "opponent_rank": 150
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Simona Waltert",
+            "opponent_country": "SUI",
+            "opponent_seed": 7,
+            "opponent_entry": "",
+            "score": "6-2, 3-6, 6-2",
+            "opponent_rank": 87
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Solana Sierra",
+            "opponent_country": "ARG",
+            "opponent_seed": 3,
+            "opponent_entry": "",
+            "score": "6-3, 6-4",
+            "opponent_rank": 63
+          }
+        ],
+        "summary": {
+          "rank": 131,
+          "seed": null,
+          "wta_points_gain": "+27",
+          "prize_money_won": "+$3,450",
+          "draw": "32M/16Q/16D"
+        }
+      },
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 131,
+        "seed": 21,
+        "wta_points_gain": 40.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Lilli Tagger",
+            "opponent_country": "AUT",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-0",
+            "opponent_rank": 155
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Harriet Dart",
+            "opponent_country": "GBR",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-0, 3-6, 6-3",
+            "opponent_rank": 170
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Sofia Costoulas",
+            "opponent_country": "BEL",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 143
+          },
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Elise Mertens",
+            "opponent_country": "BEL",
+            "opponent_seed": 21,
+            "opponent_entry": "",
+            "score": "7-5, 6-1",
+            "opponent_rank": 21
+          }
+        ],
+        "summary": {
+          "rank": 131,
+          "seed": 21,
+          "wta_points_gain": "+40",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "CANBERRA 125",
+        "location": "Canberra \u2022 Australia",
+        "date_range": "5 Jan - 10 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 131,
+        "seed": null,
+        "wta_points_gain": 15.0,
+        "prize_money_won": 3895.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Tamara Zidansek",
+            "opponent_country": "SLO",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "7-6(5), 2-6, 6-3",
+            "opponent_rank": 156
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Tina Smith",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-2, 6-2",
+            "opponent_rank": 328
+          }
+        ],
+        "summary": {
+          "rank": 131,
+          "seed": null,
+          "wta_points_gain": "+15",
+          "prize_money_won": "+$3,895",
+          "draw": "32M/32Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:58:07.120901+00:00"
   }
 }

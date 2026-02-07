@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n41.7%\n1st Return Points Won %\n32.5%\n2nd Return Points Won %\n55.4%\nBreak Points Converted\n56.7%\nReturn Games Won\n32.7%\nReturn Games Played\n52\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:04:04.444614+00:00",
+  "updated_at": "2026-02-07T11:52:10.382351+00:00",
   "records_tab": {
     "summary": [
       {
@@ -150,5 +150,127 @@
         "us_open": "R128"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 21,
+        "seed": 21,
+        "wta_points_gain": 240.0,
+        "prize_money_won": 310761.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Nikola Bartunkova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-0, 6-4",
+            "opponent_rank": 126
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Moyuka Uchijima",
+            "opponent_country": "JPN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-1",
+            "opponent_rank": 88
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Lanlana Tararudee",
+            "opponent_country": "THA",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "7-5, 6-1",
+            "opponent_rank": 131
+          }
+        ],
+        "summary": {
+          "rank": 21,
+          "seed": 21,
+          "wta_points_gain": "+240",
+          "prize_money_won": "+$310,761",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "UNITED CUP",
+        "location": "Perth + Sydney \u2022 Australia",
+        "date_range": "2 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 19,
+        "seed": 7,
+        "wta_points_gain": 150.0,
+        "prize_money_won": 312500.0,
+        "draw": "0M/0Q/0D",
+        "matches": [
+          {
+            "round": "Round 9",
+            "result": "W",
+            "opponent_name": "Lin Zhu",
+            "opponent_country": "CHN",
+            "opponent_seed": 18,
+            "opponent_entry": "",
+            "score": "6-2, 6-2",
+            "opponent_rank": 162
+          },
+          {
+            "round": "Round 9",
+            "result": "W",
+            "opponent_name": "Victoria Mboko",
+            "opponent_country": "CAN",
+            "opponent_seed": 2,
+            "opponent_entry": "",
+            "score": "6-3, 3-6, 6-3",
+            "opponent_rank": 18
+          },
+          {
+            "round": "Round 3",
+            "result": "W",
+            "opponent_name": "Barbora Krejcikova",
+            "opponent_country": "CZE",
+            "opponent_seed": 11,
+            "opponent_entry": "",
+            "score": "5-7, 6-1, 7-5",
+            "opponent_rank": 63
+          },
+          {
+            "round": "Round 2",
+            "result": "L",
+            "opponent_name": "Belinda Bencic",
+            "opponent_country": "SUI",
+            "opponent_seed": 16,
+            "opponent_entry": "",
+            "score": "6-3, 4-6, 7-6(0)",
+            "opponent_rank": 11
+          }
+        ],
+        "summary": {
+          "rank": 19,
+          "seed": 7,
+          "wta_points_gain": "+150",
+          "prize_money_won": "+$312,500",
+          "draw": "0M/0Q/0D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:52:10.382332+00:00"
   }
 }

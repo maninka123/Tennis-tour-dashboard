@@ -32,5 +32,140 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n45.3%\n1st Return Points Won %\n36.8%\n2nd Return Points Won %\n60.5%\nBreak Points Converted\n57.1%\nReturn Games Won\n42.1%\nReturn Games Played\n19\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:21:49.926058+00:00"
+  "updated_at": "2026-02-07T12:07:19.234437+00:00",
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "FUJAIRAH",
+        "location": "United Arab Emirates",
+        "date_range": "26 Jan - 1 Feb 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 159,
+        "seed": 4,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 926.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Carol Young Suh Lee",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 6-1",
+            "opponent_rank": 210
+          }
+        ],
+        "summary": {
+          "rank": 159,
+          "seed": 4,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$926",
+          "draw": "32M/32Q/16D"
+        }
+      },
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 159,
+        "seed": null,
+        "wta_points_gain": 2.0,
+        "prize_money_won": 26220.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Maria Lourdes Carle",
+            "opponent_country": "ARG",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-3",
+            "opponent_rank": 158
+          }
+        ],
+        "summary": {
+          "rank": 159,
+          "seed": null,
+          "wta_points_gain": "+2",
+          "prize_money_won": "+$26,220",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "CANBERRA 125",
+        "location": "Canberra \u2022 Australia",
+        "date_range": "5 Jan - 10 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 163,
+        "seed": null,
+        "wta_points_gain": 21.0,
+        "prize_money_won": 3895.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Joanna Garland",
+            "opponent_country": "TPE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "3-3",
+            "opponent_rank": 129
+          },
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Ena Shibahara",
+            "opponent_country": "JPN",
+            "opponent_seed": 11,
+            "opponent_entry": "",
+            "score": "4-6, 7-6(1), 6-2",
+            "opponent_rank": 190
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Destanee Aiava",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-7(5), 6-3, 6-3",
+            "opponent_rank": 235
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Sijia Wei",
+            "opponent_country": "CHN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-3",
+            "opponent_rank": 287
+          }
+        ],
+        "summary": {
+          "rank": 163,
+          "seed": null,
+          "wta_points_gain": "+21",
+          "prize_money_won": "+$3,895",
+          "draw": "32M/32Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:07:19.234420+00:00"
+  }
 }

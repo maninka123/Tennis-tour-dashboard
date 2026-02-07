@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n49.5%\n1st Return Points Won %\n42.9%\n2nd Return Points Won %\n60.7%\nBreak Points Converted\n51.0%\nReturn Games Won\n46.3%\nReturn Games Played\n54\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:02:27.593205+00:00",
+  "updated_at": "2026-02-07T11:50:54.678861+00:00",
   "records_tab": {
     "summary": [
       {
@@ -166,5 +166,127 @@
         "us_open": "QF"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 10,
+        "seed": 10,
+        "wta_points_gain": 70.0,
+        "prize_money_won": 145669.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "result": "L",
+            "opponent_name": "Nikola Bartunkova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-3, 0-6, 6-4",
+            "opponent_rank": 126
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Katie Boulter",
+            "opponent_country": "GBR",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-0, 7-5",
+            "opponent_rank": 113
+          }
+        ],
+        "summary": {
+          "rank": 10,
+          "seed": 10,
+          "wta_points_gain": "+70",
+          "prize_money_won": "+$145,669",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "UNITED CUP",
+        "location": "Perth + Sydney \u2022 Australia",
+        "date_range": "2 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 11,
+        "seed": 16,
+        "wta_points_gain": 500.0,
+        "prize_money_won": 786700.0,
+        "draw": "0M/0Q/0D",
+        "matches": [
+          {
+            "round": "Round 9",
+            "result": "W",
+            "opponent_name": "Leolia Jeanjean",
+            "opponent_country": "FRA",
+            "opponent_seed": 8,
+            "opponent_entry": "",
+            "score": "6-2, 6-4",
+            "opponent_rank": 102
+          },
+          {
+            "round": "Round 9",
+            "result": "W",
+            "opponent_name": "Jasmine Paolini",
+            "opponent_country": "ITA",
+            "opponent_seed": 3,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 8
+          },
+          {
+            "round": "Round 3",
+            "result": "W",
+            "opponent_name": "Solana Sierra",
+            "opponent_country": "ARG",
+            "opponent_seed": 14,
+            "opponent_entry": "",
+            "score": "6-2, 6-2",
+            "opponent_rank": 66
+          },
+          {
+            "round": "Round 2",
+            "result": "W",
+            "opponent_name": "Elise Mertens",
+            "opponent_country": "BEL",
+            "opponent_seed": 7,
+            "opponent_entry": "",
+            "score": "6-3, 4-6, 7-6(0)",
+            "opponent_rank": 19
+          },
+          {
+            "round": "Round 1",
+            "result": "W",
+            "opponent_name": "Iga Swiatek",
+            "opponent_country": "POL",
+            "opponent_seed": 9,
+            "opponent_entry": "",
+            "score": "3-6, 6-0, 6-3",
+            "opponent_rank": 2
+          }
+        ],
+        "summary": {
+          "rank": 11,
+          "seed": 16,
+          "wta_points_gain": "+500",
+          "prize_money_won": "+$786,700",
+          "draw": "0M/0Q/0D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:50:54.678843+00:00"
   }
 }

@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n46.1%\n1st Return Points Won %\n38.5%\n2nd Return Points Won %\n57.1%\nBreak Points Converted\n34.8%\nReturn Games Won\n40.0%\nReturn Games Played\n40\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:19:38.993512+00:00",
+  "updated_at": "2026-02-07T12:05:31.322422+00:00",
   "records_tab": {
     "summary": [
       {
@@ -94,5 +94,173 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "MANILA 125",
+        "location": "Manila \u2022 Philippines",
+        "date_range": "26 Jan - 31 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 87,
+        "seed": 7,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 1200.0,
+        "draw": "32M/16Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Lanlana Tararudee",
+            "opponent_country": "THA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 3-6, 6-2",
+            "opponent_rank": 131
+          }
+        ],
+        "summary": {
+          "rank": 87,
+          "seed": 7,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$1,200",
+          "draw": "32M/16Q/16D"
+        }
+      },
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 87,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Amanda Anisimova",
+            "opponent_country": "USA",
+            "opponent_seed": 4,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 4
+          }
+        ],
+        "summary": {
+          "rank": 87,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 86,
+        "seed": 9,
+        "wta_points_gain": 12.0,
+        "prize_money_won": 2260.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Renata Zarazua",
+            "opponent_country": "MEX",
+            "opponent_seed": 2,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 84
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Ava Beck",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-3, 6-2",
+            "opponent_rank": 1418
+          }
+        ],
+        "summary": {
+          "rank": 86,
+          "seed": 9,
+          "wta_points_gain": "+12",
+          "prize_money_won": "+$2,260",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "CANBERRA 125",
+        "location": "Canberra \u2022 Australia",
+        "date_range": "5 Jan - 10 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 88,
+        "seed": 1,
+        "wta_points_gain": 27.0,
+        "prize_money_won": 6800.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Darja Vidmanova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "3-6, 7-5, 6-3",
+            "opponent_rank": 145
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Dominika Salkova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-7(2), 7-6(0), 6-2",
+            "opponent_rank": 142
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Daria Snigur",
+            "opponent_country": "UKR",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 6-4",
+            "opponent_rank": 149
+          }
+        ],
+        "summary": {
+          "rank": 88,
+          "seed": 1,
+          "wta_points_gain": "+27",
+          "prize_money_won": "+$6,800",
+          "draw": "32M/32Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:05:31.322373+00:00"
   }
 }

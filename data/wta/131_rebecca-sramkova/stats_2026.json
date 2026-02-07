@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n37.8%\n1st Return Points Won %\n32.3%\n2nd Return Points Won %\n50.0%\nBreak Points Converted\n37.5%\nReturn Games Won\n21.4%\nReturn Games Played\n14\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:18:05.758554+00:00",
+  "updated_at": "2026-02-07T12:04:13.161663+00:00",
   "records_tab": {
     "summary": [
       {
@@ -142,5 +142,140 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 73,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Jelena Ostapenko",
+            "opponent_country": "LAT",
+            "opponent_seed": 24,
+            "opponent_entry": "",
+            "score": "6-4, 6-4",
+            "opponent_rank": 24
+          }
+        ],
+        "summary": {
+          "rank": 73,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 72,
+        "seed": null,
+        "wta_points_gain": 30.0,
+        "prize_money_won": 4285.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Taylah Preston",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-4, 6-1",
+            "opponent_rank": 204
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Varvara Gracheva",
+            "opponent_country": "FRA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 4-6, 6-2",
+            "opponent_rank": 74
+          }
+        ],
+        "summary": {
+          "rank": 72,
+          "seed": null,
+          "wta_points_gain": "+30",
+          "prize_money_won": "+$4,285",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 71,
+        "seed": 3,
+        "wta_points_gain": 25.0,
+        "prize_money_won": 11920.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Kamilla Rakhimova",
+            "opponent_country": "UZB",
+            "opponent_seed": 8,
+            "opponent_entry": "",
+            "score": "6-1, 6-2",
+            "opponent_rank": 91
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Lizette Cabrera",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-4, 6-2",
+            "opponent_rank": 275
+          },
+          {
+            "round": "Round of 64",
+            "result": "L",
+            "opponent_name": "Kimberly Birrell",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-4, 3-6, 6-3",
+            "opponent_rank": 106
+          }
+        ],
+        "summary": {
+          "rank": 71,
+          "seed": 3,
+          "wta_points_gain": "+25",
+          "prize_money_won": "+$11,920",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:04:13.161642+00:00"
   }
 }

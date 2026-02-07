@@ -524,8 +524,15 @@ const EventHandlers = {
             const matchCard = e.target.closest('.match-card');
             if (matchCard) {
                 const matchId = matchCard.dataset.matchId;
+                const matchKey = matchCard.dataset.matchKey;
+                let source = '';
+                if (matchCard.closest('.recent-matches-section')) {
+                    source = 'recent';
+                } else if (matchCard.closest('.live-scores-section')) {
+                    source = 'live';
+                }
                 if (matchId) {
-                    ScoresModule.showMatchStats(matchId);
+                    ScoresModule.showMatchStats(matchId, null, { matchKey, source });
                 }
             }
         });

@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n33.6%\n1st Return Points Won %\n27.3%\n2nd Return Points Won %\n48.5%\nBreak Points Converted\n37.5%\nReturn Games Won\n17.6%\nReturn Games Played\n17\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:08:18.837018+00:00",
+  "updated_at": "2026-02-07T11:55:35.426429+00:00",
   "records_tab": {
     "summary": [
       {
@@ -78,5 +78,120 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 97,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Anastasia Potapova",
+            "opponent_country": "AUT",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "3-6, 7-5, 6-2",
+            "opponent_rank": 55
+          }
+        ],
+        "summary": {
+          "rank": 97,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 95,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 1460.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Ella Seidel",
+            "opponent_country": "GER",
+            "opponent_seed": 7,
+            "opponent_entry": "",
+            "score": "4-6, 6-2, 6-2",
+            "opponent_rank": 78
+          }
+        ],
+        "summary": {
+          "rank": 95,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$1,460",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "UNITED CUP",
+        "location": "Perth + Sydney \u2022 Australia",
+        "date_range": "2 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 97,
+        "seed": 15,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 40000.0,
+        "draw": "0M/0Q/0D",
+        "matches": [
+          {
+            "round": "Round 9",
+            "result": "L",
+            "opponent_name": "Eva Lys",
+            "opponent_country": "GER",
+            "opponent_seed": 6,
+            "opponent_entry": "",
+            "score": "6-2, 6-2",
+            "opponent_rank": 39
+          },
+          {
+            "round": "Round 9",
+            "result": "L",
+            "opponent_name": "Iga Swiatek",
+            "opponent_country": "POL",
+            "opponent_seed": 9,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 2
+          }
+        ],
+        "summary": {
+          "rank": 97,
+          "seed": 15,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$40,000",
+          "draw": "0M/0Q/0D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:55:35.426415+00:00"
   }
 }

@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n42.7%\n1st Return Points Won %\n35.9%\n2nd Return Points Won %\n55.7%\nBreak Points Converted\n35.7%\nReturn Games Won\n30.6%\nReturn Games Played\n49\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:03:41.811123+00:00",
+  "updated_at": "2026-02-07T11:51:52.424716+00:00",
   "records_tab": {
     "summary": [
       {
@@ -134,5 +134,137 @@
         "us_open": "R32"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 19,
+        "seed": 19,
+        "wta_points_gain": 240.0,
+        "prize_money_won": 310761.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Magda Linette",
+            "opponent_country": "POL",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-1, 6-1",
+            "opponent_rank": 50
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Alycia Parks",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "4-6, 6-4, 6-4",
+            "opponent_rank": 99
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Jaqueline  Cristian",
+            "opponent_country": "ROU",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 7-6(6)",
+            "opponent_rank": 35
+          }
+        ],
+        "summary": {
+          "rank": 19,
+          "seed": 19,
+          "wta_points_gain": "+240",
+          "prize_money_won": "+$310,761",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 20,
+        "seed": 11,
+        "wta_points_gain": 195.0,
+        "prize_money_won": 77115.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Ekaterina Alexandrova",
+            "opponent_country": "RUS",
+            "opponent_seed": 7,
+            "opponent_entry": "",
+            "score": "6-4, 7-5",
+            "opponent_rank": 10
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Ajla Tomljanovic",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "4-6, 6-1, 7-6(5)",
+            "opponent_rank": 78
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "",
+            "opponent_country": "",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "",
+            "opponent_rank": 0
+          },
+          {
+            "round": "S",
+            "result": "L",
+            "opponent_name": "Aryna Sabalenka",
+            "opponent_country": "BLR",
+            "opponent_seed": 1,
+            "opponent_entry": "",
+            "score": "6-3, 6-4",
+            "opponent_rank": 1
+          },
+          {
+            "round": "Q",
+            "result": "W",
+            "opponent_name": "Elena Rybakina",
+            "opponent_country": "KAZ",
+            "opponent_seed": 3,
+            "opponent_entry": "",
+            "score": "6-2, 2-6, 6-4",
+            "opponent_rank": 5
+          }
+        ],
+        "summary": {
+          "rank": 20,
+          "seed": 11,
+          "wta_points_gain": "+195",
+          "prize_money_won": "+$77,115",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:51:52.424688+00:00"
   }
 }

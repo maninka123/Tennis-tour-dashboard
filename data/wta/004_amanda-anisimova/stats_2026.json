@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n44.5%\n1st Return Points Won %\n33.8%\n2nd Return Points Won %\n66.7%\nBreak Points Converted\n50.0%\nReturn Games Won\n35.3%\nReturn Games Played\n17\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:01:50.379566+00:00",
+  "updated_at": "2026-02-07T11:50:27.077579+00:00",
   "records_tab": {
     "summary": [
       {
@@ -142,5 +142,137 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 4,
+        "seed": 4,
+        "wta_points_gain": 430.0,
+        "prize_money_won": 485565.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Xinyu Wang",
+            "opponent_country": "CHN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(4), 6-4",
+            "opponent_rank": 46
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Peyton Stearns",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-1, 6-4",
+            "opponent_rank": 68
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Katerina Siniakova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-1, 6-4",
+            "opponent_rank": 45
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Simona Waltert",
+            "opponent_country": "SUI",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 87
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Jessica Pegula",
+            "opponent_country": "USA",
+            "opponent_seed": 6,
+            "opponent_entry": "",
+            "score": "6-2, 7-6(1)",
+            "opponent_rank": 6
+          }
+        ],
+        "summary": {
+          "rank": 4,
+          "seed": 4,
+          "wta_points_gain": "+430",
+          "prize_money_won": "+$485,565",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 3,
+        "seed": 2,
+        "wta_points_gain": 60.0,
+        "prize_money_won": 19909.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Marta Kostyuk",
+            "opponent_country": "UKR",
+            "opponent_seed": 16,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 26
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Kimberly Birrell",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-1, 6-3",
+            "opponent_rank": 106
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "",
+            "opponent_country": "",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "",
+            "opponent_rank": 0
+          }
+        ],
+        "summary": {
+          "rank": 3,
+          "seed": 2,
+          "wta_points_gain": "+60",
+          "prize_money_won": "+$19,909",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:50:27.077545+00:00"
   }
 }

@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n43.3%\n1st Return Points Won %\n37.3%\n2nd Return Points Won %\n53.7%\nBreak Points Converted\n42.4%\nReturn Games Won\n36.8%\nReturn Games Played\n38\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:15:32.876140+00:00",
+  "updated_at": "2026-02-07T12:02:05.870827+00:00",
   "records_tab": {
     "summary": [
       {
@@ -102,5 +102,97 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 66,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Anna Kalinskaya",
+            "opponent_country": "RUS",
+            "opponent_seed": 31,
+            "opponent_entry": "",
+            "score": "7-6(3), 6-1",
+            "opponent_rank": 33
+          }
+        ],
+        "summary": {
+          "rank": 66,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "AUCKLAND",
+        "location": "Auckland \u2022 New Zealand",
+        "date_range": "5 Jan - 11 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 68,
+        "seed": null,
+        "wta_points_gain": 54.0,
+        "prize_money_won": 7025.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Ella Seidel",
+            "opponent_country": "GER",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-1",
+            "opponent_rank": 84
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Janice Tjen",
+            "opponent_country": "INA",
+            "opponent_seed": 6,
+            "opponent_entry": "",
+            "score": "6-1, 6-7(4), 6-3",
+            "opponent_rank": 54
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Elina Svitolina",
+            "opponent_country": "UKR",
+            "opponent_seed": 1,
+            "opponent_entry": "",
+            "score": "6-4, 6-7(2), 7-6(5)",
+            "opponent_rank": 13
+          }
+        ],
+        "summary": {
+          "rank": 68,
+          "seed": null,
+          "wta_points_gain": "+54",
+          "prize_money_won": "+$7,025",
+          "draw": "32M/24Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:02:05.870794+00:00"
   }
 }

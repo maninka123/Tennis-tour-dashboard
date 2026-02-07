@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n40.1%\n1st Return Points Won %\n31.2%\n2nd Return Points Won %\n52.2%\nBreak Points Converted\n34.0%\nReturn Games Won\n25.0%\nReturn Games Played\n43\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:12:46.659654+00:00",
+  "updated_at": "2026-02-07T11:59:20.388960+00:00",
   "records_tab": {
     "summary": [
       {
@@ -94,5 +94,170 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "MANILA 125",
+        "location": "Manila \u2022 Philippines",
+        "date_range": "26 Jan - 31 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 150,
+        "seed": null,
+        "wta_points_gain": 15.0,
+        "prize_money_won": 2000.0,
+        "draw": "32M/16Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Lanlana Tararudee",
+            "opponent_country": "THA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-4",
+            "opponent_rank": 131
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Miho Kuramochi",
+            "opponent_country": "JPN",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-3, 7-5",
+            "opponent_rank": 364
+          }
+        ],
+        "summary": {
+          "rank": 150,
+          "seed": null,
+          "wta_points_gain": "+15",
+          "prize_money_won": "+$2,000",
+          "draw": "32M/16Q/16D"
+        }
+      },
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 150,
+        "seed": null,
+        "wta_points_gain": 70.0,
+        "prize_money_won": 145669.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "result": "L",
+            "opponent_name": "Clara Tauson",
+            "opponent_country": "DEN",
+            "opponent_seed": 14,
+            "opponent_entry": "",
+            "score": "6-3, 3-6, 7-5",
+            "opponent_rank": 14
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Guiomar Maristany Zuleta De Reales",
+            "opponent_country": "ESP",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-2, 6-3",
+            "opponent_rank": 185
+          }
+        ],
+        "summary": {
+          "rank": 150,
+          "seed": null,
+          "wta_points_gain": "+70",
+          "prize_money_won": "+$145,669",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "CANBERRA 125",
+        "location": "Canberra \u2022 Australia",
+        "date_range": "5 Jan - 10 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 167,
+        "seed": 3,
+        "wta_points_gain": 81.0,
+        "prize_money_won": 19700.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Final",
+            "result": "L",
+            "opponent_name": "Joanna Garland",
+            "opponent_country": "TPE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-2",
+            "opponent_rank": 129
+          },
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Lola Radivojevic",
+            "opponent_country": "SRB",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 7-6(1)",
+            "opponent_rank": 137
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Alina Korneeva",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 6-3",
+            "opponent_rank": 210
+          },
+          {
+            "round": "S",
+            "result": "W",
+            "opponent_name": "Himeno Sakatsume",
+            "opponent_country": "JPN",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "7-5, 6-2",
+            "opponent_rank": 151
+          },
+          {
+            "round": "Q",
+            "result": "W",
+            "opponent_name": "Yue Yuan",
+            "opponent_country": "CHN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-1, 6-0",
+            "opponent_rank": 135
+          }
+        ],
+        "summary": {
+          "rank": 167,
+          "seed": 3,
+          "wta_points_gain": "+81",
+          "prize_money_won": "+$19,700",
+          "draw": "32M/32Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:59:20.388941+00:00"
   }
 }

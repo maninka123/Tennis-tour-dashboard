@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n42.3%\n1st Return Points Won %\n29.7%\n2nd Return Points Won %\n62.9%\nBreak Points Converted\n88.9%\nReturn Games Won\n29.6%\nReturn Games Played\n27\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:05:47.188801+00:00",
+  "updated_at": "2026-02-07T11:53:35.809402+00:00",
   "records_tab": {
     "summary": [
       {
@@ -214,5 +214,150 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 41,
+        "seed": null,
+        "wta_points_gain": 70.0,
+        "prize_money_won": 145669.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "result": "L",
+            "opponent_name": "Naomi Osaka",
+            "opponent_country": "JPN",
+            "opponent_seed": 16,
+            "opponent_entry": "",
+            "score": "6-3, 4-6, 6-2",
+            "opponent_rank": 17
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Eva Lys",
+            "opponent_country": "GER",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "3-6, 6-4, 6-3",
+            "opponent_rank": 39
+          }
+        ],
+        "summary": {
+          "rank": 41,
+          "seed": null,
+          "wta_points_gain": "+70",
+          "prize_money_won": "+$145,669",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "ADELAIDE",
+        "location": "Adelaide \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 41,
+        "seed": 2,
+        "wta_points_gain": 25.0,
+        "prize_money_won": 8600.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Kamilla Rakhimova",
+            "opponent_country": "UZB",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(5), 6-3",
+            "opponent_rank": 91
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Ulrikke Eikeri",
+            "opponent_country": "NOR",
+            "opponent_seed": null,
+            "opponent_entry": "A",
+            "score": "6-3, 6-3",
+            "opponent_rank": 9999
+          }
+        ],
+        "summary": {
+          "rank": 41,
+          "seed": 2,
+          "wta_points_gain": "+25",
+          "prize_money_won": "+$8,600",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 41,
+        "seed": null,
+        "wta_points_gain": 60.0,
+        "prize_money_won": 19909.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Aryna Sabalenka",
+            "opponent_country": "BLR",
+            "opponent_seed": 1,
+            "opponent_entry": "",
+            "score": "6-3, 6-3",
+            "opponent_rank": 1
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Jelena Ostapenko",
+            "opponent_country": "LAT",
+            "opponent_seed": 14,
+            "opponent_entry": "",
+            "score": "6-2, 7-6(5)",
+            "opponent_rank": 23
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Anastasia Pavlyuchenkova",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-1",
+            "opponent_rank": 44
+          }
+        ],
+        "summary": {
+          "rank": 41,
+          "seed": null,
+          "wta_points_gain": "+60",
+          "prize_money_won": "+$19,909",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:53:35.809370+00:00"
   }
 }

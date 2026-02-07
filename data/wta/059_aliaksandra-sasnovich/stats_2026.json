@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n49.2%\n1st Return Points Won %\n43.7%\n2nd Return Points Won %\n59.4%\nBreak Points Converted\n43.8%\nReturn Games Won\n48.3%\nReturn Games Played\n29\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:08:50.731977+00:00",
+  "updated_at": "2026-02-07T11:56:00.860097+00:00",
   "records_tab": {
     "summary": [
       {
@@ -166,5 +166,147 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 104,
+        "seed": null,
+        "wta_points_gain": 40.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Daria Snigur",
+            "opponent_country": "UKR",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 0-6, 6-2",
+            "opponent_rank": 136
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Kathinka Von Deichmann",
+            "opponent_country": "LIE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 7-6(4)",
+            "opponent_rank": 258
+          },
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Jasmine Paolini",
+            "opponent_country": "ITA",
+            "opponent_seed": 7,
+            "opponent_entry": "",
+            "score": "6-1, 6-2",
+            "opponent_rank": 8
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Ksenia Efremova",
+            "opponent_country": "FRA",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-3, 6-1",
+            "opponent_rank": 583
+          }
+        ],
+        "summary": {
+          "rank": 104,
+          "seed": null,
+          "wta_points_gain": "+40",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 113,
+        "seed": 12,
+        "wta_points_gain": 85.0,
+        "prize_money_won": 19909.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Maria Timofeeva",
+            "opponent_country": "UZB",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 3-6, 6-2",
+            "opponent_rank": 138
+          },
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Liudmila Samsonova",
+            "opponent_country": "RUS",
+            "opponent_seed": 10,
+            "opponent_entry": "",
+            "score": "6-4, 6-4",
+            "opponent_rank": 17
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Viktoriya Tomova",
+            "opponent_country": "BUL",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 6-2",
+            "opponent_rank": 128
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Clara Tauson",
+            "opponent_country": "DEN",
+            "opponent_seed": 8,
+            "opponent_entry": "",
+            "score": "6-2, 6-3",
+            "opponent_rank": 14
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Anna Blinkova",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-5, 6-1",
+            "opponent_rank": 61
+          }
+        ],
+        "summary": {
+          "rank": 113,
+          "seed": 12,
+          "wta_points_gain": "+85",
+          "prize_money_won": "+$19,909",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:56:00.860076+00:00"
   }
 }

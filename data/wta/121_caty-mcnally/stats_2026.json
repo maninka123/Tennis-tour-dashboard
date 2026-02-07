@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n42.4%\n1st Return Points Won %\n36.7%\n2nd Return Points Won %\n56.0%\nBreak Points Converted\n71.4%\nReturn Games Won\n33.3%\nReturn Games Played\n15\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:16:53.218978+00:00",
+  "updated_at": "2026-02-07T12:03:11.788614+00:00",
   "records_tab": {
     "summary": [
       {
@@ -126,5 +126,140 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 85,
+        "seed": null,
+        "wta_points_gain": 70.0,
+        "prize_money_won": 145669.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "result": "L",
+            "opponent_name": "Victoria Mboko",
+            "opponent_country": "CAN",
+            "opponent_seed": 17,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 16
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Himeno Sakatsume",
+            "opponent_country": "JPN",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-3, 6-1",
+            "opponent_rank": 140
+          }
+        ],
+        "summary": {
+          "rank": 85,
+          "seed": null,
+          "wta_points_gain": "+70",
+          "prize_money_won": "+$145,669",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 83,
+        "seed": 6,
+        "wta_points_gain": 18.0,
+        "prize_money_won": 3065.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Julia Grabher",
+            "opponent_country": "AUT",
+            "opponent_seed": 11,
+            "opponent_entry": "",
+            "score": "6-2, 6-4",
+            "opponent_rank": 92
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Kaja Juvan",
+            "opponent_country": "SLO",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 7-6(7)",
+            "opponent_rank": 97
+          },
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Solana Sierra",
+            "opponent_country": "ARG",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "1-6, 6-4, 6-1",
+            "opponent_rank": 64
+          }
+        ],
+        "summary": {
+          "rank": 83,
+          "seed": 6,
+          "wta_points_gain": "+18",
+          "prize_money_won": "+$3,065",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "AUCKLAND",
+        "location": "Auckland \u2022 New Zealand",
+        "date_range": "5 Jan - 11 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 83,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 3065.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Xinyu Wang",
+            "opponent_country": "CHN",
+            "opponent_seed": 7,
+            "opponent_entry": "",
+            "score": "2-6, 6-3, 7-5",
+            "opponent_rank": 57
+          }
+        ],
+        "summary": {
+          "rank": 83,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$3,065",
+          "draw": "32M/24Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:03:11.788595+00:00"
   }
 }

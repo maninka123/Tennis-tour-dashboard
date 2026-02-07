@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n25.0%\n1st Return Points Won %\n18.2%\n2nd Return Points Won %\n37.9%\nBreak Points Converted\n33.3%\nReturn Games Won\n6.7%\nReturn Games Played\n15\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:04:56.733286+00:00",
+  "updated_at": "2026-02-07T11:52:51.799748+00:00",
   "records_tab": {
     "summary": [
       {
@@ -86,5 +86,140 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 31,
+        "seed": 30,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Tereza Valentova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-4",
+            "opponent_rank": 54
+          }
+        ],
+        "summary": {
+          "rank": 31,
+          "seed": 30,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "ADELAIDE",
+        "location": "Adelaide \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 32,
+        "seed": null,
+        "wta_points_gain": 108.0,
+        "prize_money_won": 33475.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Ajla Tomljanovic",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "0-2",
+            "opponent_rank": 76
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Sofia Kenin",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(3), 6-4",
+            "opponent_rank": 28
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Mirra Andreeva",
+            "opponent_country": "RUS",
+            "opponent_seed": 3,
+            "opponent_entry": "",
+            "score": "6-2, 6-0",
+            "opponent_rank": 8
+          }
+        ],
+        "summary": {
+          "rank": 32,
+          "seed": null,
+          "wta_points_gain": "+108",
+          "prize_money_won": "+$33,475",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "UNITED CUP",
+        "location": "Perth + Sydney \u2022 Australia",
+        "date_range": "2 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 32,
+        "seed": 4,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 72000.0,
+        "draw": "0M/0Q/0D",
+        "matches": [
+          {
+            "round": "Round 9",
+            "result": "L",
+            "opponent_name": "Barbora Krejcikova",
+            "opponent_country": "CZE",
+            "opponent_seed": 11,
+            "opponent_entry": "",
+            "score": "6-4, 6-1",
+            "opponent_rank": 63
+          },
+          {
+            "round": "Round 3",
+            "result": "L",
+            "opponent_name": "Iga Swiatek",
+            "opponent_country": "POL",
+            "opponent_seed": 9,
+            "opponent_entry": "",
+            "score": "6-1, 6-1",
+            "opponent_rank": 2
+          }
+        ],
+        "summary": {
+          "rank": 32,
+          "seed": 4,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$72,000",
+          "draw": "0M/0Q/0D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:52:51.799733+00:00"
   }
 }

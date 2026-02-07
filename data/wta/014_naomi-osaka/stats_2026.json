@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n44.7%\n1st Return Points Won %\n38.5%\n2nd Return Points Won %\n56.0%\nBreak Points Converted\n31.6%\nReturn Games Won\n31.6%\nReturn Games Played\n19\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:03:04.483457+00:00",
+  "updated_at": "2026-02-07T11:51:23.086410+00:00",
   "records_tab": {
     "summary": [
       {
@@ -150,5 +150,107 @@
         "us_open": "R32"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 17,
+        "seed": 16,
+        "wta_points_gain": 130.0,
+        "prize_money_won": 212192.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Maddison Inglis",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "",
+            "opponent_rank": 168
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Sorana Cirstea",
+            "opponent_country": "ROU",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 4-6, 6-2",
+            "opponent_rank": 41
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Antonia Ruzic",
+            "opponent_country": "CRO",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 3-6, 6-4",
+            "opponent_rank": 65
+          }
+        ],
+        "summary": {
+          "rank": 17,
+          "seed": 16,
+          "wta_points_gain": "+130",
+          "prize_money_won": "+$212,192",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "UNITED CUP",
+        "location": "Perth + Sydney \u2022 Australia",
+        "date_range": "2 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 16,
+        "seed": 13,
+        "wta_points_gain": 32.0,
+        "prize_money_won": 170000.0,
+        "draw": "0M/0Q/0D",
+        "matches": [
+          {
+            "round": "Round 9",
+            "result": "L",
+            "opponent_name": "Maria Sakkari",
+            "opponent_country": "GRE",
+            "opponent_seed": 12,
+            "opponent_entry": "",
+            "score": "6-4, 6-2",
+            "opponent_rank": 51
+          },
+          {
+            "round": "Round 9",
+            "result": "W",
+            "opponent_name": "Katie Swan",
+            "opponent_country": "GBR",
+            "opponent_seed": 5,
+            "opponent_entry": "",
+            "score": "7-6(4), 6-1",
+            "opponent_rank": 270
+          }
+        ],
+        "summary": {
+          "rank": 16,
+          "seed": 13,
+          "wta_points_gain": "+32",
+          "prize_money_won": "+$170,000",
+          "draw": "0M/0Q/0D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:51:23.086389+00:00"
   }
 }
