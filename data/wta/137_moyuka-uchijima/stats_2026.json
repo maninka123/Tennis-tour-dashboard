@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n48.4%\n1st Return Points Won %\n47.4%\n2nd Return Points Won %\n51.7%\nBreak Points Converted\n52.9%\nReturn Games Won\n47.4%\nReturn Games Played\n19\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:18:48.809437+00:00",
+  "updated_at": "2026-02-07T12:04:48.204858+00:00",
   "records_tab": {
     "summary": [
       {
@@ -94,5 +94,130 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 88,
+        "seed": null,
+        "wta_points_gain": 70.0,
+        "prize_money_won": 145669.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "result": "L",
+            "opponent_name": "Elise Mertens",
+            "opponent_country": "BEL",
+            "opponent_seed": 21,
+            "opponent_entry": "",
+            "score": "6-3, 6-1",
+            "opponent_rank": 21
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Solana Sierra",
+            "opponent_country": "ARG",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-1",
+            "opponent_rank": 63
+          }
+        ],
+        "summary": {
+          "rank": 88,
+          "seed": null,
+          "wta_points_gain": "+70",
+          "prize_money_won": "+$145,669",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 87,
+        "seed": 10,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 1460.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Darja Semenistaja",
+            "opponent_country": "LAT",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(2), 7-6(6)",
+            "opponent_rank": 96
+          }
+        ],
+        "summary": {
+          "rank": 87,
+          "seed": 10,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$1,460",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "CANBERRA 125",
+        "location": "Canberra \u2022 Australia",
+        "date_range": "5 Jan - 10 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 89,
+        "seed": 2,
+        "wta_points_gain": 15.0,
+        "prize_money_won": 3895.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Ekaterine Gorgodze",
+            "opponent_country": "GEO",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-4, 6-1",
+            "opponent_rank": 176
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Madison Brengle",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-4",
+            "opponent_rank": 453
+          }
+        ],
+        "summary": {
+          "rank": 89,
+          "seed": 2,
+          "wta_points_gain": "+15",
+          "prize_money_won": "+$3,895",
+          "draw": "32M/32Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:04:48.204833+00:00"
   }
 }

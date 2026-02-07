@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n45.5%\n1st Return Points Won %\n39.4%\n2nd Return Points Won %\n60.5%\nBreak Points Converted\n36.4%\nReturn Games Won\n44.4%\nReturn Games Played\n18\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:02:19.981628+00:00",
+  "updated_at": "2026-02-07T11:50:49.644058+00:00",
   "records_tab": {
     "summary": [
       {
@@ -126,5 +126,107 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 8,
+        "seed": 7,
+        "wta_points_gain": 130.0,
+        "prize_money_won": 212192.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Iva Jovic",
+            "opponent_country": "USA",
+            "opponent_seed": 29,
+            "opponent_entry": "",
+            "score": "6-2, 7-6(3)",
+            "opponent_rank": 27
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Magdalena Frech",
+            "opponent_country": "POL",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 6-3",
+            "opponent_rank": 57
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Aliaksandra Sasnovich",
+            "opponent_country": "BLR",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-1, 6-2",
+            "opponent_rank": 104
+          }
+        ],
+        "summary": {
+          "rank": 8,
+          "seed": 7,
+          "wta_points_gain": "+130",
+          "prize_money_won": "+$212,192",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "UNITED CUP",
+        "location": "Perth + Sydney \u2022 Australia",
+        "date_range": "2 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 8,
+        "seed": 3,
+        "wta_points_gain": 32.0,
+        "prize_money_won": 301000.0,
+        "draw": "0M/0Q/0D",
+        "matches": [
+          {
+            "round": "Round 9",
+            "result": "L",
+            "opponent_name": "Belinda Bencic",
+            "opponent_country": "SUI",
+            "opponent_seed": 16,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 11
+          },
+          {
+            "round": "Round 9",
+            "result": "W",
+            "opponent_name": "Leolia Jeanjean",
+            "opponent_country": "FRA",
+            "opponent_seed": 8,
+            "opponent_entry": "",
+            "score": "6-2, 6-3",
+            "opponent_rank": 102
+          }
+        ],
+        "summary": {
+          "rank": 8,
+          "seed": 3,
+          "wta_points_gain": "+32",
+          "prize_money_won": "+$301,000",
+          "draw": "0M/0Q/0D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:50:49.644035+00:00"
   }
 }

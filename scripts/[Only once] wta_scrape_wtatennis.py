@@ -1,29 +1,50 @@
 #!/usr/bin/env python3
 import argparse
 import json
-import os
 import re
 import sys
 import time
-import io
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 
-try:
-    from PIL import Image
-except Exception:
-    Image = None
-
 BASE_URL = "https://www.wtatennis.com"
 PLAYERS_URL = f"{BASE_URL}/players"
+TENNIS_API_BASE = "https://api.wtatennis.com/tennis"
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/122.0.0.0 Safari/537.36"
 )
+
+# ============================================================
+# Configurable Defaults (edit here)
+# ============================================================
+DEFAULT_LIMIT = 200
+DEFAULT_OUT_DIR = "data/wta"
+DEFAULT_DELAY_SECONDS = 1.0
+DEFAULT_YEAR = 2026
+
+# Browser/requests behavior
+DEFAULT_HEADLESS = True
+DEFAULT_LOAD_MORE_CLICKS = 6
+DEFAULT_REQUEST_TIMEOUT_SECONDS = 30
+
+# Playwright waits (milliseconds)
+DEFAULT_WAIT_INITIAL_LIST_MS = 1200
+DEFAULT_WAIT_AFTER_LOAD_MORE_SCROLL_MS = 800
+DEFAULT_WAIT_AFTER_LOAD_MORE_CLICK_MS = 1500
+DEFAULT_WAIT_AFTER_FALLBACK_SCROLL_MS = 500
+DEFAULT_WAIT_STATS_OPEN_MS = 1500
+DEFAULT_WAIT_STATS_FILTER_MS = 1200
+DEFAULT_WAIT_RECORD_OPEN_MS = 1200
+
+# Runtime tunables (can be overridden by CLI in main)
+PLAYWRIGHT_HEADLESS = DEFAULT_HEADLESS
+PLAYWRIGHT_LOAD_MORE_CLICKS = DEFAULT_LOAD_MORE_CLICKS
+REQUEST_TIMEOUT_SECONDS = DEFAULT_REQUEST_TIMEOUT_SECONDS
 
 
 def green(text: str) -> str:
@@ -35,89 +56,25 @@ def slugify(text: str) -> str:
 
 
 def fetch_html(url: str, session: requests.Session) -> str:
-    resp = session.get(url, timeout=30, headers={"User-Agent": USER_AGENT})
+    resp = session.get(
+        url, timeout=REQUEST_TIMEOUT_SECONDS, headers={"User-Agent": USER_AGENT}
+    )
     resp.raise_for_status()
     return resp.text
 
 
-def _pick_src_from_srcset(srcset: str) -> str:
-    if not srcset:
-        return ""
-    parts = [p.strip() for p in srcset.split(",") if p.strip()]
-    if not parts:
-        return ""
-    # Use last (usually largest) entry
-    last = parts[-1].split(" ")[0].strip()
-    return last
-
-
-def _make_absolute(url: str) -> str:
-    if not url:
-        return ""
-    if url.startswith("//"):
-        return "https:" + url
-    if url.startswith("/"):
-        return BASE_URL + url
-    return url
-
-
-def _extract_img_url_from_element(element) -> str:
-    if not element:
-        return ""
-    attrs = ["src", "data-src", "data-original", "data-lazy", "data-srcset", "srcset"]
-    for attr in attrs:
-        try:
-            val = element.get_attribute(attr)
-        except Exception:
-            val = None
-        if not val:
-            continue
-        if "srcset" in attr:
-            picked = _pick_src_from_srcset(val)
-            if picked:
-                return _make_absolute(picked)
-        return _make_absolute(val)
-    return ""
-
-
-def _choose_player_image(urls: List[str]) -> str:
-    if not urls:
-        return ""
-    # Prefer photoresources/torso/headshot and avoid flags
-    preferred = []
-    fallback = []
-    for url in urls:
-        if not url:
-            continue
-        lower = url.lower()
-        if "flag" in lower or "flags" in lower:
-            continue
-        if "photoresources" in lower or "photo-resources" in lower or "torso" in lower or "headshot" in lower:
-            preferred.append(url)
-        else:
-            fallback.append(url)
-    return preferred[0] if preferred else (fallback[0] if fallback else "")
-
-
-def _extract_bg_url_from_style(style: str) -> str:
-    if not style:
-        return ""
-    match = re.search(r'background-image\\s*:\\s*url\\([\"\\\']?([^\"\\\')]+)[\"\\\']?\\)', style, re.IGNORECASE)
-    return _make_absolute(match.group(1)) if match else ""
-
-
-def _extract_img_url_from_html(html: str) -> str:
-    # Prefer torso/headshot images from photoresources
-    matches = re.findall(r"https://photoresources\\.wtatennis\\.com[^\"\\s]+", html)
-    for m in matches:
-        if any(k in m.lower() for k in ["torso", "headshot", "profile"]):
-            return _make_absolute(m.rstrip(","))
-
-    # Fallback to first wtatennis image (avoid og:image and generic share images)
-    img_match = re.search(
-        r"(https://www\.wtatennis\.com/sites/default/files/[^\"\s]+)", html
-    )
-    return _make_absolute(img_match.group(1)) if img_match else ""
+def fetch_json(
+    url: str, session: requests.Session, headers: Optional[Dict[str, str]] = None
+) -> Dict:
+    req_headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "application/json",
+    }
+    if headers:
+        req_headers.update(headers)
+    resp = session.get(url, timeout=REQUEST_TIMEOUT_SECONDS, headers=req_headers)
+    resp.raise_for_status()
+    return resp.json()
 
 
 def extract_player_links_from_html(html: str) -> List[Tuple[str, str]]:
@@ -144,7 +101,7 @@ def _iso_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def get_players_with_playwright(limit: int) -> List[Tuple[str, str, str]]:
+def get_players_with_playwright(limit: int) -> List[Tuple[str, str]]:
     try:
         from playwright.sync_api import sync_playwright
     except Exception as exc:
@@ -152,16 +109,16 @@ def get_players_with_playwright(limit: int) -> List[Tuple[str, str, str]]:
 
     players = []
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=PLAYWRIGHT_HEADLESS)
         page = browser.new_page()
         page.goto(PLAYERS_URL, wait_until="domcontentloaded")
-        page.wait_for_timeout(1200)
+        page.wait_for_timeout(DEFAULT_WAIT_INITIAL_LIST_MS)
         _dismiss_cookie_banner(page)
 
         # Hard-click Load More several times to ensure full list
-        for _ in range(6):
+        for _ in range(max(0, PLAYWRIGHT_LOAD_MORE_CLICKS)):
             page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-            page.wait_for_timeout(800)
+            page.wait_for_timeout(DEFAULT_WAIT_AFTER_LOAD_MORE_SCROLL_MS)
             # Try normal click
             load_more = page.query_selector(
                 "button:has-text('Load More'), a:has-text('Load More')"
@@ -179,11 +136,11 @@ def get_players_with_playwright(limit: int) -> List[Tuple[str, str, str]]:
                         if (btn) btn.click();
                     })();
                 """)
-                page.wait_for_timeout(1500)
+                page.wait_for_timeout(DEFAULT_WAIT_AFTER_LOAD_MORE_CLICK_MS)
                 continue
             # Try scrolling a bit more to trigger lazy load
             page.evaluate("window.scrollTo(0, document.body.scrollHeight - 200)")
-            page.wait_for_timeout(500)
+            page.wait_for_timeout(DEFAULT_WAIT_AFTER_FALLBACK_SCROLL_MS)
 
         # After loading, collect all players
         anchors = page.query_selector_all('a[href^="/players/"]')
@@ -194,34 +151,14 @@ def get_players_with_playwright(limit: int) -> List[Tuple[str, str, str]]:
             if re.match(r"/players/\d+/", href):
                 parts = href.strip("/").split("/")
                 pid = parts[1]
-                img_url = ""
-                try:
-                    card = a.evaluate_handle("node => node.closest('article, li, div')")
-                    if card:
-                        urls = []
-                        imgs = card.query_selector_all("img")
-                        for img in imgs:
-                            urls.append(_extract_img_url_from_element(img))
-                        # Try background images on card/children
-                        style = card.get_attribute("style") or ""
-                        bg = _extract_bg_url_from_style(style)
-                        if bg:
-                            urls.append(bg)
-                        for el in card.query_selector_all("[style*='background-image']"):
-                            bg = _extract_bg_url_from_style(el.get_attribute("style") or "")
-                            if bg:
-                                urls.append(bg)
-                        img_url = _choose_player_image(urls)
-                except Exception:
-                    img_url = ""
-                if (pid, href, img_url) not in players:
-                    players.append((pid, href, img_url))
+                if (pid, href) not in players:
+                    players.append((pid, href))
 
         browser.close()
     return players[:limit]
 
 
-def get_players(limit: int) -> List[Tuple[str, str, str]]:
+def get_players(limit: int) -> List[Tuple[str, str]]:
     # Try playwright for full list (Load More is client-side)
     try:
         players = get_players_with_playwright(limit)
@@ -232,12 +169,12 @@ def get_players(limit: int) -> List[Tuple[str, str, str]]:
         session = requests.Session()
         html = fetch_html(PLAYERS_URL, session)
         links = extract_player_links_from_html(html)
-        return [(pid, path, "") for pid, path in links[:limit]]
+        return links[:limit]
     # Fallback if playwright returned empty
     session = requests.Session()
     html = fetch_html(PLAYERS_URL, session)
     links = extract_player_links_from_html(html)
-    return [(pid, path, "") for pid, path in links[:limit]]
+    return links[:limit]
 
 
 def _slice_section(text: str, start_label: str, next_labels: List[str]) -> str:
@@ -580,6 +517,307 @@ def _select_year_2026(page) -> None:
                     continue
 
 
+def _to_int(value: Any) -> Optional[int]:
+    try:
+        if value is None or value == "":
+            return None
+        return int(value)
+    except Exception:
+        return None
+
+
+def _to_float(value: Any) -> Optional[float]:
+    try:
+        if value is None or value == "":
+            return None
+        return float(value)
+    except Exception:
+        return None
+
+
+def _category_from_level(level: str) -> str:
+    upper = str(level or "").upper()
+    if "GS" in upper or "GRAND" in upper:
+        return "grand_slam"
+    if "1000" in upper or upper in {"PM", "P1"}:
+        return "masters_1000"
+    if "500" in upper or upper in {"P5"}:
+        return "atp_500"
+    if "250" in upper or upper in {"P2"}:
+        return "atp_250"
+    if "125" in upper or upper in {"P3"}:
+        return "atp_125"
+    if "FINALS" in upper or "FINAL" in upper:
+        return "finals"
+    if upper == "P":
+        return "masters_1000"
+    return "other"
+
+
+def _category_label(category: str) -> str:
+    labels = {
+        "grand_slam": "Grand Slam",
+        "masters_1000": "WTA 1000",
+        "atp_500": "WTA 500",
+        "atp_250": "WTA 250",
+        "atp_125": "WTA 125",
+        "finals": "WTA Finals",
+        "other": "Tour",
+    }
+    return labels.get(category, "Tour")
+
+
+def _surface_key(surface: str) -> str:
+    text = str(surface or "").lower()
+    if "grass" in text:
+        return "grass"
+    if "clay" in text:
+        return "clay"
+    if "indoor" in text:
+        return "indoor"
+    return "hard"
+
+
+def _format_money(value: Any) -> str:
+    numeric = _to_float(value)
+    if numeric is None:
+        return ""
+    sign = "+" if numeric >= 0 else "-"
+    return f"{sign}${abs(numeric):,.0f}"
+
+
+def _format_points(value: Any) -> str:
+    numeric = _to_float(value)
+    if numeric is None:
+        return ""
+    sign = "+" if numeric >= 0 else ""
+    if abs(numeric - round(numeric)) < 1e-9:
+        return f"{sign}{int(round(numeric))}"
+    return f"{sign}{numeric:.1f}"
+
+
+def _format_date_range(start_date: str, end_date: str) -> str:
+    def parse_date(value: str):
+        if not value:
+            return None
+        try:
+            return datetime.fromisoformat(str(value).replace("Z", "+00:00")).date()
+        except Exception:
+            try:
+                return datetime.fromisoformat(str(value)[:10]).date()
+            except Exception:
+                return None
+
+    start = parse_date(start_date)
+    end = parse_date(end_date)
+    if not start and not end:
+        return ""
+    if start and end:
+        if start.year == end.year:
+            return f"{start.strftime('%d %b').lstrip('0')} - {end.strftime('%d %b %Y').lstrip('0')}"
+        return f"{start.strftime('%d %b %Y').lstrip('0')} - {end.strftime('%d %b %Y').lstrip('0')}"
+    single = start or end
+    return single.strftime("%d %b %Y").lstrip("0")
+
+
+def _round_label(round_name: str, tourn_round: Any) -> str:
+    raw = str(round_name or "").strip()
+    upper = raw.upper()
+    if upper == "F":
+        return "Final"
+    if upper == "SF":
+        return "Semifinals"
+    if upper == "QF":
+        return "Quarterfinals"
+    m = re.match(r"^R(\d+)$", upper)
+    if m:
+        return f"Round of {m.group(1)}"
+    if raw:
+        return raw
+    round_num = _to_int(tourn_round)
+    if round_num is not None:
+        return f"Round {round_num}"
+    return "-"
+
+
+def _round_sort_value(round_name: str, tourn_round: Any) -> int:
+    upper = str(round_name or "").upper()
+    if upper == "F":
+        return 1000
+    if upper == "SF":
+        return 900
+    if upper == "QF":
+        return 800
+    m = re.match(r"^R(\d+)$", upper)
+    if m:
+        n = _to_int(m.group(1)) or 0
+        # Round of 16 > Round of 32 > Round of 64 > Round of 128
+        return 700 - n
+    return _to_int(tourn_round) or 0
+
+
+def _flip_score_for_player_perspective(score_text: str, player_side: int) -> str:
+    text = re.sub(r"\s+", " ", str(score_text or "")).strip()
+    if not text:
+        return ""
+    if player_side != 2:
+        return text.replace(" ", ", ")
+
+    parts = []
+    for token in text.split(" "):
+        m = re.match(r"^(\d+)-(\d+)(?:\((\d+)\))?$", token.strip())
+        if not m:
+            continue
+        left, right, tb = int(m.group(1)), int(m.group(2)), m.group(3)
+        left, right = right, left
+        if tb:
+            if left > right:
+                parts.append(f"{left}-{right}({tb})")
+            elif right > left:
+                parts.append(f"{left}({tb})-{right}")
+            else:
+                parts.append(f"{left}-{right}({tb})")
+        else:
+            parts.append(f"{left}-{right}")
+    return ", ".join(parts) if parts else text.replace(" ", ", ")
+
+
+def scrape_player_recent_matches(player_id: str, year: int, session: requests.Session) -> Dict[str, Any]:
+    url = f"{TENNIS_API_BASE}/players/{player_id}/matches?year={year}"
+    payload = fetch_json(url, session, headers={"account": "wta"},)
+    matches = payload.get("matches") if isinstance(payload, dict) else []
+    if not isinstance(matches, list):
+        return {"year": year, "tournaments": [], "updated_at": _iso_now()}
+
+    pid_int = _to_int(player_id)
+    grouped: Dict[str, Dict[str, Any]] = {}
+
+    for row in matches:
+        if not isinstance(row, dict):
+            continue
+        match_year = _to_int(row.get("tourn_year"))
+        if match_year is not None and match_year != year:
+            continue
+        if str(row.get("s_d_flag") or "S").upper() not in {"S", ""}:
+            continue
+
+        p1 = _to_int(row.get("player_1"))
+        p2 = _to_int(row.get("player_2"))
+        if pid_int is None or (p1 != pid_int and p2 != pid_int):
+            continue
+        player_side = 1 if p1 == pid_int else 2
+
+        tournament = row.get("tournament") if isinstance(row.get("tournament"), dict) else {}
+        group = tournament.get("tournamentGroup") if isinstance(tournament.get("tournamentGroup"), dict) else {}
+        tournament_name = str(row.get("TournamentName") or tournament.get("title") or group.get("name") or "Tournament").strip()
+        level = str(row.get("TournamentLevel") or tournament.get("level") or group.get("level") or "").strip()
+        category = _category_from_level(level)
+        category_label = _category_label(category)
+
+        surface = str(row.get("Surface") or tournament.get("surface") or "Hard").title()
+        surface_key = _surface_key(surface)
+
+        city = str(row.get("city") or tournament.get("city") or "").strip().title()
+        country = str(row.get("Country") or tournament.get("country") or "").strip().title()
+        location = " • ".join([v for v in [city, country] if v])
+
+        start_date = str(tournament.get("startDate") or row.get("StartDate") or "")
+        end_date = str(tournament.get("endDate") or "")
+        date_range = _format_date_range(start_date, end_date)
+
+        event_key = str(row.get("tourn_nbr") or tournament.get("liveScoringId") or f"{tournament_name}:{start_date}")
+        if event_key not in grouped:
+            draw_sizes = str(row.get("DrawSizes") or "").strip()
+            if not draw_sizes:
+                singles = _to_int(tournament.get("singlesDrawSize"))
+                doubles = _to_int(tournament.get("doublesDrawSize"))
+                if singles or doubles:
+                    draw_sizes = f"{singles or 0}M/{doubles or 0}D"
+
+            grouped[event_key] = {
+                "event_key": event_key,
+                "tournament": tournament_name,
+                "location": location,
+                "date_range": date_range,
+                "category": category,
+                "category_label": category_label,
+                "surface": surface.upper(),
+                "surface_key": surface_key,
+                "rank": _to_int(row.get("rank_1") if player_side == 1 else row.get("rank_2")),
+                "seed": _to_int(row.get("seed_1") if player_side == 1 else row.get("seed_2")),
+                "wta_points_gain": _to_float(row.get("points_1") if player_side == 1 else row.get("points_2")),
+                "prize_money_won": _to_float(row.get("PrizeWon")),
+                "draw": draw_sizes,
+                "start_date": start_date,
+                "matches": [],
+            }
+
+        opp = row.get("opponent") if isinstance(row.get("opponent"), dict) else {}
+        opponent_name = str(opp.get("fullName") or "").strip()
+        opponent_country = str(opp.get("countryCode") or "").strip().upper()
+        opponent_rank = _to_int(row.get("rank_2") if player_side == 1 else row.get("rank_1"))
+        opponent_seed = _to_int(row.get("seed_2") if player_side == 1 else row.get("seed_1"))
+        opponent_entry = str(row.get("entry_type_2") if player_side == 1 else row.get("entry_type_1") or "").strip().upper()
+
+        winner = _to_int(row.get("winner"))
+        if winner in (1, 2):
+            result = "W" if winner == player_side else "L"
+        else:
+            result = "-"
+
+        grouped[event_key]["matches"].append(
+            {
+                "round": _round_label(row.get("round_name"), row.get("tourn_round")),
+                "round_sort": _round_sort_value(row.get("round_name"), row.get("tourn_round")),
+                "result": result,
+                "opponent_name": opponent_name,
+                "opponent_country": opponent_country,
+                "opponent_seed": opponent_seed,
+                "opponent_entry": opponent_entry,
+                "score": _flip_score_for_player_perspective(row.get("scores"), player_side),
+                "opponent_rank": opponent_rank,
+            }
+        )
+
+        # Keep best available tournament-level values while iterating rows.
+        current_points = _to_float(row.get("points_1") if player_side == 1 else row.get("points_2"))
+        if current_points is not None:
+            prev_points = grouped[event_key].get("wta_points_gain")
+            if prev_points is None or current_points > prev_points:
+                grouped[event_key]["wta_points_gain"] = current_points
+        current_prize = _to_float(row.get("PrizeWon"))
+        if current_prize is not None:
+            prev_prize = grouped[event_key].get("prize_money_won")
+            if prev_prize is None or current_prize > prev_prize:
+                grouped[event_key]["prize_money_won"] = current_prize
+
+    tournaments = []
+    for event in grouped.values():
+        event["matches"].sort(key=lambda m: m.get("round_sort", 0), reverse=True)
+        for item in event["matches"]:
+            item.pop("round_sort", None)
+        event["summary"] = {
+            "rank": event.get("rank"),
+            "seed": event.get("seed"),
+            "wta_points_gain": _format_points(event.get("wta_points_gain")),
+            "prize_money_won": _format_money(event.get("prize_money_won")),
+            "draw": event.get("draw") or "",
+        }
+        event.pop("event_key", None)
+        event["_sort_start_date"] = event.get("start_date") or ""
+        event.pop("start_date", None)
+        tournaments.append(event)
+
+    tournaments.sort(key=lambda t: str(t.get("_sort_start_date") or ""), reverse=True)
+    for event in tournaments:
+        event.pop("_sort_start_date", None)
+    return {
+        "year": year,
+        "tournaments": tournaments,
+        "updated_at": _iso_now(),
+    }
+
+
 def scrape_player_stats(page, player_url: str) -> Dict[str, str]:
     try:
         _ = page
@@ -588,11 +826,11 @@ def scrape_player_stats(page, player_url: str) -> Dict[str, str]:
 
     stats_url = f"{player_url}/stats"
     page.goto(stats_url, wait_until="domcontentloaded")
-    page.wait_for_timeout(1500)
+    page.wait_for_timeout(DEFAULT_WAIT_STATS_OPEN_MS)
     _dismiss_cookie_banner(page)
     _click_if_exists(page, "button:has-text('Singles')")
     _select_year_2026(page)
-    page.wait_for_timeout(1200)
+    page.wait_for_timeout(DEFAULT_WAIT_STATS_FILTER_MS)
     text = page.inner_text("body")
     stats = parse_stats_from_text(text)
     return stats
@@ -613,111 +851,85 @@ def scrape_player_records(page, player_url: str) -> Dict[str, List[Dict[str, str
     # Fallback to stats page record tab
     stats_url = f"{player_url}/stats"
     page.goto(stats_url, wait_until="domcontentloaded")
-    page.wait_for_timeout(1200)
+    page.wait_for_timeout(DEFAULT_WAIT_RECORD_OPEN_MS)
     _dismiss_cookie_banner(page)
     _click_if_exists(page, "button:has-text('Record')")
     _click_if_exists(page, "button:has-text('Records')")
-    page.wait_for_timeout(1200)
+    page.wait_for_timeout(DEFAULT_WAIT_RECORD_OPEN_MS)
     text = page.inner_text("body")
     return parse_records_tab(text)
 
 
-# Note: We intentionally avoid pulling images from player pages.
-# Images should come from the players list page for consistency.
+def fetch_player_overview(player_id: str, session: requests.Session) -> Dict:
+    url = f"{TENNIS_API_BASE}/players/{player_id}/detailed"
+    return fetch_json(url, session, headers={"account": "wta"})
 
 
-def scrape_player_profile(player_url: str) -> Dict[str, str]:
+def scrape_player_profile(player_url: str, player_id: str) -> Dict[str, str]:
     session = requests.Session()
-    html = fetch_html(player_url, session)
-    # name (JSON-LD or fallback)
-    name = ""
-    json_ld_match = re.search(
-        r'<script type="application/ld\+json">([^<]+)</script>', html
+    overview = {}
+    try:
+        overview = fetch_player_overview(player_id, session)
+    except Exception:
+        overview = {}
+
+    bio = overview.get("bio", {}) if isinstance(overview, dict) else {}
+    player = overview.get("player", {}) if isinstance(overview, dict) else {}
+
+    name = (
+        player.get("fullName")
+        or f"{bio.get('firstname', '')} {bio.get('lastname', '')}".strip()
     )
-    if json_ld_match:
-        try:
-            json_ld = json.loads(json_ld_match.group(1))
-            name = json_ld.get("name", "") if isinstance(json_ld, dict) else ""
-        except Exception:
-            name = ""
-    if not name:
-        title_match = re.search(r"<title>([^<]+)</title>", html)
-        name = title_match.group(1).split("|")[0].strip() if title_match else ""
+    age = str(bio.get("age") or "")
+    height = str(bio.get("height") or "")
+    country = str(bio.get("countryname") or player.get("countryCode") or "")
+    plays = str(bio.get("playhand") or "")
 
-    # age
-    age_match = re.search(r"(\d{2})\s*yrs", html)
-    age = age_match.group(1) if age_match else ""
+    # Fallback when API payload is incomplete for a player.
+    if not name or not plays or not country or not height or not age:
+        html = fetch_html(player_url, session)
 
-    # height
-    height_match = re.search(r"(\d+'\s*\d+\".*?\(\d\.\d{2}m\))", html)
-    height = height_match.group(1) if height_match else ""
+        if not name:
+            json_ld_match = re.search(
+                r'<script type="application/ld\+json">([^<]+)</script>', html
+            )
+            if json_ld_match:
+                try:
+                    json_ld = json.loads(json_ld_match.group(1))
+                    if isinstance(json_ld, dict):
+                        name = json_ld.get("name", "") or name
+                except Exception:
+                    pass
+            if not name:
+                title_match = re.search(r"<title>([^<]+)</title>", html)
+                name = title_match.group(1).split("|")[0].strip() if title_match else ""
 
-    # plays
-    plays_match = re.search(r"Plays\s*([A-Za-z\-]+)", html)
-    plays = plays_match.group(1) if plays_match else ""
+        if not age:
+            age_match = re.search(r"(\d{2})\s*yrs", html)
+            age = age_match.group(1) if age_match else ""
 
-    # image (keep empty here; prefer players list image)
-    img_url = ""
+        if not height:
+            height_match = re.search(r"(\d+'\s*\d+\".*?\(\d\.\d{2}m\))", html)
+            height = height_match.group(1) if height_match else ""
 
-    # country
-    country_match = re.search(r'"country":"([^"]+)"', html)
-    country = country_match.group(1) if country_match else ""
+        if not plays:
+            plays_match = re.search(r"Plays\s*([A-Za-z\-]+(?:\s*[A-Za-z\-]+)*)", html)
+            plays = plays_match.group(1).strip() if plays_match else ""
+
+        if not country:
+            country_match = re.search(r'"country":"([^"]+)"', html)
+            country = country_match.group(1) if country_match else ""
+
     return {
         "name": name.strip(),
         "age": age,
         "country": country,
         "height": height,
         "plays": plays,
-        "image_url": img_url,
+        "image_url": "",
         "url": player_url,
         "updated_at": _iso_now(),
     }
-
-
-def _infer_ext(url: str, content_type: str) -> str:
-    ct = (content_type or "").lower()
-    if "jpeg" in ct or "jpg" in ct:
-        return ".jpg"
-    if "png" in ct:
-        return ".png"
-    if "webp" in ct:
-        return ".webp"
-    if "image" in ct:
-        return ".jpg"
-    for ext in [".jpg", ".jpeg", ".png", ".webp"]:
-        if url.lower().endswith(ext):
-            return ext if ext != ".jpeg" else ".jpg"
-    return ".jpg"
-
-
-def download_image(url: str, out_base: Path) -> Optional[Path]:
-    if not url:
-        return None
-    url = url.strip().rstrip(",")
-    resp = requests.get(
-        url,
-        timeout=30,
-        headers={
-            "User-Agent": USER_AGENT,
-            "Accept": "image/jpeg,image/png,image/*;q=0.8",
-            "Referer": BASE_URL,
-        },
-    )
-    if resp.status_code != 200:
-        return None
-    ext = _infer_ext(url, resp.headers.get("Content-Type", ""))
-    out_path = out_base.with_suffix(ext)
-    if ext == ".webp" and Image is not None:
-        try:
-            with Image.open(io.BytesIO(resp.content)) as img:
-                rgb = img.convert("RGB")
-                out_path = out_base.with_suffix(".jpg")
-                rgb.save(out_path, format="JPEG", quality=90)
-                return out_path
-        except Exception:
-            pass
-    out_path.write_bytes(resp.content)
-    return out_path
 
 
 def write_json(path: Path, data: Dict) -> None:
@@ -726,10 +938,33 @@ def write_json(path: Path, data: Dict) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--limit", type=int, default=200)
-    parser.add_argument("--out", default="data/wta")
-    parser.add_argument("--delay", type=float, default=1.0)
+    parser.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
+    parser.add_argument("--out", default=DEFAULT_OUT_DIR)
+    parser.add_argument("--delay", type=float, default=DEFAULT_DELAY_SECONDS)
+    parser.add_argument("--year", type=int, default=DEFAULT_YEAR)
+    parser.add_argument(
+        "--load-more-clicks",
+        type=int,
+        default=DEFAULT_LOAD_MORE_CLICKS,
+        help="How many times to click 'Load More' on the WTA players page",
+    )
+    parser.add_argument(
+        "--request-timeout",
+        type=int,
+        default=DEFAULT_REQUEST_TIMEOUT_SECONDS,
+        help="HTTP request timeout in seconds",
+    )
+    parser.add_argument(
+        "--headful",
+        action="store_true",
+        help="Run browser with UI (default is headless)",
+    )
     args = parser.parse_args()
+
+    global PLAYWRIGHT_HEADLESS, PLAYWRIGHT_LOAD_MORE_CLICKS, REQUEST_TIMEOUT_SECONDS
+    PLAYWRIGHT_HEADLESS = not args.headful
+    PLAYWRIGHT_LOAD_MORE_CLICKS = max(0, int(args.load_more_clicks))
+    REQUEST_TIMEOUT_SECONDS = max(5, int(args.request_timeout))
 
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -741,6 +976,12 @@ def main() -> int:
         return 1
 
     print(green(f"Found {total} players. Starting scrape..."))
+    print(
+        f"Config -> limit={args.limit}, year={args.year}, out='{args.out}', "
+        f"delay={args.delay}s, headless={PLAYWRIGHT_HEADLESS}, "
+        f"load_more_clicks={PLAYWRIGHT_LOAD_MORE_CLICKS}, "
+        f"request_timeout={REQUEST_TIMEOUT_SECONDS}s"
+    )
 
     try:
         from playwright.sync_api import sync_playwright
@@ -749,13 +990,15 @@ def main() -> int:
         return 1
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=PLAYWRIGHT_HEADLESS)
         page = browser.new_page()
 
-        for idx, (pid, path, list_image_url) in enumerate(players, 1):
+        api_session = requests.Session()
+
+        for idx, (pid, path) in enumerate(players, 1):
             player_url = f"{BASE_URL}{path}"
             try:
-                profile = scrape_player_profile(player_url)
+                profile = scrape_player_profile(player_url, pid)
                 name = profile.get("name") or f"player_{pid}"
                 slug = slugify(name)
                 folder = out_dir / f"{idx:03d}_{slug}"
@@ -765,15 +1008,12 @@ def main() -> int:
                 records_tab = scrape_player_records(page, player_url)
                 if records_tab.get("summary") or records_tab.get("yearly"):
                     stats["records_tab"] = records_tab
-
-                if list_image_url:
-                    profile["image_url"] = list_image_url
+                recent_matches_tab = scrape_player_recent_matches(pid, args.year, api_session)
+                if recent_matches_tab.get("tournaments"):
+                    stats["recent_matches_tab"] = recent_matches_tab
 
                 write_json(folder / "profile.json", profile)
                 write_json(folder / "stats_2026.json", stats)
-
-                if profile.get("image_url"):
-                    download_image(profile["image_url"], folder / "image")
 
             except Exception as exc:
                 err_path = out_dir / "errors.log"

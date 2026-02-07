@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n31.3%\n1st Return Points Won %\n11.8%\n2nd Return Points Won %\n51.5%\nBreak Points Converted\n25.0%\nReturn Games Won\n10.0%\nReturn Games Played\n10\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:04:18.657416+00:00",
+  "updated_at": "2026-02-07T11:52:23.342316+00:00",
   "records_tab": {
     "summary": [
       {
@@ -158,5 +158,87 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "ADELAIDE",
+        "location": "Adelaide \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 24,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 12700.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Tereza Valentova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "7-5, 3-2",
+            "opponent_rank": 60
+          }
+        ],
+        "summary": {
+          "rank": 24,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$12,700",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 23,
+        "seed": 14,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 13735.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Sorana Cirstea",
+            "opponent_country": "ROU",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 7-6(5)",
+            "opponent_rank": 41
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "",
+            "opponent_country": "",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "",
+            "opponent_rank": 0
+          }
+        ],
+        "summary": {
+          "rank": 23,
+          "seed": 14,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$13,735",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:52:23.342297+00:00"
   }
 }

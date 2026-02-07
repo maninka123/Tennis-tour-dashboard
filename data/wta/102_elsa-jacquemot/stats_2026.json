@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n31.1%\n1st Return Points Won %\n23.3%\n2nd Return Points Won %\n46.7%\nBreak Points Converted\n50.0%\nReturn Games Won\n12.5%\nReturn Games Played\n8\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:14:26.541087+00:00",
+  "updated_at": "2026-02-07T12:00:57.781684+00:00",
   "records_tab": {
     "summary": [
       {
@@ -118,5 +118,120 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 60,
+        "seed": null,
+        "wta_points_gain": 70.0,
+        "prize_money_won": 145669.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "result": "L",
+            "opponent_name": "Yulia Putintseva",
+            "opponent_country": "KAZ",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-1, 6-2",
+            "opponent_rank": 94
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Marta Kostyuk",
+            "opponent_country": "UKR",
+            "opponent_seed": 20,
+            "opponent_entry": "",
+            "score": "6-7(4), 7-6(4), 7-6(7)",
+            "opponent_rank": 20
+          }
+        ],
+        "summary": {
+          "rank": 60,
+          "seed": null,
+          "wta_points_gain": "+70",
+          "prize_money_won": "+$145,669",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 58,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 3065.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Magdalena Frech",
+            "opponent_country": "POL",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-0",
+            "opponent_rank": 57
+          }
+        ],
+        "summary": {
+          "rank": 58,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$3,065",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 56,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 11920.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "result": "L",
+            "opponent_name": "Ajla Tomljanovic",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-1, 6-3",
+            "opponent_rank": 78
+          }
+        ],
+        "summary": {
+          "rank": 56,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$11,920",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:00:57.781668+00:00"
   }
 }

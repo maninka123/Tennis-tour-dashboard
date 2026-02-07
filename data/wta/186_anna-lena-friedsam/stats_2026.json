@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n40.5%\n1st Return Points Won %\n34.5%\n2nd Return Points Won %\n54.2%\nBreak Points Converted\n50.0%\nReturn Games Won\n27.3%\nReturn Games Played\n11\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:25:39.011698+00:00",
+  "updated_at": "2026-02-07T12:10:09.950498+00:00",
   "records_tab": {
     "summary": [
       {
@@ -142,5 +142,87 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 156,
+        "seed": null,
+        "wta_points_gain": 2.0,
+        "prize_money_won": 26220.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Linda Fruhvirtova",
+            "opponent_country": "CZE",
+            "opponent_seed": 20,
+            "opponent_entry": "",
+            "score": "2-6, 6-2, 6-3",
+            "opponent_rank": 132
+          }
+        ],
+        "summary": {
+          "rank": 156,
+          "seed": null,
+          "wta_points_gain": "+2",
+          "prize_money_won": "+$26,220",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "AUCKLAND",
+        "location": "Auckland \u2022 New Zealand",
+        "date_range": "5 Jan - 11 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 153,
+        "seed": 8,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 1460.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Kristina Mladenovic",
+            "opponent_country": "FRA",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "7-6(5), 6-4",
+            "opponent_rank": 934
+          },
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Kristina Mladenovic",
+            "opponent_country": "FRA",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "7-6(5), 6-4",
+            "opponent_rank": 934
+          }
+        ],
+        "summary": {
+          "rank": 153,
+          "seed": 8,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$1,460",
+          "draw": "32M/24Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:10:09.950486+00:00"
   }
 }

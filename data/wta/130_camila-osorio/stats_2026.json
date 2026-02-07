@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n46.6%\n1st Return Points Won %\n36.4%\n2nd Return Points Won %\n63.6%\nBreak Points Converted\n66.7%\nReturn Games Won\n42.9%\nReturn Games Played\n14\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:17:57.957125+00:00",
+  "updated_at": "2026-02-07T12:04:07.678780+00:00",
   "records_tab": {
     "summary": [
       {
@@ -110,5 +110,183 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "MANILA 125",
+        "location": "Manila \u2022 Philippines",
+        "date_range": "26 Jan - 31 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 84,
+        "seed": 5,
+        "wta_points_gain": 125.0,
+        "prize_money_won": 15500.0,
+        "draw": "32M/16Q/16D",
+        "matches": [
+          {
+            "round": "Final",
+            "result": "W",
+            "opponent_name": "Donna Vekic",
+            "opponent_country": "CRO",
+            "opponent_seed": 4,
+            "opponent_entry": "",
+            "score": "2-6, 6-3, 7-5",
+            "opponent_rank": 72
+          },
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Mai Hontama",
+            "opponent_country": "JPN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 4-6, 6-2",
+            "opponent_rank": 244
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Sakura Hosogi",
+            "opponent_country": "JPN",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-4, 6-3",
+            "opponent_rank": 298
+          },
+          {
+            "round": "S",
+            "result": "W",
+            "opponent_name": "Solana Sierra",
+            "opponent_country": "ARG",
+            "opponent_seed": 3,
+            "opponent_entry": "",
+            "score": "6-0, 6-1",
+            "opponent_rank": 63
+          },
+          {
+            "round": "Q",
+            "result": "W",
+            "opponent_name": "Alexandra Eala",
+            "opponent_country": "PHI",
+            "opponent_seed": 2,
+            "opponent_entry": "W",
+            "score": "6-4, 6-4",
+            "opponent_rank": 49
+          }
+        ],
+        "summary": {
+          "rank": 84,
+          "seed": 5,
+          "wta_points_gain": "+125",
+          "prize_money_won": "+$15,500",
+          "draw": "32M/16Q/16D"
+        }
+      },
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 84,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Ann Li",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-7(5), 7-5",
+            "opponent_rank": 38
+          }
+        ],
+        "summary": {
+          "rank": 84,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 82,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 3065.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Emma Raducanu",
+            "opponent_country": "GBR",
+            "opponent_seed": 1,
+            "opponent_entry": "",
+            "score": "6-3, 7-6(2)",
+            "opponent_rank": 29
+          }
+        ],
+        "summary": {
+          "rank": 82,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$3,065",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "AUCKLAND",
+        "location": "Auckland \u2022 New Zealand",
+        "date_range": "5 Jan - 11 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 76,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 3065.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Petra Marcinko",
+            "opponent_country": "CRO",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 0-6, 7-6(2)",
+            "opponent_rank": 82
+          }
+        ],
+        "summary": {
+          "rank": 76,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$3,065",
+          "draw": "32M/24Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:04:07.678746+00:00"
   }
 }

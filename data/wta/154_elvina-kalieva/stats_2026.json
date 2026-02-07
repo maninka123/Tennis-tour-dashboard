@@ -32,5 +32,160 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n40.0%\n1st Return Points Won %\n38.6%\n2nd Return Points Won %\n43.8%\nBreak Points Converted\n37.5%\nReturn Games Won\n18.8%\nReturn Games Played\n16\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:20:56.552902+00:00"
+  "updated_at": "2026-02-07T12:06:37.433535+00:00",
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "SAN DIEGO",
+        "location": "United States",
+        "date_range": "26 Jan - 1 Feb 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 207,
+        "seed": 5,
+        "wta_points_gain": 100.0,
+        "prize_money_won": 15239.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Vivian Wolff",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 6-3",
+            "opponent_rank": 330
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Sara Daavettila",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 6-3",
+            "opponent_rank": 472
+          }
+        ],
+        "summary": {
+          "rank": 207,
+          "seed": 5,
+          "wta_points_gain": "+100",
+          "prize_money_won": "+$15,239",
+          "draw": "32M/32Q/16D"
+        }
+      },
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 207,
+        "seed": null,
+        "wta_points_gain": 30.0,
+        "prize_money_won": 54060.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Guiomar Maristany Zuleta De Reales",
+            "opponent_country": "ESP",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-5, 4-6, 6-4",
+            "opponent_rank": 185
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Ye-Xin Ma",
+            "opponent_country": "CHN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-2",
+            "opponent_rank": 225
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Sijia Wei",
+            "opponent_country": "CHN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "4-6, 6-2, 3-2",
+            "opponent_rank": 289
+          }
+        ],
+        "summary": {
+          "rank": 207,
+          "seed": null,
+          "wta_points_gain": "+30",
+          "prize_money_won": "+$54,060",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "CANBERRA 125",
+        "location": "Canberra \u2022 Australia",
+        "date_range": "5 Jan - 10 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 203,
+        "seed": 16,
+        "wta_points_gain": 6.0,
+        "prize_money_won": 2255.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Vera Zvonareva",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "5-7, 6-2, 6-2",
+            "opponent_rank": 658
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Nuria Parrizas Diaz",
+            "opponent_country": "ESP",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 250
+          },
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Ekaterine Gorgodze",
+            "opponent_country": "GEO",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-2, 6-7(2), 7-6(3)",
+            "opponent_rank": 176
+          }
+        ],
+        "summary": {
+          "rank": 203,
+          "seed": 16,
+          "wta_points_gain": "+6",
+          "prize_money_won": "+$2,255",
+          "draw": "32M/32Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:06:37.433512+00:00"
+  }
 }

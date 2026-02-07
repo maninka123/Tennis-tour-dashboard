@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n40.0%\n1st Return Points Won %\n39.0%\n2nd Return Points Won %\n41.9%\nBreak Points Converted\n71.4%\nReturn Games Won\n33.3%\nReturn Games Played\n15\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:10:01.632991+00:00",
+  "updated_at": "2026-02-07T11:57:03.919620+00:00",
   "records_tab": {
     "summary": [
       {
@@ -118,5 +118,130 @@
         "us_open": "R128"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "FUJAIRAH",
+        "location": "United Arab Emirates",
+        "date_range": "26 Jan - 1 Feb 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 122,
+        "seed": 2,
+        "wta_points_gain": 21.0,
+        "prize_money_won": 2573.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Anastasia Kulikova",
+            "opponent_country": "FIN",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-4, 6-4",
+            "opponent_rank": 514
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Anastasia Tikhonova",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 7-5",
+            "opponent_rank": 250
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Harriet Dart",
+            "opponent_country": "GBR",
+            "opponent_seed": 7,
+            "opponent_entry": "",
+            "score": "6-2, 6-1",
+            "opponent_rank": 170
+          }
+        ],
+        "summary": {
+          "rank": 122,
+          "seed": 2,
+          "wta_points_gain": "+21",
+          "prize_money_won": "+$2,573",
+          "draw": "32M/32Q/16D"
+        }
+      },
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 122,
+        "seed": 13,
+        "wta_points_gain": 2.0,
+        "prize_money_won": 26220.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Elena Pridankina",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 190
+          }
+        ],
+        "summary": {
+          "rank": 122,
+          "seed": 13,
+          "wta_points_gain": "+2",
+          "prize_money_won": "+$26,220",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "CANBERRA 125",
+        "location": "Canberra \u2022 Australia",
+        "date_range": "5 Jan - 10 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 122,
+        "seed": 6,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 2255.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Joanna Garland",
+            "opponent_country": "TPE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "5-7, 6-4, 6-2",
+            "opponent_rank": 129
+          }
+        ],
+        "summary": {
+          "rank": 122,
+          "seed": 6,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$2,255",
+          "draw": "32M/32Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:57:03.919603+00:00"
   }
 }

@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n41.5%\n1st Return Points Won %\n36.3%\n2nd Return Points Won %\n51.8%\nBreak Points Converted\n40.9%\nReturn Games Won\n25.0%\nReturn Games Played\n36\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:03:11.714966+00:00",
+  "updated_at": "2026-02-07T11:51:28.778228+00:00",
   "records_tab": {
     "summary": [
       {
@@ -190,5 +190,180 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 9,
+        "seed": 9,
+        "wta_points_gain": 240.0,
+        "prize_money_won": 310761.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Karolina Pliskova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-3",
+            "opponent_rank": 1057
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Ashlyn Krueger",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-1, 7-5",
+            "opponent_rank": 62
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Oleksandra Oliynykova",
+            "opponent_country": "UKR",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(6), 6-1",
+            "opponent_rank": 92
+          }
+        ],
+        "summary": {
+          "rank": 9,
+          "seed": 9,
+          "wta_points_gain": "+240",
+          "prize_money_won": "+$310,761",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "ADELAIDE",
+        "location": "Adelaide \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 9,
+        "seed": 2,
+        "wta_points_gain": 108.0,
+        "prize_money_won": 33475.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Tereza Valentova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-4, 6-1",
+            "opponent_rank": 60
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "",
+            "opponent_country": "",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "",
+            "opponent_rank": 0
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Victoria Mboko",
+            "opponent_country": "CAN",
+            "opponent_seed": 8,
+            "opponent_entry": "",
+            "score": "6-4, 4-6, 6-2",
+            "opponent_rank": 17
+          }
+        ],
+        "summary": {
+          "rank": 9,
+          "seed": 2,
+          "wta_points_gain": "+108",
+          "prize_money_won": "+$33,475",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 7,
+        "seed": 5,
+        "wta_points_gain": 108.0,
+        "prize_money_won": 37640.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Diana Shnaider",
+            "opponent_country": "RUS",
+            "opponent_seed": 12,
+            "opponent_entry": "",
+            "score": "6-7(5), 7-6(5), 7-6(4)",
+            "opponent_rank": 21
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Mccartney Kessler",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 31
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "",
+            "opponent_country": "",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "",
+            "opponent_rank": 0
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Aryna Sabalenka",
+            "opponent_country": "BLR",
+            "opponent_seed": 1,
+            "opponent_entry": "",
+            "score": "6-3, 6-3",
+            "opponent_rank": 1
+          }
+        ],
+        "summary": {
+          "rank": 7,
+          "seed": 5,
+          "wta_points_gain": "+108",
+          "prize_money_won": "+$37,640",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:51:28.778208+00:00"
   }
 }

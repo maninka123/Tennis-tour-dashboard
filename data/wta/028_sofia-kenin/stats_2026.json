@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n35.5%\n1st Return Points Won %\n25.8%\n2nd Return Points Won %\n52.7%\nBreak Points Converted\n53.8%\nReturn Games Won\n28.0%\nReturn Games Played\n25\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:04:49.679267+00:00",
+  "updated_at": "2026-02-07T11:52:46.243621+00:00",
   "records_tab": {
     "summary": [
       {
@@ -158,5 +158,120 @@
         "us_open": "R128"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 30,
+        "seed": 27,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Peyton Stearns",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 68
+          }
+        ],
+        "summary": {
+          "rank": 30,
+          "seed": 27,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "ADELAIDE",
+        "location": "Adelaide \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 28,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 12700.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Maya Joint",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(3), 6-4",
+            "opponent_rank": 32
+          }
+        ],
+        "summary": {
+          "rank": 28,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$12,700",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 28,
+        "seed": null,
+        "wta_points_gain": 32.0,
+        "prize_money_won": 13735.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Ekaterina Alexandrova",
+            "opponent_country": "RUS",
+            "opponent_seed": 7,
+            "opponent_entry": "",
+            "score": "7-6(2), 6-3",
+            "opponent_rank": 10
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Elena-Gabriela Ruse",
+            "opponent_country": "ROU",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-4, 4-6, 6-3",
+            "opponent_rank": 85
+          }
+        ],
+        "summary": {
+          "rank": 28,
+          "seed": null,
+          "wta_points_gain": "+32",
+          "prize_money_won": "+$13,735",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:52:46.243603+00:00"
   }
 }

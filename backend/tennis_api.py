@@ -105,7 +105,10 @@ import csv
 import re
 import unicodedata
 import difflib
-import time
+import shutil
+import subprocess
+import sys
+import zlib
 from pathlib import Path
 from config import Config
 
@@ -153,10 +156,7 @@ class TennisDataFetcher:
         self._wta_tournament_index = None
         self._wta_rankings_cache = None
         self._wta_rankings_index = None
-        self._wta_global_cache_fast_data = None
-        self._wta_global_cache_fast_at = 0.0
-        self._wta_global_cache_slow_data = None
-        self._wta_global_cache_slow_at = 0.0
+        self._wta_connections_map = None
 
     def _normalize_player_name(self, name):
         if not name:
@@ -173,6 +173,178 @@ class TennisDataFetcher:
         cleaned = re.sub(r"\s+(presented|powered)\s+by\s+.*$", "", str(name), flags=re.IGNORECASE).strip()
         return cleaned or str(name).strip()
 
+    def _wta_data_root(self):
+        return Path(__file__).resolve().parent.parent / 'data'
+
+    def _wta_rankings_csv_path(self):
+        return self._wta_data_root() / 'wta_live_ranking.csv'
+
+    def _wta_rankings_outdated_dir(self):
+        return self._wta_data_root() / 'wta_rankings_outdated'
+
+    def _wta_connections_file_path(self):
+        return self._wta_data_root() / 'wta_player_connections.json'
+
+    def _to_iso_utc(self, ts):
+        try:
+            return datetime.utcfromtimestamp(float(ts)).isoformat() + 'Z'
+        except Exception:
+            return None
+
+    def _stable_player_id_from_name(self, normalized_name, used_ids):
+        norm = normalized_name or "unknown-player"
+        base = 700000 + (zlib.crc32(norm.encode('utf-8')) % 100000)
+        candidate = int(base)
+        while candidate in used_ids:
+            candidate += 1
+        used_ids.add(candidate)
+        return candidate
+
+    def _persist_wta_player_connections(self, index):
+        try:
+            out_path = self._wta_connections_file_path()
+            payload = {
+                'updated_at': datetime.utcnow().isoformat() + 'Z',
+                'players': []
+            }
+            for player in index.get('players', []):
+                profile = player.get('profile') or {}
+                folder = player.get('folder') or ''
+                payload['players'].append({
+                    'player_id': player.get('player_id'),
+                    'name': player.get('name') or '',
+                    'normalized_name': player.get('norm') or '',
+                    'folder': folder,
+                    'profile_path': f"{folder}/profile.json" if folder else '',
+                    'stats_path': f"{folder}/stats_2026.json" if folder else '',
+                    'image_url': profile.get('image_url') or '',
+                    'profile_url': profile.get('url') or ''
+                })
+            payload['players'].sort(
+                key=lambda p: (
+                    p.get('player_id') if p.get('player_id') is not None else 10**9,
+                    p.get('normalized_name') or ''
+                )
+            )
+            out_path.write_text(json.dumps(payload, indent=2), encoding='utf-8')
+            by_norm = {}
+            by_player_id = {}
+            for row in payload['players']:
+                norm = (row.get('normalized_name') or '').strip()
+                pid = row.get('player_id')
+                if norm and norm not in by_norm:
+                    by_norm[norm] = row
+                if pid is not None:
+                    try:
+                        by_player_id[int(pid)] = row
+                    except Exception:
+                        pass
+            self._wta_connections_map = {
+                'by_norm': by_norm,
+                'by_player_id': by_player_id
+            }
+        except Exception:
+            # Non-critical, app can work without this file.
+            pass
+
+    def _load_wta_connections_map(self):
+        if self._wta_connections_map is not None:
+            return self._wta_connections_map
+
+        out = {'by_norm': {}, 'by_player_id': {}}
+        path = self._wta_connections_file_path()
+        if not path.exists():
+            self._wta_connections_map = out
+            return out
+        try:
+            payload = json.loads(path.read_text(encoding='utf-8'))
+            for row in payload.get('players', []):
+                norm = (row.get('normalized_name') or '').strip()
+                pid = row.get('player_id')
+                if norm and norm not in out['by_norm']:
+                    out['by_norm'][norm] = row
+                if pid is not None:
+                    try:
+                        out['by_player_id'][int(pid)] = row
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+        self._wta_connections_map = out
+        return out
+
+    def invalidate_wta_rankings_cache(self):
+        self._wta_rankings_cache = None
+        self._wta_rankings_index = None
+        self._wta_connections_map = None
+        for key in list(rankings_cache.keys()):
+            if str(key).startswith('rankings_wta'):
+                rankings_cache.pop(key, None)
+
+    def get_wta_rankings_status(self):
+        csv_path = self._wta_rankings_csv_path()
+        exists = csv_path.exists()
+        updated_at = None
+        created_at = None
+        size_bytes = 0
+        if exists:
+            stat = csv_path.stat()
+            size_bytes = stat.st_size
+            updated_at = self._to_iso_utc(stat.st_mtime)
+            birth_ts = getattr(stat, 'st_birthtime', None) or stat.st_ctime
+            created_at = self._to_iso_utc(birth_ts)
+        outdated_dir = self._wta_rankings_outdated_dir()
+        outdated_count = len(list(outdated_dir.glob('wta_live_ranking_*.csv'))) if outdated_dir.exists() else 0
+        return {
+            'exists': exists,
+            'path': str(csv_path),
+            'updated_at': updated_at,
+            'created_at': created_at,
+            'size_bytes': size_bytes,
+            'outdated_count': outdated_count
+        }
+
+    def refresh_wta_rankings_csv(self):
+        csv_path = self._wta_rankings_csv_path()
+        outdated_dir = self._wta_rankings_outdated_dir()
+        outdated_dir.mkdir(parents=True, exist_ok=True)
+        archived_path = None
+
+        if csv_path.exists():
+            stat = csv_path.stat()
+            birth_ts = getattr(stat, 'st_birthtime', None) or stat.st_ctime
+            timestamp = datetime.fromtimestamp(birth_ts).strftime('%Y%m%d_%H%M%S')
+            base_name = f"wta_live_ranking_{timestamp}"
+            archive_path = outdated_dir / f"{base_name}.csv"
+            suffix = 1
+            while archive_path.exists():
+                archive_path = outdated_dir / f"{base_name}_{suffix}.csv"
+                suffix += 1
+            shutil.copy2(csv_path, archive_path)
+            archived_path = str(archive_path)
+
+        script_path = Path(__file__).resolve().parent.parent / 'scripts' / 'wta_live_rankings_to_csv.py'
+        if not script_path.exists():
+            raise RuntimeError(f"Script not found: {script_path}")
+
+        result = subprocess.run(
+            [sys.executable, str(script_path), "--out", str(csv_path)],
+            capture_output=True,
+            text=True,
+            timeout=240
+        )
+        if result.returncode != 0:
+            stderr = (result.stderr or '').strip()
+            stdout = (result.stdout or '').strip()
+            message = stderr or stdout or "Failed to refresh WTA rankings CSV."
+            raise RuntimeError(message)
+
+        self.invalidate_wta_rankings_cache()
+        status = self.get_wta_rankings_status()
+        status['archived_path'] = archived_path
+        status['stdout'] = (result.stdout or '').strip()
+        return status
+
     def _load_wta_scraped_index(self):
         if self._wta_scraped_index is not None:
             return self._wta_scraped_index
@@ -182,13 +354,14 @@ class TennisDataFetcher:
             'by_full': {},
             'by_last_first': {},
             'by_last': {},
+            'by_player_id': {},
             'players': []
         }
         if not base_dir.exists():
             self._wta_scraped_index = index
             return index
 
-        for folder in base_dir.iterdir():
+        for folder in sorted(base_dir.iterdir()):
             if not folder.is_dir():
                 continue
             profile_path = folder / 'profile.json'
@@ -218,6 +391,7 @@ class TennisDataFetcher:
                 'norm': norm,
                 'first': first,
                 'last': last,
+                'player_id': self._extract_wta_player_id_from_url(profile.get('url')),
                 'profile': profile,
                 'stats': stats,
                 'folder': str(folder)
@@ -230,7 +404,10 @@ class TennisDataFetcher:
                 index['by_last_first'][key] = entry
             if last:
                 index['by_last'].setdefault(last, []).append(entry)
+            if entry.get('player_id') is not None:
+                index['by_player_id'][int(entry['player_id'])] = entry
 
+        self._persist_wta_player_connections(index)
         self._wta_scraped_index = index
         return index
 
@@ -249,8 +426,6 @@ class TennisDataFetcher:
             key = f"{last}_{first[0]}"
             if key in index['by_last_first']:
                 return index['by_last_first'][key]
-            if last in index['by_last'] and len(index['by_last'][last]) == 1:
-                return index['by_last'][last][0]
 
         choices = list(index['by_full'].keys())
         if choices:
@@ -314,6 +489,27 @@ class TennisDataFetcher:
             if match:
                 return index[match[0]]
         return None
+
+    def _match_wta_ranking_strict(self, name='', player_id=None):
+        pid = self._to_int(player_id)
+        if pid is not None:
+            for player in self._get_wta_rankings():
+                if self._to_int(player.get('id')) == pid:
+                    return player
+        norm = self._normalize_player_name(name or '')
+        if not norm:
+            return None
+        return self._get_wta_rankings_index().get(norm)
+
+    def _match_wta_scraped_strict(self, name='', player_id=None):
+        index = self._load_wta_scraped_index()
+        pid = self._to_int(player_id)
+        if pid is not None and pid in index.get('by_player_id', {}):
+            return index['by_player_id'][pid]
+        norm = self._normalize_player_name(name or '')
+        if not norm:
+            return None
+        return index.get('by_full', {}).get(norm)
 
     def _to_float(self, value):
         if value is None:
@@ -495,8 +691,8 @@ class TennisDataFetcher:
         return labels.get(category, 'Tour')
 
     def _build_h2h_player_payload(self, player_id, full_name, country_code=''):
-        ranking = self._match_wta_ranking(full_name or '')
-        scraped = self._match_wta_scraped(full_name or '')
+        ranking = self._match_wta_ranking_strict(full_name or '', player_id=player_id)
+        scraped = self._match_wta_scraped_strict(full_name or '', player_id=player_id)
         profile = scraped.get('profile') if scraped else {}
         image_url = (ranking or {}).get('image_url') or profile.get('image_url') or ''
         country = country_code or (ranking or {}).get('country') or profile.get('country') or ''
@@ -649,6 +845,43 @@ class TennisDataFetcher:
             })
         return set_rows
 
+    def _flip_h2h_set_scores(self, set_rows):
+        flipped = []
+        for row in set_rows or []:
+            original_left = self._to_int(row.get('left_games'))
+            original_right = self._to_int(row.get('right_games'))
+            if original_left is None or original_right is None:
+                continue
+            left_games = original_right
+            right_games = original_left
+
+            left_won = None
+            if left_games > right_games:
+                left_won = True
+            elif right_games > left_games:
+                left_won = False
+
+            raw_display = str(row.get('display') or '')
+            tb_match = re.search(r"\((\d+)\)", raw_display)
+            tiebreak_loser_points = tb_match.group(1) if tb_match else None
+            if tiebreak_loser_points:
+                if left_games > right_games:
+                    display = f"{left_games}-{right_games} ({tiebreak_loser_points})"
+                elif right_games > left_games:
+                    display = f"{left_games} ({tiebreak_loser_points})-{right_games}"
+                else:
+                    display = f"{left_games}-{right_games} ({tiebreak_loser_points})"
+            else:
+                display = f"{left_games}-{right_games}"
+
+            flipped.append({
+                'left_games': left_games,
+                'right_games': right_games,
+                'left_won': left_won,
+                'display': display
+            })
+        return flipped
+
     def search_wta_players_for_h2h(self, query, limit=8):
         text = (query or '').strip()
         if not text:
@@ -672,8 +905,8 @@ class TennisDataFetcher:
             if score < 12.0:
                 return
 
-            ranking = self._match_wta_ranking(full_name)
-            scraped = self._match_wta_scraped(full_name)
+            ranking = self._match_wta_ranking_strict(full_name, player_id=pid)
+            scraped = self._match_wta_scraped_strict(full_name, player_id=pid)
             profile = scraped.get('profile') if scraped else {}
             existing = candidates.get(pid) or {}
             chosen_rank = rank if rank is not None else (ranking or {}).get('rank')
@@ -860,6 +1093,20 @@ class TennisDataFetcher:
             reverse_order = int(api_player1_id or 0) != int(p1_id)
             set_scores = self._parse_h2h_set_scores(score, reverse_order=reverse_order)
 
+            # WTA feed can occasionally provide `scores` not aligned with player1/player2.
+            # If parsed set winners contradict the declared match winner, flip set orientation.
+            left_sets = sum(1 for s in set_scores if s.get('left_won') is True)
+            right_sets = sum(1 for s in set_scores if s.get('left_won') is False)
+            if winner_id is not None:
+                try:
+                    winner_id_int = int(winner_id)
+                except Exception:
+                    winner_id_int = None
+                if winner_id_int == p1_id and right_sets > left_sets:
+                    set_scores = self._flip_h2h_set_scores(set_scores)
+                elif winner_id_int == p2_id and left_sets > right_sets:
+                    set_scores = self._flip_h2h_set_scores(set_scores)
+
             meetings.append({
                 'date': date_text,
                 'tournament': tournament,
@@ -944,47 +1191,39 @@ class TennisDataFetcher:
             'past_meetings': meetings
         }
 
-    def _fetch_wta_global_matches(self):
-        url = 'https://api.wtatennis.com/tennis/matches/global'
+    def _run_wta_matches_script(self, script_name, args=None, timeout=35):
+        script_path = Path(__file__).resolve().parent.parent / 'scripts' / script_name
+        if not script_path.exists():
+            print(f"WTA match script not found: {script_path}")
+            return None
+        cmd = [sys.executable, str(script_path)]
+        for arg in args or []:
+            cmd.append(str(arg))
         try:
-            resp = self.session.get(url, headers={
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                'Referer': 'https://www.wtatennis.com/scores?type=S'
-            }, timeout=20)
-            resp.raise_for_status()
-            data = resp.json()
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=timeout
+            )
         except Exception as exc:
-            print(f"Error fetching WTA live matches: {exc}")
+            print(f"Error running WTA script {script_name}: {exc}")
+            return None
+        if result.returncode != 0:
+            stderr = (result.stderr or '').strip()
+            print(f"WTA script failed ({script_name}): {stderr or 'unknown error'}")
+            return None
+        stdout = (result.stdout or '').strip()
+        if not stdout:
             return []
-
-        if isinstance(data, list):
-            return data
-        if isinstance(data, dict):
-            for key in ('Matches', 'matches', 'data'):
-                if isinstance(data.get(key), list):
-                    return data.get(key)
+        try:
+            payload = json.loads(stdout)
+        except Exception as exc:
+            print(f"Invalid JSON from WTA script {script_name}: {exc}")
+            return None
+        if isinstance(payload, list):
+            return payload
         return []
-
-    def _get_wta_global_matches_cached(self, ttl=10, cache_slot='fast'):
-        now = time.time()
-        if cache_slot == 'slow':
-            data = self._wta_global_cache_slow_data
-            ts = self._wta_global_cache_slow_at
-        else:
-            data = self._wta_global_cache_fast_data
-            ts = self._wta_global_cache_fast_at
-
-        if data is not None and (now - ts) < ttl:
-            return data
-
-        matches = self._fetch_wta_global_matches()
-        if cache_slot == 'slow':
-            self._wta_global_cache_slow_data = matches
-            self._wta_global_cache_slow_at = now
-        else:
-            self._wta_global_cache_fast_data = matches
-            self._wta_global_cache_fast_at = now
-        return matches
 
     def _format_wta_duration(self, value):
         if not value:
@@ -1161,13 +1400,16 @@ class TennisDataFetcher:
     def _resolve_wta_player(self, name, country, player_id):
         rank_entry = self._match_wta_ranking(name)
         scraped_entry = self._match_wta_scraped(name)
+        resolved_id = int(player_id) if player_id and str(player_id).isdigit() else None
+        if resolved_id is None:
+            resolved_id = (rank_entry or {}).get('id')
         image_url = ''
         if rank_entry and rank_entry.get('image_url'):
             image_url = rank_entry.get('image_url')
         elif scraped_entry:
             image_url = scraped_entry.get('profile', {}).get('image_url') or ''
         return {
-            'id': (rank_entry or {}).get('id') or (int(player_id) if player_id and str(player_id).isdigit() else None),
+            'id': resolved_id,
             'name': name,
             'country': country or (rank_entry or {}).get('country') or (scraped_entry or {}).get('profile', {}).get('country'),
             'rank': (rank_entry or {}).get('rank'),
@@ -1290,7 +1532,7 @@ class TennisDataFetcher:
         
         live_matches = []
         if tour in ('wta', 'both'):
-            wta_raw = self._get_wta_global_matches_cached(ttl=10, cache_slot='fast')
+            wta_raw = self._run_wta_matches_script('[Live] wta_live_matches.py')
             if not wta_raw:
                 live_matches.extend(self._generate_sample_live_matches('wta'))
             else:
@@ -1298,8 +1540,6 @@ class TennisDataFetcher:
                     self._parse_wta_match(match)
                     for match in wta_raw
                     if isinstance(match, dict)
-                    and match.get('DrawMatchType') == 'S'
-                    and match.get('MatchState') == 'P'
                 ]
                 live_matches.extend(wta_live)
 
@@ -1313,18 +1553,14 @@ class TennisDataFetcher:
         """Fetch recently completed matches"""
         matches = []
         if tour in ('wta', 'both'):
-            wta_raw = self._get_wta_global_matches_cached(ttl=1800, cache_slot='slow')
+            wta_raw = self._run_wta_matches_script(
+                '[Live] wta_recent_matches.py',
+                args=['--limit', str(limit)]
+            )
             if not wta_raw:
                 matches.extend(self._generate_sample_recent_matches('wta', limit))
             else:
-                wta_finished = [
-                    match for match in wta_raw
-                    if isinstance(match, dict)
-                    and match.get('DrawMatchType') == 'S'
-                    and match.get('MatchState') == 'F'
-                ]
-                wta_finished.sort(key=lambda m: m.get('MatchTimeStamp') or '', reverse=True)
-                parsed = [self._parse_wta_match(match) for match in wta_finished[:limit]]
+                parsed = [self._parse_wta_match(match) for match in wta_raw if isinstance(match, dict)]
                 matches.extend(parsed)
 
         if tour in ('atp', 'both'):
@@ -1339,32 +1575,16 @@ class TennisDataFetcher:
         days: number of days to look ahead (default 2)
         """
         matches = []
-        cutoff = datetime.now().date() + timedelta(days=days)
 
         if tour in ('wta', 'both'):
-            wta_raw = self._get_wta_global_matches_cached(ttl=1800, cache_slot='slow')
+            wta_raw = self._run_wta_matches_script(
+                '[Live] wta_upcoming_matches.py',
+                args=['--days', str(days)]
+            )
             if not wta_raw:
                 matches.extend(self._generate_sample_upcoming_matches('wta', days))
             else:
-                upcoming = []
-                for match in wta_raw:
-                    if not isinstance(match, dict):
-                        continue
-                    if match.get('DrawMatchType') != 'S':
-                        continue
-                    if match.get('MatchState') in ('P', 'F'):
-                        continue
-                    ts = match.get('MatchTimeStamp') or ''
-                    try:
-                        dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
-                        if dt.date() > cutoff:
-                            continue
-                    except Exception:
-                        pass
-                    upcoming.append(match)
-
-                upcoming.sort(key=lambda m: m.get('MatchTimeStamp') or '')
-                parsed = [self._parse_wta_match(match) for match in upcoming]
+                parsed = [self._parse_wta_match(match) for match in wta_raw if isinstance(match, dict)]
                 matches.extend(parsed)
 
         if tour in ('atp', 'both'):
@@ -1428,24 +1648,26 @@ class TennisDataFetcher:
 
     def _get_wta_player_from_csv(self, player_id):
         """Resolve WTA player details from CSV-backed rankings."""
-        if player_id < 100000:
-            return None
         rankings = self._load_wta_rankings_csv()
         if not rankings:
             return None
-        rank = player_id - 100000
-        player = next((p for p in rankings if p.get('rank') == rank), None)
+        player = next((p for p in rankings if p.get('id') == player_id), None)
+        # Backward compatibility for old synthetic IDs (100000 + rank).
+        if not player and player_id >= 100000:
+            rank = player_id - 100000
+            player = next((p for p in rankings if p.get('rank') == rank), None)
         if not player:
             return None
+        resolved_id = player.get('id') or player_id
         height = player.get('height') or f"{random.randint(170, 190)} cm"
         plays = player.get('plays') or random.choice(['Right-Handed', 'Left-Handed'])
         titles = player.get('titles') or random.randint(0, 15)
         prize_money = player.get('prize_money') or f"${random.randint(1, 50)},{random.randint(100, 999)},{random.randint(100, 999)}"
-        image_url = player.get('image_url') or f'https://api.sofascore.com/api/v1/player/{player_id}/image'
+        image_url = player.get('image_url') or f'https://api.sofascore.com/api/v1/player/{resolved_id}/image'
 
         return {
             **player,
-            'id': player_id,
+            'id': resolved_id,
             'tour': 'WTA',
             'height': height,
             'plays': plays,
@@ -2371,10 +2593,13 @@ class TennisDataFetcher:
 
     def _load_wta_rankings_csv(self):
         """Load WTA rankings from CSV created by live-tennis.eu scraper."""
-        csv_path = Path(__file__).resolve().parent.parent / 'data' / 'wta_live_ranking.csv'
+        csv_path = self._wta_rankings_csv_path()
         if not csv_path.exists():
             return None
 
+        scraped_index = self._load_wta_scraped_index()
+        connections = self._load_wta_connections_map()
+        used_ids = set()
         rankings = []
         with csv_path.open('r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
@@ -2386,10 +2611,41 @@ class TennisDataFetcher:
                 name = (row.get('player') or '').strip()
                 if not name:
                     continue
+                norm_name = self._normalize_player_name(name)
 
                 scraped = self._match_wta_scraped(name)
                 profile_data = scraped.get('profile') if scraped else {}
                 stats_data = scraped.get('stats') if scraped else {}
+                scraped_player_id = (scraped or {}).get('player_id')
+
+                resolved_id = None
+                if scraped_player_id is not None:
+                    try:
+                        resolved_id = int(scraped_player_id)
+                    except Exception:
+                        resolved_id = None
+                if resolved_id is None and norm_name:
+                    known_entry = (scraped_index.get('by_full') or {}).get(norm_name)
+                    known_pid = (known_entry or {}).get('player_id')
+                    if known_pid is not None:
+                        try:
+                            resolved_id = int(known_pid)
+                        except Exception:
+                            resolved_id = None
+                if resolved_id is None and norm_name:
+                    conn_entry = (connections.get('by_norm') or {}).get(norm_name) or {}
+                    conn_pid = conn_entry.get('player_id')
+                    if conn_pid is not None:
+                        try:
+                            resolved_id = int(conn_pid)
+                        except Exception:
+                            resolved_id = None
+                if resolved_id is None:
+                    resolved_id = self._stable_player_id_from_name(norm_name, used_ids)
+                elif resolved_id in used_ids:
+                    resolved_id = self._stable_player_id_from_name(f"{norm_name}-{rank}", used_ids)
+                else:
+                    used_ids.add(resolved_id)
 
                 points_raw = re.sub(r'[^\d]', '', row.get('points') or '')
                 points = int(points_raw) if points_raw else 0
@@ -2435,7 +2691,7 @@ class TennisDataFetcher:
 
                 rankings.append({
                     'rank': rank,
-                    'id': 100000 + rank,
+                    'id': resolved_id,
                     'name': name,
                     'country': country,
                     'age': age,

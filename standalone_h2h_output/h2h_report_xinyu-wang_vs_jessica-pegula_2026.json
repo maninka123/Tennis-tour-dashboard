@@ -1,0 +1,349 @@
+{
+  "generatedAtUtc": "2026-02-07T07:11:35Z",
+  "players": {
+    "player1": {
+      "id": 326376,
+      "fullName": "Xinyu Wang",
+      "countryCode": "CHN"
+    },
+    "player2": {
+      "id": 316956,
+      "fullName": "Jessica Pegula",
+      "countryCode": "USA"
+    }
+  },
+  "year": 2026,
+  "careerHeadToHead": {
+    "player1Wins": 2,
+    "player2Wins": 1
+  },
+  "pastMeetings": [
+    {
+      "date": "2025-03-05",
+      "tournament": "INDIAN WELLS",
+      "surface": "HARD",
+      "score": "6-2  6-1",
+      "winner": "Jessica Pegula"
+    },
+    {
+      "date": "2024-10-07",
+      "tournament": "WUHAN",
+      "surface": "HARD",
+      "score": "6-3  7-5",
+      "winner": "Xinyu Wang"
+    },
+    {
+      "date": "2024-07-01",
+      "tournament": "WIMBLEDON",
+      "surface": "GRASS",
+      "score": "6-4  6-7(7)  6-1",
+      "winner": "Xinyu Wang"
+    }
+  ],
+  "careerSurfaceRecords": {
+    "Xinyu Wang": {
+      "GRASS": {
+        "wins": 17,
+        "losses": 17,
+        "winPercentage": 50.0
+      },
+      "HARD": {
+        "wins": 230,
+        "losses": 163,
+        "winPercentage": 58.5
+      },
+      "CLAY": {
+        "wins": 47,
+        "losses": 39,
+        "winPercentage": 54.7
+      }
+    },
+    "Jessica Pegula": {
+      "CARPET": {
+        "wins": 1,
+        "losses": 4,
+        "winPercentage": 20.0
+      },
+      "GRASS": {
+        "wins": 38,
+        "losses": 28,
+        "winPercentage": 57.6
+      },
+      "HARD": {
+        "wins": 433,
+        "losses": 237,
+        "winPercentage": 64.6
+      },
+      "CLAY": {
+        "wins": 156,
+        "losses": 107,
+        "winPercentage": 59.3
+      }
+    }
+  },
+  "seasonMatchStats": {
+    "serving": [
+      {
+        "key": "aces",
+        "label": "Aces",
+        "is_percent": false,
+        "lower_is_better": false,
+        "player_raw": 28.0,
+        "opponent_raw": 15.0,
+        "avg_raw": 6.0,
+        "min_raw": 0.0,
+        "max_raw": 28.0,
+        "player_display": "28",
+        "opponent_display": "15",
+        "avg_display": "6",
+        "player_norm": 100.0,
+        "opponent_norm": 53.57142857142857,
+        "avg_norm": 21.428571428571427
+      },
+      {
+        "key": "double-faults",
+        "label": "Double\nFaults",
+        "is_percent": false,
+        "lower_is_better": true,
+        "player_raw": 14.0,
+        "opponent_raw": 9.0,
+        "avg_raw": 6.0,
+        "min_raw": 0.0,
+        "max_raw": 28.0,
+        "player_display": "14",
+        "opponent_display": "9",
+        "avg_display": "6",
+        "player_norm": 50.0,
+        "opponent_norm": 67.85714285714286,
+        "avg_norm": 78.57142857142857
+      },
+      {
+        "key": "first-serves-percent",
+        "label": "1st Serve %",
+        "is_percent": true,
+        "lower_is_better": false,
+        "player_raw": 67.25,
+        "opponent_raw": 60.5,
+        "avg_raw": 62.325862,
+        "min_raw": 0.0,
+        "max_raw": 84.0,
+        "player_display": "67.2%",
+        "opponent_display": "60.5%",
+        "avg_display": "62.3%",
+        "player_norm": 80.05952380952381,
+        "opponent_norm": 72.02380952380952,
+        "avg_norm": 74.19745476190475
+      },
+      {
+        "key": "first-serve-won-percent",
+        "label": "1st Serve\nWon %",
+        "is_percent": true,
+        "lower_is_better": false,
+        "player_raw": 68.45,
+        "opponent_raw": 67.7,
+        "avg_raw": 62.789655,
+        "min_raw": 0.0,
+        "max_raw": 82.0,
+        "player_display": "68.5%",
+        "opponent_display": "67.7%",
+        "avg_display": "62.8%",
+        "player_norm": 83.47560975609757,
+        "opponent_norm": 82.5609756097561,
+        "avg_norm": 76.57275
+      },
+      {
+        "key": "second-serve-won-percent",
+        "label": "2nd Serve\nWon %",
+        "is_percent": true,
+        "lower_is_better": false,
+        "player_raw": 48.55,
+        "opponent_raw": 46.7,
+        "avg_raw": 42.535344,
+        "min_raw": 0.0,
+        "max_raw": 71.0,
+        "player_display": "48.5%",
+        "opponent_display": "46.7%",
+        "avg_display": "42.5%",
+        "player_norm": 68.38028169014085,
+        "opponent_norm": 65.77464788732395,
+        "avg_norm": 59.90893521126761
+      },
+      {
+        "key": "break-points-saved",
+        "label": "Break Points\nSaved %",
+        "is_percent": true,
+        "lower_is_better": false,
+        "player_raw": 57.55,
+        "opponent_raw": 53.6,
+        "avg_raw": 50.009482,
+        "min_raw": 0.0,
+        "max_raw": 81.0,
+        "player_display": "57.5%",
+        "opponent_display": "53.6%",
+        "avg_display": "50.0%",
+        "player_norm": 71.04938271604938,
+        "opponent_norm": 66.17283950617285,
+        "avg_norm": 61.7401012345679
+      },
+      {
+        "key": "service-points-won-percent",
+        "label": "Service\nPoints Won %",
+        "is_percent": true,
+        "lower_is_better": false,
+        "player_raw": 62.15,
+        "opponent_raw": 59.4,
+        "avg_raw": 55.07931,
+        "min_raw": 0.0,
+        "max_raw": 69.0,
+        "player_display": "62.1%",
+        "opponent_display": "59.4%",
+        "avg_display": "55.1%",
+        "player_norm": 90.07246376811594,
+        "opponent_norm": 86.08695652173914,
+        "avg_norm": 79.82508695652174
+      },
+      {
+        "key": "service-games-won-percent",
+        "label": "Service\nGames Won %",
+        "is_percent": true,
+        "lower_is_better": false,
+        "player_raw": 80.6,
+        "opponent_raw": 70.5,
+        "avg_raw": 61.896551,
+        "min_raw": 0.0,
+        "max_raw": 91.0,
+        "player_display": "80.6%",
+        "opponent_display": "70.5%",
+        "avg_display": "61.9%",
+        "player_norm": 88.57142857142857,
+        "opponent_norm": 77.47252747252747,
+        "avg_norm": 68.01818791208791
+      },
+      {
+        "key": "service-games-played",
+        "label": "Service\nGames Played",
+        "is_percent": false,
+        "lower_is_better": false,
+        "player_raw": 62.0,
+        "opponent_raw": 44.0,
+        "avg_raw": 21.0,
+        "min_raw": 0.0,
+        "max_raw": 54.0,
+        "player_display": "62",
+        "opponent_display": "44",
+        "avg_display": "21",
+        "player_norm": 100.0,
+        "opponent_norm": 81.48148148148148,
+        "avg_norm": 38.88888888888889
+      }
+    ],
+    "returning": [
+      {
+        "key": "return-points-won-percent",
+        "label": "Return\nPoints Won %",
+        "is_percent": true,
+        "lower_is_better": false,
+        "player_raw": 39.4,
+        "opponent_raw": 42.4,
+        "avg_raw": 40.525,
+        "min_raw": 0.0,
+        "max_raw": 60.0,
+        "player_display": "39.4%",
+        "opponent_display": "42.4%",
+        "avg_display": "40.5%",
+        "player_norm": 65.66666666666666,
+        "opponent_norm": 70.66666666666667,
+        "avg_norm": 67.54166666666667
+      },
+      {
+        "key": "first-return-points-won-percent",
+        "label": "1st Return\nPoints Won %",
+        "is_percent": true,
+        "lower_is_better": false,
+        "player_raw": 32.95,
+        "opponent_raw": 36.4,
+        "avg_raw": 32.837931,
+        "min_raw": 0.0,
+        "max_raw": 50.0,
+        "player_display": "33.0%",
+        "opponent_display": "36.4%",
+        "avg_display": "32.8%",
+        "player_norm": 65.9,
+        "opponent_norm": 72.8,
+        "avg_norm": 65.675862
+      },
+      {
+        "key": "second-return-points-won-percent",
+        "label": "2nd Return\nPoints Won %",
+        "is_percent": true,
+        "lower_is_better": false,
+        "player_raw": 53.15,
+        "opponent_raw": 52.5,
+        "avg_raw": 53.562068,
+        "min_raw": 0.0,
+        "max_raw": 76.0,
+        "player_display": "53.1%",
+        "opponent_display": "52.5%",
+        "avg_display": "53.6%",
+        "player_norm": 69.93421052631578,
+        "opponent_norm": 69.07894736842105,
+        "avg_norm": 70.47640526315789
+      },
+      {
+        "key": "break-points-converted-percent",
+        "label": "Break Points\nConverted %",
+        "is_percent": true,
+        "lower_is_better": false,
+        "player_raw": 19.6,
+        "opponent_raw": 35.7,
+        "avg_raw": 44.970689,
+        "min_raw": 0.0,
+        "max_raw": 100.0,
+        "player_display": "19.6%",
+        "opponent_display": "35.7%",
+        "avg_display": "45.0%",
+        "player_norm": 19.6,
+        "opponent_norm": 35.7,
+        "avg_norm": 44.970689
+      },
+      {
+        "key": "return-games-won-percent",
+        "label": "Return Games\nWon %",
+        "is_percent": true,
+        "lower_is_better": false,
+        "player_raw": 19.6,
+        "opponent_raw": 31.9,
+        "avg_raw": 29.713793,
+        "min_raw": 0.0,
+        "max_raw": 70.0,
+        "player_display": "19.6%",
+        "opponent_display": "31.9%",
+        "avg_display": "29.7%",
+        "player_norm": 28.000000000000004,
+        "opponent_norm": 45.57142857142857,
+        "avg_norm": 42.448275714285714
+      },
+      {
+        "key": "return-games-played",
+        "label": "Return Games\nPlayed",
+        "is_percent": false,
+        "lower_is_better": false,
+        "player_raw": 62.0,
+        "opponent_raw": 47.0,
+        "avg_raw": 21.0,
+        "min_raw": 0.0,
+        "max_raw": 54.0,
+        "player_display": "62",
+        "opponent_display": "47",
+        "avg_display": "21",
+        "player_norm": 100.0,
+        "opponent_norm": 87.03703703703704,
+        "avg_norm": 38.88888888888889
+      }
+    ]
+  },
+  "charts": {
+    "servingRadarPng": "/Users/pasinduranasinghe/Library/CloudStorage/OneDrive-UNSW/Misc Project/Tennis Dashboard/standalone_h2h_output/serving_radar_xinyu-wang_vs_jessica-pegula_2026.png",
+    "returningRadarPng": "/Users/pasinduranasinghe/Library/CloudStorage/OneDrive-UNSW/Misc Project/Tennis Dashboard/standalone_h2h_output/returning_radar_xinyu-wang_vs_jessica-pegula_2026.png"
+  }
+}

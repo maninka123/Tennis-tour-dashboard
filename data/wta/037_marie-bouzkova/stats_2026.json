@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n42.7%\n1st Return Points Won %\n32.0%\n2nd Return Points Won %\n58.2%\nBreak Points Converted\n36.8%\nReturn Games Won\n28.0%\nReturn Games Played\n25\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:05:54.380830+00:00",
+  "updated_at": "2026-02-07T11:53:42.019596+00:00",
   "records_tab": {
     "summary": [
       {
@@ -134,5 +134,150 @@
         "us_open": "R128"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 44,
+        "seed": null,
+        "wta_points_gain": 70.0,
+        "prize_money_won": 145669.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Renata Zarazua",
+            "opponent_country": "MEX",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 7-5",
+            "opponent_rank": 80
+          }
+        ],
+        "summary": {
+          "rank": 44,
+          "seed": null,
+          "wta_points_gain": "+70",
+          "prize_money_won": "+$145,669",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "ADELAIDE",
+        "location": "Adelaide \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 45,
+        "seed": null,
+        "wta_points_gain": 73.0,
+        "prize_money_won": 17795.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Mirra Andreeva",
+            "opponent_country": "RUS",
+            "opponent_seed": 3,
+            "opponent_entry": "",
+            "score": "6-3, 6-1",
+            "opponent_rank": 8
+          },
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Yulia Putintseva",
+            "opponent_country": "KAZ",
+            "opponent_seed": 10,
+            "opponent_entry": "",
+            "score": "6-4, 7-6(0)",
+            "opponent_rank": 105
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Paula Badosa",
+            "opponent_country": "ESP",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "3-6, 6-3, 6-4",
+            "opponent_rank": 26
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Aleksandra Krunic",
+            "opponent_country": "SRB",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 6-2",
+            "opponent_rank": 465
+          }
+        ],
+        "summary": {
+          "rank": 45,
+          "seed": null,
+          "wta_points_gain": "+73",
+          "prize_money_won": "+$17,795",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 46,
+        "seed": null,
+        "wta_points_gain": 32.0,
+        "prize_money_won": 13735.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Paula Badosa",
+            "opponent_country": "ESP",
+            "opponent_seed": 15,
+            "opponent_entry": "",
+            "score": "6-7(4), 6-4, 6-2",
+            "opponent_rank": 25
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Jaqueline  Cristian",
+            "opponent_country": "ROU",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 38
+          }
+        ],
+        "summary": {
+          "rank": 46,
+          "seed": null,
+          "wta_points_gain": "+32",
+          "prize_money_won": "+$13,735",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:53:42.019576+00:00"
   }
 }

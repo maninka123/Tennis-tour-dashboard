@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n42.4%\n1st Return Points Won %\n36.4%\n2nd Return Points Won %\n52.5%\nBreak Points Converted\n35.7%\nReturn Games Won\n31.9%\nReturn Games Played\n47\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:02:04.456112+00:00",
+  "updated_at": "2026-02-07T11:50:38.208668+00:00",
   "records_tab": {
     "summary": [
       {
@@ -158,5 +158,147 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 6,
+        "seed": 6,
+        "wta_points_gain": 780.0,
+        "prize_money_won": 809275.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Madison Keys",
+            "opponent_country": "USA",
+            "opponent_seed": 9,
+            "opponent_entry": "",
+            "score": "6-3, 6-4",
+            "opponent_rank": 9
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Oksana Selekhmeteva",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 101
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Mccartney Kessler",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-0, 6-2",
+            "opponent_rank": 37
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Anastasia Zakharova",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 6-1",
+            "opponent_rank": 105
+          }
+        ],
+        "summary": {
+          "rank": 6,
+          "seed": 6,
+          "wta_points_gain": "+780",
+          "prize_money_won": "+$809,275",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 6,
+        "seed": 4,
+        "wta_points_gain": 195.0,
+        "prize_money_won": 77115.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Dayana Yastremska",
+            "opponent_country": "UKR",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "5-7, 6-2, 6-3",
+            "opponent_rank": 27
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Anna Kalinskaya",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 2-6, 6-4",
+            "opponent_rank": 33
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "",
+            "opponent_country": "",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "",
+            "opponent_rank": 0
+          },
+          {
+            "round": "S",
+            "result": "L",
+            "opponent_name": "Marta Kostyuk",
+            "opponent_country": "UKR",
+            "opponent_seed": 16,
+            "opponent_entry": "",
+            "score": "6-0, 6-3",
+            "opponent_rank": 26
+          },
+          {
+            "round": "Q",
+            "result": "W",
+            "opponent_name": "Liudmila Samsonova",
+            "opponent_country": "RUS",
+            "opponent_seed": 10,
+            "opponent_entry": "",
+            "score": "6-3, 7-6(3)",
+            "opponent_rank": 17
+          }
+        ],
+        "summary": {
+          "rank": 6,
+          "seed": 4,
+          "wta_points_gain": "+195",
+          "prize_money_won": "+$77,115",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:50:38.208648+00:00"
   }
 }

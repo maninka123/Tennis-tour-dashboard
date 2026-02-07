@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n43.7%\n1st Return Points Won %\n36.1%\n2nd Return Points Won %\n59.0%\nBreak Points Converted\n44.4%\nReturn Games Won\n30.8%\nReturn Games Played\n26\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:19:24.770896+00:00",
+  "updated_at": "2026-02-07T12:05:18.721118+00:00",
   "records_tab": {
     "summary": [
       {
@@ -118,5 +118,150 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 80,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Marie Bouzkova",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 7-5",
+            "opponent_rank": 44
+          }
+        ],
+        "summary": {
+          "rank": 80,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 84,
+        "seed": 2,
+        "wta_points_gain": 48.0,
+        "prize_money_won": 4285.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Simona Waltert",
+            "opponent_country": "SUI",
+            "opponent_seed": 9,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 86
+          },
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Iva Jovic",
+            "opponent_country": "USA",
+            "opponent_seed": 3,
+            "opponent_entry": "",
+            "score": "6-1, 6-2",
+            "opponent_rank": 30
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Hiroko Kuwata",
+            "opponent_country": "JPN",
+            "opponent_seed": null,
+            "opponent_entry": "A",
+            "score": "6-0, 6-1",
+            "opponent_rank": 664
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Hailey Baptiste",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-7(5), 6-3, 6-3",
+            "opponent_rank": 66
+          }
+        ],
+        "summary": {
+          "rank": 84,
+          "seed": 2,
+          "wta_points_gain": "+48",
+          "prize_money_won": "+$4,285",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "AUCKLAND",
+        "location": "Auckland \u2022 New Zealand",
+        "date_range": "5 Jan - 11 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 77,
+        "seed": null,
+        "wta_points_gain": 30.0,
+        "prize_money_won": 4285.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Xinyu Wang",
+            "opponent_country": "CHN",
+            "opponent_seed": 7,
+            "opponent_entry": "",
+            "score": "7-5, 6-4",
+            "opponent_rank": 57
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Sloane Stephens",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "7-5, 4-6, 6-2",
+            "opponent_rank": 1098
+          }
+        ],
+        "summary": {
+          "rank": 77,
+          "seed": null,
+          "wta_points_gain": "+30",
+          "prize_money_won": "+$4,285",
+          "draw": "32M/24Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:05:18.721030+00:00"
   }
 }

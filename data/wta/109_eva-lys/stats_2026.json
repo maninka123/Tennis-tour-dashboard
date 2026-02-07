@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n51.0%\n1st Return Points Won %\n48.4%\n2nd Return Points Won %\n55.2%\nBreak Points Converted\n50.0%\nReturn Games Won\n59.1%\nReturn Games Played\n22\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:15:16.490218+00:00",
+  "updated_at": "2026-02-07T12:01:53.115637+00:00",
   "records_tab": {
     "summary": [
       {
@@ -94,5 +94,87 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 39,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Sorana Cirstea",
+            "opponent_country": "ROU",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "3-6, 6-4, 6-3",
+            "opponent_rank": 41
+          }
+        ],
+        "summary": {
+          "rank": 39,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "UNITED CUP",
+        "location": "Perth + Sydney \u2022 Australia",
+        "date_range": "2 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 39,
+        "seed": 6,
+        "wta_points_gain": 32.0,
+        "prize_money_won": 111000.0,
+        "draw": "0M/0Q/0D",
+        "matches": [
+          {
+            "round": "Round 9",
+            "result": "W",
+            "opponent_name": "Suzan Lamens",
+            "opponent_country": "NED",
+            "opponent_seed": 15,
+            "opponent_entry": "",
+            "score": "6-2, 6-2",
+            "opponent_rank": 97
+          },
+          {
+            "round": "Round 9",
+            "result": "L",
+            "opponent_name": "Iga Swiatek",
+            "opponent_country": "POL",
+            "opponent_seed": 9,
+            "opponent_entry": "",
+            "score": "3-6, 6-3, 6-4",
+            "opponent_rank": 2
+          }
+        ],
+        "summary": {
+          "rank": 39,
+          "seed": 6,
+          "wta_points_gain": "+32",
+          "prize_money_won": "+$111,000",
+          "draw": "0M/0Q/0D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:01:53.115619+00:00"
   }
 }

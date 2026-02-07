@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n44.6%\n1st Return Points Won %\n44.7%\n2nd Return Points Won %\n44.4%\nBreak Points Converted\n37.5%\nReturn Games Won\n33.3%\nReturn Games Played\n9\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:21:22.201718+00:00",
+  "updated_at": "2026-02-07T12:06:56.235400+00:00",
   "records_tab": {
     "summary": [
       {
@@ -70,5 +70,140 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "MANAMA",
+        "location": "Bahrain",
+        "date_range": "19 Jan - 25 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 212,
+        "seed": null,
+        "wta_points_gain": 75.0,
+        "prize_money_won": 9142.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Hanne Vandewinkel",
+            "opponent_country": "BEL",
+            "opponent_seed": 2,
+            "opponent_entry": "",
+            "score": "7-5, 6-3",
+            "opponent_rank": 125
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Havah Kaur Kaler",
+            "opponent_country": "CAN",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-1, 6-0",
+            "opponent_rank": 1490
+          },
+          {
+            "round": "S",
+            "result": "W",
+            "opponent_name": "Carol Young Suh Lee",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "3-6, 6-4, 6-4",
+            "opponent_rank": 210
+          },
+          {
+            "round": "Q",
+            "result": "W",
+            "opponent_name": "Sofia Costoulas",
+            "opponent_country": "BEL",
+            "opponent_seed": 5,
+            "opponent_entry": "",
+            "score": "6-3, 6-1",
+            "opponent_rank": 143
+          }
+        ],
+        "summary": {
+          "rank": 212,
+          "seed": null,
+          "wta_points_gain": "+75",
+          "prize_money_won": "+$9,142",
+          "draw": "32M/32Q/16D"
+        }
+      },
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 212,
+        "seed": null,
+        "wta_points_gain": 2.0,
+        "prize_money_won": 26220.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Zhuoxuan Bai",
+            "opponent_country": "CHN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 702
+          }
+        ],
+        "summary": {
+          "rank": 212,
+          "seed": null,
+          "wta_points_gain": "+2",
+          "prize_money_won": "+$26,220",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "CANBERRA 125",
+        "location": "Canberra \u2022 Australia",
+        "date_range": "5 Jan - 10 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 210,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 2255.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Polina Kudermetova",
+            "opponent_country": "UZB",
+            "opponent_seed": 3,
+            "opponent_entry": "",
+            "score": "6-2, 6-3",
+            "opponent_rank": 167
+          }
+        ],
+        "summary": {
+          "rank": 210,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$2,255",
+          "draw": "32M/32Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:06:56.235383+00:00"
   }
 }

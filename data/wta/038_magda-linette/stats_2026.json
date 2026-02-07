@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n42.0%\n1st Return Points Won %\n35.4%\n2nd Return Points Won %\n52.1%\nBreak Points Converted\n46.2%\nReturn Games Won\n32.4%\nReturn Games Played\n37\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:06:01.790658+00:00",
+  "updated_at": "2026-02-07T11:53:47.771806+00:00",
   "records_tab": {
     "summary": [
       {
@@ -158,5 +158,150 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 50,
+        "seed": null,
+        "wta_points_gain": 130.0,
+        "prize_money_won": 212192.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Emma Navarro",
+            "opponent_country": "USA",
+            "opponent_seed": 15,
+            "opponent_entry": "",
+            "score": "3-6, 6-3, 6-3",
+            "opponent_rank": 15
+          }
+        ],
+        "summary": {
+          "rank": 50,
+          "seed": null,
+          "wta_points_gain": "+130",
+          "prize_money_won": "+$212,192",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 53,
+        "seed": 8,
+        "wta_points_gain": 54.0,
+        "prize_money_won": 7025.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Xinyu Wang",
+            "opponent_country": "CHN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-1, 7-5",
+            "opponent_rank": 43
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Oksana Selekhmeteva",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-3, 1-6, 6-1",
+            "opponent_rank": 98
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Iva Jovic",
+            "opponent_country": "USA",
+            "opponent_seed": 3,
+            "opponent_entry": "",
+            "score": "6-3, 6-7(5), 6-2",
+            "opponent_rank": 30
+          }
+        ],
+        "summary": {
+          "rank": 53,
+          "seed": 8,
+          "wta_points_gain": "+54",
+          "prize_money_won": "+$7,025",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "AUCKLAND",
+        "location": "Auckland \u2022 New Zealand",
+        "date_range": "5 Jan - 11 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 52,
+        "seed": 5,
+        "wta_points_gain": 54.0,
+        "prize_money_won": 7025.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Elisabetta Cocciaretto",
+            "opponent_country": "ITA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-5, 2-6, 6-3",
+            "opponent_rank": 81
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Venus Williams",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-4, 4-6, 6-2",
+            "opponent_rank": 582
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Alexandra Eala",
+            "opponent_country": "PHI",
+            "opponent_seed": 4,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 53
+          }
+        ],
+        "summary": {
+          "rank": 52,
+          "seed": 5,
+          "wta_points_gain": "+54",
+          "prize_money_won": "+$7,025",
+          "draw": "32M/24Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:53:47.771789+00:00"
   }
 }

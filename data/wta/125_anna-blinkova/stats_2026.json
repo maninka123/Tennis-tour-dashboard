@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n38.3%\n1st Return Points Won %\n32.4%\n2nd Return Points Won %\n53.8%\nBreak Points Converted\n60.0%\nReturn Games Won\n33.3%\nReturn Games Played\n9\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:17:22.083451+00:00",
+  "updated_at": "2026-02-07T12:03:36.724675+00:00",
   "records_tab": {
     "summary": [
       {
@@ -142,5 +142,110 @@
         "us_open": "R128"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 64,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Talia Gibson",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-1, 6-3",
+            "opponent_rank": 119
+          }
+        ],
+        "summary": {
+          "rank": 64,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "ADELAIDE",
+        "location": "Adelaide \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 62,
+        "seed": 9,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 4400.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Mina Hodzic",
+            "opponent_country": "GER",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 7-5",
+            "opponent_rank": 466
+          }
+        ],
+        "summary": {
+          "rank": 62,
+          "seed": 9,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$4,400",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 61,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 11920.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "result": "L",
+            "opponent_name": "Aliaksandra Sasnovich",
+            "opponent_country": "BLR",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "7-5, 6-1",
+            "opponent_rank": 113
+          }
+        ],
+        "summary": {
+          "rank": 61,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$11,920",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:03:36.724650+00:00"
   }
 }

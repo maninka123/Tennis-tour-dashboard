@@ -40,24 +40,22 @@ Modal insight view for upcoming matches with percentage edge split, H2H snapshot
 
 <img src="Images/Upcoming%20match%20insights.png" alt="Upcoming match insights with win percentage bars" width="1200" />
 
-### 4) Match Stats Popup (Overview)
+### 4) Match Stats Popup
 Detailed post/live match stat comparison popup for two players.
 
+Overview view:
 <img src="Images/Player_stats_1.png" alt="Player stats comparison popup overview" width="1200" />
 
-### 5) Match Stats Popup (Detailed Breakdown)
-Expanded stat rows for serve/return and point-level metrics.
-
+Detailed breakdown view:
 <img src="Images/Player_stats_2.png" alt="Player stats popup detailed rows" width="1200" />
 
-### 6) WTA H2H Dashboard (Overview)
-Head-to-head hero section, career records, and radar analytics.
+### 5) WTA H2H Dashboard
+Head-to-head hero section, career records, radar analytics, and past meetings.
 
+Overview view:
 <img src="Images/H2H_1.png" alt="WTA H2H overview with radar charts" width="1200" />
 
-### 7) WTA H2H Past Meetings and Surface Records
-Past meetings card layout with tournament labels, surface highlights, and set score boxes.
-
+Past meetings and surface records view:
 <img src="Images/H2H_2.png" alt="WTA H2H past meetings and surface records" width="1200" />
 
 ## Quick Start
@@ -115,6 +113,12 @@ python3 no_cache_server.py
   - Tournament data refresh utility
 - `scripts/standalone_wta_h2h_stats.py`
   - Standalone WTA H2H radar/stat extraction script
+- `scripts/[Live] wta_live_matches.py`
+  - Fetches live WTA singles raw matches (used by API)
+- `scripts/[Live] wta_recent_matches.py`
+  - Fetches recent/finished WTA singles raw matches (used by API)
+- `scripts/[Live] wta_upcoming_matches.py`
+  - Fetches upcoming WTA singles raw matches (used by API)
 
 Note: some scripts may require extra packages (for example `playwright` + Chromium install) beyond backend runtime dependencies.
 
@@ -145,6 +149,9 @@ scripts/
   wta_live_rankings_to_csv.py
   wta_scrape_wtatennis.py
   [Only once] wta_fix_player_images.py
+  [Live] wta_live_matches.py
+  [Live] wta_recent_matches.py
+  [Live] wta_upcoming_matches.py
   wta_tournaments_to_json.py
   standalone_wta_h2h_stats.py
 

@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n60.0%\n1st Return Points Won %\n46.4%\n2nd Return Points Won %\n71.9%\nBreak Points Converted\n50.0%\nReturn Games Won\n70.0%\nReturn Games Played\n10\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:08:00.183092+00:00",
+  "updated_at": "2026-02-07T11:55:20.120939+00:00",
   "records_tab": {
     "summary": [
       {
@@ -78,5 +78,97 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 102,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Magdalena Frech",
+            "opponent_country": "POL",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-1, 6-1",
+            "opponent_rank": 57
+          }
+        ],
+        "summary": {
+          "rank": 102,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "AUCKLAND",
+        "location": "Auckland \u2022 New Zealand",
+        "date_range": "5 Jan - 11 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 103,
+        "seed": 2,
+        "wta_points_gain": 12.0,
+        "prize_money_won": 2260.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Sofia Costoulas",
+            "opponent_country": "BEL",
+            "opponent_seed": 11,
+            "opponent_entry": "",
+            "score": "6-3, 4-6, 6-3",
+            "opponent_rank": 159
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Aishi Das",
+            "opponent_country": "NZL",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-3, 6-4",
+            "opponent_rank": 1172
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Aishi Das",
+            "opponent_country": "NZL",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-3, 6-4",
+            "opponent_rank": 1172
+          }
+        ],
+        "summary": {
+          "rank": 103,
+          "seed": 2,
+          "wta_points_gain": "+12",
+          "prize_money_won": "+$2,260",
+          "draw": "32M/24Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:55:20.120927+00:00"
   }
 }

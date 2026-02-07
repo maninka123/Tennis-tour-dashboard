@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n27.8%\n1st Return Points Won %\n18.0%\n2nd Return Points Won %\n44.4%\nBreak Points Converted\n28.6%\nReturn Games Won\n11.8%\nReturn Games Played\n17\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:09:26.065808+00:00",
+  "updated_at": "2026-02-07T11:56:32.373681+00:00",
   "records_tab": {
     "summary": [
       {
@@ -102,5 +102,120 @@
         "us_open": "R128"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "MANILA 125",
+        "location": "Manila \u2022 Philippines",
+        "date_range": "26 Jan - 31 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 103,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 1200.0,
+        "draw": "32M/16Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Tatjana Maria",
+            "opponent_country": "GER",
+            "opponent_seed": 1,
+            "opponent_entry": "",
+            "score": "7-6(5), 6-4",
+            "opponent_rank": 42
+          }
+        ],
+        "summary": {
+          "rank": 103,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$1,200",
+          "draw": "32M/16Q/16D"
+        }
+      },
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 103,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Maria Sakkari",
+            "opponent_country": "GRE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-2",
+            "opponent_rank": 53
+          }
+        ],
+        "summary": {
+          "rank": 103,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "UNITED CUP",
+        "location": "Perth + Sydney \u2022 Australia",
+        "date_range": "2 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 102,
+        "seed": 8,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 15000.0,
+        "draw": "0M/0Q/0D",
+        "matches": [
+          {
+            "round": "Round 9",
+            "result": "L",
+            "opponent_name": "Belinda Bencic",
+            "opponent_country": "SUI",
+            "opponent_seed": 16,
+            "opponent_entry": "",
+            "score": "6-2, 6-4",
+            "opponent_rank": 11
+          },
+          {
+            "round": "Round 9",
+            "result": "L",
+            "opponent_name": "Jasmine Paolini",
+            "opponent_country": "ITA",
+            "opponent_seed": 3,
+            "opponent_entry": "",
+            "score": "6-2, 6-3",
+            "opponent_rank": 8
+          }
+        ],
+        "summary": {
+          "rank": 102,
+          "seed": 8,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$15,000",
+          "draw": "0M/0Q/0D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:56:32.373668+00:00"
   }
 }

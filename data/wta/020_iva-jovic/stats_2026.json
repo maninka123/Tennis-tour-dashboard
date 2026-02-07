@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n49.4%\n1st Return Points Won %\n39.5%\n2nd Return Points Won %\n62.4%\nBreak Points Converted\n63.3%\nReturn Games Won\n45.2%\nReturn Games Played\n42\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:03:48.945387+00:00",
+  "updated_at": "2026-02-07T11:51:58.327455+00:00",
   "records_tab": {
     "summary": [
       {
@@ -86,5 +86,127 @@
         "us_open": "R64"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 30,
+        "seed": 3,
+        "wta_points_gain": 163.0,
+        "prize_money_won": 22125.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Renata Zarazua",
+            "opponent_country": "MEX",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-1, 6-2",
+            "opponent_rank": 84
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Janice Tjen",
+            "opponent_country": "INA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-0, 6-1",
+            "opponent_rank": 56
+          },
+          {
+            "round": "Q",
+            "result": "W",
+            "opponent_name": "Magda Linette",
+            "opponent_country": "POL",
+            "opponent_seed": 8,
+            "opponent_entry": "",
+            "score": "6-3, 6-7(5), 6-2",
+            "opponent_rank": 53
+          }
+        ],
+        "summary": {
+          "rank": 30,
+          "seed": 3,
+          "wta_points_gain": "+163",
+          "prize_money_won": "+$22,125",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "AUCKLAND",
+        "location": "Auckland \u2022 New Zealand",
+        "date_range": "5 Jan - 11 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 35,
+        "seed": 3,
+        "wta_points_gain": 98.0,
+        "prize_money_won": 12331.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Sara Bejlek",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(3), 6-4",
+            "opponent_rank": 93
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Gabriela Knutson",
+            "opponent_country": "CZE",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "4-6, 6-1, 6-0",
+            "opponent_rank": 182
+          },
+          {
+            "round": "S",
+            "result": "L",
+            "opponent_name": "Elina Svitolina",
+            "opponent_country": "UKR",
+            "opponent_seed": 1,
+            "opponent_entry": "",
+            "score": "7-6(5), 6-2",
+            "opponent_rank": 13
+          },
+          {
+            "round": "Q",
+            "result": "W",
+            "opponent_name": "Sofia Costoulas",
+            "opponent_country": "BEL",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-2, 7-6(6)",
+            "opponent_rank": 159
+          }
+        ],
+        "summary": {
+          "rank": 35,
+          "seed": 3,
+          "wta_points_gain": "+98",
+          "prize_money_won": "+$12,331",
+          "draw": "32M/24Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:51:58.327441+00:00"
   }
 }

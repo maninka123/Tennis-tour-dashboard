@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n45.0%\n1st Return Points Won %\n43.1%\n2nd Return Points Won %\n48.3%\nBreak Points Converted\n87.5%\nReturn Games Won\n46.7%\nReturn Games Played\n15\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:18:27.382830+00:00",
+  "updated_at": "2026-02-07T12:04:30.499819+00:00",
   "records_tab": {
     "summary": [
       {
@@ -86,5 +86,140 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 82,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Oksana Selekhmeteva",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 3-6, 6-0",
+            "opponent_rank": 101
+          }
+        ],
+        "summary": {
+          "rank": 82,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "HOBART",
+        "location": "Hobart \u2022 Australia",
+        "date_range": "12 Jan - 17 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 78,
+        "seed": 7,
+        "wta_points_gain": 12.0,
+        "prize_money_won": 3065.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Katie Volynets",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "3-6, 6-1, 6-4",
+            "opponent_rank": 94
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Suzan Lamens",
+            "opponent_country": "NED",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "4-6, 6-2, 6-2",
+            "opponent_rank": 95
+          },
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Anna Bondar",
+            "opponent_country": "HUN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-0, 6-1",
+            "opponent_rank": 75
+          }
+        ],
+        "summary": {
+          "rank": 78,
+          "seed": 7,
+          "wta_points_gain": "+12",
+          "prize_money_won": "+$3,065",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "AUCKLAND",
+        "location": "Auckland \u2022 New Zealand",
+        "date_range": "5 Jan - 11 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 84,
+        "seed": null,
+        "wta_points_gain": 30.0,
+        "prize_money_won": 4285.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "L",
+            "opponent_name": "Sonay Kartal",
+            "opponent_country": "GBR",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-1",
+            "opponent_rank": 68
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Monique Barry",
+            "opponent_country": "NZL",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-2, 6-1",
+            "opponent_rank": 726
+          }
+        ],
+        "summary": {
+          "rank": 84,
+          "seed": null,
+          "wta_points_gain": "+30",
+          "prize_money_won": "+$4,285",
+          "draw": "32M/24Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:04:30.499804+00:00"
   }
 }

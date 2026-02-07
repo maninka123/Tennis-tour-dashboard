@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n37.9%\n1st Return Points Won %\n31.3%\n2nd Return Points Won %\n46.8%\nBreak Points Converted\n41.7%\nReturn Games Won\n22.7%\nReturn Games Played\n22\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:15:01.534749+00:00",
+  "updated_at": "2026-02-07T12:01:40.778874+00:00",
   "records_tab": {
     "summary": [
       {
@@ -110,5 +110,87 @@
         "us_open": "R128"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 52,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 97113.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Elina Svitolina",
+            "opponent_country": "UKR",
+            "opponent_seed": 12,
+            "opponent_entry": "",
+            "score": "6-4, 6-1",
+            "opponent_rank": 12
+          }
+        ],
+        "summary": {
+          "rank": 52,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$97,113",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "BRISBANE",
+        "location": "Brisbane \u2022 Australia",
+        "date_range": "4 Jan - 11 Jan 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 50,
+        "seed": null,
+        "wta_points_gain": 32.0,
+        "prize_money_won": 13735.0,
+        "draw": "48M/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Aryna Sabalenka",
+            "opponent_country": "BLR",
+            "opponent_seed": 1,
+            "opponent_entry": "",
+            "score": "6-0, 6-1",
+            "opponent_rank": 1
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Anna Bondar",
+            "opponent_country": "HUN",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "4-6, 7-6(4), 6-2",
+            "opponent_rank": 73
+          }
+        ],
+        "summary": {
+          "rank": 50,
+          "seed": null,
+          "wta_points_gain": "+32",
+          "prize_money_won": "+$13,735",
+          "draw": "48M/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:01:40.778831+00:00"
   }
 }

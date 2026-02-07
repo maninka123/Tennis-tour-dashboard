@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n38.7%\n1st Return Points Won %\n29.6%\n2nd Return Points Won %\n51.3%\nBreak Points Converted\n42.9%\nReturn Games Won\n21.4%\nReturn Games Played\n14\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:08:57.656410+00:00",
+  "updated_at": "2026-02-07T11:56:07.236865+00:00",
   "records_tab": {
     "summary": [
       {
@@ -94,5 +94,97 @@
         "us_open": "R128"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 107,
+        "seed": 2,
+        "wta_points_gain": 30.0,
+        "prize_money_won": 54060.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Sloane Stephens",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-1, 7-5",
+            "opponent_rank": 1102
+          },
+          {
+            "round": "Round of 64",
+            "result": "W",
+            "opponent_name": "Mary Stoiana",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(7), 1-6, 6-4",
+            "opponent_rank": 222
+          },
+          {
+            "round": "Round of 128",
+            "result": "W",
+            "opponent_name": "Aliona Bolsova",
+            "opponent_country": "ESP",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-0, 6-7(3), 6-1",
+            "opponent_rank": 234
+          }
+        ],
+        "summary": {
+          "rank": 107,
+          "seed": 2,
+          "wta_points_gain": "+30",
+          "prize_money_won": "+$54,060",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "CANBERRA 125",
+        "location": "Canberra \u2022 Australia",
+        "date_range": "5 Jan - 10 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 105,
+        "seed": 4,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 2255.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Tamara Zidansek",
+            "opponent_country": "SLO",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-2, 6-7(4), 6-3",
+            "opponent_rank": 156
+          }
+        ],
+        "summary": {
+          "rank": 105,
+          "seed": 4,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$2,255",
+          "draw": "32M/32Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T11:56:07.236851+00:00"
   }
 }

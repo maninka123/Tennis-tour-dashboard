@@ -5,6 +5,7 @@
 
 const PlayerModule = {
     currentPlayer: null,
+    currentRecentMatches: null,
     /**
      * Initialize the module
      */
@@ -50,7 +51,9 @@ const PlayerModule = {
                 : this.generateDemoPerformance(player);
 
             this.currentPlayer = player;
-            this.render(player, stats, profile, performance);
+            const recentMatches = this.extractRecentMatches(player);
+            this.currentRecentMatches = recentMatches;
+            this.render(player, stats, profile, performance, recentMatches);
 
         } catch (error) {
             console.error('Error loading player stats:', error);
@@ -63,7 +66,7 @@ const PlayerModule = {
      * @param {object} player - Player's personal data
      * @param {object} stats - Player's statistics
      */
-    render(player, stats, profile, performance) {
+    render(player, stats, profile, performance, recentMatches) {
         const { Utils } = window.TennisApp;
         const modal = document.getElementById('playerStatsModal');
         if (!modal) return;
@@ -80,13 +83,17 @@ const PlayerModule = {
 
         const chClass = player.is_new_career_high ? 'ch-highlight nch' : (player.is_career_high ? 'ch-highlight' : '');
         const chText = player.career_high ? `CH #${player.career_high}` : 'CH -';
-        const rankText = player.rank ? `Rank #${player.rank}` : 'Rank -';
         const playingText = player.is_playing && player.previous ? `${player.previous}` : '';
         const rankBadge = player.rank ? `<div class="rank-badge">#${player.rank}</div>` : '';
 
         const wonLost = this.parseWonLost(player?.stats_2026?.won_lost || profile.wonLost || '');
         const winsValue = wonLost.wins ?? stats?.wins ?? 0;
         const lossesValue = wonLost.losses ?? stats?.losses ?? 0;
+        const recentTournamentCount = Array.isArray(recentMatches?.tournaments) ? recentMatches.tournaments.length : 0;
+        const recentMatchCount = Array.isArray(recentMatches?.tournaments)
+            ? recentMatches.tournaments.reduce((acc, t) => acc + (Array.isArray(t.matches) ? t.matches.length : 0), 0)
+            : 0;
+        const recentButtonDisabled = recentMatchCount === 0;
 
         let html = `
             <div class="modal-content">
@@ -110,6 +117,19 @@ const PlayerModule = {
                                     <span class="${chClass}">${chText}</span>
                                 </div>
                                 ${playingText ? `<div class="player-status playing-text">${playingText}</div>` : ''}
+                            </div>
+                        </div>
+                        <div class="player-profile-actions">
+                            <button class="recent-matches-launch ${recentButtonDisabled ? 'disabled' : ''}"
+                                ${recentButtonDisabled ? 'disabled' : ''}
+                                onclick="PlayerModule.openRecentMatchesModal()">
+                                <i class="fas fa-table-list"></i>
+                                <span>Recent Matches</span>
+                            </button>
+                            <div class="recent-matches-subtitle">
+                                ${recentButtonDisabled
+                                    ? 'No match history available'
+                                    : `${recentMatchCount} matches • ${recentTournamentCount} tournaments`}
                             </div>
                         </div>
                     </div>
@@ -140,6 +160,7 @@ const PlayerModule = {
                         <h4>Major Events Performance (2020–2025)</h4>
                         ${this.getPerformanceTableHTML(performance)}
                     </div>
+                    ${this.getRecentMatchesModalHTML(player, recentMatches, Utils)}
                 </div>
             </div>
         `;
@@ -202,16 +223,16 @@ const PlayerModule = {
         const playingCard = profile.playing ? `<div class="subtext playing-text">${profile.playing}</div>` : '';
 
         return `
-            <div class="info-card">
+            <div class="info-card age-card">
                 <span class="label">Age</span>
                 <span class="value">${profile.age}</span>
                 ${playingCard}
             </div>
-            <div class="info-card">
+            <div class="info-card height-card">
                 <span class="label">Height</span>
                 <span class="value">${profile.height}</span>
             </div>
-            <div class="info-card">
+            <div class="info-card plays-card">
                 <span class="label">Plays</span>
                 <span class="value">${profile.hand}</span>
             </div>
@@ -310,6 +331,156 @@ const PlayerModule = {
         if (modal) {
             modal.classList.remove('active');
         }
+        this.currentRecentMatches = null;
+    },
+
+    extractRecentMatches(player) {
+        const raw = player?.stats_2026?.recent_matches_tab || player?.stats_2026?.recent_matches;
+        if (!raw || !Array.isArray(raw.tournaments)) {
+            return { year: 2026, tournaments: [], updated_at: null };
+        }
+        return raw;
+    },
+
+    openRecentMatchesModal() {
+        const overlay = document.getElementById('playerRecentMatchesOverlay');
+        if (!overlay) return;
+        overlay.classList.add('active');
+    },
+
+    closeRecentMatchesModal(event) {
+        const overlay = document.getElementById('playerRecentMatchesOverlay');
+        if (!overlay) return;
+        if (event && event.target && event.target.id !== 'playerRecentMatchesOverlay') {
+            return;
+        }
+        overlay.classList.remove('active');
+    },
+
+    getRecentMatchesModalHTML(player, recentMatches, Utils) {
+        const tournaments = Array.isArray(recentMatches?.tournaments) ? recentMatches.tournaments : [];
+        if (!tournaments.length) {
+            return `
+                <div class="player-recent-overlay" id="playerRecentMatchesOverlay" onclick="PlayerModule.closeRecentMatchesModal(event)">
+                    <div class="player-recent-modal">
+                        <div class="player-recent-header">
+                            <h3>${player.name} — Recent Matches</h3>
+                            <button class="close-modal" onclick="PlayerModule.closeRecentMatchesModal()">&times;</button>
+                        </div>
+                        <div class="player-recent-body">
+                            <div class="player-recent-empty">No recent match history available for this player.</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        const tournamentCards = tournaments.map((event) => this.renderRecentTournamentCard(event, Utils)).join('');
+        const yearText = recentMatches?.year ? `Season ${recentMatches.year}` : 'Recent results';
+        return `
+            <div class="player-recent-overlay" id="playerRecentMatchesOverlay" onclick="PlayerModule.closeRecentMatchesModal(event)">
+                <div class="player-recent-modal">
+                    <div class="player-recent-header">
+                        <div>
+                            <h3>${player.name} — Recent Matches</h3>
+                            <div class="player-recent-header-sub">${yearText}</div>
+                        </div>
+                        <button class="close-modal" onclick="PlayerModule.closeRecentMatchesModal()">&times;</button>
+                    </div>
+                    <div class="player-recent-body">
+                        ${tournamentCards}
+                    </div>
+                </div>
+            </div>
+        `;
+    },
+
+    renderRecentTournamentCard(event, Utils) {
+        const category = event?.category || 'other';
+        const categoryClass = Utils.getCategoryClass(category);
+        const surfaceClass = this.surfaceClassFromKey(event?.surface_key || event?.surface || '');
+        const surfaceLabel = event?.surface || 'HARD';
+        const rows = Array.isArray(event?.matches) ? event.matches : [];
+        const rowsHtml = rows.map((row) => this.renderRecentMatchRow(row, Utils)).join('');
+        const summary = event?.summary || {};
+
+        const metaChips = [
+            this.renderMetaChip('Rank', this.safeDisplay(summary.rank)),
+            this.renderMetaChip('Seed', this.safeDisplay(summary.seed)),
+            this.renderMetaChip('WTA Points Gain', this.safeDisplay(summary.wta_points_gain)),
+            this.renderMetaChip('Prize Money Won', this.safeDisplay(summary.prize_money_won)),
+            this.renderMetaChip('Draw', this.safeDisplay(summary.draw))
+        ].join('');
+
+        return `
+            <section class="recent-tournament-card category-${categoryClass} ${surfaceClass}">
+                <div class="recent-tournament-header">
+                    <div class="recent-tournament-title-wrap">
+                        <h4>${event?.tournament || 'Tournament'}</h4>
+                        <div class="recent-tournament-sub">${[event?.location || '', event?.date_range || ''].filter(Boolean).join(', ')}</div>
+                    </div>
+                    <div class="recent-tournament-badges">
+                        <span class="category-badge ${categoryClass}">${event?.category_label || 'Tour'}</span>
+                        <span class="recent-surface-badge ${surfaceClass}">${surfaceLabel}</span>
+                    </div>
+                </div>
+                <div class="recent-tournament-table-wrap">
+                    <table class="recent-tournament-table">
+                        <thead>
+                            <tr>
+                                <th>Round</th>
+                                <th>W-L</th>
+                                <th>Opponent</th>
+                                <th>Match Score</th>
+                                <th>Opponent Rank</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHtml}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="recent-tournament-meta">${metaChips}</div>
+            </section>
+        `;
+    },
+
+    renderRecentMatchRow(row, Utils) {
+        const result = row?.result || '-';
+        const resultClass = result === 'W' ? 'win' : (result === 'L' ? 'loss' : 'other');
+        const opponentName = row?.opponent_name || '-';
+        const opponentFlag = row?.opponent_country ? Utils.getFlag(row.opponent_country) : '';
+        const extras = [];
+        if (row?.opponent_seed) extras.push(`(${row.opponent_seed})`);
+        if (row?.opponent_entry) extras.push(`(${row.opponent_entry})`);
+        const extrasText = extras.length ? ` <span class="recent-opponent-meta">${extras.join(' ')}</span>` : '';
+
+        return `
+            <tr>
+                <td>${row?.round || '-'}</td>
+                <td><span class="recent-result-pill ${resultClass}">${result}</span></td>
+                <td>${opponentFlag} ${opponentName}${extrasText}</td>
+                <td class="recent-score-cell">${row?.score || '-'}</td>
+                <td>${this.safeDisplay(row?.opponent_rank)}</td>
+            </tr>
+        `;
+    },
+
+    renderMetaChip(label, value) {
+        return `<span class="recent-meta-chip"><strong>${label}:</strong> ${value}</span>`;
+    },
+
+    safeDisplay(value) {
+        if (value === null || value === undefined || value === '') return '-';
+        return value;
+    },
+
+    surfaceClassFromKey(surface) {
+        const value = String(surface || '').toLowerCase();
+        if (value.includes('clay')) return 'surface-clay';
+        if (value.includes('grass')) return 'surface-grass';
+        if (value.includes('indoor')) return 'surface-indoor';
+        return 'surface-hard';
     },
 
     /**

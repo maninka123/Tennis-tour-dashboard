@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n36.8%\n1st Return Points Won %\n31.6%\n2nd Return Points Won %\n47.4%\nBreak Points Converted\n28.6%\nReturn Games Won\n22.2%\nReturn Games Played\n9\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-02T13:22:33.059739+00:00",
+  "updated_at": "2026-02-07T12:07:51.903460+00:00",
   "records_tab": {
     "summary": [
       {
@@ -118,5 +118,140 @@
         "us_open": "-"
       }
     ]
+  },
+  "recent_matches_tab": {
+    "year": 2026,
+    "tournaments": [
+      {
+        "tournament": "MANAMA",
+        "location": "Bahrain",
+        "date_range": "19 Jan - 25 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 166,
+        "seed": 6,
+        "wta_points_gain": 16.0,
+        "prize_money_won": 1543.0,
+        "draw": "32M/32Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "result": "W",
+            "opponent_name": "Vittoria Paganetti",
+            "opponent_country": "ITA",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-2, 6-2",
+            "opponent_rank": 420
+          },
+          {
+            "round": "Round of 32",
+            "result": "W",
+            "opponent_name": "Briana Szabo",
+            "opponent_country": "ROU",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-2, 6-0",
+            "opponent_rank": 691
+          },
+          {
+            "round": "Q",
+            "result": "L",
+            "opponent_name": "Carol Young Suh Lee",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-1, 5-7, 6-4",
+            "opponent_rank": 210
+          }
+        ],
+        "summary": {
+          "rank": 166,
+          "seed": 6,
+          "wta_points_gain": "+16",
+          "prize_money_won": "+$1,543",
+          "draw": "32M/32Q/16D"
+        }
+      },
+      {
+        "tournament": "AUSTRALIAN OPEN",
+        "location": "Melbourne \u2022 Australia",
+        "date_range": "18 Jan - 1 Feb 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 166,
+        "seed": null,
+        "wta_points_gain": 2.0,
+        "prize_money_won": 26220.0,
+        "draw": "128M/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "result": "L",
+            "opponent_name": "Tamara Zidansek",
+            "opponent_country": "SLO",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(3), 6-3",
+            "opponent_rank": 151
+          }
+        ],
+        "summary": {
+          "rank": 166,
+          "seed": null,
+          "wta_points_gain": "+2",
+          "prize_money_won": "+$26,220",
+          "draw": "128M/64D"
+        }
+      },
+      {
+        "tournament": "AUCKLAND",
+        "location": "Auckland \u2022 New Zealand",
+        "date_range": "5 Jan - 11 Jan 2026",
+        "category": "other",
+        "category_label": "Tour",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 164,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 1460.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Yuliia Starodubtseva",
+            "opponent_country": "UKR",
+            "opponent_seed": 4,
+            "opponent_entry": "",
+            "score": "6-3, 6-3",
+            "opponent_rank": 111
+          },
+          {
+            "round": "Round of 32",
+            "result": "L",
+            "opponent_name": "Yuliia Starodubtseva",
+            "opponent_country": "UKR",
+            "opponent_seed": 4,
+            "opponent_entry": "",
+            "score": "6-3, 6-3",
+            "opponent_rank": 111
+          }
+        ],
+        "summary": {
+          "rank": 164,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$1,460",
+          "draw": "32M/24Q/16D"
+        }
+      }
+    ],
+    "updated_at": "2026-02-07T12:07:51.903441+00:00"
   }
 }

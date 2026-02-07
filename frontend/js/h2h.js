@@ -330,7 +330,9 @@ const H2HModule = {
         resultsDiv.innerHTML = `
             <div class="h2h-hero">
                 <div class="h2h-hero-card">
-                    <img src="${Utils.getPlayerImage(p1)}" alt="${p1.name}">
+                    <div class="h2h-hero-avatar">
+                        <img src="${Utils.getPlayerImage(p1)}" alt="${p1.name}">
+                    </div>
                     <div class="h2h-hero-meta">
                         <div class="h2h-hero-name">${p1.name}</div>
                         <div class="h2h-hero-rank">${Utils.getFlag(p1.country)} ${p1.rank ? `Rank #${p1.rank}` : 'WTA'}</div>
@@ -341,8 +343,10 @@ const H2HModule = {
                     <div class="h2h-record-label">Career H2H</div>
                     <div class="h2h-record-sub">Last ${h2h.recent_last_n || 0}: ${h2h.recent_player1_wins || 0} - ${h2h.recent_player2_wins || 0}</div>
                 </div>
-                <div class="h2h-hero-card">
-                    <img src="${Utils.getPlayerImage(p2)}" alt="${p2.name}">
+                <div class="h2h-hero-card h2h-hero-card-right">
+                    <div class="h2h-hero-avatar">
+                        <img src="${Utils.getPlayerImage(p2)}" alt="${p2.name}">
+                    </div>
                     <div class="h2h-hero-meta">
                         <div class="h2h-hero-name">${p2.name}</div>
                         <div class="h2h-hero-rank">${Utils.getFlag(p2.country)} ${p2.rank ? `Rank #${p2.rank}` : 'WTA'}</div>
