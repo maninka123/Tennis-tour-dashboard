@@ -269,6 +269,34 @@ const ScoresModule = {
         ]
     },
 
+    formatRelativeMinutes(isoText) {
+        if (!isoText) return 'Updated --';
+        const then = new Date(isoText);
+        if (Number.isNaN(then.getTime())) return 'Updated --';
+        const diffMs = Date.now() - then.getTime();
+        if (diffMs < 0 || diffMs < 45000) return 'Updated just now';
+        const mins = Math.max(1, Math.floor(diffMs / 60000));
+        return `Updated ${mins}m ago`;
+    },
+
+    updateRecentUpdatedAgo() {
+        const { AppState, DOM } = window.TennisApp;
+        if (!DOM.recentUpdatedAgo) return;
+        DOM.recentUpdatedAgo.textContent = this.formatRelativeMinutes(AppState.recentMatchesUpdatedAt);
+    },
+
+    updateUpcomingUpdatedAgo() {
+        const { AppState } = window.TennisApp;
+        const label = document.getElementById('upcomingUpdatedAgo');
+        if (!label) return;
+        label.textContent = this.formatRelativeMinutes(AppState.upcomingMatchesUpdatedAt);
+    },
+
+    refreshSectionUpdatedAgo() {
+        this.updateRecentUpdatedAgo();
+        this.updateUpcomingUpdatedAgo();
+    },
+
     /**
      * Render live scores
      */
@@ -298,7 +326,7 @@ const ScoresModule = {
      * Render recent matches
      */
     renderRecentMatches() {
-        const { AppState, Utils, DOM } = window.TennisApp;
+        const { AppState, DOM } = window.TennisApp;
         const tour = AppState.currentTour;
         
         // Get data (use demo if empty)
@@ -313,6 +341,7 @@ const ScoresModule = {
                     <p>No recent matches</p>
                 </div>
             `;
+            this.updateRecentUpdatedAgo();
             return;
         }
 
@@ -320,6 +349,7 @@ const ScoresModule = {
         DOM.recentMatchesWrapper.innerHTML = grouped
             .map(group => this.renderTournamentGroup(group, false))
             .join('');
+        this.updateRecentUpdatedAgo();
     },
 
     /**
@@ -513,19 +543,26 @@ const ScoresModule = {
         if (matches.length === 0) {
             upcomingSection.innerHTML = `
                 <div class="section-header">
-                    <h2><i class="fas fa-calendar"></i> Upcoming Matches</h2>
+                    <div class="section-title-stack">
+                        <h2><i class="fas fa-calendar"></i> Upcoming Matches</h2>
+                        <span class="section-updated-ago" id="upcomingUpdatedAgo">Updated --</span>
+                    </div>
                 </div>
                 <div class="no-matches-message">
                     <p>No upcoming matches in the next 2 days</p>
                 </div>
             `;
+            this.updateUpcomingUpdatedAgo();
             return;
         }
 
         const grouped = this.groupMatchesByTournament(matches);
         const upcomingHTML = `
             <div class="section-header">
-                <h2><i class="fas fa-calendar"></i> Upcoming Matches (Next 2 Days)</h2>
+                <div class="section-title-stack">
+                    <h2><i class="fas fa-calendar"></i> Upcoming Matches (Next 2 Days)</h2>
+                    <span class="section-updated-ago" id="upcomingUpdatedAgo">Updated --</span>
+                </div>
             </div>
             <div class="upcoming-matches-container">
                 ${grouped.map(group => this.renderTournamentGroup(group, false, (match) => this.createUpcomingMatchCard(match))).join('')}
@@ -533,6 +570,7 @@ const ScoresModule = {
         `;
 
         upcomingSection.innerHTML = upcomingHTML;
+        this.updateUpcomingUpdatedAgo();
         this.attachUpcomingInsights(matches);
     },
 
