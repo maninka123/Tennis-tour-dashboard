@@ -1,16 +1,21 @@
 /**
  * API Configuration
- * Update API_BASE_URL after deploying to production
+ * Automatically detects local vs production environment
  */
 
-// For local development
-// const API_BASE_URL = 'http://localhost:5001';
+// Auto-detect environment
+const isLocal = window.location.hostname === 'localhost' || 
+                window.location.hostname === '127.0.0.1' ||
+                window.location.hostname === '';
 
-// For production (update this after deployment)
-const API_BASE_URL = 'https://tennis-tour-dashboard.onrender.com';
+// Set API base URL based on environment
+const API_BASE_URL = isLocal 
+    ? 'http://localhost:5001'  // Local development
+    : window.location.origin;   // Production (same domain as frontend)
 
 // Make config globally available
 window.TennisApp = window.TennisApp || {};
 window.TennisApp.CONFIG = {
-    API_BASE_URL: API_BASE_URL
+    API_BASE_URL: API_BASE_URL,
+    IS_LOCAL: isLocal
 };
