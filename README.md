@@ -452,6 +452,10 @@ Made with 🎾 and ☕ | © 2026 Tennis Dashboard
 
 ### 📸 Image Gallery
 
+<img src="Images/loading%20intro.png" alt="Loading intro page" width="900" />
+
+Loading intro page with animated GIF grid background.
+
 <img src="Images/Interface_Live%20results_recent%20scores_upcoming%20matches.png" alt="Main interface" width="900" />
 
 Main interface with live scores, recent results, and upcoming match insights.
@@ -464,20 +468,33 @@ Rankings panel and tournament calendar with surface filters.
 
 Upcoming match insights with win probability and form notes.
 
-<img src="Images/Player_stats_1.png" alt="Player stats overview" width="900" />
+<img src="Images/stat%20table.png" alt="Statistics table" width="900" />
 
-Player stats comparison overview.
+Detailed match statistics table with serve and return metrics.
 
-<img src="Images/Player_stats_2.png" alt="Player stats details" width="900" />
-
-Detailed serve and return breakdowns.
-
-<img src="Images/H2H_1.png" alt="H2H overview" width="900" />
-
-Head-to-head overview with radar charts.
-
-<img src="Images/H2H_2.png" alt="H2H details" width="900" />
-
-Past meetings and surface records.
+<div align="center">
+<table>
+<tr>
+<td width="50%">
+<img src="Images/Player_stats_1.png" alt="Player stats overview" width="100%" />
+<p align="center">Player stats comparison overview</p>
+</td>
+<td width="50%">
+<img src="Images/Player_stats_2.png" alt="Player stats details" width="100%" />
+<p align="center">Detailed serve and return breakdowns</p>
+</td>
+</tr>
+<tr>
+<td width="50%">
+<img src="Images/H2H_1.png" alt="H2H overview" width="100%" />
+<p align="center">Head-to-head overview with radar charts</p>
+</td>
+<td width="50%">
+<img src="Images/H2H_2.png" alt="H2H details" width="100%" />
+<p align="center">Past meetings and surface records</p>
+</td>
+</tr>
+</table>
+</div>
 
 ---
