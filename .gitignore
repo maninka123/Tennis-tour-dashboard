@@ -42,6 +42,8 @@ build/
 # Cache
 .cache/
 *.cache
+.wta_*
+.atp_*
 
 # Testing
 .pytest_cache/
