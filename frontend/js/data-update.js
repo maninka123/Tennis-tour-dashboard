@@ -2,7 +2,7 @@
 const UpdateManager = {
     gifs: [],
     pollingInterval: null,
-    backendUrl: 'http://localhost:5001', // Should match config
+    backendUrl: window.TennisApp?.CONFIG?.API_BASE_URL || 'http://localhost:5001',
 
     init() {
         // Generate list of gifs tennis_01.gif to tennis_30.gif
