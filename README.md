@@ -1,37 +1,3 @@
----
-
-## 📸 Image Gallery
-
-<img src="Images/Interface_Live%20results_recent%20scores_upcoming%20matches.png" alt="Main interface" width="900" />
-
-Main interface with live scores, recent results, and upcoming match insights.
-
-<img src="Images/Live%20Rankings%20and%20calender.png" alt="Rankings and calendar" width="900" />
-
-Rankings panel and tournament calendar with surface filters.
-
-<img src="Images/Upcoming%20match%20insights.png" alt="Match insights" width="900" />
-
-Upcoming match insights with win probability and form notes.
-
-<img src="Images/Player_stats_1.png" alt="Player stats overview" width="900" />
-
-Player stats comparison overview.
-
-<img src="Images/Player_stats_2.png" alt="Player stats details" width="900" />
-
-Detailed serve and return breakdowns.
-
-<img src="Images/H2H_1.png" alt="H2H overview" width="900" />
-
-Head-to-head overview with radar charts.
-
-<img src="Images/H2H_2.png" alt="H2H details" width="900" />
-
-Past meetings and surface records.
-
----
-
 <div align="center">
 
 # 🎾 Tennis Live Dashboard
@@ -481,3 +447,37 @@ Created with ❤️ for tennis fans worldwide 🎾
 Made with 🎾 and ☕ | © 2026 Tennis Dashboard
 
 </div>
+
+---
+
+### 📸 Image Gallery
+
+<img src="Images/Interface_Live%20results_recent%20scores_upcoming%20matches.png" alt="Main interface" width="900" />
+
+Main interface with live scores, recent results, and upcoming match insights.
+
+<img src="Images/Live%20Rankings%20and%20calender.png" alt="Rankings and calendar" width="900" />
+
+Rankings panel and tournament calendar with surface filters.
+
+<img src="Images/Upcoming%20match%20insights.png" alt="Match insights" width="900" />
+
+Upcoming match insights with win probability and form notes.
+
+<img src="Images/Player_stats_1.png" alt="Player stats overview" width="900" />
+
+Player stats comparison overview.
+
+<img src="Images/Player_stats_2.png" alt="Player stats details" width="900" />
+
+Detailed serve and return breakdowns.
+
+<img src="Images/H2H_1.png" alt="H2H overview" width="900" />
+
+Head-to-head overview with radar charts.
+
+<img src="Images/H2H_2.png" alt="H2H details" width="900" />
+
+Past meetings and surface records.
+
+---
