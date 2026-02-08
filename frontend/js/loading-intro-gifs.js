@@ -71,17 +71,23 @@
         // Shuffle to randomize which gifs are shown each time
         const pool = shuffle(GIF_FILES);
 
-        // Use each gif at its original size
-        for (let i = 0; i < pool.length; i += 1) {
+        // Use each gif at 80% of its original size and repeat the pool to fill the screen
+        const repeatedPool = Array(3).fill(pool).flat(); // Repeat 3 times
+
+        for (let i = 0; i < repeatedPool.length; i += 1) {
             const tile = document.createElement('div');
             tile.className = 'intro-gif-tile';
 
             const img = document.createElement('img');
-            const file = pool[i];
+            const file = repeatedPool[i];
             img.src = buildGifUrl(file);
             img.alt = 'Tennis intro animation';
             img.loading = 'eager';
             img.decoding = 'async';
+
+            img.onload = () => {
+                img.width = img.naturalWidth * 0.8;
+            };
 
             img.onerror = () => {
                 // Keep the tile but show gradient background if gif fails to load

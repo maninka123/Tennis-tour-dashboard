@@ -3544,20 +3544,17 @@ body {
 .intro-gif-grid {
     position: absolute;
     inset: 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    gap: 0;
-    padding: 0;
-    overflow: auto;
+    column-count: 8;
+    column-gap: 8px;
+    padding: 8px;
+    overflow: hidden;
 }
 
 .intro-gif-tile {
-    flex: 0 0 auto;
-    background: transparent;
-    border: none;
-    padding: 0;
-    overflow: visible;
+    break-inside: avoid-column;
+    margin-bottom: 8px;
+    overflow: hidden;
+    border-radius: 8px;
 }
 
 .intro-gif-tile img {
@@ -3595,16 +3592,14 @@ body {
 
 @media (max-width: 1200px) {
     .intro-gif-grid {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-        grid-auto-rows: 10vh;
+        column-count: 6;
     }
 }
 
 @media (max-width: 768px) {
     .intro-gif-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        grid-auto-rows: 12vh;
-        gap: 6px;
+        column-count: 4;
+        column-gap: 6px;
         padding: 6px;
     }
 
