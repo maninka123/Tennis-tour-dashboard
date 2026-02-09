@@ -17,16 +17,8 @@
   "draw_size_doubles": 8,
   "prize_money": 115000,
   "prize_money_currency": "USD",
-  "champion": {
-    "id": "326929",
-    "name": "Mananchaya Sawangkaew",
-    "country": "THA"
-  },
-  "runner_up": {
-    "id": "332150",
-    "name": "Lilli Tagger",
-    "country": "AUT"
-  },
+  "champion": null,
+  "runner_up": null,
   "draw_year": 2026,
   "draw": {
     "draw_size": 32,
@@ -3106,12 +3098,12 @@
     },
     {
       "match_id": "LS001",
-      "round_id": "F",
+      "round_id": 1,
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "F",
-      "scheduled": "2026-02-08T10:18:36.86+00:00",
-      "duration": "01:25:00",
+      "match_state": "U",
+      "scheduled": "2026-02-08T16:00+05:30",
+      "duration": null,
       "player_a": {
         "id": "326929",
         "name": "Mananchaya Sawangkaew",
@@ -3122,28 +3114,19 @@
         "name": "Lilli Tagger",
         "country": "AUT"
       },
-      "score_string": "6-4,6-3",
-      "result_string": "M. Sawangkaew d [7]L. Tagger 6-4,6-3",
-      "sets": [
-        {
-          "a": "6",
-          "b": "4"
-        },
-        {
-          "a": "6",
-          "b": "3"
-        }
-      ],
-      "winner_side": "A"
+      "score_string": null,
+      "result_string": null,
+      "sets": [],
+      "winner_side": null
     },
     {
       "match_id": "LD001",
-      "round_id": "F",
+      "round_id": 1,
       "draw_level_type": "M",
       "draw_match_type": "D",
-      "match_state": "F",
-      "scheduled": "2026-02-08T12:26:29.877+00:00",
-      "duration": "01:28:12",
+      "match_state": "U",
+      "scheduled": "2026-02-08T23:59+05:30",
+      "duration": null,
       "player_a": {
         "id": "318001",
         "name": "Nicole Fossa Huergo",
@@ -3154,23 +3137,10 @@
         "name": "Polina Iatcenko",
         "country": "RUS"
       },
-      "score_string": "7-6(3),1-6,1-0(5)",
-      "result_string": "[2]P. Iatcenko / E. Pridankina d N. Fossa Huergo / M. Sawangkaew 7-6(3),1-6,1-0(5)",
-      "sets": [
-        {
-          "a": "6",
-          "b": "7"
-        },
-        {
-          "a": "6",
-          "b": "1"
-        },
-        {
-          "a": "0",
-          "b": "1"
-        }
-      ],
-      "winner_side": "B"
+      "score_string": null,
+      "result_string": null,
+      "sets": [],
+      "winner_side": null
     }
   ]
 }

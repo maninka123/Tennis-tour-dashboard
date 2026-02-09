@@ -108,6 +108,7 @@ import difflib
 import shutil
 import subprocess
 import sys
+import urllib.parse
 import zlib
 from pathlib import Path
 from config import Config
@@ -2631,6 +2632,7 @@ class TennisDataFetcher:
             image_url = rank_entry.get('image_url')
         elif scraped_entry:
             image_url = scraped_entry.get('profile', {}).get('image_url') or ''
+            
         return {
             'id': resolved_id,
             'name': name,
@@ -2680,6 +2682,9 @@ class TennisDataFetcher:
             or str(profile.get('player_id') or '').strip().upper()
             or str((ranking or {}).get('player_code') or '').strip().upper()
         )
+
+        if resolved_player_code:
+            image_url = f"/api/player/atp/{resolved_player_code}/image"
 
         return {
             'id': resolved_id,
@@ -4519,6 +4524,7 @@ class TennisDataFetcher:
                 is_playing = (row.get('is_playing') or '').strip().lower() == 'yes'
 
                 image_url = profile_data.get('image_url') or ''
+
                 height = profile_data.get('height') or ''
                 plays = profile_data.get('plays') or ''
                 prize_money = stats_data.get('prize_money') or ''
@@ -4621,7 +4627,8 @@ class TennisDataFetcher:
                 country = (row.get('country') or '').strip() or profile_data.get('country') or 'WHITE'
                 is_playing = (row.get('is_playing') or '').strip().lower() == 'yes'
 
-                image_url = profile_data.get('image_url') or ''
+                image_url = f"/api/player/atp/{player_code}/image" if player_code else (profile_data.get('image_url') or '')
+
                 height = profile_data.get('height') or ''
                 plays = profile_data.get('plays') or ''
                 prize_money = stats_data.get('prize_money') or ''
