@@ -532,9 +532,7 @@ Created with ❤️ for tennis fans worldwide 🎾
 | ![Rankings and calendar](Images/Live%20Rankings%20and%20calender.png) | Rankings panel and tournament calendar with surface filters |
 | ![Match insights](Images/Upcoming%20match%20insights.png) | Upcoming match insights with win probability and form notes |
 | ![Statistics table](Images/stat%20table.png) | Detailed match statistics table with serve and return metrics |
-| ![Player stats overview](Images/Player_stats_1.png) | Player stats comparison overview |
-| ![Player stats details](Images/Player_stats_2.png) | Detailed serve and return breakdowns |
-| ![H2H overview](Images/H2H_1.png) | Head-to-head overview with radar charts |
-| ![H2H details](Images/H2H_2.png) | Past meetings and surface records |
+| ![Player stats overview](Images/Player_stats_1.png) <br> ![Player stats details](Images/Player_stats_2.png) | **Player Statistics Analysis**<br><br>Complete player profile view showing:<br>• Stats comparison overview<br>• Detailed serve & return metrics<br>• Season performance breakdown |
+| ![H2H overview](Images/H2H_1.png) <br> ![H2H details](Images/H2H_2.png) | **Head-to-Head Deep Dive**<br><br>Full analytics suite featuring:<br>• Radar chart comparison<br>• Past meetings history<br>• Surface performance records |
 
 ---
