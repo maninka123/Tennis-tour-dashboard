@@ -183,11 +183,8 @@ def _build_player_from_team(team: Dict[str, Any]) -> Dict[str, Any]:
     last = _clean_text(player.get("PlayerLastName"))
     name = _clean_text(f"{first} {last}")
     player_id = _clean_text(player.get("PlayerId")).upper()
-    image_url = (
-        f"{BASE_URL}/-/media/alias/player-headshot/{player_id.lower()}"
-        if player_id
-        else None
-    )
+    # Image URLs handled by frontend fallback (PLAYER_IMAGE_MAP or SVG)
+    image_url = None
     return {
         "id": player_id or None,
         "name": name or "TBD",
@@ -364,12 +361,14 @@ def _extract_results_player(stats_item: BeautifulSoup) -> Tuple[Dict[str, Any], 
         tb = _to_int(spans[1]) if len(spans) > 1 else None
         score_cells.append((int(main), tb if tb is not None else None))
 
+    # Image URLs handled by frontend fallback (PLAYER_IMAGE_MAP or SVG)
+    image_url = None
     player = {
         "id": player_id,
         "name": player_name or "TBD",
         "country": country,
         "rank": None,
-        "image_url": _absolute_url(profile_src) if profile_src else None,
+        "image_url": image_url,
     }
     return player, score_cells, winner
 
@@ -501,12 +500,14 @@ def _extract_schedule_player(side_node: BeautifulSoup) -> Dict[str, Any]:
     player_id = _player_id_from_profile_link(profile_href)
     country = _flag_code_from_node(side_node.select_one(".country"))
 
+    # Image URLs handled by frontend fallback (PLAYER_IMAGE_MAP or SVG)
+    image_url = None
     return {
         "id": player_id,
         "name": player_name or "TBD",
         "country": country,
         "rank": None,
-        "image_url": _absolute_url(profile_src) if profile_src else None,
+        "image_url": image_url,
     }
 
 

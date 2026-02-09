@@ -207,6 +207,10 @@ const Utils = {
     getPlayerImage(player, tour = 'atp') {
         // Explicit image_url from API
         if (player && player.image_url) {
+            // Local API image paths need the backend base URL prepended
+            if (player.image_url.startsWith('/api/')) {
+                return API_BASE_URL + player.image_url.substring(4);
+            }
             return player.image_url;
         }
 

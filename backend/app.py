@@ -3,7 +3,7 @@ Tennis Dashboard - Flask Backend Server
 Provides REST API and WebSocket for real-time tennis data
 """
 
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory, redirect
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 import time
@@ -12,8 +12,94 @@ import os
 import threading
 import subprocess
 import json
+import re
 from tennis_api import tennis_fetcher
 from config import Config
+
+
+# --- Player Image Manager ---
+class PlayerImageManager:
+    def __init__(self, data_root):
+        self.data_root = data_root
+        self.mapping = {'atp': {}, 'wta': {}}
+        self.lock = threading.Lock()
+        
+    def scan_players(self):
+        """Background task to scan player IDs from profile files"""
+        print("[PlayerImageManager] Starting background scan...")
+        sys.stdout.flush()
+        for tour in ['atp', 'wta']:
+            print(f"[PlayerImageManager] Scanning {tour}...")
+            sys.stdout.flush()
+            tour_idx = {}
+            tour_path = os.path.join(self.data_root, tour)
+            if not os.path.exists(tour_path): 
+                print(f"[PlayerImageManager] {tour} path not found: {tour_path}")
+                continue
+            
+            try:
+                count = 0
+                for entry in os.scandir(tour_path):
+                    if not entry.is_dir(): continue
+                    # Look for profile.json
+                    try:
+                        p_file = os.path.join(entry.path, 'profile.json')
+                        if os.path.exists(p_file):
+                            with open(p_file, 'r', encoding='utf-8') as f:
+                                data = json.load(f)
+                                pid = data.get('player_id')
+                                
+                                # Process WTA ID from URL if missing
+                                if not pid and tour == 'wta':
+                                    url = data.get('url', '')
+                                    m = re.search(r'players/(\d+)/', url)
+                                    if m: pid = m.group(1)
+                                
+                                if pid:
+                                    # Store mapping ID -> {path, external_url}
+                                    tour_idx[str(pid).upper()] = {
+                                        'path': entry.path,
+                                        'external_url': data.get('image_url')
+                                    }
+                                    count += 1
+                    except Exception as e:
+                        print(f"[PlayerImageManager] Error reading profile in {entry.name}: {e}")
+                        continue
+                print(f"[PlayerImageManager] Scanned {count} entries for {tour}")
+            except Exception as e:
+                print(f"[PlayerImageManager] Error scanning {tour}: {e}")
+            
+            with self.lock:
+                self.mapping[tour] = tour_idx
+        print(f"[PlayerImageManager] Indexed {len(self.mapping['atp'])} ATP and {len(self.mapping['wta'])} WTA players")
+        sys.stdout.flush()
+
+    def get_player_info(self, tour, player_id):
+        if not player_id: return None
+        pid = str(player_id).upper()
+        
+        # Try finding by ID
+        with self.lock:
+            info = self.mapping.get(tour, {}).get(pid)
+        
+        if info:
+            # Check for local image file
+            for ext in ['.jpg', '.png', '.jpeg']:
+                img_path = os.path.join(info['path'], f'image{ext}')
+                if os.path.exists(img_path):
+                    return {'type': 'local', 'path': img_path}
+            
+            # Fallback to external URL if known
+            if info.get('external_url'):
+                return {'type': 'external', 'url': info['external_url']}
+                
+        return None
+
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+image_manager = PlayerImageManager(DATA_DIR)
+# Start scanning in background
+threading.Thread(target=image_manager.scan_players, daemon=True).start()
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'tennis_dashboard_secret_2024'
@@ -49,6 +135,25 @@ def serve_images(filename):
         return jsonify({'error': 'Image not found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/player/<tour>/<player_id>/image')
+def serve_player_image(tour, player_id):
+    """Serve player image from local data or redirect"""
+    info = image_manager.get_player_info(tour, player_id)
+    
+    if info:
+        if info['type'] == 'local':
+            return send_from_directory(os.path.dirname(info['path']), os.path.basename(info['path']))
+        elif info['type'] == 'external':
+            return redirect(info['url'])
+            
+    # Check fallback param
+    fallback = request.args.get('fallback')
+    if fallback:
+        return redirect(fallback)
+        
+    return jsonify({'error': 'Image not found'}), 404
 
 
 @app.route('/<path:filename>')
