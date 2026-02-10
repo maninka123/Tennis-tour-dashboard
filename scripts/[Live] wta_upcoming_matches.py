@@ -40,6 +40,11 @@ def filter_upcoming_singles(matches: List[Dict[str, Any]], days: int) -> List[Di
             continue
         if match.get("MatchState") in ("P", "F"):
             continue
+        # Skip matches where either player is TBD / undetermined
+        name_a = f"{match.get('PlayerNameFirstA', '')} {match.get('PlayerNameLastA', '')}".strip()
+        name_b = f"{match.get('PlayerNameFirstB', '')} {match.get('PlayerNameLastB', '')}".strip()
+        if not name_a or not name_b or str(match.get("PlayerIDA", "")).upper() == "TBD" or str(match.get("PlayerIDB", "")).upper() == "TBD":
+            continue
         ts = match.get("MatchTimeStamp") or ""
         try:
             dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))

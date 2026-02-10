@@ -615,6 +615,29 @@ const ScoresModule = {
             matches = this.filterMatchesForActiveTour(this.demoUpcomingMatches[tour] || [], tour);
         }
 
+        // Remove matches that are already showing as live or recently finished
+        const liveMatches = AppState.liveScores[tour] || [];
+        const recentMatches = AppState.recentMatches[tour] || [];
+        if (matches && matches.length > 0 && (liveMatches.length > 0 || recentMatches.length > 0)) {
+            const normalize = (s) => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+            const activePlayers = new Set();
+            [...liveMatches, ...recentMatches].forEach(m => {
+                const p1 = normalize(m?.player1?.name);
+                const p2 = normalize(m?.player2?.name);
+                if (p1 && p2) activePlayers.add(`${p1}|${p2}`);
+            });
+            matches = matches.filter(m => {
+                // Filter by status
+                const st = String(m?.status || '').toLowerCase();
+                if (st === 'live' || st === 'in_progress' || st === 'finished' || st === 'completed') return false;
+                // Filter by player pair overlap with live/recent
+                const p1 = normalize(m?.player1?.name);
+                const p2 = normalize(m?.player2?.name);
+                if (p1 && p2 && activePlayers.has(`${p1}|${p2}`)) return false;
+                return true;
+            });
+        }
+
         // Find or create upcoming matches section after live scores
         let upcomingSection = document.getElementById('upcomingMatchesSection');
         if (!upcomingSection) {

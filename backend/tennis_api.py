@@ -3936,7 +3936,7 @@ class TennisDataFetcher:
         if tour in ('atp', 'both'):
             atp_raw = self._run_atp_matches_script('[Live] atp_live_matches.py')
             if atp_raw is None:
-                live_matches.extend(self._generate_sample_live_matches('atp'))
+                print('ATP live: script failed, returning empty')
             else:
                 atp_live = []
                 for match in atp_raw:
@@ -3967,10 +3967,11 @@ class TennisDataFetcher:
         if tour in ('atp', 'both'):
             atp_raw = self._run_atp_matches_script(
                 '[Live] atp_recent_matches.py',
-                args=['--limit', str(limit)]
+                args=['--limit', str(limit)],
+                timeout=90
             )
             if atp_raw is None:
-                matches.extend(self._generate_sample_recent_matches('atp', limit))
+                print('ATP recent: script failed, returning empty')
             else:
                 parsed = []
                 for match in atp_raw:
@@ -4005,34 +4006,21 @@ class TennisDataFetcher:
                 matches.extend(self._generate_sample_upcoming_matches('wta', days))
             else:
                 parsed = [self._parse_wta_match(match) for match in wta_raw if isinstance(match, dict)]
+                # Filter out matches with TBD/empty player names
+                parsed = [m for m in parsed if m and m.get('player1', {}).get('name', '').strip() and m.get('player2', {}).get('name', '').strip()]
                 print(f"WTA upcoming: loaded {len(parsed)} real matches from scraper")
                 matches.extend(parsed)
 
         if tour in ('atp', 'both'):
             atp_raw = self._run_atp_matches_script(
                 '[Live] atp_upcoming_matches.py',
-                args=['--days', str(days)]
+                args=['--days', str(days)],
+                timeout=90
             )
             if atp_raw is None:
-                print(f"ATP upcoming: script failed, using generated matches")
-                sample_matches = self._generate_sample_upcoming_matches('atp', days)
-                print(f"ATP upcoming: generated {len(sample_matches)} sample matches")
-                # Enrich sample matches the same way as real matches
-                for match in sample_matches:
-                    enriched = self._enrich_atp_match(match)
-                    if enriched:
-                        matches.append(enriched)
-                print(f"ATP upcoming: enriched {len([m for m in matches if m.get('tour') == 'ATP'])} ATP matches")
+                print(f"ATP upcoming: script failed, returning empty")
             elif len(atp_raw) == 0:
-                # Scraper ran successfully but found no matches - use generated matches as fallback
-                print(f"ATP upcoming: scraper returned empty, using generated matches")
-                sample_matches = self._generate_sample_upcoming_matches('atp', days)
-                print(f"ATP upcoming: generated {len(sample_matches)} sample matches")
-                for match in sample_matches:
-                    enriched = self._enrich_atp_match(match)
-                    if enriched:
-                        matches.append(enriched)
-                print(f"ATP upcoming: enriched {len([m for m in matches if m.get('tour') == 'ATP'])} ATP matches")
+                print(f"ATP upcoming: scraper returned empty, no matches found")
             else:
                 parsed = []
                 for match in atp_raw:
