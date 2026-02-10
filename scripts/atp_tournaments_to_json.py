@@ -465,27 +465,46 @@ def _archive_file_if_needed(path: Path, outdated_dir: Path, stamp: str) -> None:
 
 
 def _build_scraper() -> Any:
-    scraper = cloudscraper.create_scraper(browser={"browser": "chrome", "platform": "windows", "mobile": False})
+    scraper = cloudscraper.create_scraper(
+        browser={"browser": "chrome", "platform": "windows", "mobile": False},
+        delay=3
+    )
     scraper.headers.update(
         {
             "User-Agent": USER_AGENT,
             "Accept": "text/html,application/json;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Accept-Encoding": "gzip, deflate, br",
             "Referer": f"{BASE_URL}/en/tournaments",
+            "Sec-Fetch-Dest": "document",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "same-origin",
+            "Sec-Ch-Ua-Platform": '"Windows"',
         }
     )
     return scraper
 
 
 def _fetch_calendar(scraper: Any, timeout: int) -> List[Dict[str, Any]]:
-    resp = scraper.get(CALENDAR_ENDPOINT, timeout=timeout)
-    resp.raise_for_status()
-    payload = resp.json() if resp.text else {}
-    out: List[Dict[str, Any]] = []
-    for block in payload.get("TournamentDates", []) or []:
-        for row in block.get("Tournaments", []) or []:
-            if isinstance(row, dict):
-                out.append(row)
-    return out
+    import time as _time
+    last_error = None
+    for attempt in range(3):
+        try:
+            if attempt > 0:
+                _time.sleep(2 * attempt)
+            resp = scraper.get(CALENDAR_ENDPOINT, timeout=timeout)
+            resp.raise_for_status()
+            payload = resp.json() if resp.text else {}
+            out: List[Dict[str, Any]] = []
+            for block in payload.get("TournamentDates", []) or []:
+                for row in block.get("Tournaments", []) or []:
+                    if isinstance(row, dict):
+                        out.append(row)
+            return out
+        except Exception as e:
+            last_error = e
+            continue
+    raise last_error or RuntimeError("Failed to fetch ATP tournament calendar")
 
 
 def _build_tournament_record(row: Dict[str, Any], year: int, today: date) -> Dict[str, Any]:
