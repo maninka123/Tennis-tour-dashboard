@@ -156,6 +156,7 @@ const FavouritesModule = {
 
         let myPoints = 0;
         let oppPoints = 0;
+        let foundCurrentSet = false;
 
         sets.forEach((set) => {
             const a = Number(set?.p1 ?? 0);
@@ -495,17 +496,18 @@ const FavouritesModule = {
             const imgSrc = `${apiBase}/player/${tour}/${imageId}/image`;
 
             // Build initials fallback
+            const safeName = this.escapeHtml(player.name);
             const initials = player.name.split(' ').map(n => (n[0] || '')).join('').substring(0, 2).toUpperCase();
 
             return `
                 <div class="fav-player-row ${isLive ? 'fav-live' : ''}" data-player-id="${player.id}">
                     <div class="fav-player-info">
                         <div class="fav-player-img-wrap">
-                            <img src="${imgSrc}" alt="${player.name}"
+                            <img src="${imgSrc}" alt="${safeName}"
                                  onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22><rect width=%2232%22 height=%2232%22 rx=%2216%22 fill=%22%234A90E2%22/><text x=%2216%22 y=%2218%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22white%22 font-size=%2212%22 font-weight=%22700%22>${initials}</text></svg>'">
                         </div>
                         <div class="fav-player-text">
-                            <span class="fav-player-name">${flag} ${player.name}</span>
+                            <span class="fav-player-name">${flag} ${safeName}</span>
                             <span class="fav-player-rank">${player.rank ? '#' + player.rank : ''} ${isLive ? `<span class="fav-live-status" aria-label="Player live now"><span class="fav-live-dot"></span><span class="fav-live-badge">LIVE</span></span>` : ''}</span>
                         </div>
                     </div>
