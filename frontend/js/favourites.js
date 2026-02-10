@@ -154,11 +154,8 @@ const FavouritesModule = {
             return false;
         };
 
-        let myCompletedSets = 0;
-        let oppCompletedSets = 0;
-        let myCurrentSetGames = 0;
-        let oppCurrentSetGames = 0;
-        let foundCurrentSet = false;
+        let myPoints = 0;
+        let oppPoints = 0;
 
         sets.forEach((set) => {
             const a = Number(set?.p1 ?? 0);
@@ -166,39 +163,19 @@ const FavouritesModule = {
             const mine = iAmP1 ? a : b;
             const opp = iAmP1 ? b : a;
             if (!foundCurrentSet && !isCompletedSet(mine, opp)) {
-                myCurrentSetGames = mine;
-                oppCurrentSetGames = opp;
+                // Ongoing set – only award a point if lead is 2+ games
+                if ((mine - opp) >= 2) myPoints += 1;
+                else if ((opp - mine) >= 2) oppPoints += 1;
                 foundCurrentSet = true;
                 return;
             }
-            if (mine > opp) myCompletedSets += 1;
-            if (opp > mine) oppCompletedSets += 1;
+            // Completed set – winner gets 1 point
+            if (mine > opp) myPoints += 1;
+            else if (opp > mine) oppPoints += 1;
         });
 
-        const setDiff = myCompletedSets - oppCompletedSets;
-        const currentSetGap = myCurrentSetGames - oppCurrentSetGames;
-        const weightedEdge = (setDiff * 2) + currentSetGap;
-
-        if (weightedEdge > 0) return { label: 'Winning', cls: 'winning' };
-        if (weightedEdge < 0) return { label: 'Losing', cls: 'losing' };
-
-        const pointToNumber = (value) => {
-            const raw = String(value ?? '').toUpperCase().trim();
-            if (!raw) return 0;
-            if (raw === '0') return 0;
-            if (raw === '15') return 1;
-            if (raw === '30') return 2;
-            if (raw === '40') return 3;
-            if (raw === 'AD' || raw === 'AV' || raw === 'A') return 4;
-            const parsed = Number(raw);
-            return Number.isFinite(parsed) ? parsed : 0;
-        };
-        const game = score?.current_game || {};
-        const minePts = pointToNumber(iAmP1 ? game.p1 : game.p2);
-        const oppPts = pointToNumber(iAmP1 ? game.p2 : game.p1);
-        const pointGap = minePts - oppPts;
-        if (pointGap > 1) return { label: 'Winning', cls: 'winning' };
-        if (pointGap < -1) return { label: 'Losing', cls: 'losing' };
+        if (myPoints > oppPoints) return { label: 'Winning', cls: 'winning' };
+        if (oppPoints > myPoints) return { label: 'Losing', cls: 'losing' };
 
         return { label: 'Balanced', cls: 'balanced' };
     },

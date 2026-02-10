@@ -10,6 +10,7 @@ from datetime import datetime
 from typing import Any, Dict, List
 
 from atp_scores_common import (
+    build_schedule_day_numbers,
     build_schedule_url,
     fetch_tour_tournaments,
     make_scraper,
@@ -37,21 +38,39 @@ def main() -> int:
         now = datetime.now()
         for tournament in tournaments:
             try:
-                url = build_schedule_url(tournament)
-                print(f"[DEBUG] Fetching tournament: {tournament.get('EventTitle')} from {url}", file=sys.stderr)
-                response = scraper.get(url, timeout=args.timeout)
-                print(f"[DEBUG] Response status: {response.status_code}", file=sys.stderr)
-                if response.status_code != 200:
-                    print(f"[DEBUG] Skipping tournament with status {response.status_code}", file=sys.stderr)
-                    continue
-                parsed = parse_upcoming_matches_from_schedule_page(
-                    html_text=response.text,
-                    tournament=tournament,
-                    days=max(0, int(args.days)),
-                    now=now,
-                )
-                print(f"[DEBUG] Parsed {len(parsed)} matches from this tournament", file=sys.stderr)
-                upcoming.extend(parsed)
+                event_name = tournament.get('EventTitle', '?')
+                day_numbers = build_schedule_day_numbers(tournament, now=now)
+                # Build list of URLs to try: specific day pages first, then default
+                urls_to_try: List[str] = []
+                for day_num in day_numbers:
+                    urls_to_try.append(build_schedule_url(tournament, day=day_num))
+                urls_to_try.append(build_schedule_url(tournament))
+
+                seen_ids: set = set()
+                for url in urls_to_try:
+                    print(f"[DEBUG] Fetching {event_name} from {url}", file=sys.stderr)
+                    try:
+                        response = scraper.get(url, timeout=args.timeout)
+                    except Exception as req_err:
+                        print(f"[DEBUG] Request failed for {url}: {req_err}", file=sys.stderr)
+                        continue
+                    if response.status_code != 200:
+                        print(f"[DEBUG] Skipping {url} with status {response.status_code}", file=sys.stderr)
+                        continue
+                    parsed = parse_upcoming_matches_from_schedule_page(
+                        html_text=response.text,
+                        tournament=tournament,
+                        days=max(0, int(args.days)),
+                        now=now,
+                    )
+                    new_count = 0
+                    for match in parsed:
+                        mid = str(match.get("id") or "")
+                        if mid and mid not in seen_ids:
+                            seen_ids.add(mid)
+                            upcoming.append(match)
+                            new_count += 1
+                    print(f"[DEBUG] Parsed {new_count} new matches from {url}", file=sys.stderr)
             except Exception as e:
                 print(f"[ERROR] Failed to fetch tournament {tournament.get('EventTitle')}: {e}", file=sys.stderr)
                 continue

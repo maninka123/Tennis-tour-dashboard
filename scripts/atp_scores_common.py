@@ -522,6 +522,8 @@ def parse_upcoming_matches_from_schedule_page(
 
     now_dt = now or datetime.now()
     cutoff = now_dt + timedelta(days=max(0, int(days)))
+    # Allow matches from the previous day that are still unplayed
+    earliest_allowed = now_dt - timedelta(days=1)
 
     event_id = _clean_text(tournament.get("EventId"))
     event_year = _clean_text(tournament.get("EventYear"))
@@ -529,16 +531,47 @@ def parse_upcoming_matches_from_schedule_page(
     category = _event_category(tournament.get("EventType"))
     location = _build_location(tournament)
 
+    last_known_dt: Optional[datetime] = None
+
     for idx, schedule_node in enumerate(soup.select(".schedule"), start=1):
-        dt_text = _clean_text(schedule_node.get("data-datetime"))
-        if not dt_text:
-            continue
-        try:
-            match_dt = datetime.strptime(dt_text, "%Y-%m-%d %H:%M:%S")
-        except Exception:
+        # Skip completed matches: only include those with status "Vs"
+        status_el = schedule_node.select_one(".schedule-players > .status")
+        status_text = _clean_text(status_el.get_text(" ", strip=True) if status_el else "")
+        if status_text.lower() not in ("vs", "v"):
+            # Track datetime for "Followed By" entries even on completed ones
+            dt_text = _clean_text(schedule_node.get("data-datetime"))
+            if dt_text:
+                try:
+                    last_known_dt = datetime.strptime(dt_text, "%Y-%m-%d %H:%M:%S")
+                except Exception:
+                    pass
             continue
 
-        if match_dt < now_dt:
+        dt_text = _clean_text(schedule_node.get("data-datetime"))
+        match_dt = None
+        if dt_text:
+            try:
+                match_dt = datetime.strptime(dt_text, "%Y-%m-%d %H:%M:%S")
+            except Exception:
+                pass
+
+        # For "Followed By" entries with empty datetime, use matchdate or last known
+        if match_dt is None:
+            match_date_text = _clean_text(schedule_node.get("data-matchdate"))
+            if match_date_text:
+                try:
+                    match_dt = datetime.strptime(match_date_text, "%Y-%m-%d")
+                except Exception:
+                    pass
+            if match_dt is None and last_known_dt is not None:
+                match_dt = last_known_dt + timedelta(hours=2)
+            if match_dt is None:
+                match_dt = now_dt
+
+        last_known_dt = match_dt
+
+        # Skip matches too far in the past (>1 day) or beyond the cutoff
+        if match_dt < earliest_allowed:
             continue
         if match_dt > cutoff:
             continue
@@ -551,6 +584,10 @@ def parse_upcoming_matches_from_schedule_page(
         player1 = _extract_schedule_player(player_side)
         player2 = _extract_schedule_player(opponent_side)
         if not player1.get("name") or not player2.get("name"):
+            continue
+
+        # Skip doubles matches (both sides have 2+ players)
+        if _is_doubles_schedule_entry(player_side) or _is_doubles_schedule_entry(opponent_side):
             continue
 
         round_text = _clean_text(
@@ -593,14 +630,42 @@ def parse_upcoming_matches_from_schedule_page(
     return parsed
 
 
+def _is_doubles_schedule_entry(side_node) -> bool:
+    """Check if a schedule player side contains multiple player names (doubles)."""
+    name_links = side_node.select(".name a")
+    return len(name_links) >= 2
+
+
 def build_results_url(tournament: Dict[str, Any]) -> str:
     slug = _slugify(_clean_text(tournament.get("EventTitle")))
     event_id = _clean_text(tournament.get("EventId"))
     return f"{BASE_URL}/en/scores/current/{slug}/{event_id}/results"
 
 
-def build_schedule_url(tournament: Dict[str, Any]) -> str:
+def build_schedule_url(tournament: Dict[str, Any], day: Optional[int] = None) -> str:
     slug = _slugify(_clean_text(tournament.get("EventTitle")))
     event_id = _clean_text(tournament.get("EventId"))
     schedule_link = _clean_text(tournament.get("ScheduleLink")) or "daily-schedule"
-    return f"{BASE_URL}/en/scores/current/{slug}/{event_id}/{schedule_link}"
+    url = f"{BASE_URL}/en/scores/current/{slug}/{event_id}/{schedule_link}"
+    if day is not None:
+        url += f"?day={day}"
+    return url
+
+
+def build_schedule_day_numbers(tournament: Dict[str, Any], now: Optional[datetime] = None) -> List[int]:
+    """Return day numbers to try for the schedule page (current day, previous day, next day)."""
+    now_dt = now or datetime.now()
+    start_text = str(tournament.get("EventStartDate") or "").strip()
+    if not start_text:
+        return []  # No start date; caller will use the default page
+    try:
+        start_dt = datetime.strptime(start_text.split(" ")[0], "%m/%d/%Y")
+    except Exception:
+        return []
+    day_num = (now_dt.date() - start_dt.date()).days + 1
+    # Return current day and next day; clamp to >= 1
+    days = []
+    for d in [day_num, day_num + 1, day_num - 1]:
+        if d >= 1 and d not in days:
+            days.append(d)
+    return days
