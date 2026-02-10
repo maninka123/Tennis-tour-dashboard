@@ -158,7 +158,7 @@ const PlayerModule = {
         const chText = player.career_high ? `CH #${player.career_high}` : 'CH -';
         const isWta = !this.isAtpPlayer(player);
         const rawPlayingText = player.is_playing && player.previous ? `${player.previous}` : '';
-        const playingText = isWta ? this.cleanPreviousText(rawPlayingText) : rawPlayingText;
+        const playingText = this.cleanPreviousText(rawPlayingText);
         const rankBadge = player.rank ? `<div class="rank-badge">#${player.rank}</div>` : '';
         const parsePoints = (value) => {
             if (typeof value === 'number' && Number.isFinite(value)) return value;
@@ -194,7 +194,7 @@ const PlayerModule = {
                 <div class="modal-body">
                     <div class="player-profile">
                         <div class="player-hero">
-                            <img src="${Utils.getPlayerImage(player)}" alt="${player.name}">
+                            <img src="${Utils.getPlayerImage(player)}" alt="${player.name}" onclick="PlayerModule.openImageLightbox(this.src, '${player.name.replace(/'/g, "\\'")}')">
                             <div class="player-info">
                                 ${rankBadge}
                                 ${pointsBadge}
@@ -785,8 +785,7 @@ const PlayerModule = {
             ? player.rank_change
             : (typeof player?.movement === 'number' ? player.movement : null);
         const playingValue = player?.is_playing && player?.previous ? player.previous : null;
-        const isWtaDemo = !this.isAtpPlayer(player);
-        const cleanedPlaying = (isWtaDemo && playingValue) ? this.cleanPreviousText(playingValue) : playingValue;
+        const cleanedPlaying = playingValue ? this.cleanPreviousText(playingValue) : playingValue;
         const prizeMoney = player?.prize_money || statsData?.prize_money || null;
         const prizeMoneyCareer = player?.prize_money_career || statsData?.career_prize_money || prizeMoney || null;
         const prizeMoneyYtd = player?.prize_money_ytd || statsData?.ytd_prize_money || null;
@@ -933,6 +932,61 @@ const PlayerModule = {
             { event: 'Wimbledon', surface: 'grass', results: sample(['R32','R16','QF','SF','QF','F']) },
             { event: 'US Open', surface: 'hard', results: sample(['R16','QF','SF','W','SF','W']) }
         ];
+    },
+
+    /* ============================================
+       Player Image Lightbox
+       ============================================ */
+    openImageLightbox(imageSrc, playerName) {
+        // Remove any existing lightbox
+        const existing = document.querySelector('.image-lightbox-overlay');
+        if (existing) existing.remove();
+
+        // Build high-res URL (strip any thumbnail sizing params if present)
+        const highResSrc = imageSrc;
+
+        // Create overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'image-lightbox-overlay';
+        overlay.innerHTML = `
+            <div class="image-lightbox-container">
+                <button class="image-lightbox-close" aria-label="Close">&times;</button>
+                <img src="${highResSrc}" alt="${playerName}">
+                <div class="image-lightbox-name">${playerName}</div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        // Trigger entrance animation on next frame
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                overlay.classList.add('active');
+            });
+        });
+
+        // Close handlers
+        const closeLightbox = () => {
+            overlay.classList.remove('active');
+            setTimeout(() => overlay.remove(), 320);
+        };
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeLightbox();
+        });
+
+        overlay.querySelector('.image-lightbox-close').addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeLightbox();
+        });
+
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
     }
 };
 

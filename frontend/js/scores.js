@@ -1411,7 +1411,7 @@ const ScoresModule = {
             </div>
             <div class="match-stats-hero">
                 <div class="match-stats-player-card ${resolvedWinner === 1 ? 'winner' : ''} ${player1ModalId ? 'clickable' : ''}" ${player1ModalId ? `data-player-id="${player1ModalId}" role="button" tabindex="0" title="Open player details"` : ''}>
-                    <img class="player-hero-img" src="${Utils.getPlayerImage(match.player1)}" alt="${match.player1.name}">
+                    <img class="player-hero-img" src="${Utils.getPlayerImage(match.player1)}" alt="${match.player1.name}" onclick="event.stopPropagation(); PlayerModule.openImageLightbox(this.src, '${match.player1.name.replace(/'/g, "\\'")}')" style="cursor:pointer">
                     <div class="player-hero-name">${match.player1.name}</div>
                     <div class="player-hero-meta-row">
                         <div class="player-hero-meta">${Utils.getFlag(match.player1.country)} ${match.player1.country} • Rank ${match.player1.rank || '-'}</div>
@@ -1426,7 +1426,7 @@ const ScoresModule = {
                     ${stats.duration ? `<div class="duration">${stats.duration}</div>` : ''}
                 </div>
                 <div class="match-stats-player-card ${resolvedWinner === 2 ? 'winner' : ''} ${player2ModalId ? 'clickable' : ''}" ${player2ModalId ? `data-player-id="${player2ModalId}" role="button" tabindex="0" title="Open player details"` : ''}>
-                    <img class="player-hero-img" src="${Utils.getPlayerImage(match.player2)}" alt="${match.player2.name}">
+                    <img class="player-hero-img" src="${Utils.getPlayerImage(match.player2)}" alt="${match.player2.name}" onclick="event.stopPropagation(); PlayerModule.openImageLightbox(this.src, '${match.player2.name.replace(/'/g, "\\'")}')" style="cursor:pointer">
                     <div class="player-hero-name">${match.player2.name}</div>
                     <div class="player-hero-meta-row">
                         <div class="player-hero-meta">${Utils.getFlag(match.player2.country)} ${match.player2.country} • Rank ${match.player2.rank || '-'}</div>

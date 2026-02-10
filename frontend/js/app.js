@@ -149,7 +149,7 @@ const DOM = {
 // ============================================
 const Utils = {
     /**
-     * Get country flag emoji from country code
+     * Get country flag as an inline <img> element (works on all platforms including Windows)
      */
     getFlag(countryCode) {
         // Map full country names to 3-letter codes (ATP search returns full names)
@@ -179,25 +179,27 @@ const Utils = {
             'Bolivia': 'BOL', 'Ecuador': 'ECU', 'Venezuela': 'VEN',
             'Paraguay': 'PAR', 'Taiwan, Chinese Taipei': 'TPE'
         };
-        const code = nameToCode[countryCode] || countryCode;
-        const flags = {
-            'SRB': '🇷🇸', 'ESP': '🇪🇸', 'ITA': '🇮🇹', 'RUS': '🇷🇺', 'GER': '🇩🇪',
-            'DEN': '🇩🇰', 'GRE': '🇬🇷', 'POL': '🇵🇱', 'NOR': '🇳🇴', 'USA': '🇺🇸',
-            'CAN': '🇨🇦', 'GBR': '🇬🇧', 'FRA': '🇫🇷', 'AUS': '🇦🇺', 'ARG': '🇦🇷',
-            'BLR': '🇧🇾', 'KAZ': '🇰🇿', 'TUN': '🇹🇳', 'CZE': '🇨🇿', 'CHN': '🇨🇳',
-            'LAT': '🇱🇻', 'BRA': '🇧🇷', 'JPN': '🇯🇵', 'KOR': '🇰🇷', 'BUL': '🇧🇬',
-            'CHI': '🇨🇱', 'SUI': '🇨🇭', 'BEL': '🇧🇪', 'NED': '🇳🇱', 'SWE': '🇸🇪',
-            'AUT': '🇦🇹', 'COL': '🇨🇴', 'CRO': '🇭🇷', 'RSA': '🇿🇦', 'UKR': '🇺🇦',
-            'IND': '🇮🇳', 'TPE': '🇹🇼', 'ROU': '🇷🇴', 'HUN': '🇭🇺', 'POR': '🇵🇹',
-            'GEO': '🇬🇪', 'FIN': '🇫🇮', 'SVK': '🇸🇰', 'SLO': '🇸🇮',
-            'MEX': '🇲🇽', 'PER': '🇵🇪', 'URU': '🇺🇾', 'ISR': '🇮🇱',
-            'TUR': '🇹🇷', 'DOM': '🇩🇴', 'THA': '🇹🇭', 'INA': '🇮🇩',
-            'NZL': '🇳🇿', 'IRL': '🇮🇪', 'EGY': '🇪🇬', 'MDA': '🇲🇩',
-            'BIH': '🇧🇦', 'MNE': '🇲🇪', 'MKD': '🇲🇰', 'LTU': '🇱🇹',
-            'EST': '🇪🇪', 'LUX': '🇱🇺', 'MON': '🇲🇨', 'BOL': '🇧🇴',
-            'ECU': '🇪🇨', 'VEN': '🇻🇪', 'PAR': '🇵🇾'
+        // Map 3-letter sport codes to ISO 3166-1 alpha-2 for flagcdn
+        const toISO2 = {
+            'SRB': 'rs', 'ESP': 'es', 'ITA': 'it', 'RUS': 'ru', 'GER': 'de',
+            'DEN': 'dk', 'GRE': 'gr', 'POL': 'pl', 'NOR': 'no', 'USA': 'us',
+            'CAN': 'ca', 'GBR': 'gb', 'FRA': 'fr', 'AUS': 'au', 'ARG': 'ar',
+            'BLR': 'by', 'KAZ': 'kz', 'TUN': 'tn', 'CZE': 'cz', 'CHN': 'cn',
+            'LAT': 'lv', 'BRA': 'br', 'JPN': 'jp', 'KOR': 'kr', 'BUL': 'bg',
+            'CHI': 'cl', 'SUI': 'ch', 'BEL': 'be', 'NED': 'nl', 'SWE': 'se',
+            'AUT': 'at', 'COL': 'co', 'CRO': 'hr', 'RSA': 'za', 'UKR': 'ua',
+            'IND': 'in', 'TPE': 'tw', 'ROU': 'ro', 'HUN': 'hu', 'POR': 'pt',
+            'GEO': 'ge', 'FIN': 'fi', 'SVK': 'sk', 'SLO': 'si',
+            'MEX': 'mx', 'PER': 'pe', 'URU': 'uy', 'ISR': 'il',
+            'TUR': 'tr', 'DOM': 'do', 'THA': 'th', 'INA': 'id',
+            'NZL': 'nz', 'IRL': 'ie', 'EGY': 'eg', 'MDA': 'md',
+            'BIH': 'ba', 'MNE': 'me', 'MKD': 'mk', 'LTU': 'lt',
+            'EST': 'ee', 'LUX': 'lu', 'MON': 'mc', 'BOL': 'bo',
+            'ECU': 'ec', 'VEN': 've', 'PAR': 'py'
         };
-        return flags[code] || '🏳️';
+        const code = nameToCode[countryCode] || countryCode;
+        const iso2 = toISO2[code] || code.substring(0, 2).toLowerCase();
+        return `<img class="flag-icon" src="https://flagcdn.com/w40/${iso2}.png" srcset="https://flagcdn.com/w80/${iso2}.png 2x" alt="${code}" onerror="this.style.display='none'">`;
     },
 
     /**
@@ -1339,7 +1341,12 @@ const App = {
             Socket.updateLastUpdated();
         } catch (error) {
             console.error(`Error updating ${tour.toUpperCase()} tournaments:`, error);
-            alert(`${tour.toUpperCase()} tournament update failed: ${error.message}`);
+            const msg = error.message || String(error);
+            if (msg.includes('403') || msg.includes('Forbidden')) {
+                alert(`${tour.toUpperCase()} tournament refresh blocked by source website (403 Forbidden).\n\nThe ATP Tour website is blocking automated requests. Your existing local tournament data is still loaded and working.\n\nTry again later or refresh from a different network.`);
+            } else {
+                alert(`${tour.toUpperCase()} tournament update failed: ${msg}`);
+            }
         } finally {
             AppState.isUpdatingTournaments[tour] = false;
             this.syncTournamentHeaderState();
