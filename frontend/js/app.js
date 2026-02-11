@@ -889,8 +889,9 @@ const EventHandlers = {
             const upcomingCard = e.target.closest('.upcoming-match-card');
             if (upcomingCard) {
                 const matchId = upcomingCard.dataset.matchId;
+                const matchKey = upcomingCard.dataset.matchKey;
                 if (matchId) {
-                    ScoresModule.showUpcomingInsights(matchId);
+                    ScoresModule.showUpcomingInsights(matchId, null, { matchKey });
                 }
                 return;
             }

@@ -608,10 +608,11 @@ const ScoresModule = {
     renderUpcomingMatches() {
         const { AppState, Utils } = window.TennisApp;
         const tour = AppState.currentTour;
+        const isWtaTour = tour === 'wta';
         
-        // Get data (use demo if empty)
+        // Get data (keep demo fallback only for WTA)
         let matches = this.filterMatchesForActiveTour(AppState.upcomingMatches[tour], tour);
-        if (!matches || matches.length === 0) {
+        if (isWtaTour && (!matches || matches.length === 0)) {
             matches = this.filterMatchesForActiveTour(this.demoUpcomingMatches[tour] || [], tour);
         }
 
@@ -655,6 +656,9 @@ const ScoresModule = {
         if (!upcomingSection) return;
 
         if (matches.length === 0) {
+            const emptyMessage = isWtaTour
+                ? 'No upcoming matches in the next 2 days'
+                : 'ATP upcoming matches are not loading right now.';
             upcomingSection.innerHTML = `
                 <div class="section-header">
                     <div class="section-title-stack">
@@ -663,7 +667,7 @@ const ScoresModule = {
                     </div>
                 </div>
                 <div class="no-matches-message">
-                    <p>No upcoming matches in the next 2 days</p>
+                    <p>${emptyMessage}</p>
                 </div>
             `;
             this.updateUpcomingUpdatedAgo();
@@ -692,7 +696,11 @@ const ScoresModule = {
         const cards = document.querySelectorAll('.upcoming-match-card');
         cards.forEach(card => {
             const matchId = card.dataset.matchId;
-            const match = matches.find(m => m.id === matchId);
+            const matchKey = card.dataset.matchKey;
+            const match = (matchKey
+                ? matches.find((m) => this.getMatchKey(m) === matchKey)
+                : null)
+                || matches.find((m) => String(m?.id) === String(matchId));
             if (!match) return;
             const edgeBar = card.querySelector('.edge-bar');
             if (!edgeBar) return;
@@ -703,12 +711,20 @@ const ScoresModule = {
         });
     },
 
-    showUpcomingInsights(matchId, matchOverride = null) {
+    showUpcomingInsights(matchId, matchOverride = null, context = {}) {
         const { AppState, Utils } = window.TennisApp;
         const tour = AppState.currentTour;
+        const demoUpcoming = tour === 'wta' ? (this.demoUpcomingMatches[tour] || []) : [];
+        const key = String(context?.matchKey || '').trim();
+        const findByKey = (list) => {
+            if (!key || !Array.isArray(list)) return null;
+            return list.find((m) => this.getMatchKey(m) === key) || null;
+        };
         const match = matchOverride
-            || AppState.upcomingMatches[tour]?.find(m => m.id === matchId)
-            || this.demoUpcomingMatches[tour]?.find(m => m.id === matchId);
+            || findByKey(AppState.upcomingMatches[tour])
+            || AppState.upcomingMatches[tour]?.find((m) => String(m?.id) === String(matchId))
+            || findByKey(demoUpcoming)
+            || demoUpcoming.find((m) => String(m?.id) === String(matchId));
         if (!match) return;
 
         const winEdge = this.calculateWinEdge(match);
@@ -916,6 +932,7 @@ const ScoresModule = {
         const categoryClass = Utils.getCategoryClass(match.tournament_category);
         const categoryLabel = this.getCategoryLabel(match.tournament_category);
         const surfaceClass = this.getSurfaceClass(match);
+        const matchKey = this.getMatchKey(match);
         const tournamentName = this.sanitizeTournamentName(match.tournament);
         const roundLabel = this.getRoundLabelWithPoints(match);
         const courtLabel = match.court || match.court_name || match.stadium || 'Stadium TBA';
@@ -932,7 +949,7 @@ const ScoresModule = {
         const winEdge = this.calculateWinEdge(match);
 
         return `
-            <div class="upcoming-match-card ${categoryClass} ${surfaceClass}" data-match-id="${match.id}">
+            <div class="upcoming-match-card ${categoryClass} ${surfaceClass}" data-match-id="${match.id}" data-match-key="${matchKey}">
                 <div class="match-header">
                     <div class="tournament-info">
                         <div class="tournament-name compact-inline">
@@ -1369,7 +1386,7 @@ const ScoresModule = {
             const upcoming = AppState.upcomingMatches[tour] || [];
             const demoLive = this.demoLiveMatches[tour] || [];
             const demoRecent = this.demoRecentMatches[tour] || [];
-            const demoUpcoming = this.demoUpcomingMatches[tour] || [];
+            const demoUpcoming = tour === 'wta' ? (this.demoUpcomingMatches[tour] || []) : [];
             const allMatches = [...live, ...recent, ...upcoming, ...demoLive, ...demoRecent, ...demoUpcoming];
             const source = String(context?.source || '').trim().toLowerCase();
             const sourceMap = {
