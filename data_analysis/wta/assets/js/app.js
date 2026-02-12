@@ -13,10 +13,12 @@ import {
 
 const service = new DataService();
 const TOUR_NAME = APP_CONFIG.tourName || 'WTA';
+const TOUR_LABEL = TOUR_NAME;
 const HERO_SUBTITLE_BASE = `Player Explorer, Tournament Explorer, and Records Book powered by your local ${TOUR_NAME} CSV archive`;
 
 const state = {
   loaded: false,
+  loading: false,
   activeTab: 'players',
   activePlayerKey: '',
   playerSubtab: 'overview',
@@ -42,6 +44,8 @@ const state = {
     year: 'all',
   },
   recordCategory: 'all',
+  selectedRecordKey: '',
+  styleClusterModel: null,
 };
 
 const dom = {
@@ -66,10 +70,12 @@ const dom = {
   playerRivalries: document.getElementById('playerRivalries'),
   playerRanking: document.getElementById('playerRanking'),
   playerMatchesTable: document.getElementById('playerMatchesTable'),
+  playerMatchesInsights: document.getElementById('playerMatchesInsights'),
   playerRivalriesTable: document.getElementById('playerRivalriesTable'),
   rankingSummaryTiles: document.getElementById('rankingSummaryTiles'),
   rankingChart: document.getElementById('rankingChart'),
   rankingTimelineTable: document.getElementById('rankingTimelineTable'),
+  rankingAdvancedPlots: document.getElementById('rankingAdvancedPlots'),
 
   playerYearFilter: document.getElementById('playerYearFilter'),
   playerSurfaceFilter: document.getElementById('playerSurfaceFilter'),
@@ -280,7 +286,20 @@ function renderPlayerOverview() {
         </table>
       </div>
     </section>
+
+    <section class="section-block analytics-block">
+      <h4>Interactive Performance Intelligence</h4>
+      <div class="analytics-grid">
+        ${createAnalyticsCard('Surface Strength Matrix', 'Surface x tournament level win profile with titles/finals context', 'overviewSurfaceStrengthChart')}
+        ${createAnalyticsCard('Elo Trajectory', 'Overall and surface-sensitive Elo movement', 'overviewEloTrajectoryChart')}
+        ${createAnalyticsCard('Tournament DNA', 'Player context for tournament volatility and identity', 'overviewTournamentDNAChart')}
+        ${createAnalyticsCard('Calendar Heatmap', 'Month-by-month win-rate trend by year', 'overviewCalendarHeatmapChart')}
+        ${createAnalyticsCard('Style Clustering (PCA)', 'Peer-group style map from serve/return profile', 'overviewStyleClusterChart')}
+      </div>
+    </section>
   `;
+
+  renderOverviewInsightCharts(player, topTournaments);
 }
 
 function refreshPlayerYearFilter() {
@@ -305,12 +324,14 @@ function renderPlayerMatches() {
   const player = service.getPlayerByKey(state.activePlayerKey);
   if (!player) {
     renderEmptyTable(dom.playerMatchesTable, 'Pick a player first.');
+    if (dom.playerMatchesInsights) renderEmptyTable(dom.playerMatchesInsights, 'Pick a player to unlock match intelligence plots.');
     return;
   }
 
   const rows = service.getPlayerMatches(state.activePlayerKey, state.playerFilters);
   if (!rows.length) {
     renderEmptyTable(dom.playerMatchesTable, 'No matches found for the selected filters.');
+    if (dom.playerMatchesInsights) renderEmptyTable(dom.playerMatchesInsights, 'No match samples available for the current filters.');
     return;
   }
 
@@ -361,6 +382,8 @@ function renderPlayerMatches() {
       <tbody>${tableRows}</tbody>
     </table>
   `;
+
+  renderMatchesInsightCharts();
 }
 
 function renderPlayerRivalries() {
@@ -459,6 +482,1062 @@ function getRankingChartHeightPx() {
   return 560;
 }
 
+const SURFACE_CLASS_ORDER = ['surface-hard', 'surface-clay', 'surface-grass', 'surface-indoor', 'surface-carpet'];
+const CATEGORY_KEY_ORDER = ['grand-slam', 'masters-1000', 'finals', 'atp-500', 'atp-250', 'atp-125', 'other'];
+const OPPONENT_BUCKETS = [
+  { label: 'Top 5', max: 5 },
+  { label: 'Top 10', max: 10 },
+  { label: 'Top 20', max: 20 },
+  { label: 'Top 50', max: 50 },
+  { label: 'Top 100', max: 100 },
+  { label: 'Top 200', max: 200 },
+  { label: 'Top 500', max: 500 },
+  { label: '500+', max: Number.POSITIVE_INFINITY },
+];
+const ALL_PLAYER_FILTERS = { year: 'all', surface: 'all', category: 'all', result: 'all', query: '' };
+
+function isFiniteNumber(value) {
+  return Number.isFinite(value);
+}
+
+function toSafeNumber(value, fallback = 0) {
+  return Number.isFinite(value) ? Number(value) : fallback;
+}
+
+function toSafePct(numerator, denominator) {
+  if (!Number.isFinite(numerator) || !Number.isFinite(denominator) || denominator <= 0) return null;
+  return (numerator / denominator) * 100;
+}
+
+function scoreHasTiebreak(score) {
+  const text = String(score || '');
+  return /7-6|6-7/.test(text);
+}
+
+function getPlayerRowsAll() {
+  return service.getPlayerMatches(state.activePlayerKey, ALL_PLAYER_FILTERS);
+}
+
+function sortRowsByDateAsc(rows) {
+  return rows.slice().sort((a, b) => (a.dateSort || 0) - (b.dateSort || 0));
+}
+
+function analyticsPlotConfig(filename) {
+  return {
+    responsive: true,
+    displaylogo: false,
+    modeBarButtonsToRemove: ['lasso2d', 'select2d', 'autoScale2d'],
+    doubleClick: 'reset',
+    toImageButtonOptions: {
+      filename,
+      format: 'png',
+    },
+  };
+}
+
+function renderChartPlaceholder(container, text) {
+  if (!container) return;
+  if (window.Plotly) {
+    window.Plotly.purge(container);
+  }
+  container.innerHTML = `<div class="empty-placeholder">${escapeHtml(text)}</div>`;
+}
+
+function analyticsBaseLayout(title, subtitle = '') {
+  return {
+    title: {
+      text: subtitle ? `${title}<br><span style="font-size:12px;color:#6a7c92;">${subtitle}</span>` : title,
+      font: { family: 'Space Grotesk, sans-serif', size: 17, color: '#213246' },
+      x: 0.02,
+      xanchor: 'left',
+    },
+    margin: { l: 62, r: 28, t: 72, b: 58 },
+    paper_bgcolor: '#ffffff',
+    plot_bgcolor: '#f8fbff',
+    font: { family: 'Manrope, sans-serif', color: '#223141' },
+    hoverlabel: {
+      bgcolor: '#ffffff',
+      bordercolor: '#96abc2',
+      font: { family: 'Manrope, sans-serif', size: 12, color: '#223141' },
+      align: 'left',
+    },
+  };
+}
+
+function dotProduct(left, right) {
+  let total = 0;
+  for (let i = 0; i < left.length; i += 1) total += left[i] * right[i];
+  return total;
+}
+
+function vectorNorm(vector) {
+  return Math.sqrt(dotProduct(vector, vector));
+}
+
+function normalizeVector(vector) {
+  const norm = vectorNorm(vector);
+  if (norm === 0) return vector.map(() => 0);
+  return vector.map((value) => value / norm);
+}
+
+function multiplyMatrixVector(matrix, vector) {
+  return matrix.map((row) => dotProduct(row, vector));
+}
+
+function buildCovarianceMatrix(matrix) {
+  if (!matrix.length) return [];
+  const cols = matrix[0].length;
+  const cov = Array.from({ length: cols }, () => Array.from({ length: cols }, () => 0));
+  const scale = 1 / Math.max(1, matrix.length - 1);
+  for (const row of matrix) {
+    for (let i = 0; i < cols; i += 1) {
+      for (let j = 0; j < cols; j += 1) {
+        cov[i][j] += row[i] * row[j];
+      }
+    }
+  }
+  for (let i = 0; i < cols; i += 1) {
+    for (let j = 0; j < cols; j += 1) {
+      cov[i][j] *= scale;
+    }
+  }
+  return cov;
+}
+
+function powerIteration(matrix, iterations = 80) {
+  if (!matrix.length) return { vector: [], eigenvalue: 0 };
+  const size = matrix.length;
+  let vector = Array.from({ length: size }, (_, idx) => (idx + 1) / size);
+  vector = normalizeVector(vector);
+  for (let i = 0; i < iterations; i += 1) {
+    vector = normalizeVector(multiplyMatrixVector(matrix, vector));
+  }
+  const mv = multiplyMatrixVector(matrix, vector);
+  const eigenvalue = dotProduct(vector, mv);
+  return { vector, eigenvalue };
+}
+
+function deflateMatrix(matrix, eigenvector, eigenvalue) {
+  const size = matrix.length;
+  const next = matrix.map((row) => row.slice());
+  for (let i = 0; i < size; i += 1) {
+    for (let j = 0; j < size; j += 1) {
+      next[i][j] -= eigenvalue * eigenvector[i] * eigenvector[j];
+    }
+  }
+  return next;
+}
+
+function nearestCentroidIndex(point, centroids) {
+  let bestIndex = 0;
+  let bestDistance = Number.POSITIVE_INFINITY;
+  for (let i = 0; i < centroids.length; i += 1) {
+    const dx = point[0] - centroids[i][0];
+    const dy = point[1] - centroids[i][1];
+    const distance = (dx * dx) + (dy * dy);
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      bestIndex = i;
+    }
+  }
+  return bestIndex;
+}
+
+function runKMeans(points, clusterCount = 5, maxIterations = 24) {
+  if (!points.length) return { labels: [], centroids: [] };
+  const k = Math.max(2, Math.min(clusterCount, points.length));
+  const stride = Math.max(1, Math.floor(points.length / k));
+  const centroids = [];
+  for (let i = 0; i < k; i += 1) {
+    const idx = Math.min(points.length - 1, i * stride);
+    centroids.push(points[idx].slice());
+  }
+
+  let labels = Array.from({ length: points.length }, () => 0);
+  for (let iteration = 0; iteration < maxIterations; iteration += 1) {
+    let changed = false;
+    for (let i = 0; i < points.length; i += 1) {
+      const next = nearestCentroidIndex(points[i], centroids);
+      if (labels[i] !== next) {
+        labels[i] = next;
+        changed = true;
+      }
+    }
+
+    const sums = Array.from({ length: k }, () => [0, 0, 0]);
+    for (let i = 0; i < points.length; i += 1) {
+      const label = labels[i];
+      sums[label][0] += points[i][0];
+      sums[label][1] += points[i][1];
+      sums[label][2] += 1;
+    }
+
+    for (let i = 0; i < k; i += 1) {
+      if (sums[i][2] > 0) {
+        centroids[i][0] = sums[i][0] / sums[i][2];
+        centroids[i][1] = sums[i][1] / sums[i][2];
+      }
+    }
+    if (!changed) break;
+  }
+  return { labels, centroids };
+}
+
+function createAnalyticsCard(title, subtitle, plotId) {
+  return `
+    <article class="analytics-card">
+      <div class="analytics-card-head">
+        <h5>${escapeHtml(title)}</h5>
+        <p>${escapeHtml(subtitle)}</p>
+      </div>
+      <div id="${escapeHtml(plotId)}" class="insight-plot"></div>
+    </article>
+  `;
+}
+
+function summarizeServeReturn(rows) {
+  let totalServicePoints = 0;
+  let totalAces = 0;
+  let totalDfs = 0;
+  let totalFirstIn = 0;
+  let totalFirstWon = 0;
+  let totalSecondWon = 0;
+  let totalBpSaved = 0;
+  let totalBpFaced = 0;
+  let totalOppServicePoints = 0;
+  let totalOppFirstWon = 0;
+  let totalOppSecondWon = 0;
+  let totalOppBpSaved = 0;
+  let totalOppBpFaced = 0;
+  let statRows = 0;
+
+  for (const row of rows) {
+    const servicePoints = toSafeNumber(row.servicePoints, NaN);
+    if (!Number.isFinite(servicePoints) || servicePoints <= 0) continue;
+
+    totalServicePoints += servicePoints;
+    totalAces += toSafeNumber(row.aces);
+    totalDfs += toSafeNumber(row.doubleFaults);
+    totalFirstIn += toSafeNumber(row.firstIn);
+    totalFirstWon += toSafeNumber(row.firstWon);
+    totalSecondWon += toSafeNumber(row.secondWon);
+    totalBpSaved += toSafeNumber(row.breakPointsSaved);
+    totalBpFaced += toSafeNumber(row.breakPointsFaced);
+    totalOppServicePoints += toSafeNumber(row.opponentServicePoints);
+    totalOppFirstWon += toSafeNumber(row.opponentFirstWon);
+    totalOppSecondWon += toSafeNumber(row.opponentSecondWon);
+    totalOppBpSaved += toSafeNumber(row.opponentBreakPointsSaved);
+    totalOppBpFaced += toSafeNumber(row.opponentBreakPointsFaced);
+    statRows += 1;
+  }
+
+  if (statRows < 12 || totalServicePoints <= 0 || totalOppServicePoints <= 0) return null;
+
+  const aceRate = totalAces / totalServicePoints;
+  const dfRate = totalDfs / totalServicePoints;
+  const firstServeWonPct = toSafePct(totalFirstWon, totalFirstIn);
+  const secondServeWonPct = toSafePct(totalSecondWon, totalServicePoints - totalFirstIn);
+  const returnPtsWonPct = toSafePct(totalOppServicePoints - totalOppFirstWon - totalOppSecondWon, totalOppServicePoints);
+  const bpWonPct = toSafePct(totalOppBpFaced - totalOppBpSaved, totalOppBpFaced);
+  const bpSavedPct = toSafePct(totalBpSaved, totalBpFaced);
+
+  if (
+    !isFiniteNumber(firstServeWonPct) ||
+    !isFiniteNumber(secondServeWonPct) ||
+    !isFiniteNumber(returnPtsWonPct) ||
+    !isFiniteNumber(bpWonPct)
+  ) return null;
+
+  const aggressiveServeIndex = (aceRate * 100) - (dfRate * 100) + (0.35 * firstServeWonPct);
+  const returnEfficiencyIndex = returnPtsWonPct + (0.25 * bpWonPct);
+
+  return {
+    statRows,
+    aceRate,
+    dfRate,
+    firstServeWonPct,
+    secondServeWonPct,
+    returnPtsWonPct,
+    bpWonPct,
+    bpSavedPct,
+    aggressiveServeIndex,
+    returnEfficiencyIndex,
+  };
+}
+
+function ensureStyleClusterModel() {
+  if (state.styleClusterModel) return state.styleClusterModel;
+  const players = service.getTopPlayers(240).filter((player) => player.matches >= 35);
+  const active = service.getPlayerByKey(state.activePlayerKey);
+  if (active && !players.some((player) => player.key === active.key)) {
+    players.push(active);
+  }
+
+  const summaries = [];
+  for (const player of players) {
+    const rows = service.getPlayerMatches(player.key, ALL_PLAYER_FILTERS);
+    const metrics = summarizeServeReturn(rows);
+    if (!metrics) continue;
+    summaries.push({
+      key: player.key,
+      name: player.name,
+      matches: rows.length,
+      winPct: player.winPct,
+      features: [
+        metrics.aceRate * 100,
+        100 - (metrics.dfRate * 100),
+        metrics.firstServeWonPct,
+        metrics.secondServeWonPct,
+        metrics.returnPtsWonPct,
+        metrics.bpWonPct,
+      ],
+      aggressiveServeIndex: metrics.aggressiveServeIndex,
+      returnEfficiencyIndex: metrics.returnEfficiencyIndex,
+    });
+  }
+
+  if (summaries.length < 10) return null;
+  const featureCount = summaries[0].features.length;
+  const means = Array.from({ length: featureCount }, () => 0);
+  const stds = Array.from({ length: featureCount }, () => 0);
+
+  for (const row of summaries) {
+    row.features.forEach((value, idx) => {
+      means[idx] += value;
+    });
+  }
+  for (let i = 0; i < featureCount; i += 1) means[i] /= summaries.length;
+
+  for (const row of summaries) {
+    row.features.forEach((value, idx) => {
+      stds[idx] += (value - means[idx]) ** 2;
+    });
+  }
+  for (let i = 0; i < featureCount; i += 1) {
+    stds[i] = Math.sqrt(stds[i] / Math.max(1, summaries.length - 1));
+    if (!Number.isFinite(stds[i]) || stds[i] < 1e-9) stds[i] = 1;
+  }
+
+  const normalized = summaries.map((row) => row.features.map((value, idx) => (value - means[idx]) / stds[idx]));
+  const covariance = buildCovarianceMatrix(normalized);
+  const first = powerIteration(covariance);
+  const deflated = deflateMatrix(covariance, first.vector, first.eigenvalue);
+  const second = powerIteration(deflated);
+
+  const coords = normalized.map((row) => [
+    dotProduct(row, first.vector),
+    dotProduct(row, second.vector),
+  ]);
+  const kMeans = runKMeans(coords, 5, 30);
+
+  const points = summaries.map((row, idx) => ({
+    ...row,
+    pc1: coords[idx][0],
+    pc2: coords[idx][1],
+    cluster: kMeans.labels[idx] ?? 0,
+  }));
+
+  state.styleClusterModel = {
+    points,
+    means,
+    stds,
+    components: [first.vector, second.vector],
+    centroids: kMeans.centroids,
+  };
+  return state.styleClusterModel;
+}
+
+function renderSurfaceStrengthMatrixChart(container, rows) {
+  if (!container) return;
+  if (!window.Plotly) {
+    renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
+    return;
+  }
+
+  const categoryKeys = CATEGORY_KEY_ORDER.filter((key) => rows.some((row) => row.category === key));
+  const surfaceKeys = SURFACE_CLASS_ORDER.filter((key) => rows.some((row) => row.surfaceClass === key));
+  if (!categoryKeys.length || !surfaceKeys.length) {
+    renderChartPlaceholder(container, 'Not enough data for surface strength matrix.');
+    return;
+  }
+
+  const z = [];
+  const text = [];
+  const custom = [];
+  for (const surface of surfaceKeys) {
+    const zRow = [];
+    const tRow = [];
+    const cRow = [];
+    for (const category of categoryKeys) {
+      const subset = rows.filter((row) => row.surfaceClass === surface && row.category === category);
+      const matches = subset.length;
+      const wins = subset.filter((row) => row.result === 'W').length;
+      const losses = matches - wins;
+      const finals = subset.filter((row) => String(row.round || '').toUpperCase() === 'F').length;
+      const titles = subset.filter((row) => String(row.round || '').toUpperCase() === 'F' && row.result === 'W').length;
+      const pct = toSafePct(wins, matches);
+      zRow.push(pct);
+      tRow.push(isFiniteNumber(pct) ? `${pct.toFixed(1)}%` : '');
+      cRow.push([wins, losses, matches, titles, finals]);
+    }
+    z.push(zRow);
+    text.push(tRow);
+    custom.push(cRow);
+  }
+
+  const layout = {
+    ...analyticsBaseLayout('Surface Strength Matrix', `${TOUR_LABEL} level x surface win profile`),
+    margin: { l: 76, r: 34, t: 78, b: 68 },
+    xaxis: { tickangle: -24, automargin: true },
+    yaxis: { automargin: true },
+  };
+
+  window.Plotly.react(container, [{
+    type: 'heatmap',
+    x: categoryKeys.map((key) => getCategoryLabel(key)),
+    y: surfaceKeys.map((key) => getSurfaceLabel(key)),
+    z,
+    text,
+    texttemplate: '%{text}',
+    textfont: { color: '#10233b', size: 12, family: 'Space Grotesk, sans-serif' },
+    customdata: custom,
+    colorscale: [
+      [0, '#7a1f1f'],
+      [0.25, '#b53a3a'],
+      [0.5, '#d96a6a'],
+      [0.5001, '#9ec5fe'],
+      [0.75, '#4f8fe8'],
+      [1, '#1e4ea8'],
+    ],
+    zmin: 0,
+    zmax: 100,
+    xgap: 1,
+    ygap: 1,
+    hovertemplate:
+      '<b>%{y}</b> • %{x}<br>' +
+      'Win %: <b>%{z:.1f}%</b><br>' +
+      'W-L: %{customdata[0]}-%{customdata[1]}<br>' +
+      'Matches: %{customdata[2]}<br>' +
+      'Titles / Finals: %{customdata[3]} / %{customdata[4]}' +
+      '<extra></extra>',
+    colorbar: { title: 'Win %' },
+  }], layout, analyticsPlotConfig(`${TOUR_LABEL.toLowerCase()}_surface_strength_matrix`));
+}
+
+function renderStyleClusteringChart(container, playerRows) {
+  if (!container) return;
+  if (!window.Plotly) {
+    renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
+    return;
+  }
+
+  const model = ensureStyleClusterModel();
+  if (!model || !Array.isArray(model.points) || !model.points.length) {
+    renderChartPlaceholder(container, 'Not enough serve/return stats to build style clusters.');
+    return;
+  }
+
+  const palette = ['#4f7fd1', '#2ea66f', '#c7736a', '#8c8f99', '#41b7c4'];
+  const markerColors = model.points.map((point) => palette[point.cluster % palette.length]);
+  const markerSizes = model.points.map((point) => Math.max(8, Math.min(17, 7 + Math.log10(Math.max(10, point.matches)) * 4)));
+  const selected = service.getPlayerByKey(state.activePlayerKey);
+  let selectedPoint = model.points.find((point) => point.key === selected?.key) || null;
+
+  if (!selectedPoint && selected && model.components?.length === 2) {
+    const summary = summarizeServeReturn(playerRows);
+    if (summary) {
+      const featureVector = [
+        summary.aceRate * 100,
+        100 - (summary.dfRate * 100),
+        summary.firstServeWonPct,
+        summary.secondServeWonPct,
+        summary.returnPtsWonPct,
+        summary.bpWonPct,
+      ];
+      const normalized = featureVector.map((value, idx) => (value - model.means[idx]) / model.stds[idx]);
+      const point = [dotProduct(normalized, model.components[0]), dotProduct(normalized, model.components[1])];
+      const cluster = model.centroids?.length ? nearestCentroidIndex(point, model.centroids) : 0;
+      selectedPoint = {
+        key: selected.key,
+        name: selected.name,
+        matches: playerRows.length,
+        winPct: selected.winPct,
+        aggressiveServeIndex: summary.aggressiveServeIndex,
+        returnEfficiencyIndex: summary.returnEfficiencyIndex,
+        pc1: point[0],
+        pc2: point[1],
+        cluster,
+      };
+    }
+  }
+
+  const layout = {
+    ...analyticsBaseLayout('Style Clustering (PCA)', 'Serve/return profile clusters with player highlight'),
+    margin: { l: 56, r: 22, t: 78, b: 56 },
+    xaxis: { title: 'PC1', gridcolor: '#dce7f3', zeroline: false },
+    yaxis: { title: 'PC2', gridcolor: '#dce7f3', zeroline: false },
+    showlegend: true,
+    legend: {
+      orientation: 'h',
+      x: 1,
+      xanchor: 'right',
+      y: 1.12,
+      bgcolor: 'rgba(255,255,255,0.86)',
+      bordercolor: '#d9e4f0',
+      borderwidth: 1,
+    },
+  };
+
+  const traces = [{
+    type: 'scatter',
+    mode: 'markers',
+    name: 'Peer Cluster Space',
+    x: model.points.map((point) => point.pc1),
+    y: model.points.map((point) => point.pc2),
+    marker: {
+      color: markerColors,
+      size: markerSizes,
+      line: { color: '#ffffff', width: 0.8 },
+      opacity: 0.88,
+    },
+    customdata: model.points.map((point) => [
+      point.name,
+      point.cluster + 1,
+      point.matches,
+      point.winPct,
+      point.aggressiveServeIndex,
+      point.returnEfficiencyIndex,
+    ]),
+    hovertemplate:
+      '<b>%{customdata[0]}</b><br>' +
+      'Cluster: %{customdata[1]}<br>' +
+      'Matches: %{customdata[2]}<br>' +
+      'Win %: %{customdata[3]:.1f}%<br>' +
+      'Aggressive Serve Index: %{customdata[4]:.2f}<br>' +
+      'Return Efficiency Index: %{customdata[5]:.2f}' +
+      '<extra></extra>',
+  }];
+
+  if (selectedPoint) {
+    traces.push({
+      type: 'scatter',
+      mode: 'markers+text',
+      name: selectedPoint.name,
+      x: [selectedPoint.pc1],
+      y: [selectedPoint.pc2],
+      text: [selectedPoint.name],
+      textposition: 'top right',
+      textfont: { size: 12, color: '#1f2d40', family: 'Space Grotesk, sans-serif' },
+      marker: {
+        symbol: 'star',
+        size: 20,
+        color: '#0f172a',
+        line: { color: '#ffffff', width: 1.4 },
+      },
+      hovertemplate:
+        '<b>%{text}</b><br>' +
+        `Cluster: ${selectedPoint.cluster + 1}<br>` +
+        `Matches: ${formatNumber(selectedPoint.matches)}<br>` +
+        `Aggressive Serve Index: ${selectedPoint.aggressiveServeIndex.toFixed(2)}<br>` +
+        `Return Efficiency Index: ${selectedPoint.returnEfficiencyIndex.toFixed(2)}` +
+        '<extra></extra>',
+    });
+  }
+
+  window.Plotly.react(container, traces, layout, analyticsPlotConfig(`${TOUR_LABEL.toLowerCase()}_style_clustering`));
+}
+
+function renderTournamentDNAChart(container, rows, topTournaments) {
+  if (!container) return;
+  if (!window.Plotly) {
+    renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
+    return;
+  }
+  const fallbackName = topTournaments?.[0]?.name || rows[0]?.tournament || '';
+  if (!fallbackName) {
+    renderChartPlaceholder(container, 'No tournament sample available.');
+    return;
+  }
+
+  const targetRows = rows.filter((row) => row.tournament === fallbackName);
+  if (!targetRows.length) {
+    renderChartPlaceholder(container, 'No tournament sample available.');
+    return;
+  }
+
+  const wins = targetRows.filter((row) => row.result === 'W').length;
+  const playerWinPct = toSafePct(wins, targetRows.length) || 0;
+  const tiebreakFreq = toSafePct(targetRows.filter((row) => scoreHasTiebreak(row.score)).length, targetRows.length) || 0;
+  const avgMinutes = targetRows.reduce((sum, row) => sum + (toSafeNumber(row.minutes, 0)), 0) / Math.max(1, targetRows.length);
+
+  const upsetRows = targetRows.filter((row) => isFiniteNumber(row.playerRank) && isFiniteNumber(row.opponentRank) && row.playerRank > 0 && row.opponentRank > 0);
+  const upsetMatches = upsetRows.filter((row) => {
+    const winnerRank = row.result === 'W' ? row.playerRank : row.opponentRank;
+    const loserRank = row.result === 'W' ? row.opponentRank : row.playerRank;
+    return winnerRank > loserRank;
+  }).length;
+  const upsetRate = toSafePct(upsetMatches, upsetRows.length) || 0;
+
+  const searchRows = service.getTournamentRows({ search: fallbackName, category: 'all', surface: 'all', year: 'all' });
+  const selectedTournament = searchRows.find((row) => row.name === fallbackName) || searchRows[0] || null;
+  const detail = selectedTournament ? service.getTournamentDetails(selectedTournament.key) : null;
+  const championDiversity = detail?.finals?.length
+    ? toSafePct(new Set(detail.finals.map((row) => row.winnerKey || row.winnerName)).size, detail.finals.length)
+    : null;
+
+  const labels = [`${service.getPlayerByKey(state.activePlayerKey)?.name || 'Player'} Win %`, 'Champion Diversity %', 'Tiebreak Frequency %', 'Upset Rate %'];
+  const values = [playerWinPct, championDiversity ?? 0, tiebreakFreq, upsetRate];
+  const custom = [
+    [`${wins}-${targetRows.length - wins}`, targetRows.length],
+    [detail?.topChampions?.length || 0, detail?.finals?.length || 0],
+    [targetRows.filter((row) => scoreHasTiebreak(row.score)).length, targetRows.length],
+    [upsetMatches, upsetRows.length],
+  ];
+
+  const layout = {
+    ...analyticsBaseLayout('Tournament DNA', `${fallbackName} • Avg match duration ${avgMinutes.toFixed(1)} min`),
+    margin: { l: 136, r: 24, t: 78, b: 48 },
+    xaxis: { range: [0, 100], title: '%' },
+    yaxis: { automargin: true },
+  };
+
+  window.Plotly.react(container, [{
+    type: 'bar',
+    orientation: 'h',
+    y: labels,
+    x: values,
+    customdata: custom,
+    marker: {
+      color: ['#7d66e2', '#f2a427', '#32b98e', '#4f84dc'],
+      line: { color: '#ffffff', width: 0.9 },
+    },
+    hovertemplate:
+      '<b>%{y}</b><br>' +
+      'Value: %{x:.1f}%<br>' +
+      'Sample: %{customdata[0]} / %{customdata[1]}' +
+      '<extra></extra>',
+  }], layout, analyticsPlotConfig(`${TOUR_LABEL.toLowerCase()}_tournament_dna`));
+}
+
+function resolveOpponentBucket(rank) {
+  const n = toSafeNumber(rank, NaN);
+  if (!Number.isFinite(n) || n <= 0) return '500+';
+  const found = OPPONENT_BUCKETS.find((bucket) => n <= bucket.max);
+  return found?.label || '500+';
+}
+
+function renderOpponentQualityChart(container, rows) {
+  if (!container) return;
+  if (!window.Plotly) {
+    renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
+    return;
+  }
+
+  const map = new Map(OPPONENT_BUCKETS.map((bucket) => [bucket.label, { wins: 0, matches: 0 }]));
+  for (const row of rows) {
+    const bucket = resolveOpponentBucket(row.opponentRank);
+    const stats = map.get(bucket);
+    stats.matches += 1;
+    if (row.result === 'W') stats.wins += 1;
+  }
+
+  const x = OPPONENT_BUCKETS.map((bucket) => bucket.label);
+  const matches = x.map((label) => map.get(label)?.matches || 0);
+  const winPct = x.map((label) => toSafePct(map.get(label)?.wins || 0, map.get(label)?.matches || 0) || 0);
+  const layout = {
+    ...analyticsBaseLayout('Opponent Quality', 'Win % and sample size by opponent rank bucket'),
+    margin: { l: 56, r: 58, t: 76, b: 78 },
+    xaxis: { tickangle: -22 },
+    yaxis: { range: [0, 100], title: 'Win %', gridcolor: '#dce7f3' },
+    yaxis2: { title: 'Matches', overlaying: 'y', side: 'right', showgrid: false, rangemode: 'tozero' },
+    legend: { orientation: 'h', x: 1, xanchor: 'right', y: 1.1 },
+  };
+
+  window.Plotly.react(container, [
+    {
+      type: 'bar',
+      x,
+      y: winPct,
+      name: 'Win %',
+      marker: {
+        color: '#5e8edd',
+        line: { color: '#ffffff', width: 0.8 },
+      },
+      customdata: matches,
+      hovertemplate: '<b>%{x}</b><br>Win %: %{y:.1f}%<br>Matches: %{customdata}<extra></extra>',
+    },
+    {
+      type: 'scatter',
+      x,
+      y: matches,
+      name: 'Matches',
+      yaxis: 'y2',
+      mode: 'lines+markers',
+      line: { color: '#111f31', width: 2.4 },
+      marker: { size: 7, color: '#111f31' },
+      hovertemplate: '<b>%{x}</b><br>Matches: %{y}<extra></extra>',
+    },
+  ], layout, analyticsPlotConfig(`${TOUR_LABEL.toLowerCase()}_opponent_quality`));
+}
+
+function renderRoundFunnelChart(container, rows) {
+  if (!container) return;
+  if (!window.Plotly) {
+    renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
+    return;
+  }
+
+  const roundOrder = ['R128', 'R64', 'R32', 'R16', 'QF', 'SF', 'F'];
+  const appearanceCount = new Map(roundOrder.map((round) => [round, 0]));
+  for (const row of rows) {
+    const round = String(row.round || '').toUpperCase();
+    if (appearanceCount.has(round)) {
+      appearanceCount.set(round, appearanceCount.get(round) + 1);
+    }
+  }
+  const titles = rows.filter((row) => String(row.round || '').toUpperCase() === 'F' && row.result === 'W').length;
+
+  const labels = [];
+  const values = [];
+  const custom = [];
+  for (let idx = 0; idx < roundOrder.length - 1; idx += 1) {
+    const from = roundOrder[idx];
+    const to = roundOrder[idx + 1];
+    const fromCount = appearanceCount.get(from) || 0;
+    const toCount = appearanceCount.get(to) || 0;
+    labels.push(`${from} → ${to}`);
+    values.push(toSafePct(toCount, fromCount) || 0);
+    custom.push([toCount, fromCount]);
+  }
+  const finalsCount = appearanceCount.get('F') || 0;
+  labels.push('F → Title');
+  values.push(toSafePct(titles, finalsCount) || 0);
+  custom.push([titles, finalsCount]);
+
+  const layout = {
+    ...analyticsBaseLayout('Round Performance Funnel', 'Conversion rates from one round to the next'),
+    margin: { l: 90, r: 24, t: 76, b: 56 },
+    xaxis: { range: [0, 100], title: 'Conversion %', gridcolor: '#dce7f3' },
+    yaxis: { automargin: true },
+  };
+
+  window.Plotly.react(container, [{
+    type: 'bar',
+    orientation: 'h',
+    y: labels,
+    x: values,
+    marker: {
+      color: '#3cab67',
+      line: { color: '#ffffff', width: 0.8 },
+    },
+    customdata: custom,
+    hovertemplate:
+      '<b>%{y}</b><br>' +
+      'Conversion: %{x:.1f}%<br>' +
+      'Events: %{customdata[0]} / %{customdata[1]}' +
+      '<extra></extra>',
+  }], layout, analyticsPlotConfig(`${TOUR_LABEL.toLowerCase()}_round_funnel`));
+}
+
+function renderCalendarHeatmapChart(container, rows) {
+  if (!container) return;
+  if (!window.Plotly) {
+    renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
+    return;
+  }
+
+  const yearMonth = new Map();
+  for (const row of rows) {
+    const year = toSafeNumber(row.year, NaN);
+    const month = Number(String(row.dateIso || '').slice(5, 7));
+    if (!Number.isFinite(year) || !Number.isFinite(month) || month < 1 || month > 12) continue;
+    const key = `${year}-${month}`;
+    const current = yearMonth.get(key) || { year, month, matches: 0, wins: 0 };
+    current.matches += 1;
+    if (row.result === 'W') current.wins += 1;
+    yearMonth.set(key, current);
+  }
+  const points = [...yearMonth.values()];
+  if (!points.length) {
+    renderChartPlaceholder(container, 'Not enough date rows for calendar heatmap.');
+    return;
+  }
+
+  const years = [...new Set(points.map((point) => point.year))].sort((a, b) => a - b);
+  const months = Array.from({ length: 12 }, (_, idx) => idx + 1);
+  const monthLabel = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  const z = [];
+  const custom = [];
+  for (const year of years) {
+    const zRow = [];
+    const cRow = [];
+    for (const month of months) {
+      const key = `${year}-${month}`;
+      const value = yearMonth.get(key);
+      const pct = value ? toSafePct(value.wins, value.matches) : null;
+      zRow.push(pct);
+      cRow.push([value?.wins || 0, value?.matches || 0]);
+    }
+    z.push(zRow);
+    custom.push(cRow);
+  }
+
+  const layout = {
+    ...analyticsBaseLayout('Calendar Heatmap', 'Monthly win-rate trend across seasons'),
+    margin: { l: 60, r: 26, t: 76, b: 56 },
+    xaxis: { tickvals: months, ticktext: monthLabel },
+    yaxis: { automargin: true },
+  };
+
+  window.Plotly.react(container, [{
+    type: 'heatmap',
+    x: months,
+    y: years,
+    z,
+    customdata: custom,
+    colorscale: [
+      [0, '#edf7ee'],
+      [0.3, '#a7d7ab'],
+      [0.6, '#4fa76a'],
+      [1, '#1f6d3e'],
+    ],
+    zmin: 0,
+    zmax: 100,
+    xgap: 1,
+    ygap: 1,
+    hovertemplate:
+      '<b>%{y} • %{x}</b><br>' +
+      'Win %: %{z:.1f}%<br>' +
+      'W-L sample: %{customdata[0]} / %{customdata[1]}' +
+      '<extra></extra>',
+    colorbar: { title: 'Win %' },
+  }], layout, analyticsPlotConfig(`${TOUR_LABEL.toLowerCase()}_calendar_heatmap`));
+}
+
+function computeEloRows(rows, kFactor = 24) {
+  const ordered = sortRowsByDateAsc(rows);
+  let overallElo = 1500;
+  const opponentElos = new Map();
+  const surfaceElos = new Map();
+  const out = [];
+  for (const row of ordered) {
+    const opponentKey = row.opponentKey || row.opponentName || 'unknown';
+    const opponentElo = opponentElos.get(opponentKey) ?? 1500;
+    const expected = 1 / (1 + (10 ** ((opponentElo - overallElo) / 400)));
+    const actual = row.result === 'W' ? 1 : 0;
+    overallElo += kFactor * (actual - expected);
+    opponentElos.set(opponentKey, opponentElo + (kFactor * ((1 - actual) - (1 - expected))));
+
+    const surface = row.surfaceClass || 'surface-hard';
+    const currentSurfaceElo = surfaceElos.get(surface) ?? 1500;
+    const surfaceExpected = 1 / (1 + (10 ** ((opponentElo - currentSurfaceElo) / 400)));
+    const nextSurfaceElo = currentSurfaceElo + (kFactor * (actual - surfaceExpected));
+    surfaceElos.set(surface, nextSurfaceElo);
+
+    out.push({
+      dateIso: row.dateIso,
+      tournament: row.tournament,
+      overallElo,
+      surface,
+      surfaceElo: nextSurfaceElo,
+    });
+  }
+  return out;
+}
+
+function renderEloTrajectoryChart(container, rows) {
+  if (!container) return;
+  if (!window.Plotly) {
+    renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
+    return;
+  }
+  if (!rows.length) {
+    renderChartPlaceholder(container, 'Not enough rows for Elo trajectory.');
+    return;
+  }
+
+  const eloRows = computeEloRows(rows);
+  const x = eloRows.map((row) => row.dateIso);
+  const layout = {
+    ...analyticsBaseLayout('Elo-style Rating Trajectory', 'Overall + surface Elo over time'),
+    margin: { l: 62, r: 24, t: 76, b: 56 },
+    xaxis: { title: 'Date', gridcolor: '#dce7f3' },
+    yaxis: { title: 'Elo', gridcolor: '#dce7f3' },
+    legend: { orientation: 'h', x: 1, xanchor: 'right', y: 1.1 },
+  };
+
+  const traces = [{
+    type: 'scatter',
+    mode: 'lines',
+    x,
+    y: eloRows.map((row) => row.overallElo),
+    name: 'Overall Elo',
+    line: { color: '#d64545', width: 4 },
+    hovertemplate: '<b>%{x}</b><br>Overall Elo: %{y:.1f}<extra></extra>',
+  }];
+
+  const surfaceColors = {
+    'surface-hard': '#4d8fd5',
+    'surface-clay': '#f08a24',
+    'surface-grass': '#3aa35c',
+  };
+  for (const [surfaceClass, color] of Object.entries(surfaceColors)) {
+    const subset = eloRows.filter((row) => row.surface === surfaceClass);
+    if (!subset.length) continue;
+    traces.push({
+      type: 'scatter',
+      mode: 'lines',
+      x: subset.map((row) => row.dateIso),
+      y: subset.map((row) => row.surfaceElo),
+      name: `${getSurfaceLabel(surfaceClass)} Elo`,
+      line: { color, width: 2.2 },
+      hovertemplate: `<b>%{x}</b><br>${getSurfaceLabel(surfaceClass)} Elo: %{y:.1f}<extra></extra>`,
+    });
+  }
+
+  window.Plotly.react(container, traces, layout, analyticsPlotConfig(`${TOUR_LABEL.toLowerCase()}_elo_trajectory`));
+}
+
+function renderQuadrantChart(container, rows) {
+  if (!container) return;
+  if (!window.Plotly) {
+    renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
+    return;
+  }
+
+  const yearMap = new Map();
+  for (const row of rows) {
+    const year = toSafeNumber(row.year, NaN);
+    if (!Number.isFinite(year)) continue;
+    const list = yearMap.get(year) || [];
+    list.push(row);
+    yearMap.set(year, list);
+  }
+
+  const yearly = [...yearMap.entries()]
+    .map(([year, yearRows]) => {
+      const metrics = summarizeServeReturn(yearRows);
+      if (!metrics) return null;
+      return {
+        year,
+        matches: yearRows.length,
+        x: metrics.aggressiveServeIndex,
+        y: metrics.returnEfficiencyIndex,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.year - b.year);
+
+  if (!yearly.length) {
+    renderChartPlaceholder(container, 'Not enough serve/return stats for yearly quadrant chart.');
+    return;
+  }
+
+  const xMean = yearly.reduce((sum, row) => sum + row.x, 0) / yearly.length;
+  const yMean = yearly.reduce((sum, row) => sum + row.y, 0) / yearly.length;
+
+  const layout = {
+    ...analyticsBaseLayout('Serve vs Return Quadrants', 'Aggressive serve index vs return efficiency by year'),
+    margin: { l: 62, r: 24, t: 76, b: 56 },
+    xaxis: { title: 'Aggressive Serve Index', gridcolor: '#dce7f3' },
+    yaxis: { title: 'Return Efficiency Index', gridcolor: '#dce7f3' },
+    shapes: [
+      {
+        type: 'line',
+        x0: xMean,
+        x1: xMean,
+        y0: Math.min(...yearly.map((row) => row.y)) - 0.7,
+        y1: Math.max(...yearly.map((row) => row.y)) + 0.7,
+        line: { color: '#405468', width: 1.4, dash: 'dash' },
+      },
+      {
+        type: 'line',
+        y0: yMean,
+        y1: yMean,
+        x0: Math.min(...yearly.map((row) => row.x)) - 0.7,
+        x1: Math.max(...yearly.map((row) => row.x)) + 0.7,
+        line: { color: '#405468', width: 1.4, dash: 'dash' },
+      },
+    ],
+  };
+
+  window.Plotly.react(container, [{
+    type: 'scatter',
+    mode: 'markers+text',
+    x: yearly.map((row) => row.x),
+    y: yearly.map((row) => row.y),
+    text: yearly.map((row) => String(row.year)),
+    textposition: 'top right',
+    marker: {
+      size: yearly.map((row) => Math.max(12, Math.min(22, 8 + Math.sqrt(row.matches) * 0.7))),
+      color: yearly.map((row) => row.year),
+      colorscale: [
+        [0, '#6aa1ea'],
+        [1, '#0b74d1'],
+      ],
+      line: { color: '#ffffff', width: 1 },
+      showscale: false,
+    },
+    customdata: yearly.map((row) => [row.matches]),
+    hovertemplate:
+      '<b>%{text}</b><br>' +
+      'Aggressive Serve Index: %{x:.2f}<br>' +
+      'Return Efficiency Index: %{y:.2f}<br>' +
+      'Matches: %{customdata[0]}' +
+      '<extra></extra>',
+  }], layout, analyticsPlotConfig(`${TOUR_LABEL.toLowerCase()}_serve_return_quadrants`));
+}
+
+function renderOverviewInsightCharts(player, topTournaments) {
+  const rows = getPlayerRowsAll();
+  const surfaceEl = dom.playerOverview.querySelector('#overviewSurfaceStrengthChart');
+  const eloEl = dom.playerOverview.querySelector('#overviewEloTrajectoryChart');
+  const dnaEl = dom.playerOverview.querySelector('#overviewTournamentDNAChart');
+  const calendarEl = dom.playerOverview.querySelector('#overviewCalendarHeatmapChart');
+  const styleEl = dom.playerOverview.querySelector('#overviewStyleClusterChart');
+  renderSurfaceStrengthMatrixChart(surfaceEl, rows);
+  renderEloTrajectoryChart(eloEl, rows);
+  renderTournamentDNAChart(dnaEl, rows, topTournaments);
+  renderCalendarHeatmapChart(calendarEl, rows);
+  renderStyleClusteringChart(styleEl, rows);
+  window.requestAnimationFrame(() => {
+    resizePlotIfVisible(surfaceEl);
+    resizePlotIfVisible(eloEl);
+    resizePlotIfVisible(dnaEl);
+    resizePlotIfVisible(calendarEl);
+    resizePlotIfVisible(styleEl);
+  });
+}
+
+function renderMatchesInsightCharts() {
+  if (!dom.playerMatchesInsights) return;
+  const rows = getPlayerRowsAll();
+  dom.playerMatchesInsights.innerHTML = `
+    <section class="section-block analytics-block">
+      <h4>Interactive Match Intelligence</h4>
+      <div class="analytics-grid two-col">
+        ${createAnalyticsCard('Opponent Quality Plot', 'Win % vs opponent rank buckets with sample size', 'matchesOpponentQualityChart')}
+        ${createAnalyticsCard('Round Performance Funnel', 'Round-to-round conversion profile', 'matchesRoundFunnelChart')}
+      </div>
+    </section>
+  `;
+  const opponentEl = dom.playerMatchesInsights.querySelector('#matchesOpponentQualityChart');
+  const funnelEl = dom.playerMatchesInsights.querySelector('#matchesRoundFunnelChart');
+  renderOpponentQualityChart(opponentEl, rows);
+  renderRoundFunnelChart(funnelEl, rows);
+  window.requestAnimationFrame(() => {
+    resizePlotIfVisible(opponentEl);
+    resizePlotIfVisible(funnelEl);
+  });
+}
+
+function renderRankingInsightCharts() {
+  if (!dom.rankingAdvancedPlots) return;
+  dom.rankingAdvancedPlots.innerHTML = '';
+}
+
+
 function renderPlayerRanking() {
   const timeline = service.getPlayerRankingTimeline(state.activePlayerKey);
   if (!timeline || !timeline.points.length) {
@@ -468,6 +1547,9 @@ function renderPlayerRanking() {
       window.Plotly.purge(dom.rankingChart);
     } else if (dom.rankingChart) {
       dom.rankingChart.innerHTML = '<div class="empty-placeholder">Interactive chart requires Plotly.</div>';
+    }
+    if (dom.rankingAdvancedPlots) {
+      dom.rankingAdvancedPlots.innerHTML = '';
     }
     return;
   }
@@ -480,6 +1562,9 @@ function renderPlayerRanking() {
     if (window.Plotly && dom.rankingChart) {
       window.Plotly.purge(dom.rankingChart);
       dom.rankingChart.innerHTML = '<div class="empty-placeholder">No ranking chart points available for the selected range.</div>';
+    }
+    if (dom.rankingAdvancedPlots) {
+      dom.rankingAdvancedPlots.innerHTML = '';
     }
     return;
   }
@@ -713,6 +1798,8 @@ function renderPlayerRanking() {
       <tbody>${tableRows}</tbody>
     </table>
   `;
+
+  renderRankingInsightCharts();
 }
 
 function renderPlayerPanel() {
@@ -744,6 +1831,7 @@ function syncTournamentDetailVisibility() {
 
 function renderTournamentTable() {
   const rows = service.getTournamentRows(state.tournamentFilters);
+  const showTopChampionColumn = !!state.tournamentDetailCollapsed;
   syncTournamentDetailVisibility();
   if (!rows.length) {
     renderEmptyTable(dom.tournamentTable, 'No tournaments match these filters.');
@@ -757,6 +1845,9 @@ function renderTournamentTable() {
 
   const body = rows.slice(0, 260).map((row) => {
     const champion = row.topChampion;
+    const championCell = champion
+      ? `${getFlagHtml(champion.countryCode)} ${escapeHtml(champion.name)} (${champion.count})`
+      : '-';
     return `
       <tr class="clickable-row ${row.key === state.selectedTournamentKey ? 'active' : ''}" data-tournament-key="${escapeHtml(row.key)}">
         <td>${escapeHtml(row.name)}</td>
@@ -766,7 +1857,7 @@ function renderTournamentTable() {
         <td>${formatNumber(row.eventCount)}</td>
         <td>${formatNumber(row.matchCount)}</td>
         <td>${formatNumber(row.playerCount)}</td>
-        <td>${champion ? `${getFlagHtml(champion.countryCode)} ${escapeHtml(champion.name)} (${champion.count})` : '-'}</td>
+        ${showTopChampionColumn ? `<td>${championCell}</td>` : ''}
       </tr>
     `;
   }).join('');
@@ -782,7 +1873,7 @@ function renderTournamentTable() {
           <th>Events</th>
           <th>Matches</th>
           <th>Players</th>
-          <th>Top Champion</th>
+          ${showTopChampionColumn ? '<th>Top Champion</th>' : ''}
         </tr>
       </thead>
       <tbody>${body}</tbody>
@@ -842,7 +1933,7 @@ function renderTournamentDetail() {
       <div class="final-list">${finalRows || '<div class="small-note">No final rows available.</div>'}</div>
     </div>
 
-    <button id="openTournamentModalBtn" class="detail-action-btn" type="button">Open Full Results Popup</button>
+    <button id="openTournamentModalBtn" class="detail-action-btn" type="button">Open Full Results</button>
   `;
 }
 
@@ -977,21 +2068,174 @@ function renderHolderPills(holders) {
   `).join('')}</div>`;
 }
 
+function getRecordKey(row) {
+  return `${row.group || 'all'}:${row.record || ''}`;
+}
+
+function getRecordSurfaceClass(recordName) {
+  const label = String(recordName || '').toLowerCase();
+  if (label.includes('hard-court')) return 'surface-hard';
+  if (label.includes('clay-court')) return 'surface-clay';
+  if (label.includes('grass-court')) return 'surface-grass';
+  if (label.includes('indoor')) return 'surface-indoor';
+  if (label.includes('carpet')) return 'surface-carpet';
+  return '';
+}
+
+function buildRecordMetrics(row, holder) {
+  const label = String(row?.record || '').toLowerCase();
+  const wins = Number(holder?.wins || 0);
+  const losses = Number(holder?.losses || 0);
+  const matches = Number(holder?.matches || (wins + losses));
+  const winPct = Number.isFinite(holder?.winPct) ? holder.winPct : (wins + losses > 0 ? (wins / (wins + losses)) * 100 : 0);
+  const metrics = [];
+
+  if (label.includes('highest win %')) {
+    metrics.push(`Win %: ${formatPercent(winPct)}`);
+    metrics.push(`Record: ${formatNumber(wins)}-${formatNumber(losses)}`);
+    metrics.push(`Matches: ${formatNumber(matches)}`);
+    return metrics;
+  }
+
+  if (label.includes('most matches played')) {
+    metrics.push(`Matches: ${formatNumber(matches)}`);
+    metrics.push(`Record: ${formatNumber(wins)}-${formatNumber(losses)}`);
+    metrics.push(`Win %: ${formatPercent(winPct)}`);
+    return metrics;
+  }
+
+  if (label.includes('most match wins')) {
+    metrics.push(`Wins: ${formatNumber(wins)}`);
+    metrics.push(`Record: ${formatNumber(wins)}-${formatNumber(losses)}`);
+    metrics.push(`Win %: ${formatPercent(winPct)}`);
+    return metrics;
+  }
+
+  if (label.includes('most grand slam titles')) {
+    metrics.push(`Grand Slam titles: ${formatNumber(holder?.grandSlamTitles || 0)}`);
+    metrics.push(`Total titles: ${formatNumber(holder?.titles || 0)}`);
+    metrics.push(`Finals reached: ${formatNumber(holder?.finals || 0)}`);
+    return metrics;
+  }
+
+  if (label.includes('1000 titles')) {
+    metrics.push(`WTA 1000 titles: ${formatNumber(holder?.mastersTitles || 0)}`);
+    metrics.push(`Total titles: ${formatNumber(holder?.titles || 0)}`);
+    metrics.push(`Finals reached: ${formatNumber(holder?.finals || 0)}`);
+    return metrics;
+  }
+
+  if (label.includes('500 titles')) {
+    metrics.push(`WTA 500 titles: ${formatNumber(holder?.atp500Titles || 0)}`);
+    metrics.push(`Total titles: ${formatNumber(holder?.titles || 0)}`);
+    metrics.push(`Finals reached: ${formatNumber(holder?.finals || 0)}`);
+    return metrics;
+  }
+
+  if (label.includes('250 titles')) {
+    metrics.push(`WTA 250 titles: ${formatNumber(holder?.atp250Titles || 0)}`);
+    metrics.push(`Total titles: ${formatNumber(holder?.titles || 0)}`);
+    metrics.push(`Finals reached: ${formatNumber(holder?.finals || 0)}`);
+    return metrics;
+  }
+
+  if (label.includes('most titles')) {
+    metrics.push(`Titles: ${formatNumber(holder?.titles || 0)}`);
+    metrics.push(`Finals reached: ${formatNumber(holder?.finals || 0)}`);
+    metrics.push(`Record: ${formatNumber(wins)}-${formatNumber(losses)}`);
+    return metrics;
+  }
+
+  if (label.includes('most finals reached')) {
+    metrics.push(`Finals reached: ${formatNumber(holder?.finals || 0)}`);
+    metrics.push(`Titles won: ${formatNumber(holder?.titles || 0)}`);
+    metrics.push(`Record: ${formatNumber(wins)}-${formatNumber(losses)}`);
+    return metrics;
+  }
+
+  const surfaceClass = getRecordSurfaceClass(label);
+  if (surfaceClass) {
+    const surfaceWins = Number(holder?.surface?.[surfaceClass]?.wins || 0);
+    const surfaceLosses = Number(holder?.surface?.[surfaceClass]?.losses || 0);
+    const totalSurfaceMatches = surfaceWins + surfaceLosses;
+    const surfacePct = totalSurfaceMatches > 0 ? (surfaceWins / totalSurfaceMatches) * 100 : 0;
+    metrics.push(`Surface record: ${formatNumber(surfaceWins)}-${formatNumber(surfaceLosses)}`);
+    metrics.push(`Surface win %: ${formatPercent(surfacePct)}`);
+    metrics.push(`Career record: ${formatNumber(wins)}-${formatNumber(losses)}`);
+    return metrics;
+  }
+
+  return metrics;
+}
+
+function renderRecordDetail(row) {
+  if (!Array.isArray(row?.holders) || row.holders.length === 0) return '';
+
+  const detailRows = row.holders.map((holder) => {
+    const metrics = buildRecordMetrics(row, holder);
+    if (!metrics.length) return '';
+    return `
+      <div class="record-holder-detail">
+        <div class="record-holder-name">${getFlagHtml(holder.countryCode)} <span class="name">${escapeHtml(holder.name || 'Unknown')}</span></div>
+        <div class="record-metrics">
+          ${metrics.map((metric) => `<span class="record-metric-pill">${escapeHtml(metric)}</span>`).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  if (!detailRows) return '';
+  const tieText = row.holders.length > 1 ? `Joint holders (${row.holders.length})` : 'Record holder';
+
+  return `
+    <div class="record-detail-panel">
+      <div class="small-note">${escapeHtml(tieText)} • ${escapeHtml(row.record || '')}</div>
+      <div class="record-holder-grid">${detailRows}</div>
+    </div>
+  `;
+}
+
 function renderRecords() {
   const rows = service.getRecords(state.recordCategory);
   if (!rows.length) {
+    state.selectedRecordKey = '';
     renderEmptyTable(dom.recordsTable, 'No records available yet.');
     return;
   }
 
-  const body = rows.map((row) => `
-    <tr>
-      <td>${escapeHtml(row.record)}</td>
-      <td><strong>${escapeHtml(String(row.value))}</strong></td>
-      <td>${renderHolderPills(row.holders)}</td>
-      <td>${escapeHtml(row.goatPoints || '-')}</td>
-    </tr>
-  `).join('');
+  const tableRows = rows.map((row) => {
+    const recordKey = getRecordKey(row);
+    const detailHtml = renderRecordDetail(row);
+    const expandable = Boolean(detailHtml);
+    return {
+      row,
+      recordKey,
+      detailHtml,
+      expandable,
+    };
+  });
+
+  if (!tableRows.some((entry) => entry.expandable && entry.recordKey === state.selectedRecordKey)) {
+    state.selectedRecordKey = '';
+  }
+
+  const body = tableRows.map(({ row, recordKey, detailHtml, expandable }) => {
+    const open = expandable && recordKey === state.selectedRecordKey;
+    return `
+      <tr class="${expandable ? 'record-row-expandable clickable-row' : ''} ${open ? 'active record-row-open' : ''}" ${expandable ? `data-record-key="${escapeHtml(recordKey)}" tabindex="0" role="button" aria-expanded="${open}" aria-selected="${open}"` : ''}>
+        <td>
+          <div class="record-cell-main">
+            <span class="record-main-label">${escapeHtml(row.record)}</span>
+            ${expandable ? `<span class="record-expand-hint">${open ? 'Hide details' : 'Show details'}</span>` : ''}
+          </div>
+        </td>
+        <td><strong>${escapeHtml(String(row.value))}</strong></td>
+        <td>${renderHolderPills(row.holders)}</td>
+        <td>${escapeHtml(row.goatPoints || '-')}</td>
+      </tr>
+      ${open ? `<tr class="record-detail-row record-detail-open"><td colspan="4">${detailHtml}</td></tr>` : ''}
+    `;
+  }).join('');
 
   dom.recordsTable.innerHTML = `
     <table class="data-table">
@@ -1014,6 +2258,35 @@ function renderAll() {
   renderPlayerPanel();
   renderTournamentTable();
   renderRecords();
+}
+
+function resizePlotIfVisible(element) {
+  if (!window.Plotly || !element) return;
+  window.Plotly.Plots.resize(element);
+}
+
+function resizePlayerSubtabPlots() {
+  if (!window.Plotly) return;
+  window.requestAnimationFrame(() => {
+    if (state.playerSubtab === 'overview') {
+      resizePlotIfVisible(dom.playerOverview.querySelector('#overviewSurfaceStrengthChart'));
+      resizePlotIfVisible(dom.playerOverview.querySelector('#overviewStyleClusterChart'));
+      resizePlotIfVisible(dom.playerOverview.querySelector('#overviewTournamentDNAChart'));
+      resizePlotIfVisible(dom.playerOverview.querySelector('#overviewCalendarHeatmapChart'));
+      resizePlotIfVisible(dom.playerOverview.querySelector('#overviewEloTrajectoryChart'));
+      return;
+    }
+
+    if (state.playerSubtab === 'matches') {
+      resizePlotIfVisible(dom.playerMatchesInsights?.querySelector('#matchesOpponentQualityChart'));
+      resizePlotIfVisible(dom.playerMatchesInsights?.querySelector('#matchesRoundFunnelChart'));
+      return;
+    }
+
+    if (state.playerSubtab === 'ranking') {
+      resizePlotIfVisible(dom.rankingChart);
+    }
+  });
 }
 
 function setActivePlayer(playerKey, updateInput = true) {
@@ -1072,12 +2345,88 @@ function resolveInitialPlayerKey() {
   return service.getTopPlayers(1)[0]?.key || '';
 }
 
+async function loadDataset() {
+  if (state.loading) return;
+
+  state.loading = true;
+  dom.loadButton.disabled = true;
+  setLoadStatus('Preparing historic data loader…');
+  setLoadProgress(2);
+  state.styleClusterModel = null;
+
+  try {
+    await service.loadAll((progress) => {
+      if (progress.phase === 'meta') {
+        setLoadStatus(progress.message || 'Loading metadata…');
+        setLoadProgress(6);
+        return;
+      }
+
+      if (progress.phase === 'loading') {
+        const p = progress.totalFiles > 0
+          ? ((progress.fileIndex / progress.totalFiles) * 100)
+          : 10;
+        setLoadProgress(p);
+        setLoadStatus(`${progress.message} • ${formatNumber(progress.totalRows || 0)} rows`);
+        return;
+      }
+
+      if (progress.phase === 'done') {
+        const liveRefreshEnabled = APP_CONFIG.enableLiveYearRefresh !== false;
+        if (!liveRefreshEnabled) {
+          setLoadProgress(100);
+          setLoadStatus(
+            `Loaded ${formatNumber(progress.totalRows)} matches, ${formatNumber(progress.totalPlayers)} players, ${formatNumber(progress.totalTournaments)} tournaments from static ${TOUR_NAME} archive.`
+          );
+          return;
+        }
+
+        const liveYearSync = progress.liveYearSync || {};
+        const liveYear = Number.isFinite(liveYearSync.year) ? liveYearSync.year : APP_CONFIG.liveYear;
+        const liveSource = liveYearSync.sourceType === 'online'
+          ? 'internet'
+          : liveYearSync.sourceType === 'missing'
+            ? 'unavailable'
+            : 'local fallback';
+        const liveLatest = liveYearSync.latestMatchDateIso
+          ? formatDate(liveYearSync.latestMatchDateIso)
+          : `Feb ${liveYear}`;
+
+        setLoadProgress(100);
+        setLoadStatus(
+          `Loaded ${formatNumber(progress.totalRows)} matches, ${formatNumber(progress.totalPlayers)} players, ${formatNumber(progress.totalTournaments)} tournaments. ${liveYear}.csv source: ${liveSource} (up to ${liveLatest}).`
+        );
+      }
+    });
+
+    state.loaded = true;
+    const initialPlayerKey = resolveInitialPlayerKey();
+    if (initialPlayerKey) setActivePlayer(initialPlayerKey, true);
+
+    populateGlobalYearFilters();
+    renderAll();
+    renderHeroSubtitle();
+  } catch (error) {
+    console.error(error);
+    setLoadStatus(`Failed to load data: ${error.message || error}`);
+    setLoadProgress(0);
+    renderHeroSubtitle();
+  } finally {
+    state.loading = false;
+    dom.loadButton.disabled = false;
+    dom.loadButton.textContent = state.loaded ? '♻️ Reload Historic Dataset' : '⚡ Load Historic Dataset';
+  }
+}
+
 function bindEvents() {
   dom.mainTabs.addEventListener('click', (event) => {
     const btn = event.target.closest('.tab-btn');
     if (!btn) return;
     state.activeTab = btn.dataset.tab;
     renderMainTab();
+    if (state.activeTab === 'players') {
+      resizePlayerSubtabPlots();
+    }
   });
 
   dom.playerSubtabs.addEventListener('click', (event) => {
@@ -1085,9 +2434,7 @@ function bindEvents() {
     if (!btn) return;
     state.playerSubtab = btn.dataset.subtab;
     renderPlayerSubtab();
-    if (state.playerSubtab === 'ranking' && window.Plotly && dom.rankingChart) {
-      window.requestAnimationFrame(() => window.Plotly.Plots.resize(dom.rankingChart));
-    }
+    resizePlayerSubtabPlots();
   });
 
   dom.playerSearch.addEventListener('input', () => {
@@ -1191,7 +2538,6 @@ function bindEvents() {
     if (!row?.dataset.tournamentKey) return;
     state.selectedTournamentKey = row.dataset.tournamentKey;
     renderTournamentTable();
-    openTournamentModal();
   });
 
   dom.tournamentDetail.addEventListener('click', (event) => {
@@ -1219,6 +2565,23 @@ function bindEvents() {
 
   dom.recordCategoryFilter.addEventListener('change', () => {
     state.recordCategory = dom.recordCategoryFilter.value;
+    state.selectedRecordKey = '';
+    renderRecords();
+  });
+
+  dom.recordsTable.addEventListener('click', (event) => {
+    const row = event.target.closest('[data-record-key]');
+    if (!row?.dataset.recordKey) return;
+    state.selectedRecordKey = state.selectedRecordKey === row.dataset.recordKey ? '' : row.dataset.recordKey;
+    renderRecords();
+  });
+
+  dom.recordsTable.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const row = event.target.closest('[data-record-key]');
+    if (!row?.dataset.recordKey) return;
+    event.preventDefault();
+    state.selectedRecordKey = state.selectedRecordKey === row.dataset.recordKey ? '' : row.dataset.recordKey;
     renderRecords();
   });
 
@@ -1228,72 +2591,8 @@ function bindEvents() {
     }
   });
 
-  dom.loadButton.addEventListener('click', async () => {
-    dom.loadButton.disabled = true;
-    setLoadStatus('Preparing historic data loader…');
-    setLoadProgress(2);
-
-    try {
-      await service.loadAll((progress) => {
-        if (progress.phase === 'meta') {
-          setLoadStatus(progress.message || 'Loading metadata…');
-          setLoadProgress(6);
-          return;
-        }
-
-        if (progress.phase === 'loading') {
-          const p = progress.totalFiles > 0
-            ? ((progress.fileIndex / progress.totalFiles) * 100)
-            : 10;
-          setLoadProgress(p);
-          setLoadStatus(`${progress.message} • ${formatNumber(progress.totalRows || 0)} rows`);
-          return;
-        }
-
-        if (progress.phase === 'done') {
-          const liveRefreshEnabled = APP_CONFIG.enableLiveYearRefresh !== false;
-          if (!liveRefreshEnabled) {
-            setLoadProgress(100);
-            setLoadStatus(
-              `Loaded ${formatNumber(progress.totalRows)} matches, ${formatNumber(progress.totalPlayers)} players, ${formatNumber(progress.totalTournaments)} tournaments from static ${TOUR_NAME} archive.`
-            );
-            return;
-          }
-
-          const liveYearSync = progress.liveYearSync || {};
-          const liveYear = Number.isFinite(liveYearSync.year) ? liveYearSync.year : APP_CONFIG.liveYear;
-          const liveSource = liveYearSync.sourceType === 'online'
-            ? 'internet'
-            : liveYearSync.sourceType === 'missing'
-              ? 'unavailable'
-              : 'local fallback';
-          const liveLatest = liveYearSync.latestMatchDateIso
-            ? formatDate(liveYearSync.latestMatchDateIso)
-            : `Feb ${liveYear}`;
-
-          setLoadProgress(100);
-          setLoadStatus(
-            `Loaded ${formatNumber(progress.totalRows)} matches, ${formatNumber(progress.totalPlayers)} players, ${formatNumber(progress.totalTournaments)} tournaments. ${liveYear}.csv source: ${liveSource} (up to ${liveLatest}).`
-          );
-        }
-      });
-
-      state.loaded = true;
-      const initialPlayerKey = resolveInitialPlayerKey();
-      if (initialPlayerKey) setActivePlayer(initialPlayerKey, true);
-
-      populateGlobalYearFilters();
-      renderAll();
-      renderHeroSubtitle();
-    } catch (error) {
-      console.error(error);
-      setLoadStatus(`Failed to load data: ${error.message || error}`);
-      setLoadProgress(0);
-      renderHeroSubtitle();
-    } finally {
-      dom.loadButton.disabled = false;
-      dom.loadButton.textContent = state.loaded ? '♻️ Reload Historic Dataset' : '⚡ Load Historic Dataset';
-    }
+  dom.loadButton.addEventListener('click', () => {
+    loadDataset();
   });
 }
 
@@ -1308,9 +2607,15 @@ function init() {
   renderHeroSubtitle();
   renderEmptyTable(dom.playerOverview, 'Load data and select a player to see the profile dashboard.');
   renderEmptyTable(dom.playerMatchesTable, 'Load data and select a player to inspect match history.');
+  if (dom.playerMatchesInsights) {
+    renderEmptyTable(dom.playerMatchesInsights, 'Interactive match intelligence charts will appear after player data is loaded.');
+  }
   renderEmptyTable(dom.playerRivalriesTable, 'Load data and select a player to inspect rivalries.');
   renderEmptyTable(dom.rankingSummaryTiles, 'Load data and select a player to view ranking timeline.');
   renderEmptyTable(dom.rankingTimelineTable, 'Load data and select a player to view ranking checkpoints.');
+  if (dom.rankingAdvancedPlots) {
+    dom.rankingAdvancedPlots.innerHTML = '';
+  }
   renderEmptyTable(dom.tournamentTable, 'Load data to analyze tournaments.');
   renderEmptyTable(dom.recordsTable, 'Load data to generate records.');
 
@@ -1323,6 +2628,9 @@ function init() {
   } else {
     setLoadStatus(`Ready. Manifest expects ${APP_CONFIG.csvManifestPath}; ${APP_CONFIG.liveYear}.csv will refresh online when you load.`);
   }
+  window.requestAnimationFrame(() => {
+    loadDataset();
+  });
 }
 
 init();

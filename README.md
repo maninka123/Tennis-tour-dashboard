@@ -355,48 +355,6 @@ DEBUG=False
 
 ---
 
-## 🎯 Key Features Explained
-
-### 📈 Match Prediction Algorithm
-
-The upcoming match predictions use a multi-factor algorithm:
-
-- 🏅 Recent form (last 5-10 matches)
-- ⚔️ Head-to-head history
-- 🎾 Surface-specific performance
-- 📊 Current ranking momentum
-- 🏆 Tournament category weighting
-
-### ⭐ Favourites System
-
-Track your favourite players with instant access and live match alerts:
-
-- **Slide-in panel** (360px) with separate ATP/WTA storage
-- **Smart search** with autocomplete for quick player lookup
-- **Live indicators** — amber glow on star icon when any favourite is playing, red blink on active players
-- **Player images** from local data served via backend API
-- **Persistent storage** in `localStorage` as `rallycourt_favourites`
-
-### 🔄 System Update UI
-
-Access via `/update.html` or the dashboard update button:
-
-- ✅ **Step 1:** Select tour (ATP/WTA/Both)
-- 🔍 **Step 2:** Preview available updates
-- 🎯 **Step 3:** Select specific updates (with Grand Slam auto-selection)
-- 📊 **Step 4:** Real-time progress monitoring with color-coded logs
-
-### 🎨 UI/UX Features
-
-- 🌓 Dark theme optimized for extended viewing
-- 📱 Responsive design for mobile/tablet/desktop
-- ⚡ Real-time updates via WebSocket with polling fallback
-- 🎯 Smart caching for fast load times
-- 🔍 Instant search with autocomplete
-- 🏳️ Country flag emoji support (40+ countries)
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Here's how you can help:
@@ -428,28 +386,6 @@ git push origin feature/AmazingFeature
 - 📝 Update README if adding new features
 - 🧪 Test locally before submitting PR
 - 💬 Provide clear commit messages
-
----
-
-## 📋 Requirements
-
-### Backend Dependencies
-
-- Python 3.11+
-- Flask 3.0.0
-- Flask-SocketIO 5.3.6
-- BeautifulSoup4 4.12.2
-- Requests 2.31.0
-- lxml 5.3.0
-- Playwright 1.58.0 *(for WTA scraping)*
-- Gunicorn 21.2.0 *(production)*
-- Gevent 24.2.1 *(production)*
-
-### Frontend Dependencies
-
-- Modern web browser (Chrome/Firefox/Safari/Edge)
-- JavaScript enabled
-- Chart.js 3.x *(included in vendor/)*
 
 ---
 
@@ -486,14 +422,6 @@ This project uses **public web sources only**:
 
 ---
 
-## 🐛 Known Issues
-
-- WTA player images may occasionally fail to load (run fix script)
-- Some historical H2H data may be incomplete
-- Playwright requires significant memory for browser automation
-
----
-
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE) file for details.
@@ -502,7 +430,7 @@ MIT License — see [LICENSE](LICENSE) file for details.
 
 ## 👨‍💻 Author
 
-Created with ❤️ for tennis fans worldwide 🎾
+Built by a tennis and tech enthusiast focused on practical, data-driven sports tools.
 
 ---
 
@@ -537,5 +465,24 @@ Created with ❤️ for tennis fans worldwide 🎾
 | ![Statistics table](Images/stat%20table.png) | Detailed match statistics table with serve and return metrics |
 | ![Player stats overview](Images/Player_stats_1.png) <br> ![Player stats details](Images/Player_stats_2.png) | **Player Statistics Analysis**<br><br>Complete player profile view showing:<br>• Stats comparison overview<br>• Detailed serve & return metrics<br>• Season performance breakdown |
 | ![H2H overview](Images/H2H_1.png) <br> ![H2H details](Images/H2H_2.png) | **Head-to-Head Deep Dive**<br><br>Full analytics suite featuring:<br>• Radar chart comparison<br>• Past meetings history<br>• Surface performance records |
+
+---
+
+## 📊 Data Analysis Dashboard
+
+The project also includes a dedicated historical analysis app under `data_analysis/` for ATP and WTA.
+
+- Player Explorer with deep profile metrics and trend charts
+- Tournament Explorer with clickable details, champions, and recent finals
+- Records Book with expandable record-holder context
+- Interactive analytics including surface matrices, clustering, form, and Elo-style trajectories
+
+### 📸 Analysis Gallery (Updated)
+
+| Analysis View | Analysis View |
+|---------------|---------------|
+| ![Analysis - Serving stat index](Images/Serving%20stat%20index.png) | ![Analysis - Stats table](Images/stat%20table.png) |
+| ![Analysis - Player stats overview](Images/Player_stats_1.png) | ![Analysis - Player stats details](Images/Player_stats_2.png) |
+| ![Analysis - H2H deep dive](Images/H2H_1.png) |  |
 
 ---
