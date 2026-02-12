@@ -21,58 +21,47 @@
 
 ### 🔴 Live Match Tracking
 
-- **Real-time scores** with current game points and serving indicators
-- **Live match statistics** with detailed player comparison popups
-- Auto-refreshing data via WebSocket + polling fallback
+- Real-time scores with server and game-point indicators
+- Live stat comparison popups with WebSocket + polling refresh
 
-### 📊 Comprehensive Match Coverage
+### 📊 Match Coverage
 
-- **Recent Results**: Completed matches with clickable stat breakdowns
-- **Upcoming Matches**: Next 48 hours with AI-powered predictions
-  - 🎯 Win-edge percentages for both players
-  - 📈 H2H snapshot and historical data
-  - 💡 Form & momentum insights
-  - 🧠 Smart prediction algorithms
+- Recent results with quick stat breakdowns
+- Upcoming 48-hour matches with win-edge, H2H, and form insights
 
-### 🏆 Rankings & Tournament Data
+### 🏆 Rankings & Tournaments
 
-- **Live ATP/WTA Rankings** with real-time point updates
-- **Tournament Calendar** with surface and category filters
-- **Interactive Draw Brackets** for ongoing tournaments
-- **Player Profiles** with detailed statistics, career records, and local images
+- Live ATP/WTA rankings with point updates
+- Filterable tournament calendar, draw brackets, and player cards
 
-### ⭐ Favourites System
+### ⭐ Favourites
 
-Quickly track and access your favourite players with live match notifications:
-
-- **Separate ATP/WTA lists** with search-powered autocomplete
-- **Live indicators** — glowing icon when any favourite is playing, red blink on active player rows
-- **One-click access** to player stats and profile cards
-- **Persistent tracking** via localStorage across sessions
+- Separate ATP/WTA favourites with autocomplete
+- Live indicators for active favourites and one-click player access
+- Persistent tracking in localStorage
 
 ### 🎯 Advanced H2H Analytics
 
-- **ATP & WTA H2H** — full support for both tours
-- **Player Search** with autocomplete (500+ players per tour)
-- **Career H2H Summary** with win/loss records
-- **Interactive Radar Charts** comparing serve/return stats
-- **Surface Performance** breakdown (Hard/Clay/Grass)
-- **Past Meetings** with detailed set-by-set scores
+- ATP and WTA head-to-head support with fast search
+- Career summary, surface splits, set-by-set history, and radar comparison
 
-### 👤 Player Stats Cards
+### 👤 Player Profiles
 
-- **Detailed profiles** with age, height, plays, coach info
-- **Season & career stats** with serve/return breakdowns
-- **Grand Slam performance** records
-- **Recent match history** within the card
-- **"Not Available" popup** with styled initials fallback for players without full data
-- **WTA text filtering** — cleans up ranking "previous" field (removes parenthetical data, trailing numbers, etc.)
+- Bio, season/career stats, and recent match history
+- Serve/return and Slam breakdowns with clean fallback UI
 
 ### 🔄 System Update Management
 
-- **Dedicated Update UI** with real-time progress tracking
-- **Color-coded logs** for easy monitoring
-- **GIF grid background** for visual appeal
+- Dedicated update UI with real-time progress and color-coded logs
+- ATP/WTA/Both update flow with preview support
+
+### 📈 Data Analysis Dashboard
+
+- Historical ATP/WTA trend analysis workspace
+- Player Explorer: surface matrix, Elo trajectory, calendar heatmap, and style clustering
+- Tournament Explorer: champions/finals insights with full-results drill-down
+- Records Book: expandable holders with contextual metrics
+- Interactive Plotly charts with hover details and export tools
 
 ---
 
@@ -454,17 +443,20 @@ Built by a tennis and tech enthusiast focused on practical, data-driven sports t
 
 ---
 
-### 📸 Image Gallery
+### 📸 Previous Images
 
-| Screenshot | Description |
-|------------|-------------|
-| ![Loading intro page](Images/loading%20intro.png) | Loading intro page with animated GIF grid background |
-| ![Main interface](Images/Interface_Live%20results_recent%20scores_upcoming%20matches.png) | Main interface with live scores, recent results, and upcoming match insights |
-| ![Rankings and calendar](Images/Live%20Rankings%20and%20calender.png) | Rankings panel and tournament calendar with surface filters |
-| ![Match insights](Images/Upcoming%20match%20insights.png) | Upcoming match insights with win probability and form notes |
-| ![Statistics table](Images/stat%20table.png) | Detailed match statistics table with serve and return metrics |
-| ![Player stats overview](Images/Player_stats_1.png) <br> ![Player stats details](Images/Player_stats_2.png) | **Player Statistics Analysis**<br><br>Complete player profile view showing:<br>• Stats comparison overview<br>• Detailed serve & return metrics<br>• Season performance breakdown |
-| ![H2H overview](Images/H2H_1.png) <br> ![H2H details](Images/H2H_2.png) | **Head-to-Head Deep Dive**<br><br>Full analytics suite featuring:<br>• Radar chart comparison<br>• Past meetings history<br>• Surface performance records |
+| Title | Preview |
+|-------|---------|
+| Loading Intro | ![Loading intro page](Images/loading%20intro.png) |
+| Main Interface | ![Main interface](Images/Interface_Live%20results_recent%20scores_upcoming%20matches.png) |
+| Upcoming Match Insights | ![Upcoming match insights](Images/Upcoming%20match%20insights.png) |
+| Live Rankings and Calendar | ![Live rankings and calendar](Images/Live%20Rankings%20and%20calender.png) |
+| H2H Analytics View 1 | ![H2H view 1](Images/H2H_1.png) |
+| H2H Analytics View 2 | ![H2H view 2](Images/H2H_2.png) |
+| Player Stats Card 1 | ![Player stats 1](Images/Player_stats_1.png) |
+| Player Stats Card 2 | ![Player stats 2](Images/Player_stats_2.png) |
+| Serving Stats Index | ![Serving stat index](Images/Serving%20stat%20index.png) |
+| Stats Table | ![Stats table](Images/stat%20table.png) |
 
 ---
 
@@ -477,12 +469,13 @@ The project also includes a dedicated historical analysis app under `data_analys
 - Records Book with expandable record-holder context
 - Interactive analytics including surface matrices, clustering, form, and Elo-style trajectories
 
-### 📸 Analysis Gallery (Updated)
+### 📸 Data Analysis Images
 
-| Analysis View | Analysis View |
-|---------------|---------------|
-| ![Analysis - Serving stat index](Images/Serving%20stat%20index.png) | ![Analysis - Stats table](Images/stat%20table.png) |
-| ![Analysis - Player stats overview](Images/Player_stats_1.png) | ![Analysis - Player stats details](Images/Player_stats_2.png) |
-| ![Analysis - H2H deep dive](Images/H2H_1.png) |  |
+| Title | Preview |
+|-------|---------|
+| Player Analysis | ![Analysis player](Images/Analysis_player.png) |
+| Ranking Points Analysis | ![Analysis ranking points](Images/Analysis_ranking_points.png) |
+| Tournament Analysis | ![Analysis tournament](Images/Analyis_Tournament.png) |
+| Record Book Analysis | ![Analysis record book](Images/Analysis_Record%20book.png) |
 
 ---
