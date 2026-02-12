@@ -308,6 +308,28 @@ export class DataService {
       bestOf: toInt(row?.best_of),
       minutes: toInt(row?.minutes),
       score: String(row?.score || '').trim(),
+      stats: {
+        winner: {
+          ace: toInt(row?.w_ace),
+          df: toInt(row?.w_df),
+          svpt: toInt(row?.w_svpt),
+          firstIn: toInt(row?.w_1stIn),
+          firstWon: toInt(row?.w_1stWon),
+          secondWon: toInt(row?.w_2ndWon),
+          bpSaved: toInt(row?.w_bpSaved),
+          bpFaced: toInt(row?.w_bpFaced),
+        },
+        loser: {
+          ace: toInt(row?.l_ace),
+          df: toInt(row?.l_df),
+          svpt: toInt(row?.l_svpt),
+          firstIn: toInt(row?.l_1stIn),
+          firstWon: toInt(row?.l_1stWon),
+          secondWon: toInt(row?.l_2ndWon),
+          bpSaved: toInt(row?.l_bpSaved),
+          bpFaced: toInt(row?.l_bpFaced),
+        },
+      },
       winner: {
         key: normalizeKey(winnerName),
         name: winnerName,
@@ -679,6 +701,8 @@ export class DataService {
 
   #toPerspective(match, playerKey) {
     const isWinner = match.winner.key === playerKey;
+    const playerStats = isWinner ? match.stats?.winner : match.stats?.loser;
+    const opponentStats = isWinner ? match.stats?.loser : match.stats?.winner;
     return {
       id: match.id,
       dateIso: match.dateIso,
@@ -699,6 +723,19 @@ export class DataService {
       playerRankPoints: isWinner ? match.winner.rankPoints : match.loser.rankPoints,
       score: match.score,
       minutes: match.minutes,
+      aces: playerStats?.ace ?? null,
+      doubleFaults: playerStats?.df ?? null,
+      servicePoints: playerStats?.svpt ?? null,
+      firstIn: playerStats?.firstIn ?? null,
+      firstWon: playerStats?.firstWon ?? null,
+      secondWon: playerStats?.secondWon ?? null,
+      breakPointsSaved: playerStats?.bpSaved ?? null,
+      breakPointsFaced: playerStats?.bpFaced ?? null,
+      opponentServicePoints: opponentStats?.svpt ?? null,
+      opponentFirstWon: opponentStats?.firstWon ?? null,
+      opponentSecondWon: opponentStats?.secondWon ?? null,
+      opponentBreakPointsSaved: opponentStats?.bpSaved ?? null,
+      opponentBreakPointsFaced: opponentStats?.bpFaced ?? null,
     };
   }
 
