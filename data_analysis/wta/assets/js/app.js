@@ -174,6 +174,110 @@ function renderEmptyTable(container, text) {
   container.innerHTML = `<div class="empty-placeholder">${escapeHtml(text)}</div>`;
 }
 
+function getPlayerImageCandidates(player) {
+  if (Array.isArray(player?.imageCandidates) && player.imageCandidates.length) {
+    return player.imageCandidates.filter((src) => String(src || '').trim());
+  }
+  if (String(player?.image || '').trim()) return [String(player.image).trim()];
+  return [];
+}
+
+function renderAvatarImage(
+  player,
+  {
+    className = 'avatar-xs',
+    alt = '',
+    inactive = false,
+    zoomable = true,
+    withActiveRing = true,
+  } = {},
+) {
+  const sources = getPlayerImageCandidates(player);
+  if (!sources.length) return '';
+
+  const classList = [className];
+  if (withActiveRing && !inactive) classList.push('active-player-ring');
+  if (zoomable) classList.push('js-avatar-zoom');
+
+  const encodedSources = encodeURIComponent(JSON.stringify(sources));
+  return `<img class="${classList.join(' ')}" src="${escapeHtml(sources[0])}" alt="${escapeHtml(alt || player?.name || 'Player')}" loading="lazy" data-fallback-sources="${escapeHtml(encodedSources)}" data-fallback-index="0" data-player-active="${inactive ? '0' : '1'}">`;
+}
+
+function ensureImageViewer() {
+  if (dom.imageViewer) return;
+  const shell = document.createElement('div');
+  shell.className = 'image-viewer-shell';
+  shell.setAttribute('aria-hidden', 'true');
+  shell.innerHTML = `
+    <div class="image-viewer-backdrop" data-image-viewer-close></div>
+    <div class="image-viewer-stage" role="dialog" aria-modal="true" aria-label="Player image preview">
+      <button class="image-viewer-close" type="button" aria-label="Close image preview" data-image-viewer-close>&times;</button>
+      <img class="image-viewer-img" src="" alt="Player image">
+      <div class="image-viewer-caption"></div>
+    </div>
+  `;
+  document.body.appendChild(shell);
+  dom.imageViewer = shell;
+  dom.imageViewerImg = shell.querySelector('.image-viewer-img');
+  dom.imageViewerCaption = shell.querySelector('.image-viewer-caption');
+}
+
+function openImageViewerFromElement(imageEl) {
+  const src = String(imageEl?.currentSrc || imageEl?.getAttribute('src') || '').trim();
+  if (!src) return;
+  ensureImageViewer();
+  if (!dom.imageViewer || !dom.imageViewerImg) return;
+
+  dom.imageViewerImg.src = src;
+  dom.imageViewerImg.alt = imageEl.alt || 'Player image';
+  if (dom.imageViewerCaption) {
+    dom.imageViewerCaption.textContent = imageEl.alt || '';
+  }
+
+  const isActive = imageEl.dataset.playerActive === '1';
+  dom.imageViewerImg.classList.toggle('active-player-ring', isActive);
+  dom.imageViewer.classList.add('open');
+  dom.imageViewer.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+}
+
+function closeImageViewer() {
+  if (!dom.imageViewer?.classList.contains('open')) return;
+  dom.imageViewer.classList.remove('open');
+  dom.imageViewer.setAttribute('aria-hidden', 'true');
+  if (dom.imageViewerImg) {
+    dom.imageViewerImg.src = '';
+  }
+  if (!dom.tournamentModal?.classList.contains('open')) {
+    document.body.classList.remove('modal-open');
+  }
+}
+
+function handleAvatarImageError(imageEl) {
+  const raw = String(imageEl?.dataset?.fallbackSources || '');
+  if (!raw) return;
+
+  let sources = [];
+  try {
+    const parsed = JSON.parse(decodeURIComponent(raw));
+    if (Array.isArray(parsed)) sources = parsed.filter((src) => String(src || '').trim());
+  } catch (error) {
+    return;
+  }
+  if (!sources.length) return;
+
+  const currentIndex = Number.parseInt(imageEl.dataset.fallbackIndex || '0', 10);
+  const index = Number.isFinite(currentIndex) ? currentIndex : 0;
+  const nextIndex = index + 1;
+  if (nextIndex >= sources.length) {
+    imageEl.removeAttribute('data-fallback-sources');
+    return;
+  }
+
+  imageEl.dataset.fallbackIndex = String(nextIndex);
+  imageEl.src = sources[nextIndex];
+}
+
 function renderPlayerHero() {
   const player = service.getPlayerByKey(state.activePlayerKey);
   if (!player) {
@@ -181,24 +285,36 @@ function renderPlayerHero() {
     return;
   }
 
+  const latestDatasetYear = getDatasetLatestYear();
+  const inactive = isLikelyInactivePlayer(player, latestDatasetYear);
   const rankText = Number.isFinite(player.currentRank) ? `Current Rank #${player.currentRank}` : 'Rank data unavailable';
   const bestRankText = Number.isFinite(player.bestRank) ? `Best Rank #${player.bestRank}` : 'Best rank unavailable';
+  const statusBadge = inactive ? '<span class="status-badge inactive">Inactive</span>' : '';
+  const heroImage = renderAvatarImage(player, {
+    className: 'player-avatar',
+    alt: player.name,
+    inactive,
+  });
+  const metaParts = [
+    !inactive ? `<span>${escapeHtml(rankText)}</span>` : '',
+    `<span>${escapeHtml(bestRankText)}</span>`,
+    `<span>${formatNumber(player.matches)} matches</span>`,
+    player.profileUrl
+      ? `<a href="${escapeHtml(player.profileUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(TOUR_NAME)} Profile</a>`
+      : '',
+  ].filter(Boolean);
 
   dom.playerHero.innerHTML = `
     <div class="player-hero-head">
-      <img class="player-avatar" src="${escapeHtml(player.image)}" alt="${escapeHtml(player.name)}" loading="lazy">
+      ${heroImage}
       <div>
         <div class="player-name-line">
           ${getFlagHtml(player.countryCode)}
           <h3>${escapeHtml(player.name)}</h3>
+          ${statusBadge}
         </div>
         <div class="player-meta-line">
-          <span>${rankText}</span>
-          <span>•</span>
-          <span>${bestRankText}</span>
-          <span>•</span>
-          <span>${formatNumber(player.matches)} matches</span>
-          ${player.profileUrl ? `<span>•</span><a href="${escapeHtml(player.profileUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(TOUR_NAME)} Profile</a>` : ''}
+          ${metaParts.join('<span>&bull;</span>')}
         </div>
       </div>
     </div>
@@ -336,9 +452,15 @@ function renderPlayerMatches() {
   }
 
   const shown = rows.slice(0, 350);
+  const latestDatasetYear = getDatasetLatestYear();
   const tableRows = shown.map((row) => {
     const opponent = service.getPlayerByKey(row.opponentKey);
-    const opponentImg = opponent?.image || '';
+    const opponentInactive = isLikelyInactivePlayer(opponent, latestDatasetYear);
+    const opponentAvatar = renderAvatarImage(opponent, {
+      className: 'avatar-xs',
+      alt: row.opponentName,
+      inactive: opponentInactive,
+    });
 
     return `
       <tr>
@@ -350,7 +472,7 @@ function renderPlayerMatches() {
         <td><span class="result-pill ${row.result}">${row.result}</span></td>
         <td>
           <span class="person-main">
-            ${opponentImg ? `<img class="avatar-xs" src="${escapeHtml(opponentImg)}" alt="${escapeHtml(row.opponentName)}" loading="lazy">` : ''}
+            ${opponentAvatar}
             ${getFlagHtml(row.opponentCountryCode)}
             <span class="name">${escapeHtml(row.opponentName)}</span>
           </span>
@@ -399,15 +521,21 @@ function renderPlayerRivalries() {
     return;
   }
 
+  const latestDatasetYear = getDatasetLatestYear();
   const rows = rivalries.map((r) => {
     const rival = service.getPlayerByKey(r.key);
-    const rivalImg = rival?.image || '';
+    const rivalInactive = isLikelyInactivePlayer(rival, latestDatasetYear);
+    const rivalAvatar = renderAvatarImage(rival, {
+      className: 'avatar-xs',
+      alt: r.name,
+      inactive: rivalInactive,
+    });
 
     return `
       <tr>
         <td>
           <span class="person-main">
-            ${rivalImg ? `<img class="avatar-xs" src="${escapeHtml(rivalImg)}" alt="${escapeHtml(r.name)}" loading="lazy">` : ''}
+            ${rivalAvatar}
             ${getFlagHtml(r.countryCode)}
             <span class="name">${escapeHtml(r.name)}</span>
           </span>
@@ -1539,6 +1667,10 @@ function renderRankingInsightCharts() {
 
 
 function renderPlayerRanking() {
+  const player = service.getPlayerByKey(state.activePlayerKey);
+  const latestDatasetYear = getDatasetLatestYear();
+  const inactive = isLikelyInactivePlayer(player, latestDatasetYear);
+  const lastYear = getYearFromDateSort(player?.lastDateSort);
   const timeline = service.getPlayerRankingTimeline(state.activePlayerKey);
   if (!timeline || !timeline.points.length) {
     renderEmptyTable(dom.rankingSummaryTiles, 'Ranking timeline is unavailable for this player.');
@@ -1584,8 +1716,19 @@ function renderPlayerRanking() {
   }, null);
 
   const currentPoints = Number.isFinite(current?.rankPoints) ? current.rankPoints : null;
+  const leadSummaryTile = inactive
+    ? {
+      label: 'Status',
+      value: 'Inactive',
+      note: Number.isFinite(lastYear) ? `Last active ${lastYear}` : 'No recent ranking updates',
+    }
+    : {
+      label: '📌 Current Rank',
+      value: current ? `#${current.rank}` : '-',
+      note: current ? formatDate(current.dateIso) : '-',
+    };
   const summaryTiles = [
-    { label: '📌 Current Rank', value: current ? `#${current.rank}` : '-', note: current ? formatDate(current.dateIso) : '-' },
+    leadSummaryTile,
     { label: '💠 Current Points', value: Number.isFinite(currentPoints) ? formatNumber(currentPoints) : '-', note: current ? cappedText(current.tournament || '-', 24) : '-' },
     { label: '🚀 Best Rank', value: best ? `#${best.rank}` : '-', note: best ? `${formatDate(best.dateIso)} • ${best.tournament}` : '-' },
     { label: '🧭 Worst Rank', value: worst ? `#${worst.rank}` : '-', note: worst ? `${formatDate(worst.dateIso)} • ${worst.tournament}` : '-' },
@@ -1832,6 +1975,7 @@ function syncTournamentDetailVisibility() {
 function renderTournamentTable() {
   const rows = service.getTournamentRows(state.tournamentFilters);
   const showTopChampionColumn = !!state.tournamentDetailCollapsed;
+  const latestDatasetYear = getDatasetLatestYear();
   syncTournamentDetailVisibility();
   if (!rows.length) {
     renderEmptyTable(dom.tournamentTable, 'No tournaments match these filters.');
@@ -1845,8 +1989,17 @@ function renderTournamentTable() {
 
   const body = rows.slice(0, 260).map((row) => {
     const champion = row.topChampion;
+    const championPlayer = champion?.key ? service.getPlayerByKey(champion.key) : null;
+    const championInactive = isLikelyInactivePlayer(championPlayer, latestDatasetYear);
+    const championAvatar = championPlayer
+      ? renderAvatarImage(championPlayer, {
+        className: 'avatar-xs',
+        alt: champion.name,
+        inactive: championInactive,
+      })
+      : '';
     const championCell = champion
-      ? `${getFlagHtml(champion.countryCode)} ${escapeHtml(champion.name)} (${champion.count})`
+      ? `<span class="person-main">${championAvatar}${getFlagHtml(champion.countryCode)} <span class="name">${escapeHtml(champion.name)}</span> (${champion.count})</span>`
       : '-';
     return `
       <tr class="clickable-row ${row.key === state.selectedTournamentKey ? 'active' : ''}" data-tournament-key="${escapeHtml(row.key)}">
@@ -1890,24 +2043,56 @@ function renderTournamentDetail() {
     return;
   }
 
-  const championRows = detail.topChampions.slice(0, 8).map((row) => `
-    <div class="person-row">
-      <span class="person-main">${getFlagHtml(row.countryCode)} <span class="name">${escapeHtml(row.name)}</span></span>
-      <strong>${row.count}</strong>
-    </div>
-  `).join('');
-
-  const finalRows = detail.finals.slice(0, 10).map((row) => `
-    <div class="final-row">
-      <div class="final-main">
-        <span class="small-note">${escapeHtml(formatDate(row.dateIso))}</span>
-        <span>${getFlagHtml(row.winnerCountryCode)} <span class="name">${escapeHtml(row.winnerName)}</span></span>
-        <span class="small-note">def.</span>
-        <span>${getFlagHtml(row.loserCountryCode)} <span class="name">${escapeHtml(row.loserName)}</span></span>
+  const latestDatasetYear = getDatasetLatestYear();
+  const championRows = detail.topChampions.slice(0, 8).map((row) => {
+    const championPlayer = row.key ? service.getPlayerByKey(row.key) : null;
+    const championInactive = isLikelyInactivePlayer(championPlayer, latestDatasetYear);
+    const championAvatar = championPlayer
+      ? renderAvatarImage(championPlayer, {
+        className: 'avatar-xs',
+        alt: row.name,
+        inactive: championInactive,
+      })
+      : '';
+    return `
+      <div class="person-row">
+        <span class="person-main">
+          ${championAvatar}
+          ${getFlagHtml(row.countryCode)}
+          <span class="name">${escapeHtml(row.name)}</span>
+        </span>
+        <strong>${row.count}</strong>
       </div>
-      <strong>${escapeHtml(row.score || '-')}</strong>
-    </div>
-  `).join('');
+    `;
+  }).join('');
+
+  const finalRows = detail.finals.slice(0, 10).map((row) => {
+    const winner = row.winnerKey ? service.getPlayerByKey(row.winnerKey) : null;
+    const loser = row.loserKey ? service.getPlayerByKey(row.loserKey) : null;
+    const winnerInactive = isLikelyInactivePlayer(winner, latestDatasetYear);
+    const loserInactive = isLikelyInactivePlayer(loser, latestDatasetYear);
+    const winnerAvatar = renderAvatarImage(winner, {
+      className: 'avatar-xs',
+      alt: row.winnerName,
+      inactive: winnerInactive,
+    });
+    const loserAvatar = renderAvatarImage(loser, {
+      className: 'avatar-xs',
+      alt: row.loserName,
+      inactive: loserInactive,
+    });
+    return `
+      <div class="final-row">
+        <div class="final-main">
+          <span class="small-note">${escapeHtml(formatDate(row.dateIso))}</span>
+          <span>${winnerAvatar}${getFlagHtml(row.winnerCountryCode)} <span class="name">${escapeHtml(row.winnerName)}</span></span>
+          <span class="small-note">def.</span>
+          <span>${loserAvatar}${getFlagHtml(row.loserCountryCode)} <span class="name">${escapeHtml(row.loserName)}</span></span>
+        </div>
+        <strong>${escapeHtml(row.score || '-')}</strong>
+      </div>
+    `;
+  }).join('');
 
   dom.tournamentDetail.innerHTML = `
     <div class="detail-title">
@@ -1960,16 +2145,22 @@ function renderTournamentPlayerCell(playerKey, fallbackName, fallbackCountryCode
   const player = playerKey ? service.getPlayerByKey(playerKey) : null;
   const name = player?.name || fallbackName || 'Unknown player';
   const countryCode = player?.countryCode || fallbackCountryCode || '';
-  const image = player?.image || '';
   const inactive = isLikelyInactivePlayer(player, latestDatasetYear);
   const lastYear = getYearFromDateSort(player?.lastDateSort);
   const inactiveHint = inactive && Number.isFinite(lastYear) ? `Last active ${lastYear}` : '';
+  const avatarImage = player
+    ? renderAvatarImage(player, {
+      className: 'modal-avatar',
+      alt: name,
+      inactive,
+      withActiveRing: false,
+    })
+    : '';
 
   return `
     <span class="modal-player-cell">
-      <span class="modal-avatar-wrap ${inactive ? 'inactive' : ''}">
-        ${image ? `<img class="modal-avatar" src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy">` : '<span class="modal-avatar placeholder">?</span>'}
-        ${inactive ? '<span class="inactive-watermark">INACTIVE</span>' : ''}
+      <span class="modal-avatar-wrap ${inactive ? 'inactive' : 'active-player-ring'}">
+        ${avatarImage || '<span class="modal-avatar placeholder">?</span>'}
       </span>
       <span class="modal-player-meta">
         <span class="name-line">${getFlagHtml(countryCode)} <span class="name">${escapeHtml(name)}</span></span>
@@ -2058,14 +2249,25 @@ function closeTournamentModal() {
   if (!dom.tournamentModal) return;
   dom.tournamentModal.classList.remove('open');
   dom.tournamentModal.setAttribute('aria-hidden', 'true');
-  document.body.classList.remove('modal-open');
+  if (!dom.imageViewer?.classList.contains('open')) {
+    document.body.classList.remove('modal-open');
+  }
 }
 
 function renderHolderPills(holders) {
   if (!Array.isArray(holders) || holders.length === 0) return '-';
-  return `<div class="holders">${holders.slice(0, 4).map((h) => `
-    <span class="holder-pill">${getFlagHtml(h.countryCode)} <span class="name">${escapeHtml(h.name)}</span></span>
-  `).join('')}</div>`;
+  const latestDatasetYear = getDatasetLatestYear();
+  const holderPills = holders.slice(0, 4).map((h) => {
+    const holderPlayer = h?.key ? service.getPlayerByKey(h.key) : h;
+    const holderInactive = isLikelyInactivePlayer(holderPlayer, latestDatasetYear);
+    const holderAvatar = renderAvatarImage(holderPlayer, {
+      className: 'avatar-xs',
+      alt: h.name,
+      inactive: holderInactive,
+    });
+    return `<span class="holder-pill">${holderAvatar}${getFlagHtml(h.countryCode)} <span class="name">${escapeHtml(h.name)}</span></span>`;
+  }).join('');
+  return `<div class="holders">${holderPills}</div>`;
 }
 
 function getRecordKey(row) {
@@ -2170,13 +2372,21 @@ function buildRecordMetrics(row, holder) {
 
 function renderRecordDetail(row) {
   if (!Array.isArray(row?.holders) || row.holders.length === 0) return '';
+  const latestDatasetYear = getDatasetLatestYear();
 
   const detailRows = row.holders.map((holder) => {
     const metrics = buildRecordMetrics(row, holder);
     if (!metrics.length) return '';
+    const holderPlayer = holder?.key ? service.getPlayerByKey(holder.key) : holder;
+    const holderInactive = isLikelyInactivePlayer(holderPlayer, latestDatasetYear);
+    const holderAvatar = renderAvatarImage(holderPlayer, {
+      className: 'avatar-xs',
+      alt: holder.name || 'Unknown',
+      inactive: holderInactive,
+    });
     return `
       <div class="record-holder-detail">
-        <div class="record-holder-name">${getFlagHtml(holder.countryCode)} <span class="name">${escapeHtml(holder.name || 'Unknown')}</span></div>
+        <div class="record-holder-name">${holderAvatar}${getFlagHtml(holder.countryCode)} <span class="name">${escapeHtml(holder.name || 'Unknown')}</span></div>
         <div class="record-metrics">
           ${metrics.map((metric) => `<span class="record-metric-pill">${escapeHtml(metric)}</span>`).join('')}
         </div>
@@ -2304,6 +2514,7 @@ function renderSuggestions(queryText) {
   if (!state.loaded) return;
   const query = String(queryText || '').trim();
   const options = service.getPlayerOptions(query, APP_CONFIG.defaultPlayerSearchLimit);
+  const latestDatasetYear = getDatasetLatestYear();
 
   if (!options.length) {
     dom.playerSuggestions.classList.remove('open');
@@ -2311,16 +2522,27 @@ function renderSuggestions(queryText) {
     return;
   }
 
-  dom.playerSuggestions.innerHTML = options.map((player) => `
+  dom.playerSuggestions.innerHTML = options.map((player) => {
+    const inactive = isLikelyInactivePlayer(player, latestDatasetYear);
+    const rankCell = inactive
+      ? '<span class="status-badge inactive compact">Inactive</span>'
+      : `#${Number.isFinite(player.currentRank) ? player.currentRank : '-'}`;
+    const avatar = renderAvatarImage(player, {
+      className: 'avatar-sm',
+      alt: player.name,
+      inactive,
+    });
+    return `
     <div class="suggestion-item" data-player-key="${escapeHtml(player.key)}">
-      <img class="avatar-sm" src="${escapeHtml(player.image)}" alt="${escapeHtml(player.name)}" loading="lazy">
+      ${avatar}
       <div>
         <div class="name">${escapeHtml(player.name)}</div>
         <div class="meta">${getFlagHtml(player.countryCode)} ${formatNumber(player.matches)} matches • ${formatPercent(player.winPct)}</div>
       </div>
-      <div class="meta">#${Number.isFinite(player.currentRank) ? player.currentRank : '-'}</div>
+      <div class="meta">${rankCell}</div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   dom.playerSuggestions.classList.add('open');
 }
@@ -2419,6 +2641,32 @@ async function loadDataset() {
 }
 
 function bindEvents() {
+  document.addEventListener('error', (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLImageElement)) return;
+    if (!target.dataset.fallbackSources) return;
+    handleAvatarImageError(target);
+  }, true);
+
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const image = target.closest('img.js-avatar-zoom');
+    if (!image) return;
+    event.preventDefault();
+    event.stopPropagation();
+    openImageViewerFromElement(image);
+  }, true);
+
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    if (!dom.imageViewer?.classList.contains('open')) return;
+    if (target.closest('[data-image-viewer-close]')) {
+      closeImageViewer();
+    }
+  });
+
   dom.mainTabs.addEventListener('click', (event) => {
     const btn = event.target.closest('.tab-btn');
     if (!btn) return;
@@ -2461,7 +2709,9 @@ function bindEvents() {
   });
 
   document.addEventListener('click', (event) => {
-    if (!event.target.closest('.player-search-wrap')) {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    if (!target.closest('.player-search-wrap')) {
       dom.playerSuggestions.classList.remove('open');
     }
   });
@@ -2586,7 +2836,12 @@ function bindEvents() {
   });
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && dom.tournamentModal?.classList.contains('open')) {
+    if (event.key !== 'Escape') return;
+    if (dom.imageViewer?.classList.contains('open')) {
+      closeImageViewer();
+      return;
+    }
+    if (dom.tournamentModal?.classList.contains('open')) {
       closeTournamentModal();
     }
   });
@@ -2597,6 +2852,7 @@ function bindEvents() {
 }
 
 function init() {
+  ensureImageViewer();
   bindEvents();
   if (dom.rankingSeriesFilter) {
     dom.rankingSeriesFilter.value = state.rankingFilters.series;

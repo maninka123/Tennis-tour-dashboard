@@ -167,17 +167,58 @@ export function initialsSvgDataUri(name) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
-export function resolvePlayerImage(playerMeta, playerName) {
-  if (playerMeta?.image_path) return playerMeta.image_path;
-  if (playerName && TOP_PLAYER_IMAGE_MAP[playerName]) return TOP_PLAYER_IMAGE_MAP[playerName];
+function slugifyName(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function pushUnique(target, source) {
+  const value = String(source || '').trim();
+  if (!value) return;
+  if (!target.includes(value)) target.push(value);
+}
+
+function analysisImageFallbackCandidates(playerName) {
+  const slug = slugifyName(playerName);
+  if (!slug) return [];
+  const base = `../images/wta/${slug}`;
+  return [`${base}.jpg`, `${base}.jpeg`, `${base}.png`, `${base}.webp`];
+}
+
+function mainDataImageCandidates(playerMeta) {
+  const folder = String(playerMeta?.folder || '').trim();
+  if (!folder) return [];
+  const base = `../../data/wta/${folder}/image`;
+  return [`${base}.jpg`, `${base}.jpeg`, `${base}.png`, `${base}.webp`];
+}
+
+export function resolvePlayerImageCandidates(playerMeta, playerName) {
+  const candidates = [];
+  if (playerMeta?.image_path) pushUnique(candidates, playerMeta.image_path);
+  for (const localMainPath of mainDataImageCandidates(playerMeta)) {
+    pushUnique(candidates, localMainPath);
+  }
+  for (const fallbackPath of analysisImageFallbackCandidates(playerName)) {
+    pushUnique(candidates, fallbackPath);
+  }
+  if (playerName && TOP_PLAYER_IMAGE_MAP[playerName]) pushUnique(candidates, TOP_PLAYER_IMAGE_MAP[playerName]);
 
   const rawRemote = String(playerMeta?.image_url || '').trim();
   if (rawRemote) {
-    if (/^http:\/\//i.test(rawRemote)) return rawRemote.replace(/^http:\/\//i, 'https://');
-    if (/^https:\/\//i.test(rawRemote)) return rawRemote;
+    if (/^http:\/\//i.test(rawRemote)) pushUnique(candidates, rawRemote.replace(/^http:\/\//i, 'https://'));
+    if (/^https:\/\//i.test(rawRemote)) pushUnique(candidates, rawRemote);
   }
 
-  return initialsSvgDataUri(playerName);
+  pushUnique(candidates, initialsSvgDataUri(playerName));
+  return candidates;
+}
+
+export function resolvePlayerImage(playerMeta, playerName) {
+  return resolvePlayerImageCandidates(playerMeta, playerName)[0] || initialsSvgDataUri(playerName);
 }
 
 export function compareByDateDesc(a, b) {
