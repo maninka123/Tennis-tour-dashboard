@@ -1293,16 +1293,34 @@ class TennisDataFetcher:
         if not script_path:
             raise RuntimeError(f"Script not found. Tried: {', '.join(str(p) for p in script_candidates)}")
 
-        result = subprocess.run(
-            [sys.executable, str(script_path), "--out", str(csv_path)],
-            capture_output=True,
-            text=True,
-            timeout=240
-        )
+        try:
+            result = subprocess.run(
+                [sys.executable, str(script_path), "--out", str(csv_path)],
+                capture_output=True,
+                text=True,
+                timeout=240
+            )
+        except Exception as exc:
+            # Keep the app usable when refresh tooling/network is flaky.
+            status = self.get_atp_stats_status()
+            if status.get('exists'):
+                status['archived_path'] = archived_path
+                status['used_cached_file'] = True
+                status['warning'] = f"ATP stats refresh failed; using existing CSV. {exc}"
+                return status
+            raise RuntimeError(str(exc))
+
         if result.returncode != 0:
             stderr = (result.stderr or '').strip()
             stdout = (result.stdout or '').strip()
             message = stderr or stdout or "Failed to refresh ATP stats CSV."
+            status = self.get_atp_stats_status()
+            if status.get('exists'):
+                status['archived_path'] = archived_path
+                status['stdout'] = stdout
+                status['used_cached_file'] = True
+                status['warning'] = message
+                return status
             raise RuntimeError(message)
 
         self.invalidate_atp_stats_cache()
