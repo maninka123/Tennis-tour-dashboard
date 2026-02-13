@@ -499,6 +499,10 @@ select:focus {
   overflow: hidden;
 }
 
+.analytics-card-wide {
+  grid-column: 1 / -1;
+}
+
 .analytics-card-head h5 {
   margin: 0;
   font-family: 'Space Grotesk', sans-serif;
@@ -512,11 +516,83 @@ select:focus {
   font-size: 0.8rem;
 }
 
+.analytics-card-detail {
+  margin: 0.16rem 0 0;
+  color: #6f7f93;
+  font-size: 0.76rem;
+}
+
+.dna-card-detail {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.dna-rank-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.14rem 0.5rem;
+  background: rgba(15, 118, 110, 0.15);
+  color: #0f6460;
+  font-weight: 700;
+}
+
+.dna-meta-sep {
+  color: #8ba0b7;
+  font-weight: 700;
+}
+
+.dna-meta-duration {
+  color: #5a6f85;
+  font-weight: 600;
+}
+
+.dna-nav-group {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24rem;
+}
+
+.dna-nav-btn {
+  width: 1.45rem;
+  height: 1.45rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid #c5d5e8;
+  background: #f3f8ff;
+  color: #264c73;
+  font-weight: 700;
+  font-size: calc(1rem + 2pt);
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dna-nav-btn:hover:not(:disabled) {
+  background: #e8f2ff;
+  border-color: #9fbde0;
+}
+
+.dna-nav-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
 .insight-plot {
   width: 100%;
-  min-height: 406px;
+  min-height: 456px;
   min-width: 0;
   overflow: hidden;
+}
+
+.insight-plot-wide {
+  min-height: 520px;
 }
 
 .insight-plot .js-plotly-plot,
@@ -524,6 +600,21 @@ select:focus {
 .insight-plot .svg-container {
   width: 100% !important;
   max-width: 100% !important;
+}
+
+.insight-note {
+  margin: 0.08rem 0 0.05rem;
+  color: #4e6075;
+  font-size: 0.77rem;
+  line-height: 1.45;
+}
+
+.insight-note strong {
+  color: #1f334a;
+}
+
+.insight-note-line {
+  display: block;
 }
 
 #playerMatchesInsights,
@@ -1295,7 +1386,15 @@ select:focus {
   }
 
   .insight-plot {
-    min-height: 370px;
+    min-height: 410px;
+  }
+
+  .insight-plot-wide {
+    min-height: 450px;
+  }
+
+  .dna-nav-group {
+    margin-left: 0;
   }
 
   .data-table {
