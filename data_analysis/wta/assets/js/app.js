@@ -46,6 +46,8 @@ const state = {
   recordCategory: 'all',
   selectedRecordKey: '',
   styleClusterModel: null,
+  dnaTournamentKey: '',
+  dnaTournamentPlayerKey: '',
 };
 
 const dom = {
@@ -410,7 +412,7 @@ function renderPlayerOverview() {
         ${createAnalyticsCard('Elo Trajectory', 'Overall and surface-sensitive Elo movement', 'overviewEloTrajectoryChart')}
         ${createAnalyticsCard('Tournament DNA', 'Player context for tournament volatility and identity', 'overviewTournamentDNAChart')}
         ${createAnalyticsCard('Calendar Heatmap', 'Month-by-month win-rate trend by year', 'overviewCalendarHeatmapChart')}
-        ${createAnalyticsCard('Style Clustering (PCA)', 'Peer-group style map from serve/return profile', 'overviewStyleClusterChart')}
+        ${createAnalyticsCard('Serve-Return Archetype Map', 'Interpretable peer map with style quadrants and cluster context', 'overviewStyleClusterChart', 'analytics-card-wide', 'insight-plot-wide')}
       </div>
     </section>
   `;
@@ -671,15 +673,9 @@ function renderChartPlaceholder(container, text) {
   container.innerHTML = `<div class="empty-placeholder">${escapeHtml(text)}</div>`;
 }
 
-function analyticsBaseLayout(title, subtitle = '') {
+function analyticsBaseLayout() {
   return {
-    title: {
-      text: subtitle ? `${title}<br><span style="font-size:12px;color:#6a7c92;">${subtitle}</span>` : title,
-      font: { family: 'Space Grotesk, sans-serif', size: 17, color: '#213246' },
-      x: 0.02,
-      xanchor: 'left',
-    },
-    margin: { l: 62, r: 28, t: 72, b: 58 },
+    margin: { l: 62, r: 28, t: 34, b: 58 },
     paper_bgcolor: '#ffffff',
     plot_bgcolor: '#f8fbff',
     font: { family: 'Manrope, sans-serif', color: '#223141' },
@@ -811,16 +807,101 @@ function runKMeans(points, clusterCount = 5, maxIterations = 24) {
   return { labels, centroids };
 }
 
-function createAnalyticsCard(title, subtitle, plotId) {
+function createAnalyticsCard(title, subtitle, plotId, cardClass = '', plotClass = '') {
+  const articleClass = ['analytics-card', cardClass].filter(Boolean).join(' ');
+  const chartClass = ['insight-plot', plotClass].filter(Boolean).join(' ');
   return `
-    <article class="analytics-card">
+    <article class="${articleClass}">
       <div class="analytics-card-head">
         <h5>${escapeHtml(title)}</h5>
         <p>${escapeHtml(subtitle)}</p>
       </div>
-      <div id="${escapeHtml(plotId)}" class="insight-plot"></div>
+      <div id="${escapeHtml(plotId)}" class="${chartClass}"></div>
     </article>
   `;
+}
+
+function setStyleMapInsightNote(container, html) {
+  const card = container?.closest('.analytics-card');
+  if (!card) return;
+  let note = card.querySelector('.insight-note');
+  const text = String(html || '').trim();
+  if (!text) {
+    if (note) note.remove();
+    return;
+  }
+  if (!note) {
+    note = document.createElement('p');
+    note.className = 'insight-note';
+    card.appendChild(note);
+  }
+  note.innerHTML = text;
+}
+
+function setAnalyticsCardDetail(container, text) {
+  const card = container?.closest('.analytics-card');
+  const head = card?.querySelector('.analytics-card-head');
+  if (!head) return;
+
+  let detail = head.querySelector('.analytics-card-detail');
+  const value = String(text || '').trim();
+  if (!value) {
+    if (detail) detail.remove();
+    return;
+  }
+
+  if (!detail) {
+    detail = document.createElement('p');
+    detail.className = 'analytics-card-detail';
+    head.appendChild(detail);
+  }
+  detail.textContent = value;
+}
+
+function setAnalyticsCardDetailHtml(container, html, extraClass = '') {
+  const card = container?.closest('.analytics-card');
+  const head = card?.querySelector('.analytics-card-head');
+  if (!head) return;
+
+  let detail = head.querySelector('.analytics-card-detail');
+  const value = String(html || '').trim();
+  if (!value) {
+    if (detail) detail.remove();
+    return;
+  }
+
+  if (!detail) {
+    detail = document.createElement('p');
+    head.appendChild(detail);
+  }
+
+  detail.className = ['analytics-card-detail', extraClass].filter(Boolean).join(' ');
+  detail.innerHTML = value;
+}
+
+function getRankedGrandSlamTournaments(player) {
+  if (!player?.tournaments || typeof player.tournaments.values !== 'function') return [];
+  return Array.from(player.tournaments.values())
+    .filter((tournament) => tournament?.category === 'grand-slam' && tournament.matches > 0)
+    .sort((a, b) => b.wins - a.wins || b.matches - a.matches || a.name.localeCompare(b.name))
+    .slice(0, 4);
+}
+
+function shiftTournamentDnaGrandSlam(step = 1) {
+  const overview = service.getPlayerOverview(state.activePlayerKey);
+  const player = overview?.player;
+  if (!player) return;
+
+  const ranking = getRankedGrandSlamTournaments(player);
+  if (ranking.length <= 1) return;
+
+  const currentIndexRaw = ranking.findIndex((row) => row.key === state.dnaTournamentKey);
+  const currentIndex = currentIndexRaw >= 0 ? currentIndexRaw : 0;
+  const nextIndex = (currentIndex + step + ranking.length) % ranking.length;
+
+  state.dnaTournamentKey = ranking[nextIndex].key;
+  state.dnaTournamentPlayerKey = player.key;
+  renderOverviewInsightCharts(player, overview.topTournaments);
 }
 
 function summarizeServeReturn(rows) {
@@ -975,8 +1056,18 @@ function ensureStyleClusterModel() {
   return state.styleClusterModel;
 }
 
+function classifyServeReturnArchetype(serveIndex, returnIndex, serveMean, returnMean) {
+  const serveDelta = serveIndex - serveMean;
+  const returnDelta = returnIndex - returnMean;
+  if (serveDelta >= 0 && returnDelta >= 0) return 'Strong Serve + Return';
+  if (serveDelta >= 0 && returnDelta < 0) return 'Serve-Driven';
+  if (serveDelta < 0 && returnDelta >= 0) return 'Return-Driven';
+  return 'Build Both Areas';
+}
+
 function renderSurfaceStrengthMatrixChart(container, rows) {
   if (!container) return;
+  setAnalyticsCardDetail(container, `${TOUR_LABEL} level x surface win profile`);
   if (!window.Plotly) {
     renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
     return;
@@ -992,6 +1083,8 @@ function renderSurfaceStrengthMatrixChart(container, rows) {
   const z = [];
   const text = [];
   const custom = [];
+  const categoryLabels = categoryKeys.map((key) => getCategoryLabel(key));
+  const surfaceLabels = surfaceKeys.map((key) => getSurfaceLabel(key));
   for (const surface of surfaceKeys) {
     const zRow = [];
     const tRow = [];
@@ -1014,16 +1107,35 @@ function renderSurfaceStrengthMatrixChart(container, rows) {
   }
 
   const layout = {
-    ...analyticsBaseLayout('Surface Strength Matrix', `${TOUR_LABEL} level x surface win profile`),
-    margin: { l: 76, r: 34, t: 78, b: 68 },
-    xaxis: { tickangle: -24, automargin: true },
-    yaxis: { automargin: true },
+    ...analyticsBaseLayout(),
+    margin: { l: 76, r: 34, t: 36, b: 68 },
+    xaxis: {
+      type: 'category',
+      categoryorder: 'array',
+      categoryarray: categoryLabels,
+      tickmode: 'array',
+      tickvals: categoryLabels,
+      ticktext: categoryLabels,
+      tickson: 'boundaries',
+      tickangle: -24,
+      automargin: true,
+    },
+    yaxis: {
+      type: 'category',
+      categoryorder: 'array',
+      categoryarray: surfaceLabels,
+      tickmode: 'array',
+      tickvals: surfaceLabels,
+      ticktext: surfaceLabels,
+      tickson: 'boundaries',
+      automargin: true,
+    },
   };
 
   window.Plotly.react(container, [{
     type: 'heatmap',
-    x: categoryKeys.map((key) => getCategoryLabel(key)),
-    y: surfaceKeys.map((key) => getSurfaceLabel(key)),
+    x: categoryLabels,
+    y: surfaceLabels,
     z,
     text,
     texttemplate: '%{text}',
@@ -1054,13 +1166,16 @@ function renderSurfaceStrengthMatrixChart(container, rows) {
 
 function renderStyleClusteringChart(container, playerRows) {
   if (!container) return;
+  setAnalyticsCardDetail(container, 'Right = stronger serve pressure, up = stronger return control');
   if (!window.Plotly) {
+    setStyleMapInsightNote(container, '');
     renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
     return;
   }
 
   const model = ensureStyleClusterModel();
   if (!model || !Array.isArray(model.points) || !model.points.length) {
+    setStyleMapInsightNote(container, '');
     renderChartPlaceholder(container, 'Not enough serve/return stats to build style clusters.');
     return;
   }
@@ -1099,17 +1214,98 @@ function renderStyleClusteringChart(container, playerRows) {
     }
   }
 
+  const peerXValues = model.points.map((point) => point.aggressiveServeIndex);
+  const peerYValues = model.points.map((point) => point.returnEfficiencyIndex);
+  const allXValues = selectedPoint
+    ? [...peerXValues, selectedPoint.aggressiveServeIndex]
+    : peerXValues.slice();
+  const allYValues = selectedPoint
+    ? [...peerYValues, selectedPoint.returnEfficiencyIndex]
+    : peerYValues.slice();
+  const xMean = peerXValues.reduce((sum, value) => sum + value, 0) / peerXValues.length;
+  const yMean = peerYValues.reduce((sum, value) => sum + value, 0) / peerYValues.length;
+  const xMin = Math.min(...allXValues);
+  const xMax = Math.max(...allXValues);
+  const yMin = Math.min(...allYValues);
+  const yMax = Math.max(...allYValues);
+  const xSpan = Math.max(0.01, xMax - xMin);
+  const ySpan = Math.max(0.01, yMax - yMin);
+  const xPad = Math.max(0.6, xSpan * 0.14);
+  const yPad = Math.max(0.6, ySpan * 0.14);
+  const xRange = [xMin - xPad, xMax + xPad];
+  const yRange = [yMin - yPad, yMax + yPad];
+  const selectedArchetype = classifyServeReturnArchetype(
+    selectedPoint?.aggressiveServeIndex ?? xMean,
+    selectedPoint?.returnEfficiencyIndex ?? yMean,
+    xMean,
+    yMean,
+  );
+
   const layout = {
-    ...analyticsBaseLayout('Style Clustering (PCA)', 'Serve/return profile clusters with player highlight'),
-    margin: { l: 56, r: 22, t: 78, b: 56 },
-    xaxis: { title: 'PC1', gridcolor: '#dce7f3', zeroline: false },
-    yaxis: { title: 'PC2', gridcolor: '#dce7f3', zeroline: false },
+    ...analyticsBaseLayout(),
+    margin: { l: 56, r: 16, t: 78, b: 60 },
+    xaxis: { title: 'Serve Pressure Index', gridcolor: '#dce7f3', zeroline: false, range: xRange },
+    yaxis: { title: 'Return Control Index', gridcolor: '#dce7f3', zeroline: false, range: yRange },
+    shapes: [
+      {
+        type: 'line',
+        x0: xMean,
+        x1: xMean,
+        y0: yRange[0],
+        y1: yRange[1],
+        line: { color: '#41566e', width: 1.4, dash: 'dash' },
+      },
+      {
+        type: 'line',
+        y0: yMean,
+        y1: yMean,
+        x0: xRange[0],
+        x1: xRange[1],
+        line: { color: '#41566e', width: 1.4, dash: 'dash' },
+      },
+    ],
+    annotations: [
+      {
+        x: xRange[0] + ((xRange[1] - xRange[0]) * 0.1),
+        y: yRange[1] - ((yRange[1] - yRange[0]) * 0.08),
+        text: 'Return-Driven',
+        showarrow: false,
+        font: { size: 11, color: '#385a7d' },
+      },
+      {
+        x: xRange[1] - ((xRange[1] - xRange[0]) * 0.1),
+        y: yRange[1] - ((yRange[1] - yRange[0]) * 0.08),
+        text: 'Strong Serve + Return',
+        showarrow: false,
+        xanchor: 'right',
+        font: { size: 11, color: '#2c6a49' },
+      },
+      {
+        x: xRange[0] + ((xRange[1] - xRange[0]) * 0.1),
+        y: yRange[0] + ((yRange[1] - yRange[0]) * 0.08),
+        text: 'Build Both Areas',
+        showarrow: false,
+        yanchor: 'bottom',
+        font: { size: 11, color: '#7a5151' },
+      },
+      {
+        x: xRange[1] - ((xRange[1] - xRange[0]) * 0.1),
+        y: yRange[0] + ((yRange[1] - yRange[0]) * 0.08),
+        text: 'Serve-Driven',
+        showarrow: false,
+        xanchor: 'right',
+        yanchor: 'bottom',
+        font: { size: 11, color: '#7b5b2e' },
+      },
+    ],
     showlegend: true,
     legend: {
       orientation: 'h',
       x: 1,
       xanchor: 'right',
       y: 1.12,
+      yanchor: 'top',
+      font: { size: 11, color: '#24374d' },
       bgcolor: 'rgba(255,255,255,0.86)',
       bordercolor: '#d9e4f0',
       borderwidth: 1,
@@ -1119,9 +1315,9 @@ function renderStyleClusteringChart(container, playerRows) {
   const traces = [{
     type: 'scatter',
     mode: 'markers',
-    name: 'Peer Cluster Space',
-    x: model.points.map((point) => point.pc1),
-    y: model.points.map((point) => point.pc2),
+    name: 'Peers',
+    x: peerXValues,
+    y: peerYValues,
     marker: {
       color: markerColors,
       size: markerSizes,
@@ -1135,6 +1331,7 @@ function renderStyleClusteringChart(container, playerRows) {
       point.winPct,
       point.aggressiveServeIndex,
       point.returnEfficiencyIndex,
+      classifyServeReturnArchetype(point.aggressiveServeIndex, point.returnEfficiencyIndex, xMean, yMean),
     ]),
     hovertemplate:
       '<b>%{customdata[0]}</b><br>' +
@@ -1142,17 +1339,40 @@ function renderStyleClusteringChart(container, playerRows) {
       'Matches: %{customdata[2]}<br>' +
       'Win %: %{customdata[3]:.1f}%<br>' +
       'Aggressive Serve Index: %{customdata[4]:.2f}<br>' +
-      'Return Efficiency Index: %{customdata[5]:.2f}' +
+      'Return Efficiency Index: %{customdata[5]:.2f}<br>' +
+      'Archetype: %{customdata[6]}' +
       '<extra></extra>',
   }];
+
+  traces.push({
+    type: 'scatter',
+    mode: 'markers+text',
+    name: 'Peer Avg',
+    x: [xMean],
+    y: [yMean],
+    text: ['Peer mean'],
+    textposition: 'bottom right',
+    textfont: { size: 11, color: '#31465f', family: 'Space Grotesk, sans-serif' },
+    marker: {
+      symbol: 'x',
+      size: 13,
+      color: '#1e3148',
+      line: { color: '#ffffff', width: 1 },
+    },
+    hovertemplate:
+      '<b>Peer mean</b><br>' +
+      'Serve Pressure Index: %{x:.2f}<br>' +
+      'Return Control Index: %{y:.2f}' +
+      '<extra></extra>',
+  });
 
   if (selectedPoint) {
     traces.push({
       type: 'scatter',
       mode: 'markers+text',
-      name: selectedPoint.name,
-      x: [selectedPoint.pc1],
-      y: [selectedPoint.pc2],
+      name: 'Selected',
+      x: [selectedPoint.aggressiveServeIndex],
+      y: [selectedPoint.returnEfficiencyIndex],
       text: [selectedPoint.name],
       textposition: 'top right',
       textfont: { size: 12, color: '#1f2d40', family: 'Space Grotesk, sans-serif' },
@@ -1167,21 +1387,53 @@ function renderStyleClusteringChart(container, playerRows) {
         `Cluster: ${selectedPoint.cluster + 1}<br>` +
         `Matches: ${formatNumber(selectedPoint.matches)}<br>` +
         `Aggressive Serve Index: ${selectedPoint.aggressiveServeIndex.toFixed(2)}<br>` +
-        `Return Efficiency Index: ${selectedPoint.returnEfficiencyIndex.toFixed(2)}` +
+        `Return Efficiency Index: ${selectedPoint.returnEfficiencyIndex.toFixed(2)}<br>` +
+        `Archetype: ${selectedArchetype}` +
         '<extra></extra>',
     });
   }
 
+  const selectedServeDelta = selectedPoint
+    ? selectedPoint.aggressiveServeIndex - xMean
+    : null;
+  const selectedReturnDelta = selectedPoint
+    ? selectedPoint.returnEfficiencyIndex - yMean
+    : null;
+  const selectedInsight = selectedPoint
+    ? `${escapeHtml(selectedPoint.name)} sits in <strong>${escapeHtml(selectedArchetype)}</strong> (vs peer mean: Serve ${selectedServeDelta >= 0 ? '+' : ''}${selectedServeDelta.toFixed(2)}, Return ${selectedReturnDelta >= 0 ? '+' : ''}${selectedReturnDelta.toFixed(2)}).`
+    : 'Select a player to see zone-specific insight.';
+  const zoneGuide = 'Zone guide: <strong>Strong Serve + Return</strong> (top-right), <strong>Return-Driven</strong> (top-left), <strong>Serve-Driven</strong> (bottom-right), <strong>Build Both Areas</strong> (bottom-left).';
+  setStyleMapInsightNote(
+    container,
+    `<span class="insight-note-line">${selectedInsight}</span><span class="insight-note-line">${zoneGuide}</span>`,
+  );
+
   window.Plotly.react(container, traces, layout, analyticsPlotConfig(`${TOUR_LABEL.toLowerCase()}_style_clustering`));
 }
 
-function renderTournamentDNAChart(container, rows, topTournaments) {
+function renderTournamentDNAChart(container, rows, topTournaments, player = null) {
   if (!container) return;
+  setAnalyticsCardDetailHtml(container, '');
   if (!window.Plotly) {
     renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
     return;
   }
-  const fallbackName = topTournaments?.[0]?.name || rows[0]?.tournament || '';
+
+  const activePlayer = player || service.getPlayerByKey(state.activePlayerKey);
+  const grandSlamRanking = getRankedGrandSlamTournaments(activePlayer);
+  if (activePlayer?.key && state.dnaTournamentPlayerKey !== activePlayer.key) {
+    state.dnaTournamentKey = '';
+    state.dnaTournamentPlayerKey = activePlayer.key;
+  }
+
+  let selectedGrandSlam = null;
+  if (grandSlamRanking.length) {
+    selectedGrandSlam = grandSlamRanking.find((row) => row.key === state.dnaTournamentKey) || grandSlamRanking[0];
+    state.dnaTournamentKey = selectedGrandSlam.key;
+    state.dnaTournamentPlayerKey = activePlayer?.key || '';
+  }
+
+  const fallbackName = selectedGrandSlam?.name || topTournaments?.[0]?.name || rows[0]?.tournament || '';
   if (!fallbackName) {
     renderChartPlaceholder(container, 'No tournament sample available.');
     return;
@@ -1196,35 +1448,80 @@ function renderTournamentDNAChart(container, rows, topTournaments) {
   const wins = targetRows.filter((row) => row.result === 'W').length;
   const playerWinPct = toSafePct(wins, targetRows.length) || 0;
   const tiebreakFreq = toSafePct(targetRows.filter((row) => scoreHasTiebreak(row.score)).length, targetRows.length) || 0;
-  const avgMinutes = targetRows.reduce((sum, row) => sum + (toSafeNumber(row.minutes, 0)), 0) / Math.max(1, targetRows.length);
+  const validTargetMinutes = targetRows
+    .map((row) => toSafeNumber(row.minutes, NaN))
+    .filter((value) => Number.isFinite(value) && value > 0);
+  const avgMinutes = validTargetMinutes.length
+    ? validTargetMinutes.reduce((sum, value) => sum + value, 0) / validTargetMinutes.length
+    : 0;
 
-  const upsetRows = targetRows.filter((row) => isFiniteNumber(row.playerRank) && isFiniteNumber(row.opponentRank) && row.playerRank > 0 && row.opponentRank > 0);
-  const upsetMatches = upsetRows.filter((row) => {
-    const winnerRank = row.result === 'W' ? row.playerRank : row.opponentRank;
-    const loserRank = row.result === 'W' ? row.opponentRank : row.playerRank;
-    return winnerRank > loserRank;
-  }).length;
-  const upsetRate = toSafePct(upsetMatches, upsetRows.length) || 0;
+  const rankKnownRows = targetRows.filter((row) => isFiniteNumber(row.playerRank) && isFiniteNumber(row.opponentRank) && row.playerRank > 0 && row.opponentRank > 0);
+  const favoredRows = rankKnownRows.filter((row) => row.playerRank < row.opponentRank);
+  const upsetLosses = favoredRows.filter((row) => row.result === 'L').length;
+  const upsetLossRate = toSafePct(upsetLosses, favoredRows.length) || 0;
+
+  const bpRows = targetRows.filter((row) => isFiniteNumber(row.breakPointsFaced) && row.breakPointsFaced > 0);
+  const bpSaved = bpRows.reduce((sum, row) => sum + toSafeNumber(row.breakPointsSaved, 0), 0);
+  const bpFaced = bpRows.reduce((sum, row) => sum + toSafeNumber(row.breakPointsFaced, 0), 0);
+  const bpSavePct = toSafePct(bpSaved, bpFaced) || 0;
 
   const searchRows = service.getTournamentRows({ search: fallbackName, category: 'all', surface: 'all', year: 'all' });
   const selectedTournament = searchRows.find((row) => row.name === fallbackName) || searchRows[0] || null;
-  const detail = selectedTournament ? service.getTournamentDetails(selectedTournament.key) : null;
-  const championDiversity = detail?.finals?.length
-    ? toSafePct(new Set(detail.finals.map((row) => row.winnerKey || row.winnerName)).size, detail.finals.length)
-    : null;
 
-  const labels = [`${service.getPlayerByKey(state.activePlayerKey)?.name || 'Player'} Win %`, 'Champion Diversity %', 'Tiebreak Frequency %', 'Upset Rate %'];
-  const values = [playerWinPct, championDiversity ?? 0, tiebreakFreq, upsetRate];
+  const selectedRankIndex = selectedGrandSlam
+    ? grandSlamRanking.findIndex((row) => row.key === selectedGrandSlam.key)
+    : -1;
+  const rankText = selectedRankIndex >= 0
+    ? `${selectedRankIndex === 0 ? 'Best ' : ''}#${selectedRankIndex + 1}/${grandSlamRanking.length}`
+    : '';
+  const surfaceClass = selectedGrandSlam?.surfaceClass || selectedTournament?.surfaceClass || targetRows[0]?.surfaceClass || 'surface-hard';
+
+  const tournamentMinutes = service.matches
+    .filter((match) => match.tournament === fallbackName)
+    .map((match) => toSafeNumber(match.minutes, NaN))
+    .filter((value) => Number.isFinite(value) && value > 0);
+  const tournamentAvgMinutes = tournamentMinutes.length
+    ? tournamentMinutes.reduce((sum, value) => sum + value, 0) / tournamentMinutes.length
+    : avgMinutes;
+  const deltaMinutes = avgMinutes - tournamentAvgMinutes;
+  const deltaClass = deltaMinutes > 0.25 ? 'delta-up' : (deltaMinutes < -0.25 ? 'delta-down' : 'delta-flat');
+  const deltaIcon = deltaMinutes > 0.25 ? '&uarr;' : (deltaMinutes < -0.25 ? '&darr;' : '&rarr;');
+  const deltaText = `${deltaMinutes >= 0 ? '+' : ''}${deltaMinutes.toFixed(1)} min vs tournament avg`;
+
+  const navDisabled = grandSlamRanking.length <= 1;
+  const navButtons = `
+    <span class="dna-nav-group">
+      <button type="button" class="dna-nav-btn" data-dna-nav="prev" aria-label="Previous Grand Slam" ${navDisabled ? 'disabled' : ''}>&lsaquo;</button>
+      <button type="button" class="dna-nav-btn" data-dna-nav="next" aria-label="Next Grand Slam" ${navDisabled ? 'disabled' : ''}>&rsaquo;</button>
+    </span>
+  `;
+  const rankBadge = rankText ? `<span class="dna-rank-pill">${escapeHtml(rankText)}</span>` : '';
+  const tournamentPill = `<span class="surface-pill ${escapeHtml(surfaceClass)}">${escapeHtml(fallbackName)}</span>`;
+  setAnalyticsCardDetailHtml(
+    container,
+    `${rankBadge}${tournamentPill}<span class="dna-meta-sep">&bull;</span><span class="dna-meta-duration">Avg match duration ${avgMinutes.toFixed(1)} min</span><span class="delta-pill ${deltaClass}">${deltaIcon} ${escapeHtml(deltaText)}</span>${navButtons}`,
+    'dna-card-detail',
+  );
+
+  const activePlayerName = service.getPlayerByKey(state.activePlayerKey)?.name || 'Player';
+  const labels = [`${activePlayerName} Win %`, 'Break-Point Save %', 'Tiebreak Match %', 'Upset Loss %'];
+  const values = [playerWinPct, bpSavePct, tiebreakFreq, upsetLossRate];
+  const metricHelp = [
+    `How often ${activePlayerName} wins at ${fallbackName}.`,
+    `How often ${activePlayerName} saves break points at ${fallbackName}.`,
+    `How often ${activePlayerName}'s matches at ${fallbackName} include a tiebreak set.`,
+    `How often ${activePlayerName} loses to a lower-ranked opponent at ${fallbackName}.`,
+  ];
   const custom = [
-    [`${wins}-${targetRows.length - wins}`, targetRows.length],
-    [detail?.topChampions?.length || 0, detail?.finals?.length || 0],
-    [targetRows.filter((row) => scoreHasTiebreak(row.score)).length, targetRows.length],
-    [upsetMatches, upsetRows.length],
+    [`${wins}-${targetRows.length - wins}`, targetRows.length, metricHelp[0]],
+    [`${Math.round(bpSaved)} / ${Math.round(bpFaced)} break points saved`, bpRows.length, metricHelp[1]],
+    [`${targetRows.filter((row) => scoreHasTiebreak(row.score)).length} / ${targetRows.length}`, targetRows.length, metricHelp[2]],
+    [`${upsetLosses} / ${favoredRows.length}`, favoredRows.length, metricHelp[3]],
   ];
 
   const layout = {
-    ...analyticsBaseLayout('Tournament DNA', `${fallbackName} • Avg match duration ${avgMinutes.toFixed(1)} min`),
-    margin: { l: 136, r: 24, t: 78, b: 48 },
+    ...analyticsBaseLayout(),
+    margin: { l: 136, r: 24, t: 36, b: 48 },
     xaxis: { range: [0, 100], title: '%' },
     yaxis: { automargin: true },
   };
@@ -1240,13 +1537,12 @@ function renderTournamentDNAChart(container, rows, topTournaments) {
       line: { color: '#ffffff', width: 0.9 },
     },
     hovertemplate:
-      '<b>%{y}</b><br>' +
-      'Value: %{x:.1f}%<br>' +
-      'Sample: %{customdata[0]} / %{customdata[1]}' +
+      '<b>%{y} → %{x:.1f}%</b><br>' +
+      '<span style="color:#5a2d82;"><i>%{customdata[2]}</i></span><br>' +
+      'Sample: %{customdata[0]}' +
       '<extra></extra>',
   }], layout, analyticsPlotConfig(`${TOUR_LABEL.toLowerCase()}_tournament_dna`));
 }
-
 function resolveOpponentBucket(rank) {
   const n = toSafeNumber(rank, NaN);
   if (!Number.isFinite(n) || n <= 0) return '500+';
@@ -1256,6 +1552,7 @@ function resolveOpponentBucket(rank) {
 
 function renderOpponentQualityChart(container, rows) {
   if (!container) return;
+  setAnalyticsCardDetail(container, 'Win % and sample size by opponent rank bucket');
   if (!window.Plotly) {
     renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
     return;
@@ -1273,8 +1570,8 @@ function renderOpponentQualityChart(container, rows) {
   const matches = x.map((label) => map.get(label)?.matches || 0);
   const winPct = x.map((label) => toSafePct(map.get(label)?.wins || 0, map.get(label)?.matches || 0) || 0);
   const layout = {
-    ...analyticsBaseLayout('Opponent Quality', 'Win % and sample size by opponent rank bucket'),
-    margin: { l: 56, r: 58, t: 76, b: 78 },
+    ...analyticsBaseLayout(),
+    margin: { l: 56, r: 58, t: 34, b: 78 },
     xaxis: { tickangle: -22 },
     yaxis: { range: [0, 100], title: 'Win %', gridcolor: '#dce7f3' },
     yaxis2: { title: 'Matches', overlaying: 'y', side: 'right', showgrid: false, rangemode: 'tozero' },
@@ -1310,6 +1607,7 @@ function renderOpponentQualityChart(container, rows) {
 
 function renderRoundFunnelChart(container, rows) {
   if (!container) return;
+  setAnalyticsCardDetail(container, 'Conversion rates from one round to the next');
   if (!window.Plotly) {
     renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
     return;
@@ -1343,8 +1641,8 @@ function renderRoundFunnelChart(container, rows) {
   custom.push([titles, finalsCount]);
 
   const layout = {
-    ...analyticsBaseLayout('Round Performance Funnel', 'Conversion rates from one round to the next'),
-    margin: { l: 90, r: 24, t: 76, b: 56 },
+    ...analyticsBaseLayout(),
+    margin: { l: 90, r: 24, t: 34, b: 56 },
     xaxis: { range: [0, 100], title: 'Conversion %', gridcolor: '#dce7f3' },
     yaxis: { automargin: true },
   };
@@ -1369,6 +1667,7 @@ function renderRoundFunnelChart(container, rows) {
 
 function renderCalendarHeatmapChart(container, rows) {
   if (!container) return;
+  setAnalyticsCardDetail(container, 'Monthly win-rate trend across seasons');
   if (!window.Plotly) {
     renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
     return;
@@ -1392,6 +1691,7 @@ function renderCalendarHeatmapChart(container, rows) {
   }
 
   const years = [...new Set(points.map((point) => point.year))].sort((a, b) => a - b);
+  const yearLabels = years.map((year) => String(year));
   const months = Array.from({ length: 12 }, (_, idx) => idx + 1);
   const monthLabel = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -1412,16 +1712,37 @@ function renderCalendarHeatmapChart(container, rows) {
   }
 
   const layout = {
-    ...analyticsBaseLayout('Calendar Heatmap', 'Monthly win-rate trend across seasons'),
-    margin: { l: 60, r: 26, t: 76, b: 56 },
-    xaxis: { tickvals: months, ticktext: monthLabel },
-    yaxis: { automargin: true },
+    ...analyticsBaseLayout(),
+    margin: { l: 60, r: 26, t: 34, b: 56 },
+    xaxis: {
+      type: 'category',
+      categoryorder: 'array',
+      categoryarray: monthLabel,
+      tickmode: 'array',
+      tickvals: monthLabel,
+      ticktext: monthLabel,
+      tickson: 'boundaries',
+      showgrid: false,
+      zeroline: false,
+    },
+    yaxis: {
+      type: 'category',
+      automargin: true,
+      categoryorder: 'array',
+      categoryarray: yearLabels,
+      tickmode: 'array',
+      tickvals: yearLabels,
+      ticktext: yearLabels,
+      tickson: 'boundaries',
+      showgrid: false,
+      zeroline: false,
+    },
   };
 
   window.Plotly.react(container, [{
     type: 'heatmap',
-    x: months,
-    y: years,
+    x: monthLabel,
+    y: yearLabels,
     z,
     customdata: custom,
     colorscale: [
@@ -1432,6 +1753,7 @@ function renderCalendarHeatmapChart(container, rows) {
     ],
     zmin: 0,
     zmax: 100,
+    hoverongaps: false,
     xgap: 1,
     ygap: 1,
     hovertemplate:
@@ -1476,6 +1798,7 @@ function computeEloRows(rows, kFactor = 24) {
 
 function renderEloTrajectoryChart(container, rows) {
   if (!container) return;
+  setAnalyticsCardDetail(container, 'Overall + surface Elo over time');
   if (!window.Plotly) {
     renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
     return;
@@ -1488,8 +1811,8 @@ function renderEloTrajectoryChart(container, rows) {
   const eloRows = computeEloRows(rows);
   const x = eloRows.map((row) => row.dateIso);
   const layout = {
-    ...analyticsBaseLayout('Elo-style Rating Trajectory', 'Overall + surface Elo over time'),
-    margin: { l: 62, r: 24, t: 76, b: 56 },
+    ...analyticsBaseLayout(),
+    margin: { l: 62, r: 24, t: 34, b: 56 },
     xaxis: { title: 'Date', gridcolor: '#dce7f3' },
     yaxis: { title: 'Elo', gridcolor: '#dce7f3' },
     legend: { orientation: 'h', x: 1, xanchor: 'right', y: 1.1 },
@@ -1529,6 +1852,7 @@ function renderEloTrajectoryChart(container, rows) {
 
 function renderQuadrantChart(container, rows) {
   if (!container) return;
+  setAnalyticsCardDetail(container, 'Aggressive serve index vs return efficiency by year');
   if (!window.Plotly) {
     renderChartPlaceholder(container, 'Interactive plot requires Plotly.');
     return;
@@ -1566,8 +1890,8 @@ function renderQuadrantChart(container, rows) {
   const yMean = yearly.reduce((sum, row) => sum + row.y, 0) / yearly.length;
 
   const layout = {
-    ...analyticsBaseLayout('Serve vs Return Quadrants', 'Aggressive serve index vs return efficiency by year'),
-    margin: { l: 62, r: 24, t: 76, b: 56 },
+    ...analyticsBaseLayout(),
+    margin: { l: 62, r: 24, t: 34, b: 56 },
     xaxis: { title: 'Aggressive Serve Index', gridcolor: '#dce7f3' },
     yaxis: { title: 'Return Efficiency Index', gridcolor: '#dce7f3' },
     shapes: [
@@ -1626,7 +1950,7 @@ function renderOverviewInsightCharts(player, topTournaments) {
   const styleEl = dom.playerOverview.querySelector('#overviewStyleClusterChart');
   renderSurfaceStrengthMatrixChart(surfaceEl, rows);
   renderEloTrajectoryChart(eloEl, rows);
-  renderTournamentDNAChart(dnaEl, rows, topTournaments);
+  renderTournamentDNAChart(dnaEl, rows, topTournaments, player);
   renderCalendarHeatmapChart(calendarEl, rows);
   renderStyleClusteringChart(styleEl, rows);
   window.requestAnimationFrame(() => {
@@ -2501,6 +2825,8 @@ function resizePlayerSubtabPlots() {
 
 function setActivePlayer(playerKey, updateInput = true) {
   state.activePlayerKey = playerKey;
+  state.dnaTournamentKey = '';
+  state.dnaTournamentPlayerKey = '';
   const player = service.getPlayerByKey(playerKey);
   if (player && updateInput) {
     dom.playerSearch.value = player.name;
@@ -2683,6 +3009,21 @@ function bindEvents() {
     state.playerSubtab = btn.dataset.subtab;
     renderPlayerSubtab();
     resizePlayerSubtabPlots();
+  });
+
+  dom.playerOverview?.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const navButton = target.closest('[data-dna-nav]');
+    if (!navButton) return;
+    const direction = navButton.getAttribute('data-dna-nav');
+    if (direction === 'prev') {
+      shiftTournamentDnaGrandSlam(-1);
+      return;
+    }
+    if (direction === 'next') {
+      shiftTournamentDnaGrandSlam(1);
+    }
   });
 
   dom.playerSearch.addEventListener('input', () => {
