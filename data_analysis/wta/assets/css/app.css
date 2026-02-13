@@ -329,6 +329,20 @@ select:focus {
   height: 24px;
 }
 
+.js-avatar-zoom {
+  cursor: zoom-in;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.js-avatar-zoom:hover {
+  filter: brightness(1.04);
+}
+
+.active-player-ring {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.35);
+}
+
 .player-name-line {
   display: flex;
   align-items: center;
@@ -355,6 +369,32 @@ select:focus {
   color: #3d7cc2;
   text-decoration: none;
   font-weight: 700;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.1rem 0.48rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.status-badge.inactive {
+  background: rgba(127, 140, 141, 0.22);
+  border-color: rgba(127, 140, 141, 0.46);
+  color: #4f5f60;
+}
+
+.status-badge.compact {
+  font-size: 0.64rem;
+  padding: 0.07rem 0.4rem;
 }
 
 .flag-icon {
@@ -839,6 +879,11 @@ select:focus {
   background: #eaf2fb;
 }
 
+.modal-avatar-wrap.active-player-ring {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.35);
+}
+
 .modal-avatar {
   width: 100%;
   height: 100%;
@@ -889,6 +934,85 @@ select:focus {
 
 .modal-player-meta .name {
   white-space: nowrap;
+}
+
+.image-viewer-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 1700;
+  display: none;
+}
+
+.image-viewer-shell.open {
+  display: block;
+}
+
+.image-viewer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 18, 32, 0.6);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.24s ease;
+}
+
+.image-viewer-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(92vw, 560px);
+  transform: translate(-50%, -48%) scale(0.95);
+  opacity: 0;
+  transition: opacity 0.24s ease, transform 0.28s ease;
+  border-radius: 18px;
+  border: 1px solid #cfd9e6;
+  background: linear-gradient(180deg, #ffffff, #f4f8fc);
+  box-shadow: 0 26px 54px rgba(8, 22, 42, 0.28);
+  padding: 0.9rem;
+}
+
+.image-viewer-shell.open .image-viewer-backdrop {
+  opacity: 1;
+}
+
+.image-viewer-shell.open .image-viewer-stage {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.image-viewer-close {
+  position: absolute;
+  right: 0.55rem;
+  top: 0.5rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid #cad5e3;
+  background: #fff;
+  color: #1e2b3b;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.image-viewer-close:hover {
+  background: #edf4fd;
+}
+
+.image-viewer-img {
+  width: 100%;
+  max-height: min(72vh, 620px);
+  object-fit: contain;
+  border-radius: 14px;
+  border: 3px solid #d6e2ef;
+  background: #e9eef5;
+}
+
+.image-viewer-caption {
+  margin-top: 0.5rem;
+  text-align: center;
+  color: #44576e;
+  font-weight: 700;
 }
 
 .detail-title {

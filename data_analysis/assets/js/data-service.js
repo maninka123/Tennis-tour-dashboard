@@ -8,6 +8,7 @@ import {
   normalizeKey,
   parseTourneyDate,
   resolveCountryCode,
+  resolvePlayerImageCandidates,
   resolvePlayerImage,
   roundWeight,
   toInt,
@@ -358,12 +359,14 @@ export class DataService {
 
     const meta = this.playerMetaByName.get(key);
     const resolvedCountry = countryCode || resolveCountryCode(meta?.country);
+    const imageCandidates = resolvePlayerImageCandidates(meta, name);
 
     const player = {
       key,
       name,
       countryCode: resolvedCountry,
-      image: resolvePlayerImage(meta, name),
+      image: imageCandidates[0] || resolvePlayerImage(meta, name),
+      imageCandidates,
       profileUrl: meta?.profile_url || '',
       matches: 0,
       wins: 0,

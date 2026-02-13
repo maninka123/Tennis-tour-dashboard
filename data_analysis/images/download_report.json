@@ -1,0 +1,392 @@
+{
+  "generated_at": "2026-02-13T03:36:07Z",
+  "top_n": 50,
+  "player_source": "csv",
+  "min_appearances": 1,
+  "tour": "atp",
+  "dry_run": true,
+  "items": [
+    {
+      "tour": "atp",
+      "player_source": "csv",
+      "discovered_players": 7537,
+      "selected_players": 50,
+      "queued_missing": 46,
+      "skipped_main_app_images": 4,
+      "skipped_existing_analysis_images": 0,
+      "saved": 2,
+      "skipped": 4,
+      "failed": 44,
+      "results": [
+        {
+          "name": "Jimmy Connors",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Roger Federer",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Rafael Nadal",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Ivan Lendl",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Ilie Nastase",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Guillermo Vilas",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Andre Agassi",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "David Ferrer",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "http_429",
+          "file_path": null,
+          "wikipedia_image_url": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Ferrer_US16_%2821%29_%2829749609722%29.jpg"
+        },
+        {
+          "name": "Stan Smith",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "John McEnroe",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Stefan Edberg",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Arthur Ashe",
+          "tour": "atp",
+          "status": "would_save",
+          "reason": "",
+          "file_path": "data_analysis\\images\\atp\\arthur-ashe.jpg",
+          "wikipedia_image_url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Arthur_Ashe_%28cropped%29.jpg"
+        },
+        {
+          "name": "Brian Gottfried",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Manuel Orantes",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "John Alexander",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "http_429",
+          "file_path": null,
+          "wikipedia_image_url": "https://upload.wikimedia.org/wikipedia/commons/8/80/John_Alexander_cropped.jpg"
+        },
+        {
+          "name": "Richard Gasquet",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Andy Murray",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Fernando Verdasco",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Feliciano Lopez",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "http_429",
+          "file_path": null,
+          "wikipedia_image_url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Lopez_F._RG21_%2810%29_%2851376399843%29.jpg"
+        },
+        {
+          "name": "Pete Sampras",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "http_429",
+          "file_path": null,
+          "wikipedia_image_url": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Pete_Sampras_Champions_Shootout_2.jpg"
+        },
+        {
+          "name": "Tomas Berdych",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Michael Chang",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Jaime Fillol Sr.",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Tom Okker",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Boris Becker",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Goran Ivanisevic",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Harold Solomon",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Mikhail Youzhny",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Yevgeny Kafelnikov",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "http_429",
+          "file_path": null,
+          "wikipedia_image_url": "https://upload.wikimedia.org/wikipedia/commons/6/63/Yevgeny_Kafelnikov_in_2023_-_01_%28cropped%29.jpg"
+        },
+        {
+          "name": "Tommy Haas",
+          "tour": "atp",
+          "status": "would_save",
+          "reason": "",
+          "file_path": "data_analysis\\images\\atp\\tommy-haas.jpg",
+          "wikipedia_image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Haas_Roland_Garros_2009_1.jpg"
+        },
+        {
+          "name": "Fabrice Santoro",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "http_429",
+          "file_path": null,
+          "wikipedia_image_url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Santoro_Roland_Garros_2009_1.jpg"
+        },
+        {
+          "name": "Gilles Simon",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Thomas Muster",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Carlos Moya",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Roscoe Tanner",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "http_429",
+          "file_path": null,
+          "wikipedia_image_url": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Roscoe_Tanner.jpg"
+        },
+        {
+          "name": "Tommy Robredo",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Lleyton Hewitt",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Philipp Kohlschreiber",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Eddie Dibbs",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Tomas Smid",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Wojtek Fibak",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Wayne Ferreira",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Marty Riessen",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "http_429",
+          "file_path": null,
+          "wikipedia_image_url": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Marty_Riessen_1968.jpg"
+        },
+        {
+          "name": "Andy Roddick",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "http_429",
+          "file_path": null,
+          "wikipedia_image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_2012_%28cropped%29.jpg"
+        },
+        {
+          "name": "Fabio Fognini",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        },
+        {
+          "name": "Nikolay Davydenko",
+          "tour": "atp",
+          "status": "failed",
+          "reason": "no_wikipedia_image",
+          "file_path": null,
+          "wikipedia_image_url": null
+        }
+      ]
+    }
+  ]
+}
