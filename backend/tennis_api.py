@@ -3239,7 +3239,13 @@ class TennisDataFetcher:
         )
 
     def _atp_matches_cache_path(self, kind):
-        safe_kind = 'upcoming' if str(kind).lower().strip() == 'upcoming' else 'recent'
+        raw_kind = str(kind).lower().strip()
+        if raw_kind == 'upcoming':
+            safe_kind = 'upcoming'
+        elif raw_kind == 'live':
+            safe_kind = 'live'
+        else:
+            safe_kind = 'recent'
         return Path(__file__).resolve().parent.parent / 'data' / f'atp_{safe_kind}_matches_cache.json'
 
     def _load_atp_matches_cache(self, kind):
@@ -4013,7 +4019,12 @@ class TennisDataFetcher:
         if tour in ('atp', 'both'):
             atp_raw = self._run_atp_matches_script('[Live] atp_live_matches.py')
             if atp_raw is None:
-                print('ATP live: script failed, returning empty')
+                cached = self._load_atp_matches_cache('live')
+                if cached:
+                    print(f"ATP live: script failed, using cached snapshot ({len(cached)} matches)")
+                    live_matches.extend(cached)
+                else:
+                    print('ATP live: script failed, returning empty')
             else:
                 atp_live = []
                 for match in atp_raw:
@@ -4022,6 +4033,13 @@ class TennisDataFetcher:
                     enriched = self._enrich_atp_match(match)
                     if enriched:
                         atp_live.append(enriched)
+                if atp_live:
+                    self._save_atp_matches_cache('live', atp_live)
+                else:
+                    cached = self._load_atp_matches_cache('live')
+                    if cached:
+                        print(f"ATP live: scraper empty, using cached snapshot ({len(cached)} matches)")
+                        atp_live = cached
                 live_matches.extend(atp_live)
         
         live_scores_cache[cache_key] = live_matches
