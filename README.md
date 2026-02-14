@@ -1,13 +1,12 @@
-# 🎾 Tennis Live Dashboard
-
-**Real-time ATP & WTA Tennis Tracking for the 2026 Season**
-
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
-[![Flask](https://img.shields.io/badge/Flask-3.0.0-green.svg)](https://flask.palletsprojects.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://tennis-tour-dashboard.onrender.com)
-
-*Your all-in-one tennis companion for live scores, rankings, tournament insights, player analytics, and smart notifications.*
+<h1 align="center">🎾 Tennis Live Dashboard</h1>
+<p align="center"><strong>Real-time ATP & WTA Tennis Tracking for 2026</strong></p>
+<p align="center">
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.11+-blue.svg" alt="Python"></a>
+  <a href="https://flask.palletsprojects.com/"><img src="https://img.shields.io/badge/Flask-3.0.0-green.svg" alt="Flask"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"></a>
+  <a href="https://tennis-tour-dashboard.onrender.com"><img src="https://img.shields.io/badge/Live-Demo-brightgreen.svg" alt="Live Demo"></a>
+</p>
+<p align="center"><em>Your all-in-one tennis companion for live scores, rankings, tournament insights, player analytics, and smart notifications.</em></p>
 
 ---
 
@@ -52,13 +51,13 @@ Visit: **[tennis-tour-dashboard.onrender.com](https://tennis-tour-dashboard.onre
 
 ### 💻 Local Development
 
-#### Option A: Quick Start Script
+#### 1. Option A: Quick Start Script
 
 ```bash
 ./start.sh
 ```
 
-#### Option B: Manual Setup
+#### 2. Option B: Manual Setup
 
 Backend:
 
@@ -212,7 +211,7 @@ Tennis-Dashboard/
 | Main Interface (Alt) | ![Alternative interface](Images/Interface_Live%20results_recent%20scores_upcoming%20matches%202.png) | Alternate dashboard composition. |
 | Upcoming Match Insights | ![Upcoming match insights](Images/Upcoming%20match%20insights.png) | Upcoming card with insights. |
 | Live Rankings and Calendar | ![Live rankings and calendar](Images/Live%20Rankings%20and%20calender.png) | Rankings + calendar + bracket workspace. |
-| Favourites Panel | ![Favourites panel](Images/Favourite%20panel.png) | Favourite players side panel. |
+| Favourites Panel | <img src="Images/Favourite%20panel.png" alt="Favourites panel" width="50%"> | Favourite players side panel. |
 | H2H Analytics View 1 | ![H2H view 1](Images/H2H_1.png) | First H2H analysis screen. |
 | H2H Analytics View 2 | ![H2H view 2](Images/H2H_2.png) | Detailed H2H comparison screen. |
 | Player Stats Card 1 | ![Player stats 1](Images/Player_stats_1.png) | Player profile card style 1. |
@@ -235,14 +234,6 @@ Tennis-Dashboard/
 | Tournament Analysis | ![Analysis tournament](Images/Analyis_Tournament.png) | Tournament explorer screen. |
 | Records Book | ![Analysis record book](Images/Analysis_Record%20book.png) | Historical records and holders. |
 | Ranking Points Analysis | ![Analysis ranking points](Images/Analysis_ranking_points.png) | Ranking points trends. |
-
----
-
-## 🔄 Data & Script Notes
-
-- Live scripts update score/match caches.
-- Update scripts refresh player profiles, rankings, tournaments, and derived stats.
-- Some update flows use browser automation (`playwright install chromium`).
 
 ---
 
