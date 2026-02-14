@@ -3012,13 +3012,23 @@ body {
     font-size: 1.25rem;
     font-weight: 700;
     margin: 0;
+    flex-wrap: wrap;
 }
 
 .bracket-title-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.bracket-title-main {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    flex: 1 1 460px;
 }
 
 .bracket-title-actions {
@@ -3162,7 +3172,7 @@ body {
 .bracket-subtitle {
     font-size: 0.95rem;
     color: var(--text-secondary);
-    margin-top: 4px;
+    margin-top: 0;
 }
 
 .bracket-meta {
@@ -3197,7 +3207,7 @@ body {
 
 .bracket-title-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-sm);
     flex-wrap: wrap;
 }
