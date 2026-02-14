@@ -668,12 +668,18 @@ const BracketModule = {
         let html = `
             <div class="bracket-info">
                 <div class="bracket-title-row">
-                    <h3 class="bracket-title">
-                        ${bracket.tournament_name || 'Tournament Draw'}
-                        <span class="tournament-category-badge ${badgeClass}">${categoryNames[category] || category}</span>
-                        ${yearBadge}
-                        ${bracket.tournament_surface ? `<span class="tournament-surface-tag ${surfaceClass}">${bracket.tournament_surface}</span>` : ''}
-                    </h3>
+                    <div class="bracket-title-main">
+                        <h3 class="bracket-title">
+                            ${bracket.tournament_name || 'Tournament Draw'}
+                            <span class="tournament-category-badge ${badgeClass}">${categoryNames[category] || category}</span>
+                            ${yearBadge}
+                            ${bracket.tournament_surface ? `<span class="tournament-surface-tag ${surfaceClass}">${bracket.tournament_surface}</span>` : ''}
+                        </h3>
+                        <div class="bracket-subtitle">
+                            ${drawSizeDisplay} Players
+                            <span class="bracket-meta">(${metaText})</span>
+                        </div>
+                    </div>
                     <div class="bracket-title-actions">
                         ${championHtml}
                         <button class="bracket-expand-btn" type="button" aria-label="Open bracket in large view">
@@ -681,10 +687,6 @@ const BracketModule = {
                             Expand
                         </button>
                     </div>
-                </div>
-                <div class="bracket-subtitle">
-                    ${drawSizeDisplay} Players
-                    <span class="bracket-meta">(${metaText})</span>
                 </div>
             </div>
         `;
