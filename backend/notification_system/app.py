@@ -1063,6 +1063,68 @@ def event_kind_label(kind: str) -> str:
     return labels.get(key, key.replace('_', ' ').title())
 
 
+EMAIL_TOURNAMENT_THEMES = [
+    {
+        'card_bg': '#f7fbff',
+        'card_border': '#cfe4ff',
+        'card_divider': '#dbeafb',
+        'pill_bg': '#eaf4ff',
+        'pill_border': '#bcd6ff',
+        'pill_text': '#1f4f79',
+    },
+    {
+        'card_bg': '#f6fffb',
+        'card_border': '#bfe8db',
+        'card_divider': '#d4f2ea',
+        'pill_bg': '#e7fbf4',
+        'pill_border': '#a9decd',
+        'pill_text': '#0b6f5a',
+    },
+    {
+        'card_bg': '#fff8f2',
+        'card_border': '#f3dcc7',
+        'card_divider': '#f7e7d8',
+        'pill_bg': '#ffefe1',
+        'pill_border': '#edcfb2',
+        'pill_text': '#8a4b1f',
+    },
+    {
+        'card_bg': '#fdf7ff',
+        'card_border': '#e6d3f6',
+        'card_divider': '#efe1fa',
+        'pill_bg': '#f4eaff',
+        'pill_border': '#d8bcf2',
+        'pill_text': '#6b2f85',
+    },
+    {
+        'card_bg': '#fff7fb',
+        'card_border': '#f2cade',
+        'card_divider': '#f8dced',
+        'pill_bg': '#fde7f3',
+        'pill_border': '#edbbda',
+        'pill_text': '#8a1f58',
+    },
+]
+
+
+def split_date_time_label(when_text: str) -> Tuple[str, str]:
+    text = str(when_text or '').strip()
+    if not text or text.upper() == 'TBD':
+        return '', ''
+    try:
+        parsed = datetime.strptime(text, '%Y-%m-%d %H:%M')
+        date_label = parsed.strftime('%b %d, %Y')
+        time_label = parsed.strftime('%I:%M %p').lstrip('0')
+        return date_label, time_label
+    except Exception:
+        pass
+
+    parts = text.split()
+    if len(parts) >= 2 and ':' in parts[1]:
+        return parts[0], parts[1]
+    return text, ''
+
+
 def rule_context_text(rule: Dict[str, Any]) -> Tuple[str, str]:
     event_type = str(rule.get('event_type') or '').strip().lower()
     tour = str(rule.get('tour') or 'both').strip().lower()
@@ -1429,6 +1491,7 @@ def smtp_ready() -> Tuple[bool, str]:
 def build_email_html(rule: Dict[str, Any], events: List[Dict[str, Any]]) -> str:
     summary, filter_text = rule_context_text(rule)
     cards = []
+    theme_by_tournament: Dict[str, Dict[str, str]] = {}
 
     for e in events[:25]:
         title_raw = str(e.get('title') or 'Tennis Alert').strip()
@@ -1442,6 +1505,10 @@ def build_email_html(rule: Dict[str, Any], events: List[Dict[str, Any]]) -> str:
         surface_raw = str(e.get('surface') or '').strip()
         court_raw = str(e.get('court') or '').strip()
         kind_raw = str(e.get('kind') or '').strip()
+        theme_key = normalize_lookup_token(tournament_raw or title_raw) or '__default__'
+        if theme_key not in theme_by_tournament:
+            theme_by_tournament[theme_key] = EMAIL_TOURNAMENT_THEMES[len(theme_by_tournament) % len(EMAIL_TOURNAMENT_THEMES)]
+        theme = theme_by_tournament[theme_key]
         p1 = str(e.get('player1') or '').strip()
         p2 = str(e.get('player2') or '').strip()
         p1_name = escape(p1 or 'Player 1')
@@ -1455,8 +1522,9 @@ def build_email_html(rule: Dict[str, Any], events: List[Dict[str, Any]]) -> str:
         p1_flag_html = f'<span style="display:inline-block;vertical-align:middle;margin-left:4px;">{p1_flag}</span>' if p1_country else ''
         p2_flag_html = f'<span style="display:inline-block;vertical-align:middle;margin-left:4px;">{p2_flag}</span>' if p2_country else ''
         surface_label = surface_raw.title() if surface_raw else ''
+        date_label, time_label = split_date_time_label(when_raw)
 
-        header_parts = [tournament_raw, round_raw, when_raw, tour_raw]
+        header_parts = [tournament_raw, round_raw, tour_raw]
         header_parts = [part for part in header_parts if part]
         header_line_raw = ' | '.join(header_parts)
         header_line = escape(header_line_raw)
@@ -1468,9 +1536,11 @@ def build_email_html(rule: Dict[str, Any], events: List[Dict[str, Any]]) -> str:
             round_raw,
             surface_label,
             court_raw,
+            date_label,
+            time_label,
         ]
         pills_html = ''.join(
-            f'<span style="display:inline-block;margin:8px 6px 0 0;padding:4px 10px;border:1px solid #c8ddf5;border-radius:999px;background:#eef6ff;color:#1f4f79;font-size:11px;line-height:1.2;font-weight:700;font-family:\'Manrope\',\'Segoe UI Emoji\',sans-serif;">{escape(value)}</span>'
+            f'<span style="display:inline-block;margin:8px 6px 0 0;padding:4px 10px;border:1px solid {theme["pill_border"]};border-radius:999px;background:{theme["pill_bg"]};color:{theme["pill_text"]};font-size:11px;line-height:1.2;font-weight:700;font-family:\'Manrope\',\'Segoe UI Emoji\',sans-serif;">{escape(value)}</span>'
             for value in pill_values
             if str(value).strip()
         )
@@ -1488,9 +1558,9 @@ def build_email_html(rule: Dict[str, Any], events: List[Dict[str, Any]]) -> str:
         if p1 or p2:
             cards.append(
                 f"""
-                <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"border:1px solid #dce8f5;border-radius:14px;overflow:hidden;margin-bottom:12px;background:#f9fcff;font-family:'Manrope','Segoe UI Emoji',sans-serif;\">
+                <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"border:1px solid {theme["card_border"]};border-radius:14px;overflow:hidden;margin-bottom:12px;background:{theme["card_bg"]};font-family:'Manrope','Segoe UI Emoji',sans-serif;\">
                   <tr>
-                    <td style=\"padding:12px 14px;border-bottom:1px solid #e4edf7;\">
+                    <td style=\"padding:12px 14px;border-bottom:1px solid {theme["card_divider"]};\">
                       <div style=\"font-family:'Space Grotesk','Manrope','Segoe UI Emoji',sans-serif;font-size:16px;font-weight:800;color:#14324d;\">{title}</div>
                       <div style=\"margin-top:6px;font-size:13px;color:#4a657f;font-family:'Manrope','Segoe UI Emoji',sans-serif;\">{header_display}</div>
                       <div>{pills_html}</div>
@@ -1534,7 +1604,7 @@ def build_email_html(rule: Dict[str, Any], events: List[Dict[str, Any]]) -> str:
         else:
             cards.append(
                 f"""
-                <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"border:1px solid #dce8f5;border-radius:14px;overflow:hidden;margin-bottom:12px;background:#f9fcff;font-family:'Manrope','Segoe UI Emoji',sans-serif;\">
+                <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"border:1px solid {theme["card_border"]};border-radius:14px;overflow:hidden;margin-bottom:12px;background:{theme["card_bg"]};font-family:'Manrope','Segoe UI Emoji',sans-serif;\">
                   <tr>
                     <td style=\"padding:12px 14px;\">
                       <div style=\"font-family:'Space Grotesk','Manrope','Segoe UI Emoji',sans-serif;font-size:16px;font-weight:800;color:#14324d;\">{title}</div>
