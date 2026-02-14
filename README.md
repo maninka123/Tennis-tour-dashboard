@@ -86,17 +86,17 @@ Default local URLs:
 ## 🛠️ Tech Stack
 
 ### Backend
-- Python 3.11+
-- Flask + Flask-SocketIO
-- Requests / BeautifulSoup / Playwright-based data flows
+- ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white) Python 3.11+
+- ![Flask](https://img.shields.io/badge/Flask-3.0.0-000000?logo=flask&logoColor=white) Flask + Flask-SocketIO
+- ![Requests](https://img.shields.io/badge/Requests-HTTP-4B8BBE?logo=python&logoColor=white) ![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-Scraping-43B02A?logo=python&logoColor=white) ![Playwright](https://img.shields.io/badge/Playwright-Automation-2EAD33?logo=playwright&logoColor=white) Requests / BeautifulSoup / Playwright-based data flows
 
 ### Frontend
-- HTML/CSS/Vanilla JS (modular files)
-- Interactive charts/visualizations + custom UI components
+- ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-F7DF1E?logo=javascript&logoColor=black) HTML/CSS/Vanilla JS (modular files)
+- ![UI](https://img.shields.io/badge/UI-Interactive_Components-6C7A89) Interactive charts/visualizations + custom UI components
 
 ### Deployment
-- Render.com (Python service)
-- GitHub for source and CI flow
+- ![Render](https://img.shields.io/badge/Render-Cloud_Service-46E3B7?logo=render&logoColor=black) Render.com (Python service)
+- ![GitHub](https://img.shields.io/badge/GitHub-Source_%26_CI-181717?logo=github&logoColor=white) GitHub for source and CI flow
 
 ---
 
