@@ -746,6 +746,13 @@ const ScoresModule = {
         if (!match) return;
 
         const winEdge = this.calculateWinEdge(match);
+        const insightTour = String(match?.tour || '').toLowerCase() === 'wta' ? 'wta' : 'atp';
+        const insP1Elo = window.TennisApp?.EloModule?.getPlayerElo?.(match.player1.name, insightTour) || null;
+        const insP2Elo = window.TennisApp?.EloModule?.getPlayerElo?.(match.player2.name, insightTour) || null;
+        const insP1EloStr = insP1Elo ? Math.round(insP1Elo.elo).toString() : '-';
+        const insP2EloStr = insP2Elo ? Math.round(insP2Elo.elo).toString() : '-';
+        const insP1MomLabel = insP1Elo ? (insP1Elo.momentum > 20 ? 'Hot' : insP1Elo.momentum > 5 ? 'Rising' : insP1Elo.momentum < -20 ? 'Cold' : insP1Elo.momentum < -5 ? 'Cooling' : 'Steady') : '-';
+        const insP2MomLabel = insP2Elo ? (insP2Elo.momentum > 20 ? 'Hot' : insP2Elo.momentum > 5 ? 'Rising' : insP2Elo.momentum < -20 ? 'Cold' : insP2Elo.momentum < -5 ? 'Cooling' : 'Steady') : '-';
         const p1Fav = winEdge.p1 >= winEdge.p2;
         const favorite = p1Fav ? match.player1 : match.player2;
         const underdog = p1Fav ? match.player2 : match.player1;
@@ -830,6 +837,8 @@ const ScoresModule = {
                             <div class="prediction-player-pills">
                                 <span class="prediction-pill">${p1Points} pts</span>
                                 <span class="prediction-pill">${surfaceLabel} ${p1Surface}</span>
+                                <span class="prediction-pill elo-pill">Elo ${insP1EloStr}</span>
+                                <span class="prediction-pill momentum-pill">${insP1MomLabel}</span>
                             </div>
                         </div>
                     </div>
@@ -849,6 +858,10 @@ const ScoresModule = {
                         <div class="prediction-mini-item">
                             <span class="label">Win Chance</span>
                             <span class="value">${winEdge.p1}%</span>
+                        </div>
+                        <div class="prediction-mini-item">
+                            <span class="label">Elo</span>
+                            <span class="value">${insP1EloStr}</span>
                         </div>
                     </div>
                 </div>
@@ -880,6 +893,8 @@ const ScoresModule = {
                             <div class="prediction-player-pills">
                                 <span class="prediction-pill">${p2Points} pts</span>
                                 <span class="prediction-pill">${surfaceLabel} ${p2Surface}</span>
+                                <span class="prediction-pill elo-pill">Elo ${insP2EloStr}</span>
+                                <span class="prediction-pill momentum-pill">${insP2MomLabel}</span>
                             </div>
                         </div>
                     </div>
@@ -899,6 +914,10 @@ const ScoresModule = {
                         <div class="prediction-mini-item">
                             <span class="label">Win Chance</span>
                             <span class="value">${winEdge.p2}%</span>
+                        </div>
+                        <div class="prediction-mini-item">
+                            <span class="label">Elo</span>
+                            <span class="value">${insP2EloStr}</span>
                         </div>
                     </div>
                 </div>
@@ -966,6 +985,24 @@ const ScoresModule = {
 
         const winEdge = this.calculateWinEdge(match);
 
+        const eloMod = window.TennisApp?.EloModule;
+        const matchTour = String(match?.tour || '').toLowerCase() === 'wta' ? 'wta' : 'atp';
+        const p1Elo = eloMod?.getPlayerElo?.(match.player1.name, matchTour) || null;
+        const p2Elo = eloMod?.getPlayerElo?.(match.player2.name, matchTour) || null;
+        const getMomentumHTML = (eloData) => {
+            if (!eloData) return '';
+            const m = eloData.momentum || 0;
+            let label, cls;
+            if (m > 20) { label = 'Hot'; cls = 'up'; }
+            else if (m > 5) { label = 'Rising'; cls = 'up'; }
+            else if (m < -20) { label = 'Cold'; cls = 'down'; }
+            else if (m < -5) { label = 'Cooling'; cls = 'down'; }
+            else { label = 'Steady'; cls = 'neutral'; }
+            return `<span class="player-momentum ${cls}">${label}</span>`;
+        };
+        const p1Momentum = getMomentumHTML(p1Elo);
+        const p2Momentum = getMomentumHTML(p2Elo);
+
         return `
             <div class="upcoming-match-card ${categoryClass} ${surfaceClass}" data-match-id="${match.id}" data-match-key="${matchKey}">
                 <div class="match-header">
@@ -995,6 +1032,7 @@ const ScoresModule = {
                                 ${match.player1.rank ? `<span class="player-rank-badge">[${match.player1.rank}]</span>` : ''}
                                 <span class="country-flag">${Utils.getFlag(match.player1.country)}</span>
                                 ${Utils.formatPlayerName(match.player1.name)}
+                                ${p1Momentum}
                             </div>
                         </div>
                         <div class="player-score upcoming-score">${this.formatUpcomingPlayerScore(match, 1)}</div>
@@ -1006,6 +1044,7 @@ const ScoresModule = {
                                 ${match.player2.rank ? `<span class="player-rank-badge">[${match.player2.rank}]</span>` : ''}
                                 <span class="country-flag">${Utils.getFlag(match.player2.country)}</span>
                                 ${Utils.formatPlayerName(match.player2.name)}
+                                ${p2Momentum}
                             </div>
                         </div>
                         <div class="player-score upcoming-score">${this.formatUpcomingPlayerScore(match, 2)}</div>

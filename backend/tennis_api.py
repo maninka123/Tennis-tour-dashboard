@@ -108,6 +108,7 @@ import difflib
 import shutil
 import subprocess
 import sys
+import os
 import time
 import urllib.parse
 import zlib
@@ -1375,6 +1376,14 @@ class TennisDataFetcher:
                 except Exception:
                     rating = None
 
+                details = {}
+                metrics_json_raw = (row.get('metrics_json') or '').strip()
+                if metrics_json_raw:
+                    try:
+                        details = json.loads(metrics_json_raw)
+                    except Exception:
+                        details = {}
+
                 item = {
                     'rank': rank,
                     'player_name': (row.get('player_name') or '').strip(),
@@ -1382,7 +1391,8 @@ class TennisDataFetcher:
                     'profile_url': (row.get('profile_url') or '').strip(),
                     'image_url': (row.get('image_url') or '').strip(),
                     'rating': rating,
-                    'metrics': metrics
+                    'metrics': metrics,
+                    'details': details
                 }
                 categories[category].append(item)
 
@@ -6157,6 +6167,146 @@ class TennisDataFetcher:
             'prize_money': f"${random.randint(1, 150)},{random.randint(100, 999)},{random.randint(100, 999)}",
             'biography': f"Professional tennis player from {player['country']}.",
             'image_url': f'https://api.sofascore.com/api/v1/player/{player_id}/image'
+        }
+
+    def should_reset_form_cache(self):
+        """Check if form cache is older than 7 days"""
+        cache_file = os.path.join(os.path.dirname(__file__), '..', 'data', 'player_form_cache.json')
+        if not os.path.exists(cache_file):
+            return True
+        
+        try:
+            with open(cache_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                last_updated_str = data.get('lastUpdated')
+                if not last_updated_str:
+                    return True
+                last_updated = datetime.fromisoformat(last_updated_str.replace('Z', '+00:00'))
+                age = datetime.utcnow().replace(tzinfo=None) - last_updated.replace(tzinfo=None)
+                return age.days >= 7
+        except Exception as e:
+            print(f"[FormCache] Error reading cache: {e}")
+            return True
+
+    def regenerate_form_cache(self):
+        """Regenerate form ratings with current rankings"""
+        cache_file = os.path.join(os.path.dirname(__file__), '..', 'data', 'player_form_cache.json')
+        
+        try:
+            # Fetch current rankings
+            atp_rankings = self._get_full_atp_rankings()
+            wta_rankings = self._get_full_wta_rankings()
+            
+            # Helper function to calculate initial form from rank
+            def calculate_form(rank):
+                rank_int = int(rank) if rank else 999
+                if not rank_int or rank_int <= 0:
+                    return 1000
+                bonus = max(0, 50 * (3.32 - (0.01605 * rank_int)))  # log2(200/rank)*50 approximation
+                return min(1500, max(700, 1000 + bonus))
+            
+            now = datetime.utcnow()
+            expires = now + timedelta(days=7)
+            
+            cache_data = {
+                'lastUpdated': now.isoformat() + 'Z',
+                'expiresAt': expires.isoformat() + 'Z',
+                'players': {
+                    'atp': {
+                        player['name']: {
+                            'form': calculate_form(player.get('rank')),
+                            'rank': player.get('rank'),
+                            'points': player.get('points', 0)
+                        }
+                        for player in atp_rankings if player.get('name')
+                    },
+                    'wta': {
+                        player['name']: {
+                            'form': calculate_form(player.get('rank')),
+                            'rank': player.get('rank'),
+                            'points': player.get('points', 0)
+                        }
+                        for player in wta_rankings if player.get('name')
+                    }
+                }
+            }
+            
+            # Ensure directory exists
+            os.makedirs(os.path.dirname(cache_file), exist_ok=True)
+            
+            # Write cache file
+            with open(cache_file, 'w', encoding='utf-8') as f:
+                json.dump(cache_data, f, indent=2)
+            
+            print(f"[FormCache] Regenerated cache with {len(cache_data['players']['atp'])} ATP and {len(cache_data['players']['wta'])} WTA players")
+            return cache_data
+        except Exception as e:
+            print(f"[FormCache] Error regenerating cache: {e}")
+            return None
+
+    def get_form_cache(self):
+        """Load or regenerate form cache"""
+        cache_file = os.path.join(os.path.dirname(__file__), '..', 'data', 'player_form_cache.json')
+        
+        # Check if we need to regenerate
+        if self.should_reset_form_cache():
+            print("[FormCache] Cache expired or missing, regenerating...")
+            return self.regenerate_form_cache()
+        
+        # Load existing cache
+        try:
+            with open(cache_file, 'r', encoding='utf-8') as f:
+                cache = json.load(f)
+                expires = cache.get('expiresAt', '')
+                print(f"[FormCache] Using cached form ratings (expires: {expires})")
+                return cache
+        except Exception as e:
+            print(f"[FormCache] Error loading cache: {e}, regenerating...")
+            return self.regenerate_form_cache()
+
+    def get_cache_status(self):
+        """Get form cache status information"""
+        cache_file = os.path.join(os.path.dirname(__file__), '..', 'data', 'player_form_cache.json')
+        
+        if not os.path.exists(cache_file):
+            return {
+                'status': 'missing',
+                'lastUpdated': None,
+                'expiresAt': None,
+                'daysUntilReset': 0,
+                'message': 'Form cache not found'
+            }
+        
+        try:
+            with open(cache_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                last_updated_str = data.get('lastUpdated')
+                expires_str = data.get('expiresAt')
+                
+                if last_updated_str and expires_str:
+                    expires = datetime.fromisoformat(expires_str.replace('Z', '+00:00'))
+                    days_left = (expires.replace(tzinfo=None) - datetime.utcnow()).days
+                    
+                    return {
+                        'status': 'active',
+                        'lastUpdated': last_updated_str,
+                        'expiresAt': expires_str,
+                        'daysUntilReset': max(0, days_left),
+                        'playersCount': {
+                            'atp': len(data.get('players', {}).get('atp', {})),
+                            'wta': len(data.get('players', {}).get('wta', {}))
+                        },
+                        'message': f'Cache will reset in {max(0, days_left)} days'
+                    }
+        except Exception as e:
+            print(f"[FormCache] Error getting cache status: {e}")
+        
+        return {
+            'status': 'error',
+            'lastUpdated': None,
+            'expiresAt': None,
+            'daysUntilReset': 0,
+            'message': 'Error reading cache status'
         }
 
 

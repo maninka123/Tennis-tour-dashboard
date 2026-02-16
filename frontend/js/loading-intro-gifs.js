@@ -73,18 +73,34 @@
         }
 
         grid.innerHTML = '';
-        // Shuffle to randomize which gifs are shown each time
-        const pool = shuffle(GIF_FILES);
+        // Determine how many tiles to fill (based on grid width/height and CSS columns)
+        const gridStyles = window.getComputedStyle(grid);
+        const colCount = parseInt(gridStyles.columnCount, 10) || 6;
+        const tileWidth = 88 + 8; // min tile width + gap
+        const tileHeight = 88 + 8; // estimate
+        const gridWidth = grid.offsetWidth || window.innerWidth;
+        const gridHeight = grid.offsetHeight || window.innerHeight;
+        const estRows = Math.ceil(gridHeight / tileHeight);
+        const tileCount = clamp(colCount * estRows, colCount * 2, colCount * 8);
 
-        // Use each gif at 80% of its original size and repeat the pool to fill the screen
-        const repeatedPool = Array(3).fill(pool).flat(); // Repeat 3 times
+        // Fill with all unique gifs first, then repeat only if needed, reshuffling each round
+        let needed = tileCount;
+        let gifPool = [];
+        let round = 0;
+        while (needed > 0) {
+            let roundGifs = shuffle(GIF_FILES);
+            if (roundGifs.length > needed) roundGifs = roundGifs.slice(0, needed);
+            gifPool = gifPool.concat(roundGifs);
+            needed -= roundGifs.length;
+            round++;
+        }
 
-        for (let i = 0; i < repeatedPool.length; i += 1) {
+        for (let i = 0; i < gifPool.length; i += 1) {
             const tile = document.createElement('div');
             tile.className = 'intro-gif-tile';
 
             const img = document.createElement('img');
-            const file = repeatedPool[i];
+            const file = gifPool[i];
             img.src = buildGifUrl(file);
             img.alt = 'Tennis intro animation';
             img.loading = 'eager';
@@ -95,7 +111,6 @@
             };
 
             img.onerror = () => {
-                // Keep the tile but show gradient background if gif fails to load
                 tile.style.background = 'linear-gradient(140deg, rgba(18,28,43,0.95), rgba(12,20,33,0.88))';
                 img.remove();
             };

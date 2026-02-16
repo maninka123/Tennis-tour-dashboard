@@ -73,6 +73,7 @@ Visit: **[tennis-tour-dashboard.onrender.com](https://tennis-tour-dashboard.onre
 ### 💻 Local Development
 
 #### 1. Option A: Quick Start Script
+macOS / Linux (bash):
 ```bash
 ./start.sh
 ```
@@ -80,13 +81,7 @@ Visit: **[tennis-tour-dashboard.onrender.com](https://tennis-tour-dashboard.onre
 Windows (PowerShell):
 
 ```powershell
-.\start.sh
-```
-
-macOS / Linux (bash):
-
-```bash
-./start.sh
+bash start.sh
 ```
 
 #### 2. Option B: Manual Setup

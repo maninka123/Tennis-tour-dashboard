@@ -67,6 +67,15 @@ const StatZoneModule = {
                         window.PlayerModule.showPlayerStats(playerId);
                     }
                 }
+
+                const eloBtn = e.target.closest('.elo-score-cell[data-elo-player]');
+                if (eloBtn) {
+                    const playerName = decodeURIComponent(eloBtn.dataset.eloPlayer || '');
+                    const tour = eloBtn.dataset.eloTour || 'atp';
+                    if (playerName && window.TennisApp?.EloModule?.openEloDetailModal) {
+                        window.TennisApp.EloModule.openEloDetailModal(playerName, tour);
+                    }
+                }
             });
         }
     },
@@ -383,6 +392,57 @@ const StatZoneModule = {
         }).join('');
     },
 
+    renderEloLeaderboard(tourKey) {
+        const eloMap = window.TennisApp?.AppState?.eloRatings?.[tourKey];
+        if (!(eloMap instanceof Map) || eloMap.size === 0) return '';
+
+        const eloMod = window.TennisApp?.EloModule;
+        const sorted = Array.from(eloMap.entries())
+            .filter(([, d]) => d.matchCount > 0)
+            .sort((a, b) => b[1].elo - a[1].elo)
+            .slice(0, 25);
+
+        if (!sorted.length) return '';
+
+        const rows = sorted.map(([name, d], idx) => {
+            const delta = Math.round(d.weekDelta || 0);
+            const deltaClass = delta > 0 ? 'positive' : delta < 0 ? 'negative' : 'neutral';
+            const deltaText = delta !== 0 ? `${delta > 0 ? '+' : ''}${delta}` : '\u2014';
+            const sparkline = (eloMod?.createSparklineSVG && d.eloHistory?.length >= 2)
+                ? eloMod.createSparklineSVG(d.eloHistory, { width: 48, height: 14 })
+                : '';
+            const encodedName = encodeURIComponent(name);
+            return `
+                <div class="stats-zone-row elo-row">
+                    <div class="stats-zone-rank">#${idx + 1}</div>
+                    <div class="stats-zone-player">
+                        <span class="stats-zone-player-name">${name}</span>
+                    </div>
+                    <button class="elo-score-cell" data-elo-player="${encodedName}" data-elo-tour="${tourKey}" title="View Elo trajectory">
+                        ${Math.round(d.elo)}
+                    </button>
+                    <span class="elo-delta ${deltaClass}">${deltaText}</span>
+                    <span class="elo-trend-cell">${sparkline}</span>
+                </div>
+            `;
+        }).join('');
+
+        return `
+            <section class="stats-zone-col stats-zone-elo-col" style="margin-top:20px; grid-column: 1 / -1;">
+                <div class="stats-zone-col-head elo-col-head">
+                    <span>Rank</span>
+                    <span>Current Form Standings</span>
+                    <span>Form</span>
+                    <span>\u0394</span>
+                    <span>Trend</span>
+                </div>
+                <div class="stats-zone-col-body">
+                    ${rows}
+                </div>
+            </section>
+        `;
+    },
+
     render() {
         const content = document.getElementById('statsZoneContent');
         if (!content) return;
@@ -440,6 +500,8 @@ const StatZoneModule = {
                 <section class="stats-zone-grid ${colClass}">
                     ${columns}
                 </section>
+
+                ${this.renderEloLeaderboard(cfg.key)}
             </div>
         `;
 

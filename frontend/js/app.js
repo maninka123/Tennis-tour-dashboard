@@ -728,6 +728,7 @@ const API = {
 // ============================================
 // Define the global object early so modules can access it.
 window.TennisApp = {
+    ...(window.TennisApp || {}),
     CONFIG,
     AppState,
     Utils,
@@ -822,6 +823,7 @@ const Socket = {
                 const limit = tour === 'wta' ? 400 : 200;
                 AppState.rankings[tour] = await API.getRankings(tour, limit) || [];
                 RankingsModule.render();
+                try { if (window.TennisApp?.EloModule?.init) window.TennisApp.EloModule.init(); } catch (e) { /* silent */ }
             } catch (error) {
                 console.error('Error handling rankings_update event:', error);
             }
@@ -1403,6 +1405,14 @@ const App = {
 
             console.log('Application state updated.');
 
+            // Compute Elo ratings for both tours (must happen after rankings are populated)
+            try {
+                if (window.TennisApp?.EloModule?.init) {
+                    window.TennisApp.EloModule.init();
+                    console.log('Elo ratings computed for ATP and WTA.');
+                }
+            } catch (eloErr) { console.error('Elo init failed:', eloErr); }
+
             // Render all components
             console.log('Rendering all modules...');
             try { ScoresModule.renderLiveScores(); } catch (e) { console.error('renderLiveScores failed:', e); }
@@ -1550,6 +1560,7 @@ const App = {
             const atpRankings = await API.getRankings('atp', 200);
             AppState.rankings.atp = atpRankings || [];
             RankingsModule.render();
+            try { if (window.TennisApp?.EloModule?.init) window.TennisApp.EloModule.init(); } catch (e) { /* silent */ }
             Socket.updateLastUpdated();
         } catch (error) {
             console.error('Error updating ATP rankings:', error);
@@ -1575,6 +1586,7 @@ const App = {
             const wtaRankings = await API.getRankings('wta', 400);
             AppState.rankings.wta = wtaRankings || [];
             RankingsModule.render();
+            try { if (window.TennisApp?.EloModule?.init) window.TennisApp.EloModule.init(); } catch (e) { /* silent */ }
             Socket.updateLastUpdated();
         } catch (error) {
             console.error('Error updating WTA rankings:', error);

@@ -4057,7 +4057,7 @@ body {
 .intro-gif-grid {
     position: absolute;
     inset: 0;
-    column-count: 8;
+    column-count: 6;
     column-gap: 8px;
     padding: 8px;
     overflow: hidden;
@@ -4072,8 +4072,10 @@ body {
 
 .intro-gif-tile img {
     display: block;
-    width: auto;
+    width: 100%;
     height: auto;
+    object-fit: cover;
+    object-position: center;
     filter: saturate(1.05) contrast(1.04);
 }
 
@@ -4662,6 +4664,7 @@ img {
 
 .stats-zone-grid {
     display: grid;
+    display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
 }
@@ -4859,10 +4862,23 @@ img {
 }
 
 @media (max-width: 1100px) {
-    .stats-zone-info-grid,
-    .stats-zone-top-grid,
+    /* Keep 3 columns on medium screens if possible, or at least 2. 
+       User requested inline, so we try to avoid stacking to 1 column too early. */
     .stats-zone-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        overflow-x: auto; /* Allow horizontal scroll if really tight */
+    }
+    .stats-zone-top-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-zone-grid {
+        grid-template-columns: repeat(1, 1fr); /* Only stack on mobile */
+    }
+    .stats-zone-top-grid {
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 
@@ -4873,12 +4889,20 @@ img {
     background: var(--bg-secondary);
 }
 
+#playerStatsModal .modal-header {
+    padding: 12px var(--space-lg);
+}
+
+#playerStatsModal .modal-body {
+    padding: 10px var(--space-lg) var(--space-md);
+}
+
 .player-profile {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-md);
-    margin-bottom: var(--space-md);
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
 }
 
 .player-hero {
@@ -4927,11 +4951,12 @@ img {
     font-size: 0.72rem;
     color: var(--text-muted);
     font-weight: 600;
+    margin-bottom: 2px;
 }
 
 .player-hero img:not(.flag-icon) {
-    width: 96px;
-    height: 96px;
+    width: 110px;
+    height: 110px;
     object-fit: cover;
     border-radius: 16px;
     box-shadow: var(--shadow-md);
@@ -7673,4 +7698,300 @@ body.fav-schedule-open .fav-live-tooltip {
 .fav-remove-btn:hover {
     color: #e74c3c;
     background: rgba(231, 76, 60, 0.08);
+}
+
+/* ──────────────────────────────────────────
+   Elo Rating System
+   ────────────────────────────────────────── */
+
+.elo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f0e6ff, #e0d0ff);
+    color: #4a2080;
+    font-weight: 800;
+    font-size: 0.72rem;
+    width: fit-content;
+}
+
+.elo-delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 1px 5px;
+}
+.elo-delta.positive {
+    color: #15803d;
+    background: rgba(34, 197, 94, 0.18);
+}
+.elo-delta.negative {
+    color: #b91c1c;
+    background: rgba(239, 68, 68, 0.18);
+}
+.elo-delta.neutral {
+    color: var(--text-muted);
+}
+
+.elo-sparkline-container {
+    cursor: pointer;
+    padding: 4px 0;
+    margin-top: 4px;
+    transition: opacity var(--transition-fast);
+    display: inline-block;
+}
+.elo-sparkline-container:hover {
+    opacity: 0.75;
+}
+.elo-sparkline-container svg {
+    display: block;
+}
+.elo-sparkline-container.elo-provisional {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    cursor: default;
+    font-style: italic;
+}
+
+.player-momentum {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 8px;
+    margin-left: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+}
+.player-momentum.up {
+    color: #15803d;
+    background: rgba(34, 197, 94, 0.15);
+}
+.player-momentum.down {
+    color: #b91c1c;
+    background: rgba(239, 68, 68, 0.15);
+}
+.player-momentum.neutral {
+    color: var(--text-muted);
+    background: rgba(134, 142, 150, 0.12);
+}
+
+.prediction-pill.elo-pill {
+    background: rgba(139, 92, 246, 0.12);
+    color: #6d28d9;
+}
+.prediction-pill.momentum-pill {
+    background: rgba(34, 197, 94, 0.12);
+    color: #15803d;
+}
+
+.stats-zone-elo-col {
+    grid-column: 1 / -1;
+    margin-bottom: var(--space-md);
+}
+.stats-zone-elo-col .elo-col-head {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) 70px 50px 56px;
+    gap: 4px;
+}
+.stats-zone-elo-col .elo-row {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) 70px 50px 56px;
+    gap: 4px;
+    align-items: center;
+}
+.elo-score-cell {
+    background: none;
+    border: none;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: #6d28d9;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast), color var(--transition-fast);
+    text-align: center;
+}
+.elo-score-cell:hover {
+    background: rgba(139, 92, 246, 0.1);
+    color: #4a2080;
+}
+.elo-row .elo-delta {
+    font-size: 0.68rem;
+    text-align: center;
+    justify-content: center;
+}
+.elo-trend-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+}
+.elo-trend-cell svg {
+    display: block;
+}
+
+.elo-point {
+    transition: transform 0.15s ease, r 0.15s ease;
+}
+.elo-point:hover {
+    r: 6;
+}
+
+.elo-empty {
+    padding: var(--space-md);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    .stats-zone-elo-col .elo-col-head,
+    .stats-zone-elo-col .elo-row {
+        grid-template-columns: 40px minmax(0, 1fr) 56px 40px 42px;
+        font-size: 0.75rem;
+    }
+    .elo-score-cell {
+        font-size: 0.72rem;
+        padding: 3px 4px;
+    }
+    .elo-trend-cell {
+        min-width: 40px;
+    }
+}
+
+/* Form Badge Pill (compact, matches Recent Matches button) */
+.form-badge-pill {
+    border: 1px solid rgba(74, 144, 226, 0.45);
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.14), rgba(90, 200, 250, 0.16));
+    color: #1f4e82;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    margin-top: 4px;
+}
+
+.form-badge-pill:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(46, 127, 193, 0.18);
+}
+
+.form-delta {
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.form-delta.positive { color: var(--accent-success, #28a745); }
+.form-delta.negative { color: var(--accent-live, #dc3545); }
+.form-delta.neutral { color: var(--text-muted); }
+
+/* Badge in table */
+.badge-win {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #def7ec;
+    color: #03543f;
+    font-weight: 700;
+    font-size: 0.8em;
+}
+
+.badge-loss {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #fde8e8;
+    color: #9b1c1c;
+    font-weight: 700;
+    font-size: 0.8em;
+}
+
+/* Form stat cards in modal summary */
+.form-stat-card {
+    padding: 12px 14px;
+    background: var(--bg-secondary, #f7f8fa);
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+}
+.form-stat-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+}
+.form-stat-value {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary, #1a1a2e);
+}
+
+/* Chart markers */
+.elo-point {
+    transition: r 0.15s ease, filter 0.15s ease;
+}
+.elo-point:hover {
+    r: 10;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3)) !important;
+}
+
+.elo-point-tooltip {
+    position: absolute;
+    z-index: 30;
+    min-width: 220px;
+    max-width: 260px;
+    pointer-events: none;
+    background: rgba(10, 18, 30, 0.97);
+    color: #e6eefc;
+    border: 1px solid rgba(163, 189, 235, 0.22);
+    border-radius: 14px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    backdrop-filter: blur(8px);
+}
+
+.elo-tooltip-title {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: #f4f8ff;
+}
+
+.elo-tooltip-meta {
+    color: #a0b8d8;
+    margin-top: 2px;
+    margin-bottom: 8px;
+    font-size: 0.78rem;
+}
+
+.elo-tooltip-row {
+    color: #d0ddf5;
+    margin-top: 3px;
+}
+
+.delta-pos { color: #22c55e; }
+.delta-neg { color: #ef4444; }
+.delta-neut { color: #94a3b8; }
+
+.elo-history-table td {
+    padding: 8px 6px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.elo-history-table tr:last-child td {
+    border-bottom: none;
 }

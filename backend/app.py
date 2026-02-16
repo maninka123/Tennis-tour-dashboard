@@ -196,6 +196,19 @@ def _notification_python_candidates():
         unique.append(key)
     return unique
 
+# ============== Form Cache Initialization ==============
+# Initialize player form cache on startup (load or regenerate if older than 7 days)
+print("[Startup] Initializing player form cache...")
+try:
+    form_cache = tennis_fetcher.get_form_cache()
+    if form_cache:
+        cache_status = tennis_fetcher.get_cache_status()
+        print(f"[Startup] Form cache initialized: {cache_status.get('message', 'OK')}")
+    else:
+        print("[Startup] Warning: Failed to initialize form cache")
+except Exception as e:
+    print(f"[Startup] Error initializing form cache: {e}")
+
 # ============== Frontend Routes ==============
 
 @app.route('/')
@@ -1094,6 +1107,56 @@ def refresh_wta_stats():
         return jsonify({
             'success': True,
             'data': status
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/form-cache/status', methods=['GET'])
+def get_form_cache_status():
+    """Get player form cache status and next reset schedule"""
+    try:
+        status = tennis_fetcher.get_cache_status()
+        return jsonify({
+            'success': True,
+            'data': status
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/form-cache/data', methods=['GET'])
+def get_form_cache_data():
+    """Get cached form ratings data for frontend"""
+    try:
+        cache = tennis_fetcher.get_form_cache()
+        if not cache:
+            return jsonify({'success': False, 'error': 'Cache load failed'}), 500
+        return jsonify({
+            'success': True,
+            'data': cache.get('players', {}),
+            'meta': {
+                'lastUpdated': cache.get('lastUpdated'),
+                'expiresAt': cache.get('expiresAt')
+            }
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@app.route('/api/form-cache/refresh', methods=['POST'])
+def refresh_form_cache():
+    """Force regenerate player form cache (admin only)"""
+    try:
+        cache = tennis_fetcher.regenerate_form_cache()
+        socketio.emit('form_cache_update', {
+            'scope': 'form_ratings',
+            'timestamp': time.time()
+        })
+        return jsonify({
+            'success': True,
+            'message': 'Form cache regenerated successfully',
+            'data': tennis_fetcher.get_cache_status()
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500

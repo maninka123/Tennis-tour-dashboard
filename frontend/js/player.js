@@ -49,7 +49,7 @@ const PlayerModule = {
             this.renderLoading();
 
             let player = await API.getPlayer(playerId).catch(() => null);
-            
+
             if (!player) {
                 // Fallback to rankings data if API isn't available
                 const { AppState } = window.TennisApp;
@@ -62,9 +62,9 @@ const PlayerModule = {
                 }
                 if (!player) {
                     // Player not found - use info extracted from the clicked DOM element
-                    this.renderStatsNotAvailable({ 
-                        name: domInfo.name || 'Player', 
-                        rank: domInfo.rank || null, 
+                    this.renderStatsNotAvailable({
+                        name: domInfo.name || 'Player',
+                        rank: domInfo.rank || null,
                         country: domInfo.country || '',
                         image_url: domInfo.image_url || ''
                     });
@@ -76,7 +76,7 @@ const PlayerModule = {
             const s2026 = player?.stats_2026 || {};
             const servingStats = s2026.singles_serving_stats || {};
             const returnStats = s2026.singles_return_stats || {};
-            
+
             // For WTA, stats objects might exist but values are null/empty
             const hasValidStats = (statsObj) => {
                 if (!statsObj || Object.keys(statsObj).length === 0) return false;
@@ -87,7 +87,7 @@ const PlayerModule = {
             const hasServingData = hasValidStats(servingStats);
             const hasReturnData = hasValidStats(returnStats);
             const hasRealStats = hasServingData || hasReturnData;
-            
+
             const isAtp = this.isAtpPlayer(player);
             const hasGrandSlamPerf = isAtp && player.grandslam_performance && Object.keys(player.grandslam_performance).length > 0;
             const yearlyRecords = s2026.records_tab?.yearly
@@ -172,6 +172,32 @@ const PlayerModule = {
             ? `<div class="points-badge">${pointsValue.toLocaleString()} PTS</div>`
             : '';
 
+        const eloTour = this.isAtpPlayer(player) ? 'atp' : 'wta';
+        const eloData = window.TennisApp?.EloModule?.getPlayerElo?.(player.name, eloTour) || null;
+        const eloRating = eloData ? Math.round(eloData.elo) : null;
+        const eloDeltaVal = Math.round(eloData?.weekDelta || 0);
+        const eloDeltaClass = eloDeltaVal > 0 ? 'positive' : eloDeltaVal < 0 ? 'negative' : 'neutral';
+        const eloDeltaIcon = eloDeltaVal > 0 ? '<i class="fas fa-arrow-up"></i> ' : eloDeltaVal < 0 ? '<i class="fas fa-arrow-down"></i> ' : '';
+        const eloDeltaText = eloDeltaVal !== 0 ? `${eloDeltaVal > 0 ? '+' : ''}${eloDeltaVal}` : '\u2014';
+        const safeEloName = String(player.name || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+                const recentTournamentCount = Array.isArray(recentMatches?.tournaments) ? recentMatches.tournaments.length : 0;
+                const recentMatchCount = Array.isArray(recentMatches?.tournaments)
+                        ? recentMatches.tournaments.reduce((acc, t) => acc + (Array.isArray(t.matches) ? t.matches.length : 0), 0)
+                        : 0;
+                const recentButtonDisabled = recentMatchCount === 0;
+
+                // Compact form pill (same style as Recent Matches button)
+        const formBadgeHTML = eloRating !== null
+                ? `<button class="form-badge-pill" title="Form rating based on last 10 matches" onclick="window.TennisApp.EloModule.openEloDetailModal('${safeEloName}', '${eloTour}')">
+                      <i class="fas fa-chart-line"></i>
+                      <span>Form: ${eloRating}</span>
+                      <span class="form-delta ${eloDeltaClass}">${eloDeltaIcon}${eloDeltaVal !== 0 ? Math.abs(eloDeltaVal) : ''}</span>
+                    </button>`
+            : '';
+
+        const matchCountSubtitle = `<div class="recent-matches-subtitle">${recentButtonDisabled ? 'No match history available' : `${recentMatchCount} matches • ${recentTournamentCount} tournaments`}</div>`;
+
         const isAtp = this.isAtpPlayer(player);
         const seasonWonLostRaw = isAtp
             ? (player?.ytd_won_lost || player?.stats_2026?.ytd_won_lost || profile.ytdWonLost || profile.wonLost || '')
@@ -179,11 +205,6 @@ const PlayerModule = {
         const wonLost = this.parseWonLost(seasonWonLostRaw);
         const winsValue = wonLost.wins ?? stats?.wins ?? 0;
         const lossesValue = wonLost.losses ?? stats?.losses ?? 0;
-        const recentTournamentCount = Array.isArray(recentMatches?.tournaments) ? recentMatches.tournaments.length : 0;
-        const recentMatchCount = Array.isArray(recentMatches?.tournaments)
-            ? recentMatches.tournaments.reduce((acc, t) => acc + (Array.isArray(t.matches) ? t.matches.length : 0), 0)
-            : 0;
-        const recentButtonDisabled = recentMatchCount === 0;
 
         const recentMatchesModalHTML = this.getRecentMatchesModalHTML(player, recentMatches, Utils);
         let html = `
@@ -218,11 +239,8 @@ const PlayerModule = {
                                 <i class="fas fa-table-list"></i>
                                 <span>Recent Matches</span>
                             </button>
-                            <div class="recent-matches-subtitle">
-                                ${recentButtonDisabled
-                                    ? 'No match history available'
-                                    : `${recentMatchCount} matches • ${recentTournamentCount} tournaments`}
-                            </div>
+                            ${matchCountSubtitle}
+                            ${formBadgeHTML}
                         </div>
                     </div>
                     <div class="season-summary">
@@ -364,7 +382,7 @@ const PlayerModule = {
     },
 
     getPerformanceTableHTML(performance, isAtp = false) {
-        const years = ['2020','2021','2022','2023','2024','2025','2026'];
+        const years = ['2020', '2021', '2022', '2023', '2024', '2025', '2026'];
         return `
             <div class="performance-table-grid">
                 <div class="perf-head event">Event</div>
@@ -375,14 +393,14 @@ const PlayerModule = {
                             <div class="event-name">${row.event}</div>
                         </div>
                         ${years.map(y => {
-                            const rawVal = row.results[y];
-                            const hasValue = rawVal !== undefined && rawVal !== null && String(rawVal).trim() !== '';
-                            let val = hasValue ? String(rawVal).trim() : '';
-                            // Keep current-year cells empty when no result yet; use "-" for prior years.
-                            if (!val) val = (y === '2026') ? '' : '-';
-                            const winnerClass = val === 'W' ? ' winner' : '';
-                            return `<div class="perf-cell${winnerClass}">${val}</div>`;
-                        }).join('')}
+            const rawVal = row.results[y];
+            const hasValue = rawVal !== undefined && rawVal !== null && String(rawVal).trim() !== '';
+            let val = hasValue ? String(rawVal).trim() : '';
+            // Keep current-year cells empty when no result yet; use "-" for prior years.
+            if (!val) val = (y === '2026') ? '' : '-';
+            const winnerClass = val === 'W' ? ' winner' : '';
+            return `<div class="perf-cell${winnerClass}">${val}</div>`;
+        }).join('')}
                     </div>
                 `).join('')}
             </div>
@@ -435,11 +453,11 @@ const PlayerModule = {
 
         // Get Utils safely
         const Utils = window.TennisApp?.Utils || {};
-        const playerImage = typeof Utils.getPlayerImage === 'function' 
-            ? Utils.getPlayerImage(player) 
+        const playerImage = typeof Utils.getPlayerImage === 'function'
+            ? Utils.getPlayerImage(player)
             : (player?.image_url || '');
-        const flag = typeof Utils.getFlag === 'function' 
-            ? Utils.getFlag(player?.country) 
+        const flag = typeof Utils.getFlag === 'function'
+            ? Utils.getFlag(player?.country)
             : '';
         const rankText = player?.rank ? `#${player.rank}` : '';
         const isAtp = this.isAtpPlayer(player);
@@ -496,7 +514,7 @@ const PlayerModule = {
         // Set image src via JS (avoids HTML encoding issues) with fallback
         const img = wrapper.querySelector('.stats-na-image-wrap img');
         if (img) {
-            img.onerror = function() { this.onerror = null; this.src = initialsSrc; };
+            img.onerror = function () { this.onerror = null; this.src = initialsSrc; };
             img.src = imgSrc;
         }
 
@@ -782,7 +800,7 @@ const PlayerModule = {
     /**
      * Add listeners for the stats toggle buttons
      */
-    addToggleListeners() {},
+    addToggleListeners() { },
 
     /**
      * Generate demo stats
@@ -885,7 +903,7 @@ const PlayerModule = {
             // The scraper returns { "2019": "Q1", "2020": "...", ... }
             return row;
         };
-        
+
         // Map scraped names to display names if needed
         return [
             { event: 'Australian Open', surface: 'hard', results: buildResults('Australian Open') },
@@ -896,7 +914,7 @@ const PlayerModule = {
     },
 
     buildPerformanceFromRecords(records) {
-        const years = ['2020','2021','2022','2023','2024','2025','2026'];
+        const years = ['2020', '2021', '2022', '2023', '2024', '2025', '2026'];
         const byYear = {};
         records.forEach(row => {
             if (row && row.year) {
@@ -962,10 +980,10 @@ const PlayerModule = {
             '2025': vals[5]
         });
         return [
-            { event: 'Australian Open', surface: 'hard', results: sample(['R16','QF','SF','SF','F','W']) },
-            { event: 'Roland Garros', surface: 'clay', results: sample(['R32','R16','QF','F','W','SF']) },
-            { event: 'Wimbledon', surface: 'grass', results: sample(['R32','R16','QF','SF','QF','F']) },
-            { event: 'US Open', surface: 'hard', results: sample(['R16','QF','SF','W','SF','W']) }
+            { event: 'Australian Open', surface: 'hard', results: sample(['R16', 'QF', 'SF', 'SF', 'F', 'W']) },
+            { event: 'Roland Garros', surface: 'clay', results: sample(['R32', 'R16', 'QF', 'F', 'W', 'SF']) },
+            { event: 'Wimbledon', surface: 'grass', results: sample(['R32', 'R16', 'QF', 'SF', 'QF', 'F']) },
+            { event: 'US Open', surface: 'hard', results: sample(['R16', 'QF', 'SF', 'W', 'SF', 'W']) }
         ];
     },
 
