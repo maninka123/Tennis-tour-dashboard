@@ -16,7 +16,11 @@
 - Real-time ATP/WTA live scores with server/game-point context.
 - Auto-refresh via SocketIO with polling fallback.
 
-- Form — Current rating: lightweight match-form metric that reflects a player's recent results relative to expectations. Designed to highlight short-term hot/cold streaks alongside the official rating.
+
+
+### 🔥 Form — Current rating
+
+- Lightweight match-form metric that reflects a player's recent results relative to expectations. Shows short-term hot/cold streaks alongside the official rating.
 
   Formula (Elo-style update):
 
@@ -32,9 +36,6 @@
 
   Notes: choose $K$ and $w_i$ to tune responsiveness; the value $F$ is shown alongside the official rating to indicate short-term form.
 
-  Example (numeric):
-
-  Suppose $R=1500$, $K=20$, and the last three matches use weights $w=[0.6, 0.3, 0.1]$ with opponent ratings $O=[1520,1480,1550]$ and results $S=[1,0,0]$ (win, loss, loss). Expected scores are approximately $E\approx[0.471,0.529,0.429]$, so the weighted sum $\sum w_i(S_i-E_i)\approx0.116$. The update is $\Delta=K\times0.116\approx2.32$, giving $F\approx1502.3$ which indicates a small recent uptick in form.
 
 ### 📊 Match Coverage
 - Recently finished matches with quick stat breakdowns.
@@ -72,6 +73,17 @@ Visit: **[tennis-tour-dashboard.onrender.com](https://tennis-tour-dashboard.onre
 ### 💻 Local Development
 
 #### 1. Option A: Quick Start Script
+```bash
+./start.sh
+```
+
+Windows (PowerShell):
+
+```powershell
+.\start.sh
+```
+
+macOS / Linux (bash):
 
 ```bash
 ./start.sh
@@ -100,40 +112,6 @@ Default local URLs:
 - Frontend: `http://localhost:8085`
 - Backend: `http://localhost:5001`
 - Notification app: `http://localhost:5090`
-
-Platform-specific Quick Start
-
-- Windows (PowerShell):
-
-```powershell
-.\start.sh
-# or run manual steps
-cd backend
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-python app.py
-
-# new terminal for frontend
-cd frontend
-python no_cache_server.py
-```
-
-- macOS / Linux (bash):
-
-```bash
-./start.sh
-# or manual
-cd backend
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python app.py
-
-# new terminal for frontend
-cd frontend
-python3 no_cache_server.py
-```
 
 ---
 
