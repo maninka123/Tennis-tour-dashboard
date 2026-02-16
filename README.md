@@ -16,6 +16,22 @@
 - Real-time ATP/WTA live scores with server/game-point context.
 - Auto-refresh via SocketIO with polling fallback.
 
+- Form — Current rating: lightweight match-form metric that reflects a player's recent results relative to expectations. Designed to highlight short-term hot/cold streaks alongside the official rating.
+
+  Formula (Elo-style update):
+
+  $$F = R + K \sum_{i=1}^n w_i (S_i - E_i)$$
+
+  where:
+
+  - $R$ = current official rating
+  - $K$ = scaling constant (controls sensitivity)
+  - $w_i$ = time-decay weight for match $i$ (recent matches larger)
+  - $S_i$ = actual score for match $i$ (1 = win, 0.5 = draw, 0 = loss)
+  - $E_i = \dfrac{1}{1 + 10^{(O_i - R)/400}}$ is the expected score vs opponent rating $O_i$
+
+  Notes: choose $K$ and $w_i$ to tune responsiveness; the value $F$ is shown alongside the official rating to indicate short-term form.
+
 ### 📊 Match Coverage
 - Recently finished matches with quick stat breakdowns.
 - Upcoming matches (next 2 days) with H2H/prediction insights.
@@ -80,6 +96,40 @@ Default local URLs:
 - Frontend: `http://localhost:8085`
 - Backend: `http://localhost:5001`
 - Notification app: `http://localhost:5090`
+
+Platform-specific Quick Start
+
+- Windows (PowerShell):
+
+```powershell
+.\start.sh
+# or run manual steps
+cd backend
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+python app.py
+
+# new terminal for frontend
+cd frontend
+python no_cache_server.py
+```
+
+- macOS / Linux (bash):
+
+```bash
+./start.sh
+# or manual
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python app.py
+
+# new terminal for frontend
+cd frontend
+python3 no_cache_server.py
+```
 
 ---
 
