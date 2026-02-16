@@ -32,6 +32,10 @@
 
   Notes: choose $K$ and $w_i$ to tune responsiveness; the value $F$ is shown alongside the official rating to indicate short-term form.
 
+  Example (numeric):
+
+  Suppose $R=1500$, $K=20$, and the last three matches use weights $w=[0.6, 0.3, 0.1]$ with opponent ratings $O=[1520,1480,1550]$ and results $S=[1,0,0]$ (win, loss, loss). Expected scores are approximately $E\approx[0.471,0.529,0.429]$, so the weighted sum $\sum w_i(S_i-E_i)\approx0.116$. The update is $\Delta=K\times0.116\approx2.32$, giving $F\approx1502.3$ which indicates a small recent uptick in form.
+
 ### 📊 Match Coverage
 - Recently finished matches with quick stat breakdowns.
 - Upcoming matches (next 2 days) with H2H/prediction insights.
