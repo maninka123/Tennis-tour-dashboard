@@ -1793,6 +1793,53 @@ class TennisDataFetcher:
                 return index['by_full'][match[0]]
         return None
 
+    def _match_wta_scraped_rankings_safe(self, name, scraped_index=None):
+        """
+        Conservative WTA scraped matcher for rankings/player cards.
+        Prevents cross-player stat bleed by avoiding broad fuzzy matching.
+        """
+        index = scraped_index or self._load_wta_scraped_index()
+        if not name:
+            return None
+        norm = self._normalize_player_name(name)
+        if not norm:
+            return None
+
+        exact = (index.get('by_full') or {}).get(norm)
+        if exact:
+            return exact
+
+        tokens = norm.split()
+        if len(tokens) < 2:
+            return None
+        first = tokens[0]
+        last = tokens[-1]
+        candidates = list((index.get('by_last') or {}).get(last) or [])
+        if not candidates:
+            return None
+
+        compatible = []
+        for candidate in candidates:
+            cand_first = str(candidate.get('first') or '').strip().lower()
+            if not cand_first:
+                continue
+            if (
+                cand_first == first
+                or cand_first.startswith(first)
+                or first.startswith(cand_first)
+            ):
+                compatible.append(candidate)
+                continue
+            # Transliteration guard (e.g., yulia <-> yuliia) while avoiding broad fuzzy links.
+            if min(len(first), len(cand_first)) >= 5:
+                ratio = difflib.SequenceMatcher(None, first, cand_first).ratio()
+                if ratio >= 0.90:
+                    compatible.append(candidate)
+
+        if len(compatible) == 1:
+            return compatible[0]
+        return None
+
     def _load_atp_scraped_index(self):
         if self._atp_scraped_index is not None:
             return self._atp_scraped_index
@@ -3530,7 +3577,7 @@ class TennisDataFetcher:
 
     def _resolve_wta_player(self, name, country, player_id):
         rank_entry = self._match_wta_ranking(name)
-        scraped_entry = self._match_wta_scraped(name)
+        scraped_entry = self._match_wta_scraped_rankings_safe(name)
         resolved_id = int(player_id) if player_id and str(player_id).isdigit() else None
         if resolved_id is None:
             resolved_id = (rank_entry or {}).get('id')
@@ -5457,7 +5504,7 @@ class TennisDataFetcher:
                     continue
                 norm_name = self._normalize_player_name(name)
 
-                scraped = self._match_wta_scraped(name)
+                scraped = self._match_wta_scraped_rankings_safe(name, scraped_index=scraped_index)
                 profile_data = scraped.get('profile') if scraped else {}
                 stats_data = scraped.get('stats') if scraped else {}
                 scraped_player_id = (scraped or {}).get('player_id')

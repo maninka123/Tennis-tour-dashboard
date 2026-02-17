@@ -104,11 +104,12 @@ const StatZoneModule = {
             return {
                 key: 'wta',
                 title: 'WTA Stat Zone',
-                updatedBadge: '2 Categories • WTA Normalized Ratings',
-                categoryOrder: ['serve', 'return'],
+                updatedBadge: '3 Categories • WTA Normalized Ratings',
+                categoryOrder: ['serve', 'return', 'current_form'],
                 categoryLabel: {
                     serve: 'Serving Leaders',
-                    return: 'Returning Leaders'
+                    return: 'Returning Leaders',
+                    current_form: 'Current Form Rankings'
                 }
             };
         }
@@ -116,12 +117,13 @@ const StatZoneModule = {
         return {
             key: 'atp',
             title: 'ATP Stat Zone',
-            updatedBadge: '3 Categories • ATP Calculated Ratings',
-            categoryOrder: ['serve', 'return', 'pressure'],
+            updatedBadge: '4 Categories • ATP Calculated Ratings',
+            categoryOrder: ['serve', 'return', 'pressure', 'current_form'],
             categoryLabel: {
                 serve: 'Serve Leaders',
                 return: 'Return Leaders',
-                pressure: 'Under Pressure'
+                pressure: 'Under Pressure',
+                current_form: 'Current Form Rankings'
             }
         };
     },
@@ -174,9 +176,13 @@ const StatZoneModule = {
         const modal = document.getElementById('statsZoneModal');
         const title = document.getElementById('statsZoneTitle');
         if (!modal) return;
+        const modalContent = modal.querySelector('.stats-zone-modal');
 
         const cfg = this.getTourConfig();
         if (title) title.textContent = cfg.title;
+        if (modalContent) {
+            modalContent.classList.toggle('stats-zone-modal--atp', cfg.key === 'atp');
+        }
 
         modal.classList.add('active');
         await this.ensureDataLoaded();
@@ -263,6 +269,7 @@ const StatZoneModule = {
         const img = window.TennisApp.Utils.getPlayerImage({
             id: topItem?.player_id || null,
             name: topItem?.player_name || 'Player',
+            player_code: topItem?.player_code || '',
             image_url: topItem?.image_url || ''
         }, tourKey);
 
@@ -326,6 +333,93 @@ const StatZoneModule = {
         return `
             <section class="stats-zone-col">
                 <div class="stats-zone-col-head">
+                    <span>Rank</span>
+                    <span>${categoryLabel}</span>
+                    <span>Rating</span>
+                </div>
+                <div class="stats-zone-col-body">
+                    ${items || '<div class="stats-zone-empty">No rows found.</div>'}
+                </div>
+            </section>
+        `;
+    },
+
+    getCurrentFormRows(tourKey, limit = 50) {
+        const eloMap = window.TennisApp?.AppState?.eloRatings?.[tourKey];
+        const rankings = window.TennisApp?.AppState?.rankings?.[tourKey] || [];
+        if (!(eloMap instanceof Map) || eloMap.size === 0) return [];
+
+        const normalize = (name) => String(name || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/["'`]/g, '')
+            .replace(/[^a-z0-9\s.-]/g, ' ')
+            .replace(/[.]/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+
+        const rankingsByName = new Map();
+        rankings.forEach((row) => {
+            const key = normalize(row?.name);
+            if (key && !rankingsByName.has(key)) rankingsByName.set(key, row);
+        });
+
+        return Array.from(eloMap.entries())
+            .filter(([, data]) => Number(data?.matchCount || 0) > 0)
+            .sort((a, b) => Number(b?.[1]?.elo || 0) - Number(a?.[1]?.elo || 0))
+            .slice(0, Math.max(1, Number(limit) || 50))
+            .map(([name, data], index) => {
+                const rankRow = rankingsByName.get(normalize(name)) || {};
+                return {
+                    rank: index + 1,
+                    player_name: name,
+                    rating: Number(data?.elo || 0),
+                    player_id: rankRow?.id || null,
+                    player_code: rankRow?.player_code || '',
+                    image_url: rankRow?.image_url || '',
+                    profile_url: rankRow?.profile_url || ''
+                };
+            });
+    },
+
+    renderCurrentFormColumn(rows, tourKey, categoryLabel) {
+        const items = (rows || []).map((row) => {
+            const img = window.TennisApp.Utils.getPlayerImage({
+                id: row.player_id || null,
+                name: row.player_name || 'Player',
+                player_code: row.player_code || '',
+                image_url: row.image_url || ''
+            }, tourKey);
+            const encodedName = encodeURIComponent(row.player_name || '');
+
+            let profileOpen = `<span class="stats-zone-player-name">${row.player_name}</span>`;
+            if (tourKey === 'wta') {
+                const playerId = Number(row.player_id || 0);
+                if (Number.isFinite(playerId) && playerId > 0) {
+                    profileOpen = `<button type="button" class="stats-zone-player-name stats-zone-player-name-btn" data-player-id="${playerId}" title="Open player card">${row.player_name}</button>`;
+                }
+            } else if (row.profile_url) {
+                profileOpen = `<a class="stats-zone-player-name" href="${row.profile_url}" target="_blank" rel="noopener noreferrer">${row.player_name}</a>`;
+            }
+
+            return `
+                <div class="stats-zone-row elo-row">
+                    <div class="stats-zone-rank">#${row.rank}</div>
+                    <div class="stats-zone-player">
+                        <div class="stats-zone-player-avatar"><img src="${img}" alt="${row.player_name}"></div>
+                        ${profileOpen}
+                    </div>
+                    <button class="elo-score-cell" data-elo-player="${encodedName}" data-elo-tour="${tourKey}" title="View form trajectory">
+                        ${Math.round(Number(row.rating || 0))}
+                    </button>
+                </div>
+            `;
+        }).join('');
+
+        return `
+            <section class="stats-zone-col stats-zone-elo-col">
+                <div class="stats-zone-col-head elo-col-head">
                     <span>Rank</span>
                     <span>${categoryLabel}</span>
                     <span>Rating</span>
@@ -452,6 +546,7 @@ const StatZoneModule = {
         const status = this.getStatusState() || {};
         const categories = data.categories || {};
         const topPlayers = data.top_players || {};
+        const currentFormRows = this.getCurrentFormRows(cfg.key, 50);
 
         const updatedAt = status.updated_at || data.fetched_at || null;
 
@@ -464,15 +559,23 @@ const StatZoneModule = {
         const formulaCards = this.renderInfoCards(data.formulas || {}, cfg.categoryOrder, cfg.categoryLabel);
 
         const topCards = cfg.categoryOrder.map((key) => {
-            const label = cfg.categoryLabel[key] || key;
-            return this.renderTopCard(label, topPlayers[key], cfg.key);
+            const label = key === 'current_form' ? 'Current Form Leader' : (cfg.categoryLabel[key] || key);
+            const topItem = key === 'current_form'
+                ? (currentFormRows[0] || null)
+                : (topPlayers[key] || null);
+            return this.renderTopCard(label, topItem, cfg.key);
         }).join('');
 
         const columns = cfg.categoryOrder.map((key) => {
+            if (key === 'current_form') {
+                return this.renderCurrentFormColumn(currentFormRows, cfg.key, cfg.categoryLabel[key] || 'Current Form Rankings');
+            }
             return this.renderCategoryColumn(key, cfg.categoryLabel[key] || key, categories[key] || [], cfg.key);
         }).join('');
 
-        const colClass = cfg.categoryOrder.length === 2 ? 'cols-2' : 'cols-3';
+        const colClass = cfg.categoryOrder.length === 4
+            ? 'cols-4'
+            : (cfg.categoryOrder.length === 2 ? 'cols-2' : 'cols-3');
 
         content.innerHTML = `
             <div class="stats-zone-shell">
@@ -500,8 +603,6 @@ const StatZoneModule = {
                 <section class="stats-zone-grid ${colClass}">
                     ${columns}
                 </section>
-
-                ${this.renderEloLeaderboard(cfg.key)}
             </div>
         `;
 

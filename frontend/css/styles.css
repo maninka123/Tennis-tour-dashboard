@@ -488,7 +488,7 @@ body {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  font-size: 0.84rem;
+  font-size: 0.92rem;
 }
 
 .endpoint-health-table th {
@@ -498,7 +498,7 @@ body {
   color: #1f3958;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: 0.72rem;
+  font-size: 0.76rem;
   font-weight: 800;
   padding: 8px 10px;
   text-align: left;
@@ -506,7 +506,7 @@ body {
 }
 
 .endpoint-health-table td {
-  padding: 8px 10px;
+  padding: 10px 10px;
   border-bottom: 1px solid rgba(31, 57, 88, 0.1);
   color: #1f2937;
   vertical-align: top;
@@ -514,18 +514,18 @@ body {
 
 .endpoint-health-table th:first-child,
 .endpoint-health-table td:first-child {
-  width: 32%;
+  width: 24%;
 }
 
 .endpoint-health-table th:nth-child(2),
 .endpoint-health-table td:nth-child(2),
 .endpoint-health-table th:nth-child(3),
 .endpoint-health-table td:nth-child(3) {
-  width: 34%;
+  width: 38%;
 }
 
 .endpoint-health-table td:first-child {
-  font-size: inherit;
+  font-size: 1.03rem;
   font-weight: 700;
 }
 
@@ -562,7 +562,7 @@ body {
 }
 
 .endpoint-health-meta {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: #5f738d;
   font-weight: 700;
 }
@@ -5225,8 +5225,8 @@ img {
 }
 
 .stats-zone-modal.stats-zone-modal--atp {
-  max-width: 1460px;
-  width: 97vw;
+  max-width: 1700px;
+  width: 98vw;
 }
 
 .stats-zone-breakdown-modal {
