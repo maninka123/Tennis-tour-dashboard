@@ -3376,6 +3376,29 @@ class TennisDataFetcher:
             return 96
         return 128
 
+    def _wta_round_from_match_number(self, match_number):
+        try:
+            num = int(match_number)
+        except Exception:
+            return ''
+        if num <= 0:
+            return ''
+        if num == 1:
+            return 'F'
+        if num in (2, 3):
+            return 'SF'
+        if 4 <= num <= 7:
+            return 'QF'
+        if 8 <= num <= 15:
+            return 'R16'
+        if 16 <= num <= 31:
+            return 'R32'
+        if 32 <= num <= 63:
+            return 'R64'
+        if 64 <= num <= 127:
+            return 'R128'
+        return ''
+
     def _wta_round_from_match(self, match, is_grand_slam, draw_size=32):
         round_id = str(match.get('RoundID') or '').strip()
         draw_level_type = str(match.get('DrawLevelType') or '').strip().upper()
@@ -3411,6 +3434,12 @@ class TennisDataFetcher:
 
         if round_id.isdigit():
             rid = int(round_id)
+            # Live/recent WTA feeds can publish numeric RoundID with opposite ordering.
+            # MatchID sequence (LS001=F, LS002/003=SF, ...) is stable across feeds and
+            # gives the correct stage for in-progress rows.
+            round_from_match_number = self._wta_round_from_match_number(match_number)
+            if round_from_match_number:
+                return round_from_match_number
             if is_grand_slam:
                 gs_rounds = ['R128', 'R64', 'R32', 'R16', 'QF', 'SF', 'F']
                 # Most WTA draw feeds expose numeric rounds with no "winner" row:
@@ -3455,21 +3484,9 @@ class TennisDataFetcher:
                 if 1 <= rid <= len(rounds):
                     return rounds[rid - 1]
 
-        if match_number:
-            if match_number == 1:
-                return 'F'
-            if match_number in (2, 3):
-                return 'SF'
-            if 4 <= match_number <= 7:
-                return 'QF'
-            if 8 <= match_number <= 15:
-                return 'R16'
-            if 16 <= match_number <= 31:
-                return 'R32'
-            if 32 <= match_number <= 63:
-                return 'R64'
-            if 64 <= match_number <= 127:
-                return 'R128'
+        round_from_match_number = self._wta_round_from_match_number(match_number)
+        if round_from_match_number:
+            return round_from_match_number
         return ''
 
     def _parse_wta_sets(self, match):
