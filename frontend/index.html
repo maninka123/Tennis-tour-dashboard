@@ -1,433 +1,668 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RallyCourt 2026</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="vendor/brackets-viewer/brackets-viewer.min.css">
-    <link rel="stylesheet" href="css/styles.css?v=20260217e">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="vendor/brackets-viewer/brackets-viewer.min.css"
+    />
+    <link rel="stylesheet" href="css/styles.css?v=20260218o" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
-    <script type="text/javascript" src="vendor/brackets-viewer/brackets-viewer.min.js"></script>
-</head>
-<body>
+    <script
+      type="text/javascript"
+      src="vendor/brackets-viewer/brackets-viewer.min.js"
+    ></script>
+  </head>
+  <body>
     <div class="dashboard-container">
-        <!-- Header with Tour Tabs -->
-        <header class="main-header">
-            <div class="logo">
-                <i class="fas fa-tennis-ball"></i>
-                <h1>RallyCourt 2026</h1>
+      <!-- Header with Tour Tabs -->
+      <header class="main-header">
+        <div class="logo">
+          <i class="fas fa-tennis-ball"></i>
+          <h1>RallyCourt 2026</h1>
+        </div>
+        <div class="tour-tabs">
+          <button class="tour-tab active" data-tour="atp">ATP Tour</button>
+          <button class="tour-tab" data-tour="wta">WTA Tour</button>
+        </div>
+        <div class="header-actions">
+          <div class="header-primary-actions">
+            <button
+              class="stat-zone-btn"
+              id="statsZoneBtn"
+              onclick="window.TennisApp.openStatsZoneModal()"
+              title="Stats Zone"
+            >
+              <i class="fas fa-chart-line"></i>
+              Stat Zone
+            </button>
+            <button
+              class="h2h-btn"
+              onclick="window.TennisApp.openH2HModal()"
+              title="Player Head-to-Head Comparison"
+            >
+              <i class="fas fa-users"></i>
+              H2H
+            </button>
+            <button
+              class="favourites-btn"
+              id="favouritesBtn"
+              title="Favourite Players"
+            >
+              <i class="fas fa-star"></i>
+              Favourites
+            </button>
+          </div>
+          <button
+            class="update-data-btn"
+            onclick="
+              window.open(
+                'update.html',
+                'RallyCourtUpdater',
+                'width=1000,height=800',
+              )
+            "
+            title="System Update"
+          >
+            <i class="fas fa-sync-alt"></i>
+            Update
+          </button>
+          <div class="endpoint-health-wrap" id="endpointHealthWrap">
+            <button
+              class="endpoint-health-toggle"
+              id="endpointHealthToggle"
+              type="button"
+              title="Endpoint health"
+              aria-label="Open endpoint health panel"
+              aria-expanded="false"
+            >
+              <span class="endpoint-health-battery">
+                <span class="endpoint-health-fill" id="endpointHealthFill"></span>
+                <span class="endpoint-health-label" id="endpointHealthLabel"
+                  >--%</span
+                >
+              </span>
+              <span class="endpoint-health-text">API Health</span>
+            </button>
+            <div
+              class="endpoint-health-popover"
+              id="endpointHealthPopover"
+              hidden
+            >
+              <div class="endpoint-health-popover-head">
+                <div class="endpoint-health-popover-title">Endpoint Health</div>
+                <button
+                  class="endpoint-health-refresh"
+                  id="endpointHealthRefreshBtn"
+                  type="button"
+                  title="Refresh endpoint health"
+                  aria-label="Refresh endpoint health"
+                >
+                  <i class="fas fa-rotate-right"></i>
+                </button>
+              </div>
+              <div class="endpoint-health-summary" id="endpointHealthSummary">
+                Checking endpoints...
+              </div>
+              <div class="endpoint-health-table-wrap">
+                <table class="endpoint-health-table" id="endpointHealthTable">
+                  <thead>
+                    <tr>
+                      <th>Endpoint</th>
+                      <th>ATP</th>
+                      <th>WTA</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="3">Loading...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="endpoint-health-generated" id="endpointHealthGenerated">
+                Updated --
+              </div>
             </div>
-            <div class="tour-tabs">
-                <button class="tour-tab active" data-tour="atp">ATP Tour</button>
-                <button class="tour-tab" data-tour="wta">WTA Tour</button>
-            </div>
-            <div class="header-actions">
-                <button class="stat-zone-btn" id="statsZoneBtn" onclick="window.TennisApp.openStatsZoneModal()" title="Stats Zone">
-                    <i class="fas fa-chart-line"></i>
-                    Stat Zone
-                </button>
-                <button class="h2h-btn" onclick="window.TennisApp.openH2HModal()" title="Player Head-to-Head Comparison">
-                    <i class="fas fa-users"></i>
-                    H2H
-                </button>
-                <button class="favourites-btn" id="favouritesBtn" title="Favourite Players">
-                    <i class="fas fa-star"></i>
-                    Favourites
-                </button>
-                <button class="update-data-btn" onclick="window.open('update.html', 'RallyCourtUpdater', 'width=1000,height=800')" title="System Update">
-                    <i class="fas fa-sync-alt"></i>
-                    Update
-                </button>
-                <span class="live-indicator">
-                    <span class="live-dot"></span>
-                    LIVE
-                </span>
-                <span class="last-updated" id="lastUpdated">Updated: --:--</span>
-            </div>
-        </header>
+          </div>
+          <div class="header-status-corner">
+            <span class="live-indicator">
+              <span class="live-dot"></span>
+              LIVE
+            </span>
+            <span class="last-updated" id="lastUpdated">Updated: --:--</span>
+          </div>
+        </div>
+      </header>
 
-        <!-- Live Scores Bar (Top Scrollable) -->
-        <section class="live-scores-section">
-            <div class="season-progress-header">
-                <div class="season-progress-strip" id="seasonProgressStrip" aria-live="polite">
-                    <div class="season-progress-topline">
-                        <span class="season-progress-kicker">Season Progress</span>
-                        <div class="season-progress-badges">
-                            <span class="season-progress-count" id="seasonProgressCount">1 / 8</span>
-                            <span class="season-progress-percent" id="seasonProgressPercent">12%</span>
-                        </div>
-                    </div>
-                    <div class="season-progress-track" id="seasonProgressTrack"></div>
-                    <div class="season-progress-meta">
-                        <span class="season-active-pill" id="seasonActivePill">Australian Swing</span>
-                        <span class="season-surface-pill" id="seasonSurfacePill"><i class="fas fa-table-cells"></i> HARD</span>
-                    </div>
-                </div>
-                <div class="season-launch-group">
-                    <a
-                        class="analysis-launch-btn analysis-launch-current analysis-launch-atp"
-                        id="analysisLaunchCurrentBtn"
-                        data-analysis-tour="atp"
-                        href="/analysis/atp/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title="Open ATP Data Lab"
-                    >
-                        <span class="analysis-tour-pill" id="analysisLaunchTourPill">ATP</span>
-                        <i class="fas fa-chart-area"></i>
-                        <span class="launch-label" id="analysisLaunchLabel">Open ATP Data Lab</span>
-                        <div class="analysis-launch-preview" aria-hidden="true">
-                            <div class="preview-title">Data Analysis Workspace</div>
-                            <p class="preview-copy">Interactive views for player trends, tournament insights, and records from your local archive.</p>
-                            <div class="preview-feature-grid">
-                                <span class="preview-chip"><i class="fas fa-user"></i> Player Explorer</span>
-                                <span class="preview-chip"><i class="fas fa-trophy"></i> Tournament Explorer</span>
-                                <span class="preview-chip"><i class="fas fa-book-open"></i> Records Book</span>
-                            </div>
-                            <div class="preview-chart-stack">
-                                <svg class="preview-chart preview-line" viewBox="0 0 160 44" preserveAspectRatio="none">
-                                    <polyline points="0,38 20,37 38,31 56,24 74,16 92,11 112,9 134,6 160,7"></polyline>
-                                </svg>
-                                <svg class="preview-chart preview-bars" viewBox="0 0 160 44" preserveAspectRatio="none">
-                                    <rect x="4" y="24" width="20" height="16"></rect>
-                                    <rect x="30" y="18" width="20" height="22"></rect>
-                                    <rect x="56" y="11" width="20" height="29"></rect>
-                                    <rect x="82" y="15" width="20" height="25"></rect>
-                                    <rect x="108" y="8" width="20" height="32"></rect>
-                                    <rect x="134" y="13" width="20" height="27"></rect>
-                                </svg>
-                            </div>
-                            <small class="preview-footnote">Opens in a separate page</small>
-                        </div>
-                    </a>
-                    <a
-                        class="analysis-launch-btn notification-launch-btn"
-                        id="notificationLaunchBtn"
-                        href="/notifications/open"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title="Open Notification System"
-                    >
-                        <i class="fas fa-bell"></i>
-                        <span class="launch-label" id="notificationLaunchLabel">Open Notification System</span>
-                        <div class="analysis-launch-preview" aria-hidden="true">
-                            <div class="preview-title">Notification Rule Center</div>
-                            <p class="preview-copy">Create alert rules for upcoming, live, and result events. Rules keep running in the background after save.</p>
-                            <div class="preview-feature-grid">
-                                <span class="preview-chip"><i class="fas fa-bell"></i> Rule Builder</span>
-                                <span class="preview-chip"><i class="fas fa-envelope"></i> Email Alerts</span>
-                                <span class="preview-chip"><i class="fas fa-clock"></i> Auto Scheduler</span>
-                            </div>
-                            <small class="preview-footnote">Starts automatically and opens in a separate page</small>
-                        </div>
-                    </a>
-                </div>
+      <!-- Live Scores Bar (Top Scrollable) -->
+      <section class="live-scores-section">
+        <div class="season-progress-header">
+          <div
+            class="season-progress-strip"
+            id="seasonProgressStrip"
+            aria-live="polite"
+          >
+            <div class="season-progress-topline">
+              <span class="season-progress-kicker">Season Progress</span>
+              <div class="season-progress-badges">
+                <span class="season-progress-count" id="seasonProgressCount"
+                  >1 / 8</span
+                >
+                <span class="season-progress-percent" id="seasonProgressPercent"
+                  >12%</span
+                >
+              </div>
             </div>
-            <div class="section-header live-section-header">
-                <h2>
-                    <i class="fas fa-bolt"></i>
-                    Live Matches
-                    <button class="match-reload-btn" id="liveMatchesReloadBtn" type="button" aria-label="Reload live matches" title="Reload live matches">
-                        <i class="fas fa-rotate-right"></i>
-                    </button>
+            <div class="season-progress-track" id="seasonProgressTrack"></div>
+            <div class="season-progress-meta">
+              <span class="season-active-pill" id="seasonActivePill"
+                >Australian Swing</span
+              >
+              <span class="season-surface-pill" id="seasonSurfacePill"
+                ><i class="fas fa-table-cells"></i> HARD</span
+              >
+            </div>
+          </div>
+          <div class="season-launch-group">
+            <a
+              class="analysis-launch-btn analysis-launch-current analysis-launch-atp"
+              id="analysisLaunchCurrentBtn"
+              data-analysis-tour="atp"
+              href="/analysis/atp/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Open ATP Data Lab"
+            >
+              <span class="analysis-tour-pill" id="analysisLaunchTourPill"
+                >ATP</span
+              >
+              <i class="fas fa-chart-area"></i>
+              <span class="launch-label" id="analysisLaunchLabel"
+                >Open ATP Data Lab</span
+              >
+              <div class="analysis-launch-preview" aria-hidden="true">
+                <div class="preview-title">Data Analysis Workspace</div>
+                <p class="preview-copy">
+                  Interactive views for player trends, tournament insights, and
+                  records from your local archive.
+                </p>
+                <div class="preview-feature-grid">
+                  <span class="preview-chip"
+                    ><i class="fas fa-user"></i> Player Explorer</span
+                  >
+                  <span class="preview-chip"
+                    ><i class="fas fa-trophy"></i> Tournament Explorer</span
+                  >
+                  <span class="preview-chip"
+                    ><i class="fas fa-book-open"></i> Records Book</span
+                  >
+                </div>
+                <div class="preview-chart-stack">
+                  <svg
+                    class="preview-chart preview-line"
+                    viewBox="0 0 160 44"
+                    preserveAspectRatio="none"
+                  >
+                    <polyline
+                      points="0,38 20,37 38,31 56,24 74,16 92,11 112,9 134,6 160,7"
+                    ></polyline>
+                  </svg>
+                  <svg
+                    class="preview-chart preview-bars"
+                    viewBox="0 0 160 44"
+                    preserveAspectRatio="none"
+                  >
+                    <rect x="4" y="24" width="20" height="16"></rect>
+                    <rect x="30" y="18" width="20" height="22"></rect>
+                    <rect x="56" y="11" width="20" height="29"></rect>
+                    <rect x="82" y="15" width="20" height="25"></rect>
+                    <rect x="108" y="8" width="20" height="32"></rect>
+                    <rect x="134" y="13" width="20" height="27"></rect>
+                  </svg>
+                </div>
+                <small class="preview-footnote">Opens in a separate page</small>
+              </div>
+            </a>
+            <a
+              class="analysis-launch-btn notification-launch-btn"
+              id="notificationLaunchBtn"
+              href="/notifications/open"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Open Notification System"
+            >
+              <i class="fas fa-bell"></i>
+              <span class="launch-label" id="notificationLaunchLabel"
+                >Open Notification System</span
+              >
+              <div class="analysis-launch-preview" aria-hidden="true">
+                <div class="preview-title">Notification Rule Center</div>
+                <p class="preview-copy">
+                  Create alert rules for upcoming, live, and result events.
+                  Rules keep running in the background after save.
+                </p>
+                <div class="preview-feature-grid">
+                  <span class="preview-chip"
+                    ><i class="fas fa-bell"></i> Rule Builder</span
+                  >
+                  <span class="preview-chip"
+                    ><i class="fas fa-envelope"></i> Email Alerts</span
+                  >
+                  <span class="preview-chip"
+                    ><i class="fas fa-clock"></i> Auto Scheduler</span
+                  >
+                </div>
+                <small class="preview-footnote"
+                  >Starts automatically and opens in a separate page</small
+                >
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="section-header live-section-header">
+          <h2>
+            <i class="fas fa-bolt"></i>
+            Live Matches
+            <button
+              class="match-reload-btn"
+              id="liveMatchesReloadBtn"
+              type="button"
+              aria-label="Reload live matches"
+              title="Reload live matches"
+            >
+              <i class="fas fa-rotate-right"></i>
+            </button>
+          </h2>
+        </div>
+        <div class="live-scores-container" id="liveScoresContainer">
+          <div class="live-scores-wrapper" id="liveScoresWrapper">
+            <!-- Live match cards will be inserted here -->
+            <div class="loading-placeholder">
+              <i class="fas fa-spinner fa-spin"></i>
+              <span>Loading live matches...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recently Finished Matches -->
+      <section class="recent-matches-section">
+        <div class="section-header">
+          <div class="section-title-stack">
+            <h2>
+              <i class="fas fa-check-circle"></i>
+              Recently Finished
+              <button
+                class="match-reload-btn"
+                id="recentMatchesReloadBtn"
+                type="button"
+                aria-label="Reload recent matches"
+                title="Reload recent matches"
+              >
+                <i class="fas fa-rotate-right"></i>
+              </button>
+            </h2>
+            <span class="section-updated-ago" id="recentUpdatedAgo"
+              >Updated --</span
+            >
+          </div>
+        </div>
+        <div class="recent-matches-container" id="recentMatchesContainer">
+          <div class="recent-matches-wrapper" id="recentMatchesWrapper">
+            <!-- Recent match cards will be inserted here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <!-- Left Sidebar - Rankings -->
+        <aside class="rankings-panel">
+          <div class="panel-header rankings-panel-header">
+            <div class="rankings-title-row">
+              <div class="rankings-title-stack">
+                <h2 class="rankings-title-main">
+                  <i class="fas fa-trophy"></i>
+                  <span id="rankingsTitle">ATP</span> Rankings
                 </h2>
+                <span class="rankings-updated-ago" id="rankingsUpdatedAgo"
+                  >Updated --</span
+                >
+              </div>
+              <div class="rankings-title-meta">
+                <button
+                  class="rankings-update-btn"
+                  id="rankingsUpdateBtn"
+                  type="button"
+                  aria-label="Update rankings"
+                  title="Update rankings"
+                  hidden
+                >
+                  <i class="fas fa-rotate-right"></i>
+                </button>
+              </div>
             </div>
-            <div class="live-scores-container" id="liveScoresContainer">
-                <div class="live-scores-wrapper" id="liveScoresWrapper">
-                    <!-- Live match cards will be inserted here -->
-                    <div class="loading-placeholder">
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <span>Loading live matches...</span>
-                    </div>
-                </div>
+          </div>
+          <div class="rankings-list" id="rankingsList">
+            <!-- Rankings will be inserted here -->
+            <div class="loading-placeholder">
+              <i class="fas fa-spinner fa-spin"></i>
+              <span>Loading rankings...</span>
             </div>
-        </section>
+          </div>
+          <div class="rankings-footer">
+            <button
+              class="rankings-load-more"
+              id="rankingsLoadMore"
+              type="button"
+            >
+              Show next 200
+            </button>
+          </div>
+        </aside>
 
-        <!-- Recently Finished Matches -->
-        <section class="recent-matches-section">
-            <div class="section-header">
-                <div class="section-title-stack">
-                    <h2>
-                        <i class="fas fa-check-circle"></i>
-                        Recently Finished
-                        <button class="match-reload-btn" id="recentMatchesReloadBtn" type="button" aria-label="Reload recent matches" title="Reload recent matches">
-                            <i class="fas fa-rotate-right"></i>
-                        </button>
-                    </h2>
-                    <span class="section-updated-ago" id="recentUpdatedAgo">Updated --</span>
-                </div>
-
+        <!-- Center - Tournament Calendar/Tree -->
+        <div class="center-panel">
+          <div class="panel-header">
+            <div class="calendar-title-stack">
+              <h2><i class="fas fa-calendar-alt"></i> Tournament Calendar</h2>
+              <span class="calendar-updated-ago" id="tournamentsUpdatedAgo"
+                >Updated --</span
+              >
             </div>
-            <div class="recent-matches-container" id="recentMatchesContainer">
-                <div class="recent-matches-wrapper" id="recentMatchesWrapper">
-                    <!-- Recent match cards will be inserted here -->
-                </div>
+            <div class="calendar-header-meta">
+              <button
+                class="calendar-update-btn"
+                id="tournamentsUpdateBtn"
+                type="button"
+                aria-label="Update tournaments"
+                title="Update tournaments"
+              >
+                <i class="fas fa-rotate-right"></i>
+              </button>
+              <span class="year-display" id="yearDisplay">2026</span>
             </div>
-        </section>
-
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <!-- Left Sidebar - Rankings -->
-            <aside class="rankings-panel">
-                <div class="panel-header rankings-panel-header">
-                    <div class="rankings-title-row">
-                        <div class="rankings-title-stack">
-                            <h2 class="rankings-title-main"><i class="fas fa-trophy"></i> <span id="rankingsTitle">ATP</span> Rankings</h2>
-                            <span class="rankings-updated-ago" id="rankingsUpdatedAgo">Updated --</span>
-                        </div>
-                        <div class="rankings-title-meta">
-                            <button class="rankings-update-btn" id="rankingsUpdateBtn" type="button" aria-label="Update rankings" title="Update rankings" hidden>
-                                <i class="fas fa-rotate-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="rankings-list" id="rankingsList">
-                    <!-- Rankings will be inserted here -->
-                    <div class="loading-placeholder">
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <span>Loading rankings...</span>
-                    </div>
-                </div>
-                <div class="rankings-footer">
-                    <button class="rankings-load-more" id="rankingsLoadMore" type="button">Show next 200</button>
-                </div>
-            </aside>
-
-            <!-- Center - Tournament Calendar/Tree -->
-            <div class="center-panel">
-                <div class="panel-header">
-                    <div class="calendar-title-stack">
-                        <h2><i class="fas fa-calendar-alt"></i> Tournament Calendar</h2>
-                        <span class="calendar-updated-ago" id="tournamentsUpdatedAgo">Updated --</span>
-                    </div>
-                    <div class="calendar-header-meta">
-                        <button class="calendar-update-btn" id="tournamentsUpdateBtn" type="button" aria-label="Update tournaments" title="Update tournaments">
-                            <i class="fas fa-rotate-right"></i>
-                        </button>
-                        <span class="year-display" id="yearDisplay">2026</span>
-                    </div>
-                </div>
-                <div class="tournament-calendar" id="tournamentCalendar">
-                    <!-- Tournament list will be inserted here -->
-                    <div class="loading-placeholder">
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <span>Loading tournaments...</span>
-                    </div>
-                </div>
+          </div>
+          <div class="tournament-calendar" id="tournamentCalendar">
+            <!-- Tournament list will be inserted here -->
+            <div class="loading-placeholder">
+              <i class="fas fa-spinner fa-spin"></i>
+              <span>Loading tournaments...</span>
             </div>
-
-            <!-- Right Panel - Tournament Details/Bracket -->
-            <aside class="tournament-details-panel" id="tournamentDetailsPanel">
-                <div class="panel-header">
-                    <h2><i class="fas fa-sitemap"></i> <span id="bracketTitle">Tournament Draw</span></h2>
-                    <button class="close-panel" id="closeBracket">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="tournament-bracket-container" id="tournamentBracket">
-                    <div class="placeholder-message">
-                        <i class="fas fa-hand-pointer"></i>
-                        <p>Select a tournament to view its draw</p>
-                    </div>
-                </div>
-            </aside>
-        </main>
-
-        <!-- Match Details Popup -->
-        <div class="match-popup" id="matchPopup">
-            <div class="popup-content">
-                <div class="popup-header">
-                    <span class="popup-tournament"></span>
-                    <span class="popup-round"></span>
-                    <button class="popup-close"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="popup-players">
-                    <div class="popup-player">
-                        <img class="popup-player-img" src="" alt="">
-                        <span class="popup-player-name"></span>
-                        <span class="popup-player-rank"></span>
-                    </div>
-                    <span class="vs-text">VS</span>
-                    <div class="popup-player">
-                        <img class="popup-player-img" src="" alt="">
-                        <span class="popup-player-name"></span>
-                        <span class="popup-player-rank"></span>
-                    </div>
-                </div>
-                <div class="popup-score"></div>
-            </div>
+          </div>
         </div>
 
-        <!-- Loading Overlay -->
-        <div class="loading-overlay" id="loadingOverlay" aria-live="polite">
-            <div class="intro-gif-grid" id="introGifGrid"></div>
-            <div class="intro-gif-overlay-shade" aria-hidden="true"></div>
-            <div class="intro-gif-caption">Loading live tennis data...</div>
-        </div>
-
-        <!-- Match Modal (Click-based) -->
-        <div class="match-modal" id="matchModal">
-            <div class="modal-content">
-                <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
-                <div class="modal-header">
-                    <div class="modal-tournament"></div>
-                    <div class="modal-round"></div>
-                    <div class="modal-round-points"></div>
-                </div>
-                <div class="modal-players">
-                    <div class="modal-player" id="modalPlayer1">
-                        <img class="modal-player-img" src="" alt="">
-                        <span class="modal-player-name"></span>
-                        <span class="modal-player-details"></span>
-                    </div>
-                    <span class="modal-vs">VS</span>
-                    <div class="modal-player" id="modalPlayer2">
-                        <img class="modal-player-img" src="" alt="">
-                        <span class="modal-player-name"></span>
-                        <span class="modal-player-details"></span>
-                    </div>
-                </div>
-                <div class="modal-score"></div>
+        <!-- Right Panel - Tournament Details/Bracket -->
+        <aside class="tournament-details-panel" id="tournamentDetailsPanel">
+          <div class="panel-header">
+            <h2>
+              <i class="fas fa-sitemap"></i>
+              <span id="bracketTitle">Tournament Draw</span>
+            </h2>
+            <button class="close-panel" id="closeBracket">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="tournament-bracket-container" id="tournamentBracket">
+            <div class="placeholder-message">
+              <i class="fas fa-hand-pointer"></i>
+              <p>Select a tournament to view its draw</p>
             </div>
-        </div>
+          </div>
+        </aside>
+      </main>
 
-        <!-- Credit Footer -->
-        <div class="credit-footer">
-            Created by Pasindu Ranasinghe
+      <!-- Match Details Popup -->
+      <div class="match-popup" id="matchPopup">
+        <div class="popup-content">
+          <div class="popup-header">
+            <span class="popup-tournament"></span>
+            <span class="popup-round"></span>
+            <button class="popup-close"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="popup-players">
+            <div class="popup-player">
+              <img class="popup-player-img" src="" alt="" />
+              <span class="popup-player-name"></span>
+              <span class="popup-player-rank"></span>
+            </div>
+            <span class="vs-text">VS</span>
+            <div class="popup-player">
+              <img class="popup-player-img" src="" alt="" />
+              <span class="popup-player-name"></span>
+              <span class="popup-player-rank"></span>
+            </div>
+          </div>
+          <div class="popup-score"></div>
         </div>
+      </div>
+
+      <!-- Loading Overlay -->
+      <div class="loading-overlay" id="loadingOverlay" aria-live="polite">
+        <div class="intro-gif-grid" id="introGifGrid"></div>
+        <div class="intro-gif-overlay-shade" aria-hidden="true"></div>
+        <div class="intro-gif-caption">Loading live tennis data...</div>
+      </div>
+
+      <!-- Match Modal (Click-based) -->
+      <div class="match-modal" id="matchModal">
+        <div class="modal-content">
+          <button class="modal-close" id="modalClose">
+            <i class="fas fa-times"></i>
+          </button>
+          <div class="modal-header">
+            <div class="modal-tournament"></div>
+            <div class="modal-round"></div>
+            <div class="modal-round-points"></div>
+          </div>
+          <div class="modal-players">
+            <div class="modal-player" id="modalPlayer1">
+              <img class="modal-player-img" src="" alt="" />
+              <span class="modal-player-name"></span>
+              <span class="modal-player-details"></span>
+            </div>
+            <span class="modal-vs">VS</span>
+            <div class="modal-player" id="modalPlayer2">
+              <img class="modal-player-img" src="" alt="" />
+              <span class="modal-player-name"></span>
+              <span class="modal-player-details"></span>
+            </div>
+          </div>
+          <div class="modal-score"></div>
+        </div>
+      </div>
+
+      <!-- Credit Footer -->
+      <div class="credit-footer">Created by Pasindu Ranasinghe</div>
     </div>
 
     <!-- ATP Stat Zone Modal -->
     <div class="modal-overlay" id="statsZoneModal">
-        <div class="modal-content stats-zone-modal">
-            <div class="modal-header">
-                <h3 id="statsZoneTitle">ATP Stat Zone</h3>
-                <div class="stats-zone-actions">
-                    <button class="stats-zone-icon-btn" id="statsZoneInfoBtn" type="button" title="Show calculation method" aria-label="Show calculation method">
-                        <i class="fas fa-circle-info"></i>
-                    </button>
-                    <button class="stats-zone-icon-btn" id="statsZoneRefreshBtn" type="button" title="Update ATP stats" aria-label="Update ATP stats">
-                        <i class="fas fa-rotate-right"></i>
-                    </button>
-                    <button class="close-modal" onclick="window.TennisApp.closeStatsZoneModal()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="modal-body" id="statsZoneContent">
-                <!-- Stat zone content rendered by JS -->
-            </div>
+      <div class="modal-content stats-zone-modal">
+        <div class="modal-header">
+          <h3 id="statsZoneTitle">ATP Stat Zone</h3>
+          <div class="stats-zone-actions">
+            <button
+              class="stats-zone-icon-btn"
+              id="statsZoneInfoBtn"
+              type="button"
+              title="Show calculation method"
+              aria-label="Show calculation method"
+            >
+              <i class="fas fa-circle-info"></i>
+            </button>
+            <button
+              class="stats-zone-icon-btn"
+              id="statsZoneRefreshBtn"
+              type="button"
+              title="Update ATP stats"
+              aria-label="Update ATP stats"
+            >
+              <i class="fas fa-rotate-right"></i>
+            </button>
+            <button
+              class="close-modal"
+              onclick="window.TennisApp.closeStatsZoneModal()"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
         </div>
+        <div class="modal-body" id="statsZoneContent">
+          <!-- Stat zone content rendered by JS -->
+        </div>
+      </div>
     </div>
 
     <!-- Stat Zone Breakdown Modal -->
     <div class="modal-overlay" id="statsZoneBreakdownModal">
-        <div class="modal-content stats-zone-breakdown-modal">
-            <div class="modal-header">
-                <h3 id="statsZoneBreakdownTitle">Rating Breakdown</h3>
-                <button class="close-modal" onclick="window.TennisApp.StatZoneModule.closeBreakdownModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body stats-zone-breakdown-body" id="statsZoneBreakdownContent">
-                <!-- Breakdown content rendered by JS -->
-            </div>
+      <div class="modal-content stats-zone-breakdown-modal">
+        <div class="modal-header">
+          <h3 id="statsZoneBreakdownTitle">Rating Breakdown</h3>
+          <button
+            class="close-modal"
+            onclick="window.TennisApp.StatZoneModule.closeBreakdownModal()"
+          >
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+        <div
+          class="modal-body stats-zone-breakdown-body"
+          id="statsZoneBreakdownContent"
+        >
+          <!-- Breakdown content rendered by JS -->
+        </div>
+      </div>
     </div>
 
     <!-- Match Statistics Modal -->
     <div class="modal-overlay" id="matchStatsModal">
-        <div class="modal-content match-stats-modal">
-            <div class="modal-header">
-                <h3>Match Statistics</h3>
-                <button class="close-modal" onclick="window.TennisApp.Scores.closeMatchStats()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body" id="matchStatsContent">
-                <!-- Stats content will be inserted here -->
-            </div>
+      <div class="modal-content match-stats-modal">
+        <div class="modal-header">
+          <h3>Match Statistics</h3>
+          <button
+            class="close-modal"
+            onclick="window.TennisApp.Scores.closeMatchStats()"
+          >
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+        <div class="modal-body" id="matchStatsContent">
+          <!-- Stats content will be inserted here -->
+        </div>
+      </div>
     </div>
 
     <!-- H2H Player Comparison Modal -->
     <div class="modal-overlay" id="h2hModal">
-        <div class="modal-content h2h-modal">
-            <div class="modal-header">
-                <h3>Head-to-Head Comparison</h3>
-                <button class="close-modal" onclick="window.TennisApp.closeH2HModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="h2h-search">
-                    <div class="player-search-box">
-                        <label>Player 1</label>
-                        <input type="text" id="h2hPlayer1" placeholder="Search player..." class="h2h-input">
-                        <div class="search-dropdown" id="h2hPlayer1Results"></div>
-                    </div>
-                    <div class="vs-divider">VS</div>
-                    <div class="player-search-box">
-                        <label>Player 2</label>
-                        <input type="text" id="h2hPlayer2" placeholder="Search player..." class="h2h-input">
-                        <div class="search-dropdown" id="h2hPlayer2Results"></div>
-                    </div>
-                </div>
-                <div id="h2hResults"></div>
-            </div>
+      <div class="modal-content h2h-modal">
+        <div class="modal-header">
+          <h3>Head-to-Head Comparison</h3>
+          <button
+            class="close-modal"
+            onclick="window.TennisApp.closeH2HModal()"
+          >
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+        <div class="modal-body">
+          <div class="h2h-search">
+            <div class="player-search-box">
+              <label>Player 1</label>
+              <input
+                type="text"
+                id="h2hPlayer1"
+                placeholder="Search player..."
+                class="h2h-input"
+              />
+              <div class="search-dropdown" id="h2hPlayer1Results"></div>
+            </div>
+            <div class="vs-divider">VS</div>
+            <div class="player-search-box">
+              <label>Player 2</label>
+              <input
+                type="text"
+                id="h2hPlayer2"
+                placeholder="Search player..."
+                class="h2h-input"
+              />
+              <div class="search-dropdown" id="h2hPlayer2Results"></div>
+            </div>
+          </div>
+          <div id="h2hResults"></div>
+        </div>
+      </div>
     </div>
 
     <!-- Champion Celebration Modal -->
     <div class="modal-overlay" id="championModal">
-        <div class="modal-content champion-modal">
-            <div class="champion-celebration" id="championContent">
-                <!-- Champion content will be inserted here -->
-            </div>
-            <button class="close-modal champion-close" onclick="window.TennisApp.BracketModule.closeChampionModal()">
-                <i class="fas fa-times"></i>
-            </button>
+      <div class="modal-content champion-modal">
+        <div class="champion-celebration" id="championContent">
+          <!-- Champion content will be inserted here -->
         </div>
+        <button
+          class="close-modal champion-close"
+          onclick="window.TennisApp.BracketModule.closeChampionModal()"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
     </div>
 
     <!-- Player Statistics Modal -->
     <div class="modal-overlay" id="playerStatsModal">
-        <!-- Player stats content will be inserted here by PlayerModule.js -->
+      <!-- Player stats content will be inserted here by PlayerModule.js -->
     </div>
 
     <!-- Favourites Panel -->
     <div id="favouritesPanel">
-        <div class="fav-panel-header">
-            <h3><i class="fas fa-star"></i> <span id="favTourLabel">ATP</span> Favourites</h3>
-            <button id="favCloseBtn"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="fav-search-box">
-            <i class="fas fa-search fav-search-icon"></i>
-            <input type="text" id="favSearchInput" placeholder="Search player to add..." autocomplete="off">
-            <div id="favSearchResults"></div>
-        </div>
-        <div id="favListContainer"></div>
+      <div class="fav-panel-header">
+        <h3>
+          <i class="fas fa-star"></i>
+          <span id="favTourLabel">ATP</span> Favourites
+        </h3>
+        <button id="favCloseBtn"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="fav-search-box">
+        <i class="fas fa-search fav-search-icon"></i>
+        <input
+          type="text"
+          id="favSearchInput"
+          placeholder="Search player to add..."
+          autocomplete="off"
+        />
+        <div id="favSearchResults"></div>
+      </div>
+      <div id="favListContainer"></div>
     </div>
 
     <!-- JavaScript Files -->
-    <script src="js/elo-engine.js?v=20260217h"></script>
+    <script src="js/elo-engine.js?v=20260218a"></script>
     <script src="js/prediction_wta_upcoming.js?v=20260207"></script>
-    <script src="js/scores.js?v=20260217"></script>
+    <script src="js/scores.js?v=20260218b"></script>
     <script src="js/rankings.js?v=20260204"></script>
     <script src="js/tournaments.js?v=20260204"></script>
     <script src="js/bracket.js?v=20260204"></script>
     <script src="js/h2h.js?v=20260204"></script>
-    <script src="js/stats-zone.js?v=20260217"></script>
+    <script src="js/stats-zone.js?v=20260218d"></script>
     <script src="js/player.js?v=20260217e"></script>
     <script src="js/favourites.js?v=20260210f"></script>
     <script src="js/config.js"></script>
-    <script src="js/loading-intro-gifs.js?v=20260217b"></script>
-    <script src="js/app.js?v=20260217b"></script>
-</body>
+    <script src="js/loading-intro-gifs.js?v=20260217c"></script>
+    <script src="js/app.js?v=20260218c"></script>
+  </body>
 </html>

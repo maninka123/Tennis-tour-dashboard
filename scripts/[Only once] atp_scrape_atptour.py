@@ -445,10 +445,23 @@ def scrape_player_stats(player_url: str, session: requests.Session, timeout: int
     }
 
 
-def _format_activity_score(raw_score: str) -> Tuple[str, str]:
+def _extract_activity_result_marker(raw_text: str) -> str:
+    text = str(raw_text or "")
+    if not text:
+        return ""
+    if re.search(r"(icon-checkmark|[\u2713\u2714\u2705])", text, flags=re.IGNORECASE):
+        return "W"
+    if re.search(r"(icon-cross|[\u2715\u2716\u274c])", text, flags=re.IGNORECASE):
+        return "L"
+    return ""
+
+
+def _format_activity_score(raw_score: str, forced_result: str = "") -> Tuple[str, str]:
     # Activity score blocks are flattened by markdown conversion.
     # Rebuild set pairs and infer W/L from player-perspective set totals.
-    text = re.sub(r"\s+", " ", str(raw_score or "")).strip()
+    raw_text = re.sub(r"\s+", " ", str(raw_score or "")).strip()
+    has_ret_prefix = bool(re.match(r"^\s*RET\b", raw_text, flags=re.IGNORECASE))
+    text = raw_text
     text = re.sub(r"\s+Bye$", "", text, flags=re.IGNORECASE).strip()
     text = re.sub(r"\s+(RET|W/O|WO)$", "", text, flags=re.IGNORECASE).strip()
     if not text:
@@ -500,6 +513,14 @@ def _format_activity_score(raw_score: str) -> Tuple[str, str]:
         result = "W"
     elif p2_sets > p1_sets:
         result = "L"
+
+    forced = str(forced_result or "").strip().upper()
+    if forced in {"W", "L"}:
+        result = forced
+    elif has_ret_prefix and result in {"W", "L"}:
+        # ATP recent activity rows with a leading "RET" can present set pairs
+        # opposite to the winning side; flip inferred set-winner when no icon marker exists.
+        result = "L" if result == "W" else "W"
 
     return ", ".join(formatted_sets), result
 
@@ -583,7 +604,7 @@ def scrape_player_recent_matches(player_url: str, year: int, session: requests.S
 
         match_rows = list(
             re.finditer(
-                r"(?P<round>[A-Z0-9]{1,6})\[(?P<opp>[^\]]+)\]\((?P<opp_url>https?://[^)]+/overview)\)\s*\n\s*\n\[(?P<score>[^\]]+)\]\((?P<stats_url>https?://[^)]+)\)",
+                r"(?P<round>[A-Z0-9]{1,6})\[(?P<opp>[^\]]+)\]\((?P<opp_url>https?://[^)]+/overview)\)\s*\n\s*\n(?P<marker>(?:icon-checkmark|icon-cross|[\u2713\u2714\u2705\u2715\u2716\u274c])\s*)?\[(?P<score>[^\]]+)\]\((?P<stats_url>https?://[^)]+)\)",
                 chunk,
                 flags=re.IGNORECASE,
             )
@@ -597,7 +618,8 @@ def scrape_player_recent_matches(player_url: str, year: int, session: requests.S
             opponent_name = re.sub(r"\*\*\([^)]*\)\*\*", "", opp_text).strip()
             opponent_slug, opponent_id = _extract_profile_parts(row.group("opp_url"))
 
-            score_fmt, result = _format_activity_score(row.group("score"))
+            marker = _extract_activity_result_marker(f"{row.group('marker') or ''} {row.group(0)}")
+            score_fmt, result = _format_activity_score(row.group("score"), forced_result=marker)
             matches.append(
                 {
                     "round": round_raw,  # keep exactly as scraped

@@ -751,8 +751,6 @@ const ScoresModule = {
         const insP2Elo = window.TennisApp?.EloModule?.getPlayerElo?.(match.player2.name, insightTour) || null;
         const insP1EloStr = insP1Elo ? Math.round(insP1Elo.elo).toString() : '-';
         const insP2EloStr = insP2Elo ? Math.round(insP2Elo.elo).toString() : '-';
-        const insP1MomLabel = insP1Elo ? (insP1Elo.momentum > 20 ? 'Hot' : insP1Elo.momentum > 5 ? 'Rising' : insP1Elo.momentum < -20 ? 'Cold' : insP1Elo.momentum < -5 ? 'Cooling' : 'Steady') : '-';
-        const insP2MomLabel = insP2Elo ? (insP2Elo.momentum > 20 ? 'Hot' : insP2Elo.momentum > 5 ? 'Rising' : insP2Elo.momentum < -20 ? 'Cold' : insP2Elo.momentum < -5 ? 'Cooling' : 'Steady') : '-';
         const p1Fav = winEdge.p1 >= winEdge.p2;
         const favorite = p1Fav ? match.player1 : match.player2;
         const underdog = p1Fav ? match.player2 : match.player1;
@@ -838,7 +836,6 @@ const ScoresModule = {
                                 <span class="prediction-pill">${p1Points} pts</span>
                                 <span class="prediction-pill">${surfaceLabel} ${p1Surface}</span>
                                 <span class="prediction-pill elo-pill">Elo ${insP1EloStr}</span>
-                                <span class="prediction-pill momentum-pill">${insP1MomLabel}</span>
                             </div>
                         </div>
                     </div>
@@ -894,7 +891,6 @@ const ScoresModule = {
                                 <span class="prediction-pill">${p2Points} pts</span>
                                 <span class="prediction-pill">${surfaceLabel} ${p2Surface}</span>
                                 <span class="prediction-pill elo-pill">Elo ${insP2EloStr}</span>
-                                <span class="prediction-pill momentum-pill">${insP2MomLabel}</span>
                             </div>
                         </div>
                     </div>
@@ -989,19 +985,31 @@ const ScoresModule = {
         const matchTour = String(match?.tour || '').toLowerCase() === 'wta' ? 'wta' : 'atp';
         const p1Elo = eloMod?.getPlayerElo?.(match.player1.name, matchTour) || null;
         const p2Elo = eloMod?.getPlayerElo?.(match.player2.name, matchTour) || null;
-        const getMomentumHTML = (eloData) => {
-            if (!eloData) return '';
-            const m = eloData.momentum || 0;
-            let label, cls;
-            if (m > 20) { label = 'Hot'; cls = 'up'; }
-            else if (m > 5) { label = 'Rising'; cls = 'up'; }
-            else if (m < -20) { label = 'Cold'; cls = 'down'; }
-            else if (m < -5) { label = 'Cooling'; cls = 'down'; }
-            else { label = 'Steady'; cls = 'neutral'; }
-            return `<span class="player-momentum ${cls}">${label}</span>`;
+        const getFormStripHTML = (eloData) => {
+            const history = Array.isArray(eloData?.eloHistory) ? eloData.eloHistory : [];
+            const recentResults = history
+                .map((row) => String(row?.result || '').toUpperCase())
+                .filter((res) => res === 'W' || res === 'L')
+                .slice(-5);
+
+            if (!recentResults.length) return '';
+
+            const paddedResults = [...Array(Math.max(0, 5 - recentResults.length)).fill('-'), ...recentResults];
+            const cells = paddedResults.map((res) => {
+                const cls = res === 'W' ? 'win' : res === 'L' ? 'loss' : 'empty';
+                const aria = res === 'W' ? 'Win' : res === 'L' ? 'Loss' : 'No match';
+                return `<span class="upcoming-form-cell ${cls}" aria-label="${aria}">${res}</span>`;
+            }).join('');
+
+            return `
+                <div class="upcoming-form-strip" aria-label="Last 5 form">
+                    <span class="upcoming-form-label">L5</span>
+                    <span class="upcoming-form-cells">${cells}</span>
+                </div>
+            `;
         };
-        const p1Momentum = getMomentumHTML(p1Elo);
-        const p2Momentum = getMomentumHTML(p2Elo);
+        const p1FormStrip = getFormStripHTML(p1Elo);
+        const p2FormStrip = getFormStripHTML(p2Elo);
 
         return `
             <div class="upcoming-match-card ${categoryClass} ${surfaceClass}" data-match-id="${match.id}" data-match-key="${matchKey}">
@@ -1032,8 +1040,8 @@ const ScoresModule = {
                                 ${match.player1.rank ? `<span class="player-rank-badge">[${match.player1.rank}]</span>` : ''}
                                 <span class="country-flag">${Utils.getFlag(match.player1.country)}</span>
                                 ${Utils.formatPlayerName(match.player1.name)}
-                                ${p1Momentum}
                             </div>
+                            ${p1FormStrip}
                         </div>
                         <div class="player-score upcoming-score">${this.formatUpcomingPlayerScore(match, 1)}</div>
                     </div>
@@ -1044,8 +1052,8 @@ const ScoresModule = {
                                 ${match.player2.rank ? `<span class="player-rank-badge">[${match.player2.rank}]</span>` : ''}
                                 <span class="country-flag">${Utils.getFlag(match.player2.country)}</span>
                                 ${Utils.formatPlayerName(match.player2.name)}
-                                ${p2Momentum}
                             </div>
+                            ${p2FormStrip}
                         </div>
                         <div class="player-score upcoming-score">${this.formatUpcomingPlayerScore(match, 2)}</div>
                     </div>
