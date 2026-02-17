@@ -49,3 +49,16 @@ build/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Project-generated / large local artifacts
+.sisyphus/
+debug_player_scan.py
+
+# Large image archives and GIF assets
+data_analysis/images/
+Images/
+frontend/assets/images/intro-gifs/
+
+# Large rolling snapshots/caches
+data/*_outdated/
+data/*_cache.json
