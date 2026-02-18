@@ -1,0 +1,749 @@
+[
+  {
+    "id": "atp_2026_407_MS001",
+    "tour": "ATP",
+    "tournament": "ABN AMRO Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "407",
+    "atp_event_year": "2026",
+    "atp_match_id": "MS001",
+    "location": "Rotterdam, Netherlands",
+    "surface": "",
+    "round": "Final",
+    "court": "Centre Court",
+    "player1": {
+      "id": 725846,
+      "player_code": "DH58",
+      "name": "Alex de Minaur",
+      "country": "AUS",
+      "rank": 6,
+      "points": 4250,
+      "image_url": "/api/player/atp/DH58/image"
+    },
+    "player2": {
+      "id": 769294,
+      "player_code": "AG37",
+      "name": "Félix Auger-Aliassime",
+      "country": "CAN",
+      "rank": 7,
+      "points": 4230,
+      "image_url": "/api/player/atp/AG37/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 3
+        },
+        {
+          "p1": 6,
+          "p2": 2
+        }
+      ]
+    },
+    "match_duration": "1:18",
+    "scheduled_time": "2026-02-16T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/407/ms001",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_451_QS004",
+    "tour": "ATP",
+    "tournament": "Qatar ExxonMobil Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "451",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS004",
+    "location": "Doha, Qatar",
+    "surface": "",
+    "round": "2nd Round Qualifying",
+    "court": "Grandstand 2",
+    "player1": {
+      "id": 794677,
+      "player_code": "CH12",
+      "name": "Jan Choinski",
+      "country": "GBR",
+      "rank": 124,
+      "points": 498,
+      "image_url": "/api/player/atp/CH12/image"
+    },
+    "player2": {
+      "id": 734160,
+      "player_code": "HB64",
+      "name": "Quentin Halys",
+      "country": "FRA",
+      "rank": 72,
+      "points": 762,
+      "image_url": "/api/player/atp/HB64/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 1,
+          "p2": 6
+        },
+        {
+          "p1": 6,
+          "p2": 3
+        },
+        {
+          "p1": 7,
+          "p2": 6,
+          "tiebreak": {
+            "p1": 7,
+            "p2": 5
+          }
+        }
+      ]
+    },
+    "match_duration": "2:13",
+    "scheduled_time": "2026-02-16T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/qs004",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_451_QS006",
+    "tour": "ATP",
+    "tournament": "Qatar ExxonMobil Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "451",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS006",
+    "location": "Doha, Qatar",
+    "surface": "",
+    "round": "2nd Round Qualifying",
+    "court": "Grandstand 1",
+    "player1": {
+      "id": 752545,
+      "player_code": "CD85",
+      "name": "Pablo Carreño Busta",
+      "country": "ESP",
+      "rank": 123,
+      "points": 504,
+      "image_url": "/api/player/atp/CD85/image"
+    },
+    "player2": {
+      "id": 755689,
+      "player_code": "HD68",
+      "name": "Billy Harris",
+      "country": "GBR",
+      "rank": 144,
+      "points": 438,
+      "image_url": "/api/player/atp/HD68/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 7,
+          "p2": 5
+        },
+        {
+          "p1": 6,
+          "p2": 3
+        }
+      ]
+    },
+    "match_duration": "1:33",
+    "scheduled_time": "2026-02-16T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/qs006",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_451_QS007",
+    "tour": "ATP",
+    "tournament": "Qatar ExxonMobil Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "451",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS007",
+    "location": "Doha, Qatar",
+    "surface": "",
+    "round": "2nd Round Qualifying",
+    "court": "Grandstand 3",
+    "player1": {
+      "id": 719379,
+      "player_code": "CF59",
+      "name": "Roberto Carballés Baena",
+      "country": "ESP",
+      "rank": 175,
+      "points": 350,
+      "image_url": "/api/player/atp/CF59/image"
+    },
+    "player2": {
+      "id": 766688,
+      "player_code": "M0HU",
+      "name": "Shintaro Mochizuki",
+      "country": "JPN",
+      "rank": 117,
+      "points": 525,
+      "image_url": "/api/player/atp/M0HU/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 0
+        },
+        {
+          "p1": 6,
+          "p2": 3
+        }
+      ]
+    },
+    "match_duration": "1:06",
+    "scheduled_time": "2026-02-16T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/qs007",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_451_QS005",
+    "tour": "ATP",
+    "tournament": "Qatar ExxonMobil Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "451",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS005",
+    "location": "Doha, Qatar",
+    "surface": "",
+    "round": "2nd Round Qualifying",
+    "court": "Court 4",
+    "player1": {
+      "id": 766978,
+      "player_code": "H996",
+      "name": "Pierre Hugues Herbert",
+      "country": "FRA",
+      "rank": 190,
+      "points": 313,
+      "image_url": "/api/player/atp/H996/image"
+    },
+    "player2": {
+      "id": 716598,
+      "player_code": "Y218",
+      "name": "Elias Ymer",
+      "country": "SWE",
+      "rank": 188,
+      "points": 315,
+      "image_url": "/api/player/atp/Y218/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 4
+        },
+        {
+          "p1": 3,
+          "p2": 6
+        },
+        {
+          "p1": 6,
+          "p2": 3
+        }
+      ]
+    },
+    "match_duration": "1:59",
+    "scheduled_time": "2026-02-16T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/qs005",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_499_QS005",
+    "tour": "ATP",
+    "tournament": "Delray Beach Open",
+    "tournament_category": "atp_250",
+    "atp_event_id": "499",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS005",
+    "location": "Delray Beach, United States",
+    "surface": "",
+    "round": "2nd Round Qualifying",
+    "court": "Court 1",
+    "player1": {
+      "id": 736929,
+      "player_code": "H0BH",
+      "name": "Rinky Hijikata",
+      "country": "AUS",
+      "rank": 113,
+      "points": 546,
+      "image_url": "/api/player/atp/H0BH/image"
+    },
+    "player2": {
+      "id": 722289,
+      "player_code": "S0GD",
+      "name": "Dalibor Svrčina",
+      "country": "CZE",
+      "rank": 99,
+      "points": 612,
+      "image_url": "/api/player/atp/S0GD/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 4
+        },
+        {
+          "p1": 6,
+          "p2": 3
+        }
+      ]
+    },
+    "match_duration": "1:37",
+    "scheduled_time": "2026-02-16T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/499/qs005",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_499_QS006",
+    "tour": "ATP",
+    "tournament": "Delray Beach Open",
+    "tournament_category": "atp_250",
+    "atp_event_id": "499",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS006",
+    "location": "Delray Beach, United States",
+    "surface": "",
+    "round": "2nd Round Qualifying",
+    "court": "Court 1",
+    "player1": {
+      "id": 755016,
+      "player_code": "W0BH",
+      "name": "Coleman Wong",
+      "country": "HKG",
+      "rank": 137,
+      "points": 458,
+      "image_url": "/api/player/atp/W0BH/image"
+    },
+    "player2": {
+      "id": 724949,
+      "player_code": "S0N0",
+      "name": "Tristan Schoolkate",
+      "country": "AUS",
+      "rank": 108,
+      "points": 556,
+      "image_url": "/api/player/atp/S0N0/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 4
+        },
+        {
+          "p1": 6,
+          "p2": 4
+        }
+      ]
+    },
+    "match_duration": "1:24",
+    "scheduled_time": "2026-02-16T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/499/qs006",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_499_QS007",
+    "tour": "ATP",
+    "tournament": "Delray Beach Open",
+    "tournament_category": "atp_250",
+    "atp_event_id": "499",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS007",
+    "location": "Delray Beach, United States",
+    "surface": "",
+    "round": "2nd Round Qualifying",
+    "court": "Center Court",
+    "player1": {
+      "id": 723731,
+      "player_code": "S0K7",
+      "name": "Zachary Svajda",
+      "country": "USA",
+      "rank": 106,
+      "points": 563,
+      "image_url": "/api/player/atp/S0K7/image"
+    },
+    "player2": {
+      "id": 766857,
+      "player_code": "WB32",
+      "name": "Yibing Wu",
+      "country": "CHN",
+      "rank": 146,
+      "points": 427,
+      "image_url": "/api/player/atp/WB32/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 3
+        },
+        {
+          "p1": 6,
+          "p2": 4
+        }
+      ]
+    },
+    "match_duration": "1:18",
+    "scheduled_time": "2026-02-16T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/499/qs007",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_407_MS002",
+    "tour": "ATP",
+    "tournament": "ABN AMRO Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "407",
+    "atp_event_year": "2026",
+    "atp_match_id": "MS002",
+    "location": "Rotterdam, Netherlands",
+    "surface": "",
+    "round": "Semifinals",
+    "court": "Centre Court",
+    "player1": {
+      "id": 725846,
+      "player_code": "DH58",
+      "name": "Alex de Minaur",
+      "country": "AUS",
+      "rank": 6,
+      "points": 4250,
+      "image_url": "/api/player/atp/DH58/image"
+    },
+    "player2": {
+      "id": 738670,
+      "player_code": "HH26",
+      "name": "Ugo Humbert",
+      "country": "FRA",
+      "rank": 36,
+      "points": 1285,
+      "image_url": "/api/player/atp/HH26/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 4
+        },
+        {
+          "p1": 6,
+          "p2": 3
+        }
+      ]
+    },
+    "match_duration": "1:32",
+    "scheduled_time": "2026-02-15T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/407/ms002",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_407_MS003",
+    "tour": "ATP",
+    "tournament": "ABN AMRO Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "407",
+    "atp_event_year": "2026",
+    "atp_match_id": "MS003",
+    "location": "Rotterdam, Netherlands",
+    "surface": "",
+    "round": "Semifinals",
+    "court": "Centre Court",
+    "player1": {
+      "id": 769294,
+      "player_code": "AG37",
+      "name": "Félix Auger-Aliassime",
+      "country": "CAN",
+      "rank": 7,
+      "points": 4230,
+      "image_url": "/api/player/atp/AG37/image"
+    },
+    "player2": {
+      "id": 721185,
+      "player_code": "BK92",
+      "name": "Alexander Bublik",
+      "country": "KAZ",
+      "rank": 10,
+      "points": 3405,
+      "image_url": "/api/player/atp/BK92/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 1
+        },
+        {
+          "p1": 6,
+          "p2": 2
+        }
+      ]
+    },
+    "match_duration": "0:54",
+    "scheduled_time": "2026-02-15T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/407/ms003",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_451_QS008",
+    "tour": "ATP",
+    "tournament": "Qatar ExxonMobil Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "451",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS008",
+    "location": "Doha, Qatar",
+    "surface": "",
+    "round": "1st Round Qualifying",
+    "court": "Grandstand 1",
+    "player1": {
+      "id": 734160,
+      "player_code": "HB64",
+      "name": "Quentin Halys",
+      "country": "FRA",
+      "rank": 72,
+      "points": 762,
+      "image_url": "/api/player/atp/HB64/image"
+    },
+    "player2": {
+      "id": 795434,
+      "player_code": "A09Q",
+      "name": "Mert Alkaya",
+      "country": "TUR",
+      "rank": 382,
+      "points": 124,
+      "image_url": "/api/player/atp/A09Q/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 3
+        },
+        {
+          "p1": 6,
+          "p2": 4
+        }
+      ]
+    },
+    "match_duration": "1:18",
+    "scheduled_time": "2026-02-15T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/qs008",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_451_QS010",
+    "tour": "ATP",
+    "tournament": "Qatar ExxonMobil Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "451",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS010",
+    "location": "Doha, Qatar",
+    "surface": "",
+    "round": "1st Round Qualifying",
+    "court": "Grandstand 2",
+    "player1": {
+      "id": 766978,
+      "player_code": "H996",
+      "name": "Pierre Hugues Herbert",
+      "country": "FRA",
+      "rank": 190,
+      "points": 313,
+      "image_url": "/api/player/atp/H996/image"
+    },
+    "player2": {
+      "id": 728938,
+      "player_code": "V832",
+      "name": "Aleksandar Vukic",
+      "country": "AUS",
+      "rank": 88,
+      "points": 656,
+      "image_url": "/api/player/atp/V832/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 4
+        },
+        {
+          "p1": 6,
+          "p2": 4
+        }
+      ]
+    },
+    "match_duration": "1:27",
+    "scheduled_time": "2026-02-15T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/qs010",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_451_QS012",
+    "tour": "ATP",
+    "tournament": "Qatar ExxonMobil Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "451",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS012",
+    "location": "Doha, Qatar",
+    "surface": "",
+    "round": "1st Round Qualifying",
+    "court": "Grandstand 1",
+    "player1": {
+      "id": 752545,
+      "player_code": "CD85",
+      "name": "Pablo Carreño Busta",
+      "country": "ESP",
+      "rank": 123,
+      "points": 504,
+      "image_url": "/api/player/atp/CD85/image"
+    },
+    "player2": {
+      "id": 766737,
+      "player_code": "B0PU",
+      "name": "Reda Bennani",
+      "country": "MAR",
+      "rank": 562,
+      "points": 69,
+      "image_url": "/api/player/atp/B0PU/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 4
+        },
+        {
+          "p1": 6,
+          "p2": 2
+        }
+      ]
+    },
+    "match_duration": "1:17",
+    "scheduled_time": "2026-02-15T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/qs012",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_451_QS014",
+    "tour": "ATP",
+    "tournament": "Qatar ExxonMobil Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "451",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS014",
+    "location": "Doha, Qatar",
+    "surface": "",
+    "round": "1st Round Qualifying",
+    "court": "Grandstand 3",
+    "player1": {
+      "id": 766688,
+      "player_code": "M0HU",
+      "name": "Shintaro Mochizuki",
+      "country": "JPN",
+      "rank": 117,
+      "points": 525,
+      "image_url": "/api/player/atp/M0HU/image"
+    },
+    "player2": {
+      "id": null,
+      "player_code": "A0K8",
+      "name": "Ghanim Al Sulaiti",
+      "country": "QAT",
+      "rank": null,
+      "points": null,
+      "image_url": "/api/player/atp/A0K8/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 0
+        },
+        {
+          "p1": 6,
+          "p2": 1
+        }
+      ]
+    },
+    "match_duration": "0:50",
+    "scheduled_time": "2026-02-15T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/qs014",
+    "h2h_text": "N/A"
+  },
+  {
+    "id": "atp_2026_451_QS009",
+    "tour": "ATP",
+    "tournament": "Qatar ExxonMobil Open",
+    "tournament_category": "atp_500",
+    "atp_event_id": "451",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS009",
+    "location": "Doha, Qatar",
+    "surface": "",
+    "round": "1st Round Qualifying",
+    "court": "Court 4",
+    "player1": {
+      "id": 794677,
+      "player_code": "CH12",
+      "name": "Jan Choinski",
+      "country": "GBR",
+      "rank": 124,
+      "points": 498,
+      "image_url": "/api/player/atp/CH12/image"
+    },
+    "player2": {
+      "id": 778660,
+      "player_code": "M0OQ",
+      "name": "James McCabe",
+      "country": "AUS",
+      "rank": 210,
+      "points": 283,
+      "image_url": "/api/player/atp/M0OQ/image"
+    },
+    "status": "finished",
+    "winner": 1,
+    "final_score": {
+      "sets": [
+        {
+          "p1": 6,
+          "p2": 4
+        },
+        {
+          "p1": 6,
+          "p2": 4
+        }
+      ]
+    },
+    "match_duration": "1:23",
+    "scheduled_time": "2026-02-15T00:00:00",
+    "atp_stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/qs009",
+    "h2h_text": "N/A"
+  }
+]

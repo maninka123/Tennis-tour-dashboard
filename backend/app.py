@@ -164,6 +164,7 @@ SCRIPTS_DIR = os.path.join(REPO_ROOT, "scripts", "Update player stats")
 FRONTEND_DIR = os.path.join(REPO_ROOT, "frontend")
 DATA_ANALYSIS_ATP_DIR = os.path.join(REPO_ROOT, "data_analysis")
 DATA_ANALYSIS_WTA_DIR = os.path.join(REPO_ROOT, "data_analysis", "wta")
+DATA_ANALYSIS_IMAGES_DIR = os.path.join(REPO_ROOT, "data_analysis", "images")
 NOTIFICATION_APP_DIR = os.path.join(REPO_ROOT, "backend", "notification_system")
 HISTORIC_DATA_ATP_DIR = os.path.join(REPO_ROOT, "historic data")
 HISTORIC_DATA_WTA_DIR = os.path.join(REPO_ROOT, "historic data_wta")
@@ -558,6 +559,12 @@ def serve_analysis_assets(tour, filename):
     return _serve_file(app_root, filename, 'Analysis asset not found')
 
 
+@app.route('/analysis/images/<path:filename>')
+def serve_analysis_images(filename):
+    """Serve historic analysis image assets (ATP/WTA extracted image archives)."""
+    return _serve_file(DATA_ANALYSIS_IMAGES_DIR, filename, 'Analysis image not found')
+
+
 @app.route('/api/notifications/status', methods=['GET'])
 def notification_status():
     return jsonify({
@@ -777,6 +784,112 @@ ensure_live_scores_thread()
 def health_check():
     """Health check endpoint"""
     return jsonify({'status': 'healthy', 'message': 'Tennis Dashboard API is running'})
+
+
+@app.route('/api/endpoint-health', methods=['GET'])
+def endpoint_health():
+    """Aggregated endpoint health snapshot for ATP/WTA dashboard tiles."""
+    def _count_rows(payload):
+        if isinstance(payload, list):
+            return len(payload)
+        if isinstance(payload, dict):
+            data = payload.get('data')
+            if isinstance(data, list):
+                return len(data)
+            count = payload.get('count')
+            if isinstance(count, int):
+                return count
+            return 1 if payload else 0
+        return 0
+
+    def _probe(fetcher):
+        started = time.time()
+        try:
+            data = fetcher()
+            return {
+                'ok': True,
+                'count': _count_rows(data),
+                'latency_ms': int(round((time.time() - started) * 1000)),
+                'error': ''
+            }
+        except Exception as exc:
+            return {
+                'ok': False,
+                'count': 0,
+                'latency_ms': int(round((time.time() - started) * 1000)),
+                'error': str(exc)
+            }
+
+    checks = [
+        (
+            'live_matches',
+            'Live Matches',
+            lambda: tennis_fetcher.fetch_live_scores('atp'),
+            lambda: tennis_fetcher.fetch_live_scores('wta')
+        ),
+        (
+            'upcoming_matches',
+            'Upcoming Matches',
+            lambda: tennis_fetcher.fetch_upcoming_matches('atp', days=7),
+            lambda: tennis_fetcher.fetch_upcoming_matches('wta', days=7)
+        ),
+        (
+            'recent_matches',
+            'Recent Matches',
+            lambda: tennis_fetcher.fetch_recent_matches('atp', 20),
+            lambda: tennis_fetcher.fetch_recent_matches('wta', 20)
+        ),
+        (
+            'calendar',
+            'Calendar',
+            lambda: tennis_fetcher.fetch_tournaments('atp', None),
+            lambda: tennis_fetcher.fetch_tournaments('wta', None)
+        ),
+        (
+            'rankings',
+            'Rankings',
+            lambda: tennis_fetcher.fetch_rankings('atp', 200),
+            lambda: tennis_fetcher.fetch_rankings('wta', 400)
+        ),
+        (
+            'h2h',
+            'H2H',
+            lambda: tennis_fetcher.search_atp_players_for_h2h('a', limit=6),
+            lambda: tennis_fetcher.search_wta_players_for_h2h('a', limit=6)
+        )
+    ]
+
+    rows = []
+    for key, label, atp_fetcher, wta_fetcher in checks:
+        rows.append({
+            'key': key,
+            'label': label,
+            'atp': _probe(atp_fetcher),
+            'wta': _probe(wta_fetcher)
+        })
+
+    cells = []
+    for row in rows:
+        cells.extend([row['atp'], row['wta']])
+
+    total = len(cells)
+    working = sum(1 for cell in cells if cell.get('ok'))
+    percent = int(round((working / total) * 100)) if total else 0
+    first_error = next((cell.get('error') for cell in cells if not cell.get('ok') and cell.get('error')), '')
+
+    return jsonify({
+        'success': True,
+        'data': {
+            'rows': rows,
+            'summary': {
+                'percent': percent,
+                'working': working,
+                'total': total,
+                'last_error': first_error
+            },
+            'generated_at': datetime.utcnow().replace(microsecond=0).isoformat() + 'Z'
+        }
+    })
 
 
 @app.route('/api/historic-data/atp/<int:year>.csv', methods=['GET'])
@@ -1282,6 +1395,7 @@ def get_wta_match_stats():
 def get_atp_match_stats():
     """Get on-demand ATP match stats using ATP stats-centre URL."""
     stats_url = (request.args.get('stats_url') or '').strip()
+    live_flag = str(request.args.get('live') or '').strip().lower() in {'1', 'true', 'yes', 'y'}
     if not stats_url:
         return jsonify({
             'success': False,
@@ -1289,7 +1403,7 @@ def get_atp_match_stats():
         }), 400
 
     try:
-        stats = tennis_fetcher.fetch_atp_match_stats(stats_url=stats_url)
+        stats = tennis_fetcher.fetch_atp_match_stats(stats_url=stats_url, is_live=live_flag)
         if not stats:
             return jsonify({'success': False, 'error': 'Match stats not available'}), 404
         return jsonify({'success': True, 'data': stats})
@@ -1414,6 +1528,38 @@ def get_categories():
         'success': True,
         'data': Config.TOURNAMENT_CATEGORIES
     })
+
+
+@app.route('/api/tournament-category-registry', methods=['GET'])
+def get_tournament_category_registry():
+    """Get persisted ATP/WTA tournament category assignments."""
+    try:
+        payload = tennis_fetcher.get_tournament_category_registry()
+        return jsonify({
+            'success': True,
+            'data': payload
+        })
+    except Exception as exc:
+        return jsonify({
+            'success': False,
+            'error': str(exc)
+        }), 500
+
+
+@app.route('/api/form/hyperparameters', methods=['GET'])
+def get_form_hyperparameters():
+    """Get central form-rating hyperparameter config."""
+    try:
+        payload = Config.get_form_hyperparameters()
+        return jsonify({
+            'success': True,
+            'data': payload
+        })
+    except Exception as exc:
+        return jsonify({
+            'success': False,
+            'error': str(exc)
+        }), 500
 
 
 # ============== WebSocket Events ==============

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "atp_2026_6932_QS004",
+    "tour": "ATP",
+    "tournament": "Rio Open presented by Claro",
+    "tournament_category": "atp_500",
+    "atp_event_id": "6932",
+    "atp_event_year": "2026",
+    "atp_match_id": "QS004",
+    "location": "Rio de Janeiro, Brazil",
+    "surface": "",
+    "round": "2nd Round Qualifying",
+    "court": "Quadra Guga Kuerten",
+    "player1": {
+      "id": 702205,
+      "player_code": "MJ08",
+      "name": "Thiago Monteiro",
+      "country": "BRA",
+      "rank": 208,
+      "points": 290,
+      "image_url": "/api/player/atp/MJ08/image"
+    },
+    "player2": {
+      "id": 720738,
+      "player_code": "L987",
+      "name": "Dušan Lajović",
+      "country": "SRB",
+      "rank": 129,
+      "points": 485,
+      "image_url": "/api/player/atp/L987/image"
+    },
+    "status": "live",
+    "serving": 1,
+    "match_time": "2:24",
+    "scheduled_time": "2026-02-15T16:35:44.8033333",
+    "score": {
+      "sets": [
+        {
+          "p1": 2,
+          "p2": 6
+        },
+        {
+          "p1": 6,
+          "p2": 3
+        },
+        {
+          "p1": 3,
+          "p2": 1
+        }
+      ],
+      "current_game": {
+        "p1": "30",
+        "p2": "40"
+      }
+    },
+    "h2h_text": "N/A"
+  }
+]

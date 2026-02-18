@@ -185,7 +185,7 @@ function pushUnique(target, source) {
 function analysisImageFallbackCandidates(playerName) {
   const slug = slugifyName(playerName);
   if (!slug) return [];
-  const base = `../images/wta/${slug}`;
+  const base = `/analysis/images/wta/${slug}`;
   return [`${base}.jpg`, `${base}.jpeg`, `${base}.png`, `${base}.webp`];
 }
 
