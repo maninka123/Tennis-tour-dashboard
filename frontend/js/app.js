@@ -162,7 +162,18 @@ const DOM = {
     seasonProgressCount: document.getElementById('seasonProgressCount'),
     seasonProgressPercent: document.getElementById('seasonProgressPercent'),
     seasonActivePill: document.getElementById('seasonActivePill'),
-    seasonSurfacePill: document.getElementById('seasonSurfacePill')
+    seasonSurfacePill: document.getElementById('seasonSurfacePill'),
+
+    // Endpoint health
+    endpointHealthWrap: document.getElementById('endpointHealthWrap'),
+    endpointHealthToggle: document.getElementById('endpointHealthToggle'),
+    endpointHealthFill: document.getElementById('endpointHealthFill'),
+    endpointHealthLabel: document.getElementById('endpointHealthLabel'),
+    endpointHealthPopover: document.getElementById('endpointHealthPopover'),
+    endpointHealthSummary: document.getElementById('endpointHealthSummary'),
+    endpointHealthTable: document.getElementById('endpointHealthTable'),
+    endpointHealthGenerated: document.getElementById('endpointHealthGenerated'),
+    endpointHealthRefreshBtn: document.getElementById('endpointHealthRefreshBtn')
 };
 
 // ============================================
@@ -288,9 +299,13 @@ const Utils = {
     getPlayerImage(player, tour = '') {
         const explicitTour = String(tour || '').trim().toLowerCase();
         const playerTour = String(player?.tour || '').trim().toLowerCase();
-        const effectiveTour = explicitTour || playerTour;
+        const imageUrl = String(player?.image_url || '').trim();
+        const inferredTour = /\/api\/player\/wta\//i.test(imageUrl)
+            ? 'wta'
+            : (/\/api\/player\/atp\//i.test(imageUrl) ? 'atp' : '');
         const numericId = Number(player?.id);
         const playerCode = String(player?.player_code || '').trim().toUpperCase();
+        const effectiveTour = explicitTour || playerTour || inferredTour || (playerCode ? 'atp' : '');
         const resolvedApiBase = AppState.apiBaseResolved
             || CONFIG.API_BASE_URL
             || window.TennisApp?.CONFIG?.API_BASE_URL
@@ -522,6 +537,13 @@ const API = {
      */
     async getRankings(tour = 'atp', limit = 200) {
         return await this.fetch(`/rankings/${tour}`, { limit });
+    },
+
+    /**
+     * Get form rating hyperparameters
+     */
+    async getFormHyperparameters() {
+        return await this.fetch('/form/hyperparameters');
     },
 
     /**
@@ -905,6 +927,7 @@ const EventHandlers = {
         DOM.tourTabs.forEach(tab => {
             tab.addEventListener('click', () => this.handleTourSwitch(tab));
         });
+        this.syncTourTabsVisual(AppState.currentTour);
 
         // Close bracket panel
         DOM.closeBracket?.addEventListener('click', () => {
@@ -1054,6 +1077,7 @@ const EventHandlers = {
         // Update tab UI
         DOM.tourTabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
+        this.syncTourTabsVisual(tour);
 
         // Update rankings title
         DOM.rankingsTitle.textContent = tour.toUpperCase();
@@ -1080,6 +1104,276 @@ const EventHandlers = {
             if (favLabel) favLabel.textContent = tour.toUpperCase();
             FavouritesModule.render();
             FavouritesModule.updateIconGlow();
+        }
+    },
+
+    syncTourTabsVisual(tour = AppState.currentTour) {
+        const tabsWrap = document.querySelector('.tour-tabs');
+        if (!tabsWrap) return;
+        tabsWrap.classList.toggle('is-wta', String(tour || '').toLowerCase() === 'wta');
+    }
+};
+
+// ============================================
+// Endpoint Health
+// ============================================
+const EndpointHealth = {
+    initialized: false,
+    refreshing: false,
+    timerId: null,
+
+    endpointDefs: [
+        {
+            key: 'live_matches',
+            label: 'Live Matches',
+            atp: () => API.getLiveScores('atp'),
+            wta: () => API.getLiveScores('wta')
+        },
+        {
+            key: 'upcoming_matches',
+            label: 'Upcoming Matches',
+            atp: () => API.getUpcomingMatches('atp'),
+            wta: () => API.getUpcomingMatches('wta')
+        },
+        {
+            key: 'recent_matches',
+            label: 'Recent Matches',
+            atp: () => API.getRecentMatches('atp', 20),
+            wta: () => API.getRecentMatches('wta', 20)
+        },
+        {
+            key: 'calendar',
+            label: 'Calendar',
+            atp: () => API.getTournaments('atp'),
+            wta: () => API.getTournaments('wta')
+        },
+        {
+            key: 'rankings',
+            label: 'Rankings',
+            atp: () => API.getRankings('atp', 200),
+            wta: () => API.getRankings('wta', 400)
+        },
+        {
+            key: 'h2h',
+            label: 'H2H',
+            atp: () => API.searchATPH2HPlayers('a', 6),
+            wta: () => API.searchWTAH2HPlayers('a', 6)
+        }
+    ],
+
+    init() {
+        if (this.initialized) return;
+        if (!DOM.endpointHealthToggle || !DOM.endpointHealthPopover) return;
+        this.initialized = true;
+
+        DOM.endpointHealthToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const shouldOpen = !DOM.endpointHealthPopover.classList.contains('active');
+            this.setOpen(shouldOpen);
+            if (shouldOpen) this.refresh();
+        });
+
+        DOM.endpointHealthRefreshBtn?.addEventListener('click', () => this.refresh());
+
+        document.addEventListener('click', (e) => {
+            if (!DOM.endpointHealthWrap) return;
+            if (!DOM.endpointHealthWrap.contains(e.target)) {
+                this.setOpen(false);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') this.setOpen(false);
+        });
+
+        this.refresh();
+        this.timerId = setInterval(() => this.refresh({ silent: true }), 120000);
+    },
+
+    setOpen(isOpen) {
+        if (!DOM.endpointHealthPopover || !DOM.endpointHealthToggle) return;
+        DOM.endpointHealthToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        DOM.endpointHealthPopover.hidden = !isOpen;
+        DOM.endpointHealthPopover.classList.toggle('active', !!isOpen);
+    },
+
+    formatUpdatedText(isoText) {
+        if (!isoText) return 'Updated --';
+        const then = new Date(isoText);
+        if (Number.isNaN(then.getTime())) return 'Updated --';
+        const diffMs = Date.now() - then.getTime();
+        if (diffMs < 45000) return 'Updated just now';
+        const min = Math.floor(diffMs / 60000);
+        if (min < 60) return `Updated ${min}m ago`;
+        const hr = Math.floor(min / 60);
+        if (hr < 24) return `Updated ${hr}h ago`;
+        return `Updated ${Math.floor(hr / 24)}d ago`;
+    },
+
+    extractCount(payload) {
+        if (Array.isArray(payload)) return payload.length;
+        if (payload && typeof payload === 'object') {
+            if (Array.isArray(payload.data)) return payload.data.length;
+            if (Number.isFinite(Number(payload.count))) return Number(payload.count);
+            if (Array.isArray(payload.matches)) return payload.matches.length;
+        }
+        return 0;
+    },
+
+    sanitizeError(err) {
+        const raw = String(err?.message || err || 'Unknown error');
+        return raw.length > 110 ? `${raw.slice(0, 107)}...` : raw;
+    },
+
+    async probe(fetchFn) {
+        const startedAt = Date.now();
+        try {
+            const result = await fetchFn();
+            return {
+                ok: true,
+                count: this.extractCount(result),
+                latency_ms: Math.max(0, Date.now() - startedAt),
+                error: ''
+            };
+        } catch (error) {
+            return {
+                ok: false,
+                count: 0,
+                latency_ms: Math.max(0, Date.now() - startedAt),
+                error: this.sanitizeError(error)
+            };
+        }
+    },
+
+    async buildClientSnapshot() {
+        const rows = [];
+        for (const endpoint of this.endpointDefs) {
+            const [atp, wta] = await Promise.all([
+                this.probe(endpoint.atp),
+                this.probe(endpoint.wta)
+            ]);
+            rows.push({
+                key: endpoint.key,
+                label: endpoint.label,
+                atp,
+                wta
+            });
+        }
+
+        const checks = rows.flatMap((row) => [row.atp, row.wta]);
+        const working = checks.filter((cell) => cell.ok).length;
+        const total = checks.length;
+        const percent = total > 0 ? Math.round((working / total) * 100) : 0;
+        const firstError = checks.find((cell) => !cell.ok && cell.error);
+
+        return {
+            rows,
+            summary: {
+                percent,
+                working,
+                total,
+                last_error: firstError?.error || ''
+            },
+            generated_at: new Date().toISOString()
+        };
+    },
+
+    renderCell(cell) {
+        const statusClass = cell?.ok ? 'up' : 'down';
+        const statusText = cell?.ok ? 'UP' : 'DOWN';
+        const count = Number.isFinite(Number(cell?.count)) ? Number(cell.count) : 0;
+        const latency = Number.isFinite(Number(cell?.latency_ms)) ? Number(cell.latency_ms) : 0;
+        return `
+            <div class="endpoint-health-cell">
+                <span class="endpoint-health-pill ${statusClass}">${statusText}</span>
+                <span class="endpoint-health-meta">${count} rows | ${latency}ms</span>
+                ${cell?.error ? `<span class="endpoint-health-error" title="${cell.error}">${cell.error}</span>` : ''}
+            </div>
+        `;
+    },
+
+    render(snapshot) {
+        if (!snapshot) return;
+        const rows = Array.isArray(snapshot.rows) ? snapshot.rows : [];
+        const summary = snapshot.summary || {};
+        const percent = Math.max(0, Math.min(100, Number(summary.percent || 0)));
+        const working = Number(summary.working || 0);
+        const total = Number(summary.total || 0);
+        const lastError = String(summary.last_error || '').trim();
+
+        if (DOM.endpointHealthFill) {
+            DOM.endpointHealthFill.style.width = `${percent}%`;
+        }
+        if (DOM.endpointHealthLabel) {
+            DOM.endpointHealthLabel.textContent = `${percent}%`;
+        }
+        if (DOM.endpointHealthToggle) {
+            DOM.endpointHealthToggle.classList.remove('health-good', 'health-warn', 'health-bad');
+            DOM.endpointHealthToggle.classList.add(percent >= 85 ? 'health-good' : (percent >= 60 ? 'health-warn' : 'health-bad'));
+        }
+
+        if (DOM.endpointHealthSummary) {
+            const errorSuffix = lastError ? ` | Last error: ${lastError}` : '';
+            DOM.endpointHealthSummary.textContent = `Health ${percent}% (${working}/${total} working)${errorSuffix}`;
+        }
+
+        if (DOM.endpointHealthTable) {
+            const tbody = DOM.endpointHealthTable.querySelector('tbody');
+            if (tbody) {
+                if (!rows.length) {
+                    tbody.innerHTML = '<tr><td colspan="3">No endpoint health data available.</td></tr>';
+                } else {
+                    tbody.innerHTML = rows.map((row) => `
+                        <tr>
+                            <td>${row.label || row.key || 'Endpoint'}</td>
+                            <td>${this.renderCell(row.atp || {})}</td>
+                            <td>${this.renderCell(row.wta || {})}</td>
+                        </tr>
+                    `).join('');
+                }
+            }
+        }
+
+        if (DOM.endpointHealthGenerated) {
+            DOM.endpointHealthGenerated.textContent = this.formatUpdatedText(snapshot.generated_at);
+        }
+    },
+
+    async refresh(options = {}) {
+        if (this.refreshing) return;
+        this.refreshing = true;
+        const silent = !!options.silent;
+
+        if (DOM.endpointHealthSummary && !silent) {
+            DOM.endpointHealthSummary.textContent = 'Checking endpoints...';
+        }
+        if (DOM.endpointHealthRefreshBtn) {
+            DOM.endpointHealthRefreshBtn.disabled = true;
+            DOM.endpointHealthRefreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        }
+
+        try {
+            let snapshot = null;
+            try {
+                snapshot = await API.fetch('/endpoint-health');
+            } catch (error) {
+                snapshot = null;
+            }
+            if (!snapshot || !Array.isArray(snapshot.rows)) {
+                snapshot = await this.buildClientSnapshot();
+            }
+            this.render(snapshot);
+        } catch (error) {
+            const message = this.sanitizeError(error);
+            if (DOM.endpointHealthSummary) {
+                DOM.endpointHealthSummary.textContent = `Health check failed: ${message}`;
+            }
+        } finally {
+            this.refreshing = false;
+            if (DOM.endpointHealthRefreshBtn) {
+                DOM.endpointHealthRefreshBtn.disabled = false;
+                DOM.endpointHealthRefreshBtn.innerHTML = '<i class="fas fa-rotate-right"></i>';
+            }
         }
     }
 };
@@ -1272,6 +1566,7 @@ const App = {
         
         // Initialize event handlers
         EventHandlers.init();
+        EndpointHealth.init();
         this.setupAnalysisLaunchers();
         this.renderSeasonProgress();
         
@@ -1906,3 +2201,4 @@ window.TennisApp.refreshLiveMatches = App.refreshLiveMatches.bind(App);
 window.TennisApp.refreshRecentMatches = App.refreshRecentMatches.bind(App);
 window.TennisApp.refreshUpcomingMatches = App.refreshUpcomingMatches.bind(App);
 window.TennisApp.openDataAnalysis = App.openDataAnalysis.bind(App);
+window.TennisApp.EndpointHealth = EndpointHealth;

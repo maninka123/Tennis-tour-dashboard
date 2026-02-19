@@ -1,25 +1,90 @@
 (function (global) {
-    // New points-based form system (replaces Elo)
-    const DEFAULT_FORM = 1000;
-    const FORM_FLOOR = 700;
-    const FORM_CEILING = 1500;
-    const MAX_MATCHES = 10;
+    const DEFAULT_FORM_CONFIG = {
+        form: {
+            default_form: 1000,
+            floor: 700,
+            ceiling: 1500,
+            max_matches: 20
+        },
+        k_value: {
+            base_numerator: 55.0,
+            base_offset: 2.0,
+            decay_exponent: 0.25
+        },
+        category_multipliers: {
+            grand_slam: 1.5,
+            masters_1000: 1.2,
+            premier_mandatory: 1.2,
+            wta_1000: 1.2,
+            atp_500: 0.9,
+            wta_500: 0.9,
+            atp_250: 0.7,
+            wta_250: 0.7,
+            atp_125: 0.6,
+            wta_125: 0.6,
+            other: 0.36
+        },
+        rank_factor: {
+            win_scale: 2.4,
+            loss_scale: 2.2,
+            win_min: 0.15,
+            win_max: 2.5,
+            loss_min: -2.5,
+            loss_max: -0.15
+        },
+        dominance: {
+            straight_sets_win_bonus: 0.30,
+            tiebreak_with_dropped_set_penalty: 0.10,
+            max_margin_bonus_cap: 0.15,
+            close_loss_three_set_bonus: 0.15,
+            close_loss_two_set_bonus: 0.10,
+            straight_sets_loss_penalty: 0.20,
+            min_multiplier: 0.5,
+            max_multiplier: 1.5
+        },
+        dampening: {
+            ceiling_strength: 0.55,
+            floor_strength: 0.55
+        },
+        retirement: {
+            balanced_multiplier: 0.5,
+            winner_leading_multiplier: 1.0,
+            winner_trailing_multiplier: 0.5,
+            loser_leading_multiplier: 0.25,
+            loser_trailing_multiplier: 1.0
+        },
+        walkover: {
+            multiplier: 0.25
+        },
+        delta_clamp: {
+            win_min: 2,
+            win_max: 80,
+            loss_min: -80,
+            loss_max: -2
+        },
+        tournament_name_overrides: {}
+    };
+
+    let DEFAULT_FORM = DEFAULT_FORM_CONFIG.form.default_form;
+    let FORM_FLOOR = DEFAULT_FORM_CONFIG.form.floor;
+    let FORM_CEILING = DEFAULT_FORM_CONFIG.form.ceiling;
+    let MAX_MATCHES = DEFAULT_FORM_CONFIG.form.max_matches;
+    let CATEGORY_MULTIPLIERS = { ...DEFAULT_FORM_CONFIG.category_multipliers };
+    let OTHER_CATEGORY_MULTIPLIER = toNumber(CATEGORY_MULTIPLIERS.other, 0.36);
+    let K_VALUE_CONFIG = { ...DEFAULT_FORM_CONFIG.k_value };
+    let RANK_FACTOR_CONFIG = { ...DEFAULT_FORM_CONFIG.rank_factor };
+    let DOMINANCE_CONFIG = { ...DEFAULT_FORM_CONFIG.dominance };
+    let DAMPENING_CONFIG = { ...DEFAULT_FORM_CONFIG.dampening };
+    let RETIREMENT_CONFIG = { ...DEFAULT_FORM_CONFIG.retirement };
+    let WALKOVER_CONFIG = { ...DEFAULT_FORM_CONFIG.walkover };
+    let DELTA_CLAMP_CONFIG = { ...DEFAULT_FORM_CONFIG.delta_clamp };
+    let TOURNAMENT_NAME_OVERRIDES = { ...DEFAULT_FORM_CONFIG.tournament_name_overrides };
 
     // Global form cache - loaded asynchronously from server
     let formCacheData = null;
     let formCacheLoading = false;
-
-    const CATEGORY_MULTIPLIERS = {
-        grand_slam: 1.5,
-        masters_1000: 1.2,
-        premier_mandatory: 1.2,
-        wta_1000: 1.2,
-        atp_500: 0.9,
-        wta_500: 0.9,
-        atp_250: 0.7,
-        wta_250: 0.7,
-        wta_125: 0.6
-    };
+    let formHyperparametersLoading = false;
+    let formHyperparametersAttempted = false;
 
     function toNumber(value, fallback = null) {
         const n = Number(value);
@@ -43,6 +108,38 @@
     function round2(value) {
         const n = toNumber(value, 0);
         return Number(n.toFixed(2));
+    }
+
+    function deepMerge(base, override) {
+        if (!override || typeof override !== 'object') return base;
+        const out = { ...(base || {}) };
+        Object.keys(override).forEach((key) => {
+            const next = override[key];
+            if (next && typeof next === 'object' && !Array.isArray(next) && out[key] && typeof out[key] === 'object' && !Array.isArray(out[key])) {
+                out[key] = deepMerge(out[key], next);
+            } else {
+                out[key] = next;
+            }
+        });
+        return out;
+    }
+
+    function applyHyperparameterConfig(rawConfig) {
+        const config = deepMerge(DEFAULT_FORM_CONFIG, rawConfig || {});
+        DEFAULT_FORM = toNumber(config?.form?.default_form, DEFAULT_FORM_CONFIG.form.default_form);
+        FORM_FLOOR = toNumber(config?.form?.floor, DEFAULT_FORM_CONFIG.form.floor);
+        FORM_CEILING = toNumber(config?.form?.ceiling, DEFAULT_FORM_CONFIG.form.ceiling);
+        MAX_MATCHES = toPositiveInt(config?.form?.max_matches, DEFAULT_FORM_CONFIG.form.max_matches);
+        CATEGORY_MULTIPLIERS = { ...DEFAULT_FORM_CONFIG.category_multipliers, ...(config?.category_multipliers || {}) };
+        OTHER_CATEGORY_MULTIPLIER = toNumber(CATEGORY_MULTIPLIERS.other, DEFAULT_FORM_CONFIG.category_multipliers.other);
+        K_VALUE_CONFIG = { ...DEFAULT_FORM_CONFIG.k_value, ...(config?.k_value || {}) };
+        RANK_FACTOR_CONFIG = { ...DEFAULT_FORM_CONFIG.rank_factor, ...(config?.rank_factor || {}) };
+        DOMINANCE_CONFIG = { ...DEFAULT_FORM_CONFIG.dominance, ...(config?.dominance || {}) };
+        DAMPENING_CONFIG = { ...DEFAULT_FORM_CONFIG.dampening, ...(config?.dampening || {}) };
+        RETIREMENT_CONFIG = { ...DEFAULT_FORM_CONFIG.retirement, ...(config?.retirement || {}) };
+        WALKOVER_CONFIG = { ...DEFAULT_FORM_CONFIG.walkover, ...(config?.walkover || {}) };
+        DELTA_CLAMP_CONFIG = { ...DEFAULT_FORM_CONFIG.delta_clamp, ...(config?.delta_clamp || {}) };
+        TOURNAMENT_NAME_OVERRIDES = { ...DEFAULT_FORM_CONFIG.tournament_name_overrides, ...(config?.tournament_name_overrides || {}) };
     }
 
     function normalizeName(name) {
@@ -113,6 +210,43 @@
     }
 
     function inferResultFromScore(score, scoreRaw) {
+        const sets = extractSetScores(score, scoreRaw);
+
+        if (!sets.length) return null;
+
+        let playerSets = 0;
+        let opponentSets = 0;
+        for (const [a, b] of sets) {
+            if (a > b) playerSets += 1;
+            if (b > a) opponentSets += 1;
+        }
+
+        if (playerSets > opponentSets) return 'W';
+        if (opponentSets > playerSets) return 'L';
+        return null;
+    }
+
+    function swapScoreOrientation(scoreText) {
+        const text = String(scoreText || '').trim();
+        if (!text) return text;
+        return text.replace(/(\d+)\s*-\s*(\d+)(\(\d+\))?/g, (_m, a, b, tb = '') => `${b}-${a}${tb || ''}`);
+    }
+
+    function normalizeScoreOrientationForTour(score, scoreRaw, result, tour) {
+        const safeTour = String(tour || '').toLowerCase() === 'wta' ? 'wta' : 'atp';
+        const explicitResult = String(result || '').trim().toUpperCase();
+        const rawScore = String(score || '').trim();
+        if (safeTour !== 'wta' || (explicitResult !== 'W' && explicitResult !== 'L') || !rawScore) {
+            return rawScore;
+        }
+        const inferred = inferResultFromScore(rawScore, scoreRaw);
+        if (!inferred || inferred === explicitResult) {
+            return rawScore;
+        }
+        return swapScoreOrientation(rawScore);
+    }
+
+    function extractSetScores(score, scoreRaw) {
         const fromScore = String(score || '');
         const setPattern = /(\d+)\s*-\s*(\d+)/g;
         const sets = [];
@@ -142,18 +276,60 @@
             }
         }
 
-        if (!sets.length) return null;
+        return sets;
+    }
+
+    function inferRetirementState(score, scoreRaw) {
+        const sets = extractSetScores(score, scoreRaw);
+        if (!sets.length) return 'balanced';
 
         let playerSets = 0;
         let opponentSets = 0;
+        let playerGames = 0;
+        let opponentGames = 0;
+
         for (const [a, b] of sets) {
             if (a > b) playerSets += 1;
             if (b > a) opponentSets += 1;
+            playerGames += toNumber(a, 0);
+            opponentGames += toNumber(b, 0);
         }
 
-        if (playerSets > opponentSets) return 'W';
-        if (opponentSets > playerSets) return 'L';
-        return null;
+        if (playerSets > opponentSets) return 'leading';
+        if (opponentSets > playerSets) return 'trailing';
+
+        const gameGap = playerGames - opponentGames;
+        if (gameGap >= 2) return 'leading';
+        if (gameGap <= -2) return 'trailing';
+        return 'balanced';
+    }
+
+    function getRetirementAdjustment(match) {
+        if (!match?.isRetirement) {
+            return { multiplier: 1.0, state: 'none' };
+        }
+
+        const state = inferRetirementState(match.score, match.scoreRaw || match.score_raw || '');
+        const isWin = String(match?.result || '').toUpperCase() === 'W';
+
+        if (state === 'balanced') {
+            return { multiplier: toNumber(RETIREMENT_CONFIG.balanced_multiplier, 0.5), state };
+        }
+        if (isWin) {
+            return {
+                multiplier: state === 'leading'
+                    ? toNumber(RETIREMENT_CONFIG.winner_leading_multiplier, 1.0)
+                    : toNumber(RETIREMENT_CONFIG.winner_trailing_multiplier, 0.5),
+                state
+            };
+        }
+        if (state === 'leading') {
+            return { multiplier: toNumber(RETIREMENT_CONFIG.loser_leading_multiplier, 0.25), state };
+        }
+        if (state === 'trailing') {
+            return { multiplier: toNumber(RETIREMENT_CONFIG.loser_trailing_multiplier, 1.0), state };
+        }
+        return { multiplier: toNumber(RETIREMENT_CONFIG.balanced_multiplier, 0.5), state: 'balanced' };
     }
 
     function normalizeMatches(player, tour) {
@@ -170,9 +346,9 @@
                     continue;
                 }
 
-                const score = String(match?.score || match?.score_raw || '').trim();
-                const isWalkover = /w\s*\/\s*o/i.test(score);
-                const isRetirement = /\bret\b|ret\./i.test(score) || /\bret\b|ret\./i.test(String(match?.score_raw || ''));
+                const rawScore = String(match?.score || match?.score_raw || '').trim();
+                const isWalkover = /w\s*\/\s*o/i.test(rawScore);
+                const isRetirement = /\bret\b|ret\./i.test(rawScore) || /\bret\b|ret\./i.test(String(match?.score_raw || ''));
                 let result = String(match?.result || '').trim().toUpperCase();
 
                 if (result !== 'W' && result !== 'L') {
@@ -183,12 +359,14 @@
                         result = 'W';
                     }
                 }
+                const score = normalizeScoreOrientationForTour(rawScore, match?.score_raw, result, tour);
 
                 flattened.push({
                     result,
                     opponentName,
                     opponentRank: toPositiveInt(match?.opponent_rank, null),
                     score,
+                    scoreRaw: String(match?.score_raw || ''),
                     round: normalizeRound(match),
                     tournamentName: String(tournament?.tournament || '').trim() || 'Tournament',
                     category: String(tournament?.category || '').trim().toLowerCase() || 'other',
@@ -322,11 +500,51 @@
             }
         }
         
-        // Fallback to rank-based calculation (only for new players or cache miss)
-        const numericRank = toPositiveInt(rank, null);
-        if (!numericRank) return DEFAULT_FORM;
-        const bonus = Math.max(0, Math.log(200 / Math.max(1, numericRank)) * 50);
-        return DEFAULT_FORM + bonus;
+        // Fallback: everybody starts from the same baseline when cache is unavailable.
+        return DEFAULT_FORM;
+    }
+
+    function normalizeTournamentKey(name) {
+        return String(name || '')
+            .toLowerCase()
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
+    function getTournamentOverride(tournamentName) {
+        const key = normalizeTournamentKey(tournamentName);
+        if (!key) return null;
+        const direct = TOURNAMENT_NAME_OVERRIDES[key];
+        if (direct && typeof direct === 'object') {
+            return direct;
+        }
+        return null;
+    }
+
+    function loadFormHyperparametersAsync() {
+        if (formHyperparametersLoading || formHyperparametersAttempted) return;
+        formHyperparametersLoading = true;
+        formHyperparametersAttempted = true;
+
+        const viaApi = global.TennisApp?.API?.getFormHyperparameters
+            ? global.TennisApp.API.getFormHyperparameters()
+            : fetch('/api/form/hyperparameters').then((res) => res.json()).then((payload) => payload?.data || payload);
+
+        Promise.resolve(viaApi)
+            .then((data) => {
+                if (!data || typeof data !== 'object') return;
+                applyHyperparameterConfig(data);
+                const tennisApp = global.TennisApp;
+                if (tennisApp?.AppState?.eloRatings) {
+                    init();
+                }
+            })
+            .catch((err) => {
+                console.warn('[FormConfig] Failed to load hyperparameters:', err);
+            })
+            .finally(() => {
+                formHyperparametersLoading = false;
+            });
     }
 
     function loadFormCacheAsync() {
@@ -371,16 +589,24 @@
             // Weak opponent → 0.1 * 2.4 = 0.24 (minimal reward for expected win)
             // Strong opponent → 0.8 * 2.4 = 1.92 (big reward for upset)
             const opponentShare = opponentPts / total;
-            const multiplier = opponentShare * 2.4;
-            return clamp(multiplier, 0.15, 2.5);
+            const multiplier = opponentShare * toNumber(RANK_FACTOR_CONFIG.win_scale, 2.4);
+            return clamp(
+                multiplier,
+                toNumber(RANK_FACTOR_CONFIG.win_min, 0.15),
+                toNumber(RANK_FACTOR_CONFIG.win_max, 2.5)
+            );
         } else {
             // player's share → higher = bigger upset loss = heavier penalty
             // Equal opponents → -(0.5 * 2.2) = -1.1 (normal loss)
             // Lost to stronger → -(0.3 * 2.2) = -0.66 (expected, lighter penalty)
             // Lost to weaker → -(0.85 * 2.2) = -1.87 (upset loss, heavy penalty)
             const playerShare = playerPts / total;
-            const multiplier = -(playerShare * 2.2);
-            return clamp(multiplier, -2.5, -0.15);
+            const multiplier = -(playerShare * toNumber(RANK_FACTOR_CONFIG.loss_scale, 2.2));
+            return clamp(
+                multiplier,
+                toNumber(RANK_FACTOR_CONFIG.loss_min, -2.5),
+                toNumber(RANK_FACTOR_CONFIG.loss_max, -0.15)
+            );
         }
     }
 
@@ -408,7 +634,7 @@
         if (result === 'W') {
             // Straight sets win: +30% bonus
             if (opponentSets === 0) {
-                multiplier += 0.30;
+                multiplier += toNumber(DOMINANCE_CONFIG.straight_sets_win_bonus, 0.30);
             }
             
             // Check for tiebreak losses (competitive set): -10% if any set went to TB
@@ -420,7 +646,7 @@
                 }
             }
             if (hadTiebreak && opponentSets > 0) {
-                multiplier -= 0.10;
+                multiplier -= toNumber(DOMINANCE_CONFIG.tiebreak_with_dropped_set_penalty, 0.10);
             }
             
             // Game margin bonus: max game margin / 6 = additional bonus (capped at +0.15)
@@ -428,33 +654,45 @@
             for (const [a, b] of sets) {
                 if (a > b) maxMargin = Math.max(maxMargin, a - b);
             }
-            multiplier += Math.min(0.15, maxMargin / 6 * 0.15);
+            const cap = toNumber(DOMINANCE_CONFIG.max_margin_bonus_cap, 0.15);
+            multiplier += Math.min(cap, maxMargin / 6 * cap);
         } else {
             // Loss - dominance reduces penalty
             // If opponent won only 1 set in 2-3 set match, it's competitive
             if (opponentSets === 1 && sets.length === 3) {
-                multiplier += 0.15; // Close loss, reduce penalty by 15%
+                multiplier += toNumber(DOMINANCE_CONFIG.close_loss_three_set_bonus, 0.15);
             } else if (opponentSets === 1 && sets.length === 2) {
-                multiplier += 0.10; // Close loss in 2 setter
+                multiplier += toNumber(DOMINANCE_CONFIG.close_loss_two_set_bonus, 0.10);
             }
             
             // Straight sets loss: heavier penalty
             if (playerSets === 0) {
-                multiplier -= 0.20;
+                multiplier -= toNumber(DOMINANCE_CONFIG.straight_sets_loss_penalty, 0.20);
             }
         }
         
-        return clamp(multiplier, 0.5, 1.5);
+        return clamp(
+            multiplier,
+            toNumber(DOMINANCE_CONFIG.min_multiplier, 0.5),
+            toNumber(DOMINANCE_CONFIG.max_multiplier, 1.5)
+        );
     }
 
 
-    function adaptiveK(matchCount, category) {
+    function adaptiveK(matchCount, category, tournamentName = '') {
         // Base points per match, decays gently as more matches are processed
         // Starts ~42, decays to ~27 by match 10 — much lower than old 300 base
         const matches = Math.max(0, toNumber(matchCount, 0));
-        const base = 55 / Math.pow(matches + 2, 0.25);
+        const baseNumerator = Math.max(1, toNumber(K_VALUE_CONFIG.base_numerator, 55));
+        const baseOffset = Math.max(0, toNumber(K_VALUE_CONFIG.base_offset, 2));
+        const decayExp = Math.max(0.05, toNumber(K_VALUE_CONFIG.decay_exponent, 0.25));
+        const base = baseNumerator / Math.pow(matches + baseOffset, decayExp);
         const key = String(category || '').trim().toLowerCase();
-        const multiplier = CATEGORY_MULTIPLIERS[key] || 1.0;
+        const override = getTournamentOverride(tournamentName);
+        const overrideFactor = toNumber(override?.factor, null);
+        const multiplier = Number.isFinite(overrideFactor)
+            ? overrideFactor
+            : (key === 'other' ? OTHER_CATEGORY_MULTIPLIER : toNumber(CATEGORY_MULTIPLIERS[key], 1.0));
         return base * multiplier;
     }
 
@@ -471,7 +709,7 @@
         const dominanceMultiplier = calculateDominanceMultiplier(match.score, match.result);
         
         // 3. Base points (lower base, tournament-weighted)
-        const baseK = adaptiveK(toNumber(match.matchCount, 0), match.category);
+        const baseK = adaptiveK(toNumber(match.matchCount, 0), match.category, match.tournamentName);
         
         // Raw change = base × strength factor × dominance
         let formChange = baseK * rankFactor * dominanceMultiplier;
@@ -482,25 +720,30 @@
         if (isWin && currentForm > DEFAULT_FORM) {
             // Gradually reduce gains as form approaches ceiling
             const ceilingProximity = (currentForm - DEFAULT_FORM) / (FORM_CEILING - DEFAULT_FORM);
-            const dampening = 1.0 - clamp(ceilingProximity, 0, 1) * 0.55;
+            const dampening = 1.0 - clamp(ceilingProximity, 0, 1) * toNumber(DAMPENING_CONFIG.ceiling_strength, 0.55);
             formChange *= dampening;
         } else if (!isWin && currentForm < DEFAULT_FORM) {
             // Gradually reduce losses as form approaches floor
             const floorProximity = (DEFAULT_FORM - currentForm) / (DEFAULT_FORM - FORM_FLOOR);
-            const dampening = 1.0 - clamp(floorProximity, 0, 1) * 0.55;
+            const dampening = 1.0 - clamp(floorProximity, 0, 1) * toNumber(DAMPENING_CONFIG.floor_strength, 0.55);
             formChange *= dampening;
         }
         
-        // Penalize retirements and walkovers
+        // Retirement weighting based on match state at retirement
         if (match.isRetirement) {
-            formChange *= 0.5;
+            const retirementAdjustment = getRetirementAdjustment(match);
+            formChange *= retirementAdjustment.multiplier;
         }
         if (match.isWalkover) {
-            formChange *= 0.25;
+            formChange *= toNumber(WALKOVER_CONFIG.multiplier, 0.25);
         }
         
         // Tighter clamp: max ±80 per match for realistic progression
-        return clamp(formChange, isWin ? 2 : -80, isWin ? 80 : -2);
+        return clamp(
+            formChange,
+            isWin ? toNumber(DELTA_CLAMP_CONFIG.win_min, 2) : toNumber(DELTA_CLAMP_CONFIG.loss_min, -80),
+            isWin ? toNumber(DELTA_CLAMP_CONFIG.win_max, 80) : toNumber(DELTA_CLAMP_CONFIG.loss_max, -2)
+        );
     }
 
     function updateForm(currentForm, formChange) {
@@ -537,6 +780,33 @@
         const safeTour = String(tour || '').toLowerCase() === 'wta' ? 'wta' : 'atp';
         const rankings = global.TennisApp?.AppState?.rankings?.[safeTour];
         return Array.isArray(rankings) ? rankings : [];
+    }
+
+    function getPlayerMeta(playerName, tour) {
+        const rankings = getTourRankings(tour);
+        const target = normalizeName(playerName);
+        if (!target) return null;
+
+        for (const row of rankings) {
+            if (normalizeName(row?.name) === target) {
+                return row;
+            }
+        }
+        return null;
+    }
+
+    function getFormRankForPlayer(playerName, tour) {
+        const safeTour = String(tour || '').toLowerCase() === 'wta' ? 'wta' : 'atp';
+        const ratingsByTour = global.TennisApp?.AppState?.eloRatings?.[safeTour];
+        if (!(ratingsByTour instanceof Map)) return null;
+
+        const sorted = Array.from(ratingsByTour.entries())
+            .filter(([, d]) => toNumber(d?.matchCount, 0) > 0)
+            .sort((a, b) => toNumber(b?.[1]?.elo, DEFAULT_FORM) - toNumber(a?.[1]?.elo, DEFAULT_FORM));
+
+        const target = normalizeName(playerName);
+        const idx = sorted.findIndex(([name]) => normalizeName(name) === target);
+        return idx >= 0 ? idx + 1 : null;
     }
 
     function computeAllElo(tour) {
@@ -608,7 +878,8 @@
                 // Store calculation details for transparency
                 const rankFactor = calculateRankFactor(state.rankPoints, opponentRankPoints, match.result === 'W');
                 const dominanceMult = calculateDominanceMultiplier(match.score, match.result);
-                const baseTourn = adaptiveK(state.matchCount - 1, match.category);
+                const baseTourn = adaptiveK(state.matchCount - 1, match.category, match.tournamentName);
+                const retirementAdjustment = getRetirementAdjustment(matchData);
 
                 state.formHistory.push({
                     form: round2(state.currentForm),
@@ -625,6 +896,8 @@
                     dominanceMultiplier: round2(dominanceMult),
                     basePoints: round2(baseTourn),
                     isRetirement: !!match.isRetirement,
+                    retirementState: retirementAdjustment.state,
+                    retirementMultiplier: round2(retirementAdjustment.multiplier),
                     isWalkover: !!match.isWalkover
                 });
 
@@ -652,6 +925,7 @@
     function init() {
         const tennisApp = global.TennisApp = global.TennisApp || {};
         const appState = tennisApp.AppState = tennisApp.AppState || {};
+        loadFormHyperparametersAsync();
         const atp = computeAllElo('atp');
         const wta = computeAllElo('wta');
 
@@ -799,11 +1073,48 @@
         return `<svg width="100%" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-label="Form trajectory">${gradients}<rect x="${margin.left}" y="${margin.top}" width="${plotWidth}" height="${plotHeight}" fill="none" rx="0" /><line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="#ddd" stroke-width="1.5" /><line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#ddd" stroke-width="1.5" />${yAxis.join('')}<polygon points="${areaPoints}" fill="${fillColor}" /><polyline points="${polylinePoints}" fill="none" stroke="${strokeColor}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />${points}${xAxis}</svg>`;
     }
 
-    function createEloDetailModalHTML(playerName, eloData) {
+    function getEloEventBadgeInfo(category, tour = 'atp') {
+        const key = String(category || 'other').trim().toLowerCase();
+        const utils = global.TennisApp?.Utils;
+        const className = utils?.getCategoryClass
+            ? utils.getCategoryClass(key, tour)
+            : String(key || 'other').replace(/_/g, '-');
+
+        const labels = {
+            grand_slam: 'GS',
+            masters_1000: '1000',
+            atp_500: '500',
+            wta_500: '500',
+            atp_250: '250',
+            wta_250: '250',
+            atp_125: '125',
+            wta_125: '125',
+            finals: 'FIN',
+            atp_finals: 'FIN',
+            wta_finals: 'FIN',
+            other: 'TOUR'
+        };
+
+        return {
+            className: className || 'other',
+            label: labels[key] || (key.includes('1000') ? '1000' : 'TOUR')
+        };
+    }
+
+    function createEloDetailModalHTML(playerName, eloData, tour = 'atp') {
         const history = Array.isArray(eloData?.eloHistory) ? eloData.eloHistory : [];
         const current = toNumber(eloData?.elo, DEFAULT_FORM);
         const highest = history.length ? Math.max(...history.map((item) => toNumber(item.form, current)), current) : current;
         const lowest = history.length ? Math.min(...history.map((item) => toNumber(item.form, current)), current) : current;
+        const safeTour = String(tour || '').toLowerCase() === 'wta' ? 'wta' : 'atp';
+        const playerMeta = getPlayerMeta(playerName, safeTour);
+        const formRank = getFormRankForPlayer(playerName, safeTour);
+        const tourPlayerCount = getTourRankings(safeTour).length;
+        const currentRank = toPositiveInt(playerMeta?.rank, null);
+        const countryCode = String(playerMeta?.country || '').trim();
+        const flagHtml = countryCode && global.TennisApp?.Utils?.getFlag
+            ? global.TennisApp.Utils.getFlag(countryCode)
+            : '';
 
         const historyRows = history.slice().reverse().map((match) => {
             const delta = toNumber(match.delta, 0);
@@ -811,12 +1122,16 @@
             const deltaClass = delta > 0 ? 'pos' : (delta < 0 ? 'neg' : 'neut');
             const strengthRatio = round2(toNumber(match.strengthRatio, 1.0));
             const dominance = round2(toNumber(match.dominanceMultiplier, 1.0));
-            const matchQuality = dominance > 1.1 ? 'Dominant' : (dominance < 0.9 ? 'Close' : 'Even');
+            const matchQuality = dominance > 1.1 ? 'Dominant' : (dominance < 0.9 ? 'Dominated' : 'Even');
+            const opponentRank = toPositiveInt(match?.opponentRank, null);
+            const opponentDisplay = opponentRank ? `${match.opponentName} (${opponentRank})` : match.opponentName;
+            const eventBadge = getEloEventBadgeInfo(match?.category, safeTour);
+            const eventBadgeHtml = `<span class="category-badge ${eventBadge.className} elo-event-badge">${eventBadge.label}</span>`;
 
             return `
                 <tr>
                     <td>
-                        <div style="font-weight:600;">${match.opponentName}</div>
+                        <div class="elo-opponent-line">${eventBadgeHtml}<span>${opponentDisplay}</span></div>
                         <div style="font-size:0.85em;color:#666;">${match.tournamentName} (${match.round})</div>
                     </td>
                     <td><span class="badge-${match.result === 'W' ? 'win' : 'loss'}">${match.result}</span></td>
@@ -831,14 +1146,25 @@
         return `
             <div class="modal-content" style="max-width:920px;width:min(94vw,920px);max-height:90vh;overflow:auto;border-radius:20px;">
                 <div class="modal-header" style="padding:18px 24px;">
-                    <h3 style="font-size:1.2rem;font-weight:700;">${playerName} — Current Form</h3>
+                    <div class="elo-player-title-wrap">
+                        <h3 style="font-size:1.2rem;font-weight:700;">${playerName} — Current Form (${MAX_MATCHES} Matches)</h3>
+                        <div class="elo-player-header-meta">
+                            ${Number.isFinite(currentRank) ? `<span class="elo-player-rank-pill">#${currentRank}</span>` : ''}
+                            ${flagHtml ? `<span class="elo-player-flag-pill">${flagHtml}</span>` : ''}
+                        </div>
+                    </div>
                     <button class="close-modal" data-elo-close>&times;</button>
                 </div>
                 <div class="modal-body" style="display:flex;flex-direction:column;gap:16px;padding:16px 24px 24px;">
-                     <div class="elo-summary" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;">
-                        <div class="form-stat-card"><div class="form-stat-label">Current Form</div><div class="form-stat-value">${Math.round(current)}</div></div>
-                        <div class="form-stat-card"><div class="form-stat-label">Peak (10m)</div><div class="form-stat-value">${Math.round(highest)}</div></div>
-                        <div class="form-stat-card"><div class="form-stat-label">Low (10m)</div><div class="form-stat-value">${Math.round(lowest)}</div></div>
+                     <div class="elo-summary" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;">
+                        <div class="form-stat-card form-stat-card--rank">
+                            <div class="form-stat-label">Form Rank</div>
+                            <div class="form-stat-value">${formRank ? `#${formRank}` : '-'}</div>
+                            <div class="form-stat-sub">${tourPlayerCount ? `/ ${tourPlayerCount} players` : ''}</div>
+                        </div>
+                        <div class="form-stat-card form-stat-card--primary"><div class="form-stat-label">Current Form</div><div class="form-stat-value">${Math.round(current)}</div></div>
+                        <div class="form-stat-card"><div class="form-stat-label">Peak</div><div class="form-stat-value">${Math.round(highest)}</div></div>
+                        <div class="form-stat-card"><div class="form-stat-label">Low</div><div class="form-stat-value">${Math.round(lowest)}</div></div>
                         <div class="form-stat-card"><div class="form-stat-label">Matches</div><div class="form-stat-value">${eloData?.matchCount || 0}</div></div>
                     </div>
                     
@@ -848,14 +1174,14 @@
                     </div>
 
                     <div class="elo-table-wrap">
-                        <h4 style="margin-bottom:8px;font-size:1em;">Match Calculation History (Last 10)</h4>
+                        <h4 style="margin-bottom:8px;font-size:1em;">Match Calculation History (Last ${MAX_MATCHES})</h4>
                         <table class="elo-history-table" style="width:100%;font-size:0.9rem;border-collapse:collapse;">
                             <thead>
                                 <tr style="border-bottom:2px solid #eee;text-align:left;color:#666;">
                                     <th style="padding:4px;">Opponent / Event</th>
                                     <th style="padding:4px;">Result</th>
                                     <th style="padding:4px;">Score</th>
-                                    <th style="padding:4px;">Strength Ratio</th>
+                                    <th style="padding:4px;">Factor</th>
                                     <th style="padding:4px;">Match Quality</th>
                                     <th style="padding:4px;">Form Change</th>
                                 </tr>
@@ -866,7 +1192,7 @@
                             </tbody>
                         </table>
                         <div style="margin-top:8px;font-size:0.8em;color:#777;">
-                            <em>* Strength Ratio: Multiplicative factor based on ranking points gap. 
+                            <em>* Factor: Multiplicative value based on ranking points gap. 
                             Match Quality: Quick assessment based on dominance (straight sets, game margins). 
                             Form Change: Adjustment multiplied by tournament importance.</em>
                         </div>
@@ -883,13 +1209,17 @@
         const deltaText = `${delta >= 0 ? '+' : ''}${round2(delta)}`;
         const strengthRatio = round2(toNumber(match.strengthRatio, 1.0));
         const dominance = round2(toNumber(match.dominanceMultiplier, 1.0));
-        const retirementNote = match.isRetirement ? 'Yes (halved)' : 'No';
+        const retirementState = String(match.retirementState || '').trim();
+        const retirementMultiplier = round2(toNumber(match.retirementMultiplier, 0.5));
+        const retirementNote = match.isRetirement
+            ? `Yes (${retirementState || 'balanced'}, x${retirementMultiplier})`
+            : 'No';
 
         targetEl.innerHTML = `
             <div><strong>Result:</strong> ${match.result} ${match.score ? `(${match.score})` : ''}</div>
             <div><strong>Opponent:</strong> ${match.opponentName}${rankText}</div>
             <div><strong>Tournament:</strong> ${match.tournamentName} - ${match.category} (${match.round})</div>
-            <div><strong>Strength Ratio:</strong> ${strengthRatio}x | <strong>Dominance:</strong> ${dominance}x</div>
+            <div><strong>Factor:</strong> ${strengthRatio}x | <strong>Dominance:</strong> ${dominance}x</div>
             <div><strong>Retirement:</strong> ${retirementNote}</div>
             <div><strong>Form Change:</strong> ${deltaText} -> <strong>${round2(match.form)}</strong></div>
         `;
@@ -912,7 +1242,7 @@
         if (!eloData) return;
 
         const modal = ensureEloModalElement();
-        modal.innerHTML = createEloDetailModalHTML(playerName, eloData);
+        modal.innerHTML = createEloDetailModalHTML(playerName, eloData, safeTour);
         modal.classList.add('active');
 
         const closeButton = modal.querySelector('[data-elo-close]');

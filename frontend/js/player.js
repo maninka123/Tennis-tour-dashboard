@@ -498,9 +498,9 @@ const PlayerModule = {
                         </div>
                         <h3 class="stats-na-title">Detailed Stats Unavailable</h3>
                         <p class="stats-na-text">
-                            In-depth performance statistics are currently available for the 
-                            <strong>top 200 ${tourLabel} players</strong>. As rankings evolve, 
-                            more player profiles will be unlocked.
+                            In-depth performance statistics for this player are not published in the current
+                            <strong>${tourLabel} season feed</strong>. This usually happens when official serve/return
+                            metrics are missing for the selected season.
                         </p>
                         <div class="stats-na-divider"></div>
                         <p class="stats-na-subtext">
@@ -688,6 +688,7 @@ const PlayerModule = {
     renderRecentMatchRow(row, Utils, isAtp = false) {
         const result = this.resolveRecentResult(row, isAtp);
         const resultClass = result === 'W' ? 'win' : (result === 'L' ? 'loss' : 'other');
+        const displayScore = this.normalizeRecentScore(row, result, isAtp);
         const opponentName = row?.opponent_name || '-';
         const opponentFlag = row?.opponent_country ? Utils.getFlag(row.opponent_country) : '';
         const extras = [];
@@ -701,7 +702,7 @@ const PlayerModule = {
                 <td>${roundLabel}</td>
                 <td><span class="recent-result-pill ${resultClass}">${result}</span></td>
                 <td>${opponentFlag} ${opponentName}${extrasText}</td>
-                <td class="recent-score-cell">${row?.score || '-'}</td>
+                <td class="recent-score-cell">${displayScore || '-'}</td>
                 ${isAtp ? '' : `<td>${this.safeDisplay(row?.opponent_rank)}</td>`}
             </tr>
         `;
@@ -727,6 +728,36 @@ const PlayerModule = {
         if (p1Sets > p2Sets) return 'W';
         if (p2Sets > p1Sets) return 'L';
         return '-';
+    },
+
+    swapScoreOrientation(scoreText) {
+        const text = String(scoreText || '').trim();
+        if (!text) return text;
+        return text.replace(/(\d+)\s*-\s*(\d+)(\(\d+\))?/g, (_m, a, b, tb = '') => `${b}-${a}${tb || ''}`);
+    },
+
+    inferResultFromScoreText(scoreText) {
+        const sets = this.parseScoreSets(scoreText || '');
+        if (!sets.length) return '';
+        let p1Sets = 0;
+        let p2Sets = 0;
+        sets.forEach(([p1, p2]) => {
+            if (p1 > p2) p1Sets += 1;
+            else if (p2 > p1) p2Sets += 1;
+        });
+        if (p1Sets > p2Sets) return 'W';
+        if (p2Sets > p1Sets) return 'L';
+        return '';
+    },
+
+    normalizeRecentScore(row, result, isAtp = false) {
+        const rawScore = String(row?.score || row?.score_raw || '').trim();
+        if (isAtp || !rawScore) return rawScore;
+        const explicit = String(result || row?.result || '').trim().toUpperCase();
+        if (explicit !== 'W' && explicit !== 'L') return rawScore;
+        const inferred = this.inferResultFromScoreText(rawScore);
+        if (!inferred || inferred === explicit) return rawScore;
+        return this.swapScoreOrientation(rawScore);
     },
 
     parseScoreSets(scoreText) {

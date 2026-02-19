@@ -1793,53 +1793,6 @@ class TennisDataFetcher:
                 return index['by_full'][match[0]]
         return None
 
-    def _match_wta_scraped_rankings_safe(self, name, scraped_index=None):
-        """
-        Conservative WTA scraped matcher for rankings/player cards.
-        Prevents cross-player stat bleed by avoiding broad fuzzy matching.
-        """
-        index = scraped_index or self._load_wta_scraped_index()
-        if not name:
-            return None
-        norm = self._normalize_player_name(name)
-        if not norm:
-            return None
-
-        exact = (index.get('by_full') or {}).get(norm)
-        if exact:
-            return exact
-
-        tokens = norm.split()
-        if len(tokens) < 2:
-            return None
-        first = tokens[0]
-        last = tokens[-1]
-        candidates = list((index.get('by_last') or {}).get(last) or [])
-        if not candidates:
-            return None
-
-        compatible = []
-        for candidate in candidates:
-            cand_first = str(candidate.get('first') or '').strip().lower()
-            if not cand_first:
-                continue
-            if (
-                cand_first == first
-                or cand_first.startswith(first)
-                or first.startswith(cand_first)
-            ):
-                compatible.append(candidate)
-                continue
-            # Transliteration guard (e.g., yulia <-> yuliia) while avoiding broad fuzzy links.
-            if min(len(first), len(cand_first)) >= 5:
-                ratio = difflib.SequenceMatcher(None, first, cand_first).ratio()
-                if ratio >= 0.90:
-                    compatible.append(candidate)
-
-        if len(compatible) == 1:
-            return compatible[0]
-        return None
-
     def _load_atp_scraped_index(self):
         if self._atp_scraped_index is not None:
             return self._atp_scraped_index
@@ -3423,29 +3376,6 @@ class TennisDataFetcher:
             return 96
         return 128
 
-    def _wta_round_from_match_number(self, match_number):
-        try:
-            num = int(match_number)
-        except Exception:
-            return ''
-        if num <= 0:
-            return ''
-        if num == 1:
-            return 'F'
-        if num in (2, 3):
-            return 'SF'
-        if 4 <= num <= 7:
-            return 'QF'
-        if 8 <= num <= 15:
-            return 'R16'
-        if 16 <= num <= 31:
-            return 'R32'
-        if 32 <= num <= 63:
-            return 'R64'
-        if 64 <= num <= 127:
-            return 'R128'
-        return ''
-
     def _wta_round_from_match(self, match, is_grand_slam, draw_size=32):
         round_id = str(match.get('RoundID') or '').strip()
         draw_level_type = str(match.get('DrawLevelType') or '').strip().upper()
@@ -3481,12 +3411,6 @@ class TennisDataFetcher:
 
         if round_id.isdigit():
             rid = int(round_id)
-            # Live/recent WTA feeds can publish numeric RoundID with opposite ordering.
-            # MatchID sequence (LS001=F, LS002/003=SF, ...) is stable across feeds and
-            # gives the correct stage for in-progress rows.
-            round_from_match_number = self._wta_round_from_match_number(match_number)
-            if round_from_match_number:
-                return round_from_match_number
             if is_grand_slam:
                 gs_rounds = ['R128', 'R64', 'R32', 'R16', 'QF', 'SF', 'F']
                 # Most WTA draw feeds expose numeric rounds with no "winner" row:
@@ -3531,9 +3455,21 @@ class TennisDataFetcher:
                 if 1 <= rid <= len(rounds):
                     return rounds[rid - 1]
 
-        round_from_match_number = self._wta_round_from_match_number(match_number)
-        if round_from_match_number:
-            return round_from_match_number
+        if match_number:
+            if match_number == 1:
+                return 'F'
+            if match_number in (2, 3):
+                return 'SF'
+            if 4 <= match_number <= 7:
+                return 'QF'
+            if 8 <= match_number <= 15:
+                return 'R16'
+            if 16 <= match_number <= 31:
+                return 'R32'
+            if 32 <= match_number <= 63:
+                return 'R64'
+            if 64 <= match_number <= 127:
+                return 'R128'
         return ''
 
     def _parse_wta_sets(self, match):
@@ -3577,7 +3513,7 @@ class TennisDataFetcher:
 
     def _resolve_wta_player(self, name, country, player_id):
         rank_entry = self._match_wta_ranking(name)
-        scraped_entry = self._match_wta_scraped_rankings_safe(name)
+        scraped_entry = self._match_wta_scraped(name)
         resolved_id = int(player_id) if player_id and str(player_id).isdigit() else None
         if resolved_id is None:
             resolved_id = (rank_entry or {}).get('id')
@@ -5504,7 +5440,7 @@ class TennisDataFetcher:
                     continue
                 norm_name = self._normalize_player_name(name)
 
-                scraped = self._match_wta_scraped_rankings_safe(name, scraped_index=scraped_index)
+                scraped = self._match_wta_scraped(name)
                 profile_data = scraped.get('profile') if scraped else {}
                 stats_data = scraped.get('stats') if scraped else {}
                 scraped_player_id = (scraped or {}).get('player_id')

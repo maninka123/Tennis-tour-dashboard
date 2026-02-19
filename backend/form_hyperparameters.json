@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "notes": "Editable form-rating hyperparameters. Use form_hyperparameters.override.json for local overrides.",
+  "form": {
+    "default_form": 1000,
+    "floor": 700,
+    "ceiling": 1500,
+    "max_matches": 20
+  },
+  "k_value": {
+    "base_numerator": 55.0,
+    "base_offset": 2.0,
+    "decay_exponent": 0.25
+  },
+  "category_multipliers": {
+    "grand_slam": 1.5,
+    "masters_1000": 1.2,
+    "premier_mandatory": 1.2,
+    "wta_1000": 1.2,
+    "atp_500": 0.9,
+    "wta_500": 0.9,
+    "atp_250": 0.7,
+    "wta_250": 0.7,
+    "atp_125": 0.6,
+    "wta_125": 0.6,
+    "other": 0.36
+  },
+  "rank_factor": {
+    "win_scale": 2.4,
+    "loss_scale": 2.2,
+    "win_min": 0.15,
+    "win_max": 2.5,
+    "loss_min": -2.5,
+    "loss_max": -0.15
+  },
+  "dominance": {
+    "straight_sets_win_bonus": 0.3,
+    "tiebreak_with_dropped_set_penalty": 0.1,
+    "max_margin_bonus_cap": 0.15,
+    "close_loss_three_set_bonus": 0.15,
+    "close_loss_two_set_bonus": 0.1,
+    "straight_sets_loss_penalty": 0.2,
+    "min_multiplier": 0.5,
+    "max_multiplier": 1.5
+  },
+  "dampening": {
+    "ceiling_strength": 0.55,
+    "floor_strength": 0.55
+  },
+  "retirement": {
+    "balanced_multiplier": 0.5,
+    "winner_leading_multiplier": 1.0,
+    "winner_trailing_multiplier": 0.5,
+    "loser_leading_multiplier": 0.25,
+    "loser_trailing_multiplier": 1.0
+  },
+  "walkover": {
+    "multiplier": 0.25
+  },
+  "delta_clamp": {
+    "win_min": 2,
+    "win_max": 80,
+    "loss_min": -80,
+    "loss_max": -2
+  },
+  "tournament_name_overrides": {
+    "noumea noumea, new caledonia": {
+      "category": "other",
+      "factor": 0.36,
+      "label": "Tour",
+      "base_points": 125,
+      "prize_money_band": "challenger"
+    }
+  },
+  "tournament_reference": {
+    "categories": {
+      "grand_slam": {
+        "label": "Grand Slam",
+        "points": 2000
+      },
+      "masters_1000": {
+        "label": "Masters 1000",
+        "points": 1000
+      },
+      "atp_500": {
+        "label": "ATP 500",
+        "points": 500
+      },
+      "atp_250": {
+        "label": "ATP 250",
+        "points": 250
+      },
+      "atp_125": {
+        "label": "ATP 125",
+        "points": 125
+      },
+      "other": {
+        "label": "Tour",
+        "points": 75
+      }
+    },
+    "prize_money_bands": {
+      "grand_slam": {
+        "min_usd": 1000000
+      },
+      "masters_1000": {
+        "min_usd": 250000
+      },
+      "atp_500": {
+        "min_usd": 125000
+      },
+      "atp_250": {
+        "min_usd": 50000
+      },
+      "atp_125": {
+        "min_usd": 20000
+      },
+      "challenger": {
+        "min_usd": 10000
+      }
+    }
+  }
+}

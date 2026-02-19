@@ -9050,3 +9050,20 @@ body.fav-schedule-open .fav-live-tooltip {
 .elo-history-table tr:last-child td {
   border-bottom: none;
 }
+
+.elo-opponent-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.elo-event-badge {
+  padding: 2px 7px;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  min-width: 34px;
+  justify-content: center;
+  line-height: 1.1;
+}

@@ -6,6 +6,7 @@
 (function () {
     let GIF_FILES = [];
     let gifsLoaded = false;
+    const DEFAULT_GIF_COUNT = 36;
 
     const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
@@ -27,26 +28,40 @@
         return `${baseUrl}/Images/intro gifs/${encodeURIComponent(file)}`;
     };
 
+    const buildDefaultGifList = () => {
+        const files = [];
+        for (let i = 1; i <= DEFAULT_GIF_COUNT; i += 1) {
+            files.push(`tennis_${String(i).padStart(2, '0')}.gif`);
+        }
+        return files;
+    };
+
     /**
      * Fetch available gif files from backend
      */
     async function fetchGifFiles() {
+        const apiBase = window.TennisApp?.CONFIG?.API_BASE_URL || 'http://localhost:5001/api';
+        const urlCandidates = [
+            `${apiBase.replace('/api', '')}/api/intro-gifs`,
+            '/api/intro-gifs'
+        ];
+
         try {
-            // Use the app's API base URL configuration
-            const apiBase = window.TennisApp?.CONFIG?.API_BASE_URL || 'http://localhost:5001/api';
-            const response = await fetch(`${apiBase.replace('/api', '')}/api/intro-gifs`);
-            const result = await response.json();
-            if (result.success && result.data && result.data.length > 0) {
-                GIF_FILES = result.data;
-                gifsLoaded = true;
-                console.log(`Loaded ${GIF_FILES.length} gifs from backend`);
-                return true;
+            for (const url of urlCandidates) {
+                const response = await fetch(url);
+                const result = await response.json();
+                if (result.success && result.data && result.data.length > 0) {
+                    GIF_FILES = result.data;
+                    gifsLoaded = true;
+                    console.log(`Loaded ${GIF_FILES.length} gifs from backend`);
+                    return true;
+                }
             }
         } catch (error) {
             console.warn('Could not fetch gif list from backend:', error);
         }
-        // Fallback: use a minimal default set if fetch fails
-        GIF_FILES = ['tennis_01.gif', 'tennis_02.gif', 'tennis_03.gif'];
+        // Fallback: use the known local filename set if API lookup fails
+        GIF_FILES = buildDefaultGifList();
         gifsLoaded = true;
         return false;
     }

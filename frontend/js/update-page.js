@@ -9,6 +9,7 @@ const UpdatePage = {
     gifs: [],
     gsNeedsUpdate: false,
     progressModel: null,
+    defaultGifCount: 36,
 
     init() {
         this.buildBackgroundCollage();
@@ -49,16 +50,27 @@ const UpdatePage = {
     },
 
     async fetchGifFiles() {
+        const urlCandidates = [
+            `${this.backendUrl.replace('/api', '')}/api/intro-gifs`,
+            '/api/intro-gifs'
+        ];
+
         try {
-            const response = await fetch(`${this.backendUrl.replace('/api', '')}/api/intro-gifs`);
-            const result = await response.json();
-            if (result.success && Array.isArray(result.data) && result.data.length) {
-                return result.data;
+            for (const url of urlCandidates) {
+                const response = await fetch(url);
+                const result = await response.json();
+                if (result.success && Array.isArray(result.data) && result.data.length) {
+                    return result.data;
+                }
             }
         } catch (error) {
             console.warn('Could not fetch update GIF list from backend:', error);
         }
-        return ['tennis_01.gif', 'tennis_02.gif', 'tennis_03.gif'];
+        const fallback = [];
+        for (let i = 1; i <= this.defaultGifCount; i += 1) {
+            fallback.push(`tennis_${String(i).padStart(2, '0')}.gif`);
+        }
+        return fallback;
     },
 
     shuffleArray(arr) {

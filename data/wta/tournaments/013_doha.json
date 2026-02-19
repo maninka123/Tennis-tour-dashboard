@@ -12,20 +12,20 @@
   "indoor_outdoor": "O",
   "city": "DOHA",
   "country": "QAT",
-  "status": "in_progress",
+  "status": "finished",
   "draw_size_singles": 56,
   "draw_size_doubles": 28,
   "prize_money": 4088211,
   "prize_money_currency": "USD",
   "champion": {
-    "id": "331006",
-    "name": "Victoria Mboko",
-    "country": "CAN"
-  },
-  "runner_up": {
     "id": "322191",
     "name": "Karolina Muchova",
     "country": "CZE"
+  },
+  "runner_up": {
+    "id": "331006",
+    "name": "Victoria Mboko",
+    "country": "CAN"
   },
   "draw_year": 2026,
   "draw": {
@@ -6516,9 +6516,9 @@
       "round_id": "F",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "P",
+      "match_state": "F",
       "scheduled": "2026-02-14T14:42:34.15+00:00",
-      "duration": "00:01:56",
+      "duration": "01:34:49",
       "player_a": {
         "id": "322191",
         "name": "Karolina Muchova",
@@ -6529,15 +6529,19 @@
         "name": "Victoria Mboko",
         "country": "CAN"
       },
-      "score_string": "0-1",
-      "result_string": "",
+      "score_string": "6-4,7-5",
+      "result_string": "[14]K. Muchova d [10]V. Mboko 6-4,7-5",
       "sets": [
         {
-          "a": "0",
-          "b": "1"
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "7",
+          "b": "5"
         }
       ],
-      "winner_side": "B"
+      "winner_side": "A"
     }
   ]
 }

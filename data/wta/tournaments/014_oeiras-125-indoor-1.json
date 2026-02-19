@@ -12,13 +12,21 @@
   "indoor_outdoor": "I",
   "city": "OEIRAS",
   "country": "POR",
-  "status": "in_progress",
+  "status": "finished",
   "draw_size_singles": 32,
   "draw_size_doubles": 16,
   "prize_money": 115000,
   "prize_money_currency": "USD",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "id": "331330",
+    "name": "Alina Korneeva",
+    "country": "RUS"
+  },
+  "runner_up": {
+    "id": "329057",
+    "name": "Darja Vidmanova",
+    "country": "CZE"
+  },
   "draw_year": 2026,
   "draw": {
     "draw_size": 32,
@@ -1426,10 +1434,10 @@
         "matches": [
           {
             "id": "LS002",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "KORNEEVA, Alina",
+            "result_score": "60 63",
+            "winner_slot": "B",
+            "result_name_and_score": "Alina Korneeva d. Matilde Jorge 60 63",
             "players": [
               {
                 "slot": "A",
@@ -1459,10 +1467,10 @@
           },
           {
             "id": "LS003",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "VIDMANOVA, Darja",
+            "result_score": "64 36 76(5)",
+            "winner_slot": "B",
+            "result_name_and_score": "Darja Vidmanova d. Maja Chwalinska 64 36 76(5)",
             "players": [
               {
                 "slot": "A",
@@ -3324,9 +3332,9 @@
       "round_id": "S",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "P",
+      "match_state": "F",
       "scheduled": "2026-02-14T14:00:48.243+00:00",
-      "duration": "01:06:06",
+      "duration": "01:14:19",
       "player_a": {
         "id": "328730",
         "name": "Matilde Jorge",
@@ -3337,8 +3345,8 @@
         "name": "Alina Korneeva",
         "country": "RUS"
       },
-      "score_string": "6-0,4-3",
-      "result_string": "",
+      "score_string": "6-0,6-3",
+      "result_string": "A. Korneeva d M. Jorge 6-0,6-3",
       "sets": [
         {
           "a": "0",
@@ -3346,19 +3354,19 @@
         },
         {
           "a": "3",
-          "b": "4"
+          "b": "6"
         }
       ],
       "winner_side": "B"
     },
     {
       "match_id": "LD001",
-      "round_id": 1,
+      "round_id": "F",
       "draw_level_type": "M",
       "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-14T15:00+00:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-14T15:25:36.303+00:00",
+      "duration": "01:01:37",
       "player_a": {
         "id": "323694",
         "name": "Emily Appleton",
@@ -3369,10 +3377,55 @@
         "name": "Carmen Corley",
         "country": "USA"
       },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
+      "score_string": "2-6,6-0,1-0(4)",
+      "result_string": "C. Corley / I. Corley d [1]E. Appleton / M. Ninomiya 2-6,6-0,1-0(4)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "0",
+          "b": "6"
+        },
+        {
+          "a": "0",
+          "b": "1"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS001",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-15T10:43:35.687+00:00",
+      "duration": "01:21:03",
+      "player_a": {
+        "id": "331330",
+        "name": "Alina Korneeva",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "329057",
+        "name": "Darja Vidmanova",
+        "country": "CZE"
+      },
+      "score_string": "7-5,6-1",
+      "result_string": "A. Korneeva d D. Vidmanova 7-5,6-1",
+      "sets": [
+        {
+          "a": "7",
+          "b": "5"
+        },
+        {
+          "a": "6",
+          "b": "1"
+        }
+      ],
+      "winner_side": "A"
     }
   ]
 }
