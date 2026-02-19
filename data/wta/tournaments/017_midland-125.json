@@ -12,7 +12,7 @@
   "indoor_outdoor": "I",
   "city": "MIDLAND",
   "country": "USA",
-  "status": "in_progress",
+  "status": "inprogress",
   "draw_size_singles": 32,
   "draw_size_doubles": 16,
   "prize_money": 115000,
@@ -2772,9 +2772,9 @@
       "round_id": "1",
       "draw_level_type": "M",
       "draw_match_type": "D",
-      "match_state": "P",
+      "match_state": "F",
       "scheduled": "2026-02-19T02:25:32.89+00:00",
-      "duration": "00:55:29",
+      "duration": "01:13:26",
       "player_a": {
         "id": "319411",
         "name": "Jamie Loeb",
@@ -2785,16 +2785,16 @@
         "name": "Yiming Dang",
         "country": "CHN"
       },
-      "score_string": "6-2,3-2",
-      "result_string": "",
+      "score_string": "6-2,6-4",
+      "result_string": "Y. Dang / X. You d J. Loeb / V. Strakhova 6-2,6-4",
       "sets": [
         {
           "a": "2",
           "b": "6"
         },
         {
-          "a": "2",
-          "b": "3"
+          "a": "4",
+          "b": "6"
         }
       ],
       "winner_side": "B"
@@ -2846,6 +2846,29 @@
       "winner_side": null
     },
     {
+      "match_id": "LD004",
+      "round_id": 3,
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "U",
+      "scheduled": "2026-02-19T14:00-05:00",
+      "duration": null,
+      "player_a": {
+        "id": "316957",
+        "name": "Sabrina Santamaria",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "329671",
+        "name": "Yiming Dang",
+        "country": "CHN"
+      },
+      "score_string": null,
+      "result_string": null,
+      "sets": [],
+      "winner_side": null
+    },
+    {
       "match_id": "LS010",
       "round_id": 4,
       "draw_level_type": "M",
@@ -2885,29 +2908,6 @@
         "id": "319413",
         "name": "Quinn Gleason",
         "country": "USA"
-      },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
-    },
-    {
-      "match_id": "LD004",
-      "round_id": 3,
-      "draw_level_type": "M",
-      "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59-05:00",
-      "duration": null,
-      "player_a": {
-        "id": "316957",
-        "name": "Sabrina Santamaria",
-        "country": "USA"
-      },
-      "player_b": {
-        "id": "TBD",
-        "name": "",
-        "country": ""
       },
       "score_string": null,
       "result_string": null,

@@ -3958,12 +3958,25 @@ class TennisDataFetcher:
         script_path = Path(__file__).resolve().parent.parent / 'scripts' / '[Live] atp_match_stats.py'
         if not script_path.exists():
             return None
-        
-        # Use the venv python if it exists
-        python_executable = sys.executable
-        venv_python = Path(__file__).resolve().parent / 'venv' / 'bin' / 'python'
-        if venv_python.exists():
-            python_executable = str(venv_python)
+
+        backend_dir = Path(__file__).resolve().parent
+        candidates = []
+        if os.name == 'nt':
+            candidates.append(backend_dir / 'venv' / 'Scripts' / 'python.exe')
+        else:
+            candidates.append(backend_dir / 'venv' / 'bin' / 'python')
+        candidates.append(Path(sys.executable))
+
+        python_executable = None
+        for candidate in candidates:
+            try:
+                if candidate and candidate.exists():
+                    python_executable = str(candidate)
+                    break
+            except Exception:
+                continue
+        if not python_executable:
+            python_executable = sys.executable
 
         cmd = [
             python_executable,
