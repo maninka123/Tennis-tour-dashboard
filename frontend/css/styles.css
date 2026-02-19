@@ -4828,6 +4828,9 @@ body {
   bottom: 24px;
   transform: translateX(-50%);
   padding: 8px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -4836,6 +4839,67 @@ body {
   border: 1px solid rgba(184, 201, 225, 0.3);
   border-radius: 999px;
   backdrop-filter: blur(4px);
+}
+
+.intro-gif-caption-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.intro-load-progress {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  width: min(320px, 72vw);
+  height: 2px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(232, 238, 247, 0.24);
+}
+
+.intro-load-progress-bar {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #79a8ff, #9ce0ff);
+  transition: width 180ms linear;
+}
+
+.gif-source-led {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: #5d6a7f;
+  box-shadow: 0 0 0 rgba(93, 106, 127, 0.4);
+}
+
+.gif-source-led.is-green {
+  background: #28c76f;
+  box-shadow: 0 0 8px rgba(40, 199, 111, 0.8);
+}
+
+.gif-source-led.is-red {
+  background: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+  animation: gif-led-blink 1s steps(1, end) infinite;
+}
+
+.gif-source-led.is-unknown {
+  background: #8a94a8;
+  box-shadow: 0 0 6px rgba(138, 148, 168, 0.55);
+}
+
+@keyframes gif-led-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0.2;
+  }
 }
 
 @media (max-width: 1200px) {

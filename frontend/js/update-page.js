@@ -55,16 +55,16 @@ const UpdatePage = {
             '/api/intro-gifs'
         ];
 
-        try {
-            for (const url of urlCandidates) {
+        for (const url of urlCandidates) {
+            try {
                 const response = await fetch(url);
                 const result = await response.json();
                 if (result.success && Array.isArray(result.data) && result.data.length) {
                     return result.data;
                 }
+            } catch (error) {
+                console.warn(`Update GIF API candidate failed (${url}):`, error);
             }
-        } catch (error) {
-            console.warn('Could not fetch update GIF list from backend:', error);
         }
         const fallback = [];
         for (let i = 1; i <= this.defaultGifCount; i += 1) {

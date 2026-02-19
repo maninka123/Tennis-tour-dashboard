@@ -455,7 +455,15 @@
       <div class="loading-overlay" id="loadingOverlay" aria-live="polite">
         <div class="intro-gif-grid" id="introGifGrid"></div>
         <div class="intro-gif-overlay-shade" aria-hidden="true"></div>
-        <div class="intro-gif-caption">Loading live tennis data...</div>
+        <div class="intro-gif-caption">
+          <div class="intro-gif-caption-row">
+            <span class="gif-source-led is-unknown" id="gifSourceLed" aria-hidden="true"></span>
+            <span id="gifSourceText">Loading live tennis data...</span>
+          </div>
+        </div>
+        <div class="intro-load-progress" aria-hidden="true">
+          <span class="intro-load-progress-bar" id="introLoadProgressBar"></span>
+        </div>
       </div>
 
       <!-- Match Modal (Click-based) -->
