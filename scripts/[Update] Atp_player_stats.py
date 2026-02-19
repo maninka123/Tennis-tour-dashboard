@@ -18,7 +18,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, Optional, Tuple
+from typing import Any, Dict, Iterable, Optional
 
 import requests
 
@@ -28,6 +28,7 @@ DEFAULT_DELAY = 0.25
 DEFAULT_LIMIT = 0
 DEFAULT_START = 0
 DEFAULT_TIMEOUT = 45
+DEFAULT_STALE_WINDOW_HOURS = 3.0
 SCRAPER_FILE = "[Only once] atp_scrape_atptour.py"
 
 
@@ -59,14 +60,9 @@ def write_json(path: Path, payload: Dict[str, Any]) -> None:
 
 
 def load_scraper_module(script_dir: Path):
-    # Prefer the parent scripts/ scraper so updates use the latest fixed implementation.
-    candidate_paths = [
-        script_dir.parent / SCRAPER_FILE,
-        script_dir / SCRAPER_FILE,
-    ]
-    scraper_path = next((p for p in candidate_paths if p.exists()), None)
-    if not scraper_path:
-        raise FileNotFoundError(f"Missing required scraper file: {candidate_paths[0]}")
+    scraper_path = script_dir / SCRAPER_FILE
+    if not scraper_path.exists():
+        raise FileNotFoundError(f"Missing required scraper file: {scraper_path}")
 
     spec = importlib.util.spec_from_file_location("atp_scrape_once", scraper_path)
     if not spec or not spec.loader:
@@ -95,50 +91,48 @@ def iter_player_folders(root: Path) -> Iterable[Path]:
     return folders
 
 
-def fetch_recent_matches_with_retry(
-    scraper: Any,
-    player_url: str,
-    year: int,
-    session: requests.Session,
-    timeout: int,
-) -> Tuple[Optional[Dict[str, Any]], Optional[str]]:
-    """Fetch recent matches with retries and a final fresh-session fallback."""
-    last_error: Optional[str] = None
-    attempts = 3
-
-    for attempt in range(1, attempts + 1):
-        try:
-            recent = scraper.scrape_player_recent_matches(
-                player_url,
-                year=year,
-                session=session,
-                timeout=timeout,
-            )
-            if isinstance(recent, dict):
-                return recent, None
-            last_error = f"unexpected payload type: {type(recent).__name__}"
-        except Exception as exc:
-            last_error = str(exc)
-
-        if attempt < attempts:
-            time.sleep(min(2.0, 0.4 * attempt))
-
+def file_age_hours(path: Path, now_ts: float) -> float:
     try:
-        fresh_session = requests.Session()
-        fresh_session.headers.update(dict(session.headers))
-        recent = scraper.scrape_player_recent_matches(
-            player_url,
-            year=year,
-            session=fresh_session,
-            timeout=timeout,
-        )
-        if isinstance(recent, dict):
-            return recent, None
-        last_error = f"unexpected payload type on fresh session: {type(recent).__name__}"
-    except Exception as exc:
-        last_error = str(exc)
+        if not path.exists():
+            return float("inf")
+        return max(0.0, (now_ts - path.stat().st_mtime) / 3600.0)
+    except Exception:
+        return float("inf")
 
-    return None, (last_error or "unknown error")
+
+def folder_update_age_hours(folder: Path, now_ts: float) -> float:
+    # ATP updater rewrites both files; use the oldest of the tracked files as staleness.
+    markers = [
+        folder / "stats_2026.json",
+        folder / "profile.json",
+    ]
+    ages = [file_age_hours(path, now_ts) for path in markers]
+    return max(ages) if ages else float("inf")
+
+
+def prioritize_folders_by_staleness(folders: Iterable[Path], stale_window_hours: float):
+    ordered = list(folders)
+    if stale_window_hours <= 0:
+        return ordered, 0
+
+    now_ts = time.time()
+    stale = []
+    fresh = []
+    for folder in ordered:
+        age_hours = folder_update_age_hours(folder, now_ts)
+        row = (folder, age_hours)
+        if age_hours > stale_window_hours:
+            stale.append(row)
+        else:
+            fresh.append(row)
+
+    if not stale:
+        return ordered, 0
+
+    # Stalest folders first; ties by folder name.
+    stale.sort(key=lambda item: (-item[1], item[0].name.lower()))
+    prioritized = [folder for folder, _ in stale] + [folder for folder, _ in fresh]
+    return prioritized, len(stale)
 
 
 def update_player_folder(
@@ -191,30 +185,18 @@ def update_player_folder(
     merged.update(new_stats)
 
     if refresh_recent:
-        recent, recent_error = fetch_recent_matches_with_retry(
-            scraper=scraper,
-            player_url=player_url,
-            year=year,
-            session=session,
-            timeout=timeout,
-        )
-        previous_recent = existing_stats.get("recent_matches_tab") if isinstance(existing_stats, dict) else None
-        previous_tournaments = []
-        if isinstance(previous_recent, dict):
-            previous_tournaments = previous_recent.get("tournaments") or []
-
-        if isinstance(recent, dict):
-            new_tournaments = recent.get("tournaments") or []
-            # Avoid replacing good existing data with an empty parse.
-            if len(new_tournaments) == 0 and len(previous_tournaments) > 0:
-                print(yellow(f"[WARN] {folder.name}: parsed empty recent matches; keeping previous recent_matches_tab"))
-            else:
+        try:
+            recent = scraper.scrape_player_recent_matches(
+                player_url,
+                year=year,
+                session=session,
+                timeout=timeout,
+            )
+            if isinstance(recent, dict):
                 merged["recent_matches_tab"] = recent
-        else:
-            # If no old recent data exists, fail this player so the issue is visible in logs.
-            if len(previous_tournaments) == 0:
-                return f"error:recent-fetch-failed ({recent_error})"
-            print(yellow(f"[WARN] {folder.name}: recent matches refresh failed ({recent_error}); keeping previous recent_matches_tab"))
+        except Exception:
+            # Keep previous recent_matches_tab if refresh fails.
+            pass
 
     merged["updated_at"] = now_iso()
 
@@ -236,6 +218,12 @@ def main() -> int:
     parser.add_argument("--limit", type=int, default=DEFAULT_LIMIT, help="Max folders to process (0 = all)")
     parser.add_argument("--start", type=int, default=DEFAULT_START, help="Start index offset")
     parser.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT, help="HTTP timeout in seconds")
+    parser.add_argument(
+        "--stale-window-hours",
+        type=float,
+        default=DEFAULT_STALE_WINDOW_HOURS,
+        help=f"Prioritize folders older than this many hours first (default: {DEFAULT_STALE_WINDOW_HOURS})",
+    )
     parser.add_argument("--filter", default="", help="Process folders matching substring")
     parser.add_argument("--dry-run", action="store_true", help="Show actions only, do not write files")
     parser.add_argument("--skip-recent", action="store_true", help="Skip recent_matches_tab refresh")
@@ -259,6 +247,8 @@ def main() -> int:
     if args.limit and args.limit > 0:
         folders = folders[: args.limit]
 
+    folders, prioritized_count = prioritize_folders_by_staleness(folders, args.stale_window_hours)
+
     if not folders:
         print(yellow("No matching player folders found."))
         return 1
@@ -268,8 +258,13 @@ def main() -> int:
         f"root={root} | year={args.year} | delay={args.delay}s | "
         f"recent={'off' if args.skip_recent else 'on'} | "
         f"timeout={args.timeout}s | "
+        f"stale_window={args.stale_window_hours}h | "
         f"mode={'dry-run' if args.dry_run else 'write'}"
     )
+    if prioritized_count > 0:
+        print(yellow(f"Priority mode: {prioritized_count} stale folders (> {args.stale_window_hours}h) moved to front"))
+    else:
+        print(green(f"Priority mode: all folders updated within {args.stale_window_hours}h, using normal order"))
 
     session = requests.Session()
     session.headers.update(

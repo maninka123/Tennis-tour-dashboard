@@ -27,6 +27,7 @@ DEFAULT_YEAR = 2026
 DEFAULT_DELAY = 0.35
 DEFAULT_LIMIT = 0
 DEFAULT_START = 0
+DEFAULT_STALE_WINDOW_HOURS = 3.0
 SCRAPER_FILE = "[Only once] wta_scrape_wtatennis.py"
 CONFIG_FILE = "update_config.json"
 
@@ -114,6 +115,44 @@ def iter_player_folders(root: Path) -> Iterable[Path]:
     folders = [p for p in root.iterdir() if p.is_dir()]
     folders.sort(key=lambda p: p.name.lower())
     return folders
+
+
+def file_age_hours(path: Path, now_ts: float) -> float:
+    try:
+        if not path.exists():
+            return float("inf")
+        return max(0.0, (now_ts - path.stat().st_mtime) / 3600.0)
+    except Exception:
+        return float("inf")
+
+
+def folder_update_age_hours(folder: Path, now_ts: float) -> float:
+    # WTA updater rewrites stats file only.
+    return file_age_hours(folder / "stats_2026.json", now_ts)
+
+
+def prioritize_folders_by_staleness(folders: Iterable[Path], stale_window_hours: float):
+    ordered = list(folders)
+    if stale_window_hours <= 0:
+        return ordered, 0
+
+    now_ts = time.time()
+    stale = []
+    fresh = []
+    for folder in ordered:
+        age_hours = folder_update_age_hours(folder, now_ts)
+        row = (folder, age_hours)
+        if age_hours > stale_window_hours:
+            stale.append(row)
+        else:
+            fresh.append(row)
+
+    if not stale:
+        return ordered, 0
+
+    stale.sort(key=lambda item: (-item[1], item[0].name.lower()))
+    prioritized = [folder for folder, _ in stale] + [folder for folder, _ in fresh]
+    return prioritized, len(stale)
 
 
 def update_player_folder(
@@ -215,6 +254,12 @@ def main() -> int:
     parser.add_argument("--delay", type=float, default=conf_delay, help=f"Delay between players (default: {conf_delay})")
     parser.add_argument("--limit", type=int, default=conf_limit, help=f"Max folders to process (0 = all, default: {conf_limit})")
     parser.add_argument("--start", type=int, default=DEFAULT_START, help="Start index offset")
+    parser.add_argument(
+        "--stale-window-hours",
+        type=float,
+        default=DEFAULT_STALE_WINDOW_HOURS,
+        help=f"Prioritize folders older than this many hours first (default: {DEFAULT_STALE_WINDOW_HOURS})",
+    )
     parser.add_argument("--filter", default="", help="Process folders matching substring")
     parser.add_argument("--headful", action="store_true", default=conf_headful, help="Run browser in visible mode")
     parser.add_argument("--dry-run", action="store_true", default=conf_dry_run, help="Show actions only, do not write files")
@@ -241,6 +286,8 @@ def main() -> int:
     if args.limit and args.limit > 0:
         folders = folders[: args.limit]
 
+    folders, prioritized_count = prioritize_folders_by_staleness(folders, args.stale_window_hours)
+
     if not folders:
         print(yellow("No matching player folders found."))
         return 1
@@ -250,8 +297,13 @@ def main() -> int:
         f"root={root} | year={args.year} | delay={args.delay}s | "
         f"records={'off' if args.skip_records else 'on'} | "
         f"recent={'off' if args.skip_recent else 'on'} | "
+        f"stale_window={args.stale_window_hours}h | "
         f"mode={'dry-run' if args.dry_run else 'write'}"
     )
+    if prioritized_count > 0:
+        print(yellow(f"Priority mode: {prioritized_count} stale folders (> {args.stale_window_hours}h) moved to front"))
+    else:
+        print(green(f"Priority mode: all folders updated within {args.stale_window_hours}h, using normal order"))
 
     try:
         from playwright.sync_api import sync_playwright

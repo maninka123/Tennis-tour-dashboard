@@ -620,8 +620,15 @@ const PlayerModule = {
     },
 
     renderRecentTournamentCard(event, Utils, isAtp = false) {
+        const tour = isAtp ? 'atp' : 'wta';
         const category = event?.category || 'other';
-        const categoryClass = Utils.getCategoryClass(category);
+        const resolvedCategory = Utils.resolveTournamentCategory
+            ? Utils.resolveTournamentCategory(event?.tournament, category, tour)
+            : category;
+        const categoryClass = Utils.getCategoryClass(resolvedCategory, tour);
+        const categoryLabel = Utils.getCategoryLabelByTour
+            ? Utils.getCategoryLabelByTour(resolvedCategory, tour)
+            : (event?.category_label || 'Tour');
         const surfaceClass = this.surfaceClassFromKey(event?.surface_key || event?.surface || '');
         const surfaceLabel = event?.surface || 'HARD';
         const rows = (Array.isArray(event?.matches) ? event.matches : []).filter((row) => this.isRenderableRecentRow(row));
@@ -652,7 +659,7 @@ const PlayerModule = {
                         <div class="recent-tournament-sub">${[event?.location || '', event?.date_range || ''].filter(Boolean).join(', ')}</div>
                     </div>
                     <div class="recent-tournament-badges">
-                        <span class="category-badge ${categoryClass}">${event?.category_label || 'Tour'}</span>
+                        <span class="category-badge ${categoryClass}">${categoryLabel}</span>
                         <span class="recent-surface-badge ${surfaceClass}">${surfaceLabel}</span>
                     </div>
                 </div>

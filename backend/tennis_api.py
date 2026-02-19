@@ -1777,20 +1777,6 @@ class TennisDataFetcher:
         norm = self._normalize_player_name(name)
         if norm in index['by_full']:
             return index['by_full'][norm]
-
-        tokens = norm.split()
-        if tokens:
-            last = tokens[-1]
-            first = tokens[0]
-            key = f"{last}_{first[0]}"
-            if key in index['by_last_first']:
-                return index['by_last_first'][key]
-
-        choices = list(index['by_full'].keys())
-        if choices:
-            match = difflib.get_close_matches(norm, choices, n=1, cutoff=0.82)
-            if match:
-                return index['by_full'][match[0]]
         return None
 
     def _load_atp_scraped_index(self):
@@ -1876,20 +1862,6 @@ class TennisDataFetcher:
         norm = self._normalize_player_name(name)
         if norm in index['by_full']:
             return index['by_full'][norm]
-
-        tokens = norm.split()
-        if tokens:
-            last = tokens[-1]
-            first = tokens[0]
-            key = f"{last}_{first[0]}"
-            if key in index['by_last_first']:
-                return index['by_last_first'][key]
-
-        choices = list(index['by_full'].keys())
-        if choices:
-            match = difflib.get_close_matches(norm, choices, n=1, cutoff=0.82)
-            if match:
-                return index['by_full'][match[0]]
         return None
     
     def get_tournament_category(self, tournament_name):
@@ -5598,6 +5570,15 @@ class TennisDataFetcher:
                 records = records_tab.get('yearly') or stats_data.get('records') or []
                 records_summary = records_tab.get('summary') or []
 
+                # We only maintain per-player stats files for top-200 coverage.
+                # Prevent accidental cross-player assignments outside that scope.
+                if rank > 200:
+                    stats_data = {}
+                    prize_money = ''
+                    singles_titles = ''
+                    records = []
+                    records_summary = []
+
                 rankings.append({
                     'rank': rank,
                     'id': resolved_id,
@@ -5706,6 +5687,16 @@ class TennisDataFetcher:
                 )
                 ytd_won_lost = profile_data.get('ytd_won_lost') or ''
                 singles_titles = stats_data.get('singles_titles') or ''
+
+                # We only maintain per-player stats files for top-200 coverage.
+                # Prevent accidental cross-player assignments outside that scope.
+                if rank > 200:
+                    stats_data = {}
+                    prize_money = ''
+                    ytd_prize_money = ''
+                    career_prize_money = ''
+                    ytd_won_lost = ''
+                    singles_titles = ''
 
                 rankings.append({
                     'rank': rank,

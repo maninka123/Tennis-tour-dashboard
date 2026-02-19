@@ -285,6 +285,99 @@ const Utils = {
         return normalized.replace(/_/g, '-') || 'other';
     },
 
+    normalizeTournamentKey(name) {
+        return String(name || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/&/g, ' ')
+            .replace(/["'`]/g, '')
+            .replace(/[^a-z0-9]/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+    },
+
+    resolveTournamentCategory(tournamentName, fallbackCategory = 'other', tour = '') {
+        const explicitTour = String(tour || '').trim().toLowerCase();
+        const currentTour = String(window.TennisApp?.AppState?.currentTour || '').trim().toLowerCase();
+        const resolvedTour = explicitTour === 'atp' || explicitTour === 'wta'
+            ? explicitTour
+            : (currentTour === 'atp' || currentTour === 'wta' ? currentTour : 'atp');
+
+        const normalizedTarget = this.normalizeTournamentKey(tournamentName);
+        const fallback = String(fallbackCategory || '').trim().toLowerCase() || 'other';
+        if (!normalizedTarget) return fallback;
+
+        const calendar = window.TennisApp?.AppState?.tournaments?.[resolvedTour];
+        if (!Array.isArray(calendar) || !calendar.length) return fallback;
+
+        const candidates = new Set([normalizedTarget]);
+        String(tournamentName || '').split(/[|,•-]/g)
+            .map((part) => this.normalizeTournamentKey(part))
+            .filter(Boolean)
+            .forEach((key) => candidates.add(key));
+
+        let matchedCategory = '';
+        for (const item of calendar) {
+            const itemCategory = String(item?.category || '').trim().toLowerCase();
+            if (!itemCategory) continue;
+            const rawNames = [
+                item?.name,
+                item?.title,
+                item?.tournament,
+                item?.location
+            ];
+            const itemKeys = rawNames
+                .map((value) => this.normalizeTournamentKey(value))
+                .filter(Boolean);
+            if (!itemKeys.length) continue;
+
+            const exact = itemKeys.some((itemKey) => candidates.has(itemKey));
+            if (exact) return itemCategory;
+
+            const fuzzy = itemKeys.some((itemKey) => {
+                for (const candidate of candidates) {
+                    if (!candidate) continue;
+                    if (
+                        itemKey === candidate ||
+                        itemKey.startsWith(`${candidate} `) ||
+                        candidate.startsWith(`${itemKey} `)
+                    ) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+            if (fuzzy && !matchedCategory) {
+                matchedCategory = itemCategory;
+            }
+        }
+
+        return matchedCategory || fallback;
+    },
+
+    getCategoryLabelByTour(category, tour = '') {
+        const key = String(category || '').trim().toLowerCase();
+        const tourKey = String(tour || '').trim().toLowerCase() === 'wta' ? 'wta' : 'atp';
+        const labels = {
+            grand_slam: 'Grand Slam',
+            masters_1000: tourKey === 'wta' ? 'WTA 1000' : 'ATP 1000',
+            atp_1000: 'ATP 1000',
+            wta_1000: 'WTA 1000',
+            atp_500: 'ATP 500',
+            wta_500: 'WTA 500',
+            atp_250: 'ATP 250',
+            wta_250: 'WTA 250',
+            atp_125: 'ATP 125',
+            wta_125: 'WTA 125',
+            finals: tourKey === 'wta' ? 'WTA Finals' : 'ATP Finals',
+            atp_finals: 'ATP Finals',
+            wta_finals: 'WTA Finals',
+            other: 'Tour'
+        };
+        return labels[key] || 'Tour';
+    },
+
     /**
      * Format date
      */

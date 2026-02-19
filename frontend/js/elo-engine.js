@@ -337,6 +337,7 @@
         const recentMatchesTab = getRecentMatchesSource(stats);
         const tournaments = Array.isArray(recentMatchesTab?.tournaments) ? recentMatchesTab.tournaments : [];
         const flattened = [];
+        const appUtils = global.TennisApp?.Utils;
 
         for (const tournament of tournaments) {
             const matches = Array.isArray(tournament?.matches) ? tournament.matches : [];
@@ -360,6 +361,11 @@
                     }
                 }
                 const score = normalizeScoreOrientationForTour(rawScore, match?.score_raw, result, tour);
+                const tournamentName = String(tournament?.tournament || '').trim() || 'Tournament';
+                const fallbackCategory = String(tournament?.category || '').trim().toLowerCase() || 'other';
+                const resolvedCategory = appUtils?.resolveTournamentCategory
+                    ? appUtils.resolveTournamentCategory(tournamentName, fallbackCategory, tour)
+                    : fallbackCategory;
 
                 flattened.push({
                     result,
@@ -368,8 +374,8 @@
                     score,
                     scoreRaw: String(match?.score_raw || ''),
                     round: normalizeRound(match),
-                    tournamentName: String(tournament?.tournament || '').trim() || 'Tournament',
-                    category: String(tournament?.category || '').trim().toLowerCase() || 'other',
+                    tournamentName,
+                    category: resolvedCategory,
                     surface: String(tournament?.surface || tournament?.surface_key || '').trim() || 'HARD',
                     isWalkover,
                     isRetirement,
@@ -491,17 +497,8 @@
     }
 
     function seedInitialForm(rank, playerName, tour = 'atp') {
-        // First check if we have cached form from weekly file
-        if (formCacheData) {
-            const tourKey = String(tour || 'atp').toLowerCase();
-            const playerCache = formCacheData[tourKey]?.[playerName];
-            if (playerCache && typeof playerCache.form === 'number') {
-                return playerCache.form;
-            }
-        }
-        
-        // Fallback: everybody starts from the same baseline when cache is unavailable.
-        return DEFAULT_FORM;
+        // Fixed baseline seeding: ATP/WTA both start at 1000.
+        return 1000;
     }
 
     function normalizeTournamentKey(name) {
@@ -934,11 +931,6 @@
             wta
         };
         
-        // Load form cache asynchronously in background
-        if (!formCacheData && !formCacheLoading) {
-            loadFormCacheAsync();
-        }
-
         return appState.eloRatings;
     }
 
