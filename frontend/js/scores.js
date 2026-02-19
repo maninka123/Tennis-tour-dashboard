@@ -1970,7 +1970,7 @@ const ScoresModule = {
         const safePercent = this.formatStatPercent(percent);
         const madeNum = Number.isFinite(Number(made)) ? Math.round(Number(made)) : 0;
         const totalNum = Number.isFinite(Number(total)) ? Math.round(Number(total)) : 0;
-        return `${safePercent}% ${madeNum}/${totalNum}`;
+        return `${safePercent}% | ${madeNum}/${totalNum}`;
     },
 
     toNumber(value, fallback = 0) {
