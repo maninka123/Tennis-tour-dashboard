@@ -3308,6 +3308,78 @@ class TennisDataFetcher:
         except Exception:
             pass
 
+    def _load_recent_atp_matches_cache(self, kind, max_age_seconds):
+        try:
+            cache_path = self._atp_matches_cache_path(kind)
+            if not cache_path.exists():
+                return []
+            age_seconds = time.time() - cache_path.stat().st_mtime
+            if age_seconds > max(0, int(max_age_seconds)):
+                return []
+            return self._load_atp_matches_cache(kind)
+        except Exception:
+            return []
+
+    def _filter_active_live_matches(self, matches):
+        active_status = {'live', 'in_progress'}
+        filtered = []
+        for row in matches if isinstance(matches, list) else []:
+            if not isinstance(row, dict):
+                continue
+            status = str(row.get('status') or '').strip().lower()
+            if status in active_status:
+                filtered.append(row)
+                continue
+            # Some sources omit explicit status for active matches; treat score-without-final as live-ish.
+            if not status and isinstance(row.get('score'), dict) and not row.get('final_score'):
+                filtered.append(row)
+        return filtered
+
+    def _filter_recent_completed_matches(self, matches):
+        completed_status = {'finished', 'completed'}
+        filtered = []
+        for row in matches if isinstance(matches, list) else []:
+            if not isinstance(row, dict):
+                continue
+            status = str(row.get('status') or '').strip().lower()
+            if status in completed_status:
+                filtered.append(row)
+                continue
+            # If status is missing but final score/winner exists, treat as completed.
+            if not status and (row.get('final_score') or row.get('winner') is not None):
+                filtered.append(row)
+        return filtered
+
+    def _filter_upcoming_matches(self, matches, days=2):
+        allowed_status = {'upcoming', 'scheduled'}
+        now_utc = datetime.utcnow()
+        window_end = now_utc + timedelta(days=max(1, int(days) if isinstance(days, int) else 2))
+        filtered = []
+
+        for row in matches if isinstance(matches, list) else []:
+            if not isinstance(row, dict):
+                continue
+
+            status = str(row.get('status') or '').strip().lower()
+            if status and status not in allowed_status:
+                continue
+
+            scheduled_raw = row.get('scheduled_time') or row.get('match_time')
+            if scheduled_raw:
+                try:
+                    dt = datetime.fromisoformat(str(scheduled_raw).replace('Z', '+00:00'))
+                    if dt.tzinfo is not None:
+                        dt = dt.astimezone(tz=None).replace(tzinfo=None)
+                    # Exclude stale past matches and far-future outliers.
+                    if dt < now_utc - timedelta(hours=2) or dt > window_end + timedelta(hours=2):
+                        continue
+                except Exception:
+                    pass
+
+            filtered.append(row)
+
+        return filtered
+
     def _format_wta_duration(self, value):
         if not value:
             return None
@@ -4054,9 +4126,10 @@ class TennisDataFetcher:
         if tour in ('atp', 'both'):
             atp_raw = self._run_atp_matches_script('[Live] atp_live_matches.py')
             if atp_raw is None:
-                cached = self._load_atp_matches_cache('live')
+                cached = self._load_recent_atp_matches_cache('live', max_age_seconds=45 * 60)
+                cached = self._filter_active_live_matches(cached)
                 if cached:
-                    print(f"ATP live: script failed, using cached snapshot ({len(cached)} matches)")
+                    print(f"ATP live: script failed, using recent cached snapshot ({len(cached)} matches)")
                     live_matches.extend(cached)
                 else:
                     print('ATP live: script failed, returning empty')
@@ -4068,13 +4141,11 @@ class TennisDataFetcher:
                     enriched = self._enrich_atp_match(match)
                     if enriched:
                         atp_live.append(enriched)
+                atp_live = self._filter_active_live_matches(atp_live)
                 if atp_live:
                     self._save_atp_matches_cache('live', atp_live)
                 else:
-                    cached = self._load_atp_matches_cache('live')
-                    if cached:
-                        print(f"ATP live: scraper empty, using cached snapshot ({len(cached)} matches)")
-                        atp_live = cached
+                    print('ATP live: scraper returned no active matches')
                 live_matches.extend(atp_live)
         
         live_scores_cache[cache_key] = live_matches
@@ -4101,9 +4172,10 @@ class TennisDataFetcher:
                 timeout=90
             )
             if atp_raw is None:
-                cached = self._load_atp_matches_cache('recent')
+                cached = self._load_recent_atp_matches_cache('recent', max_age_seconds=8 * 60 * 60)
+                cached = self._filter_recent_completed_matches(cached)
                 if cached:
-                    print(f'ATP recent: script failed, using cached snapshot ({len(cached)} matches)')
+                    print(f'ATP recent: script failed, using recent cached snapshot ({len(cached)} matches)')
                     matches.extend(cached[:max(1, int(limit) if isinstance(limit, int) else 20)])
                 else:
                     print('ATP recent: script failed, returning empty')
@@ -4115,14 +4187,12 @@ class TennisDataFetcher:
                     enriched = self._enrich_atp_match(match)
                     if enriched:
                         parsed.append(enriched)
+                parsed = self._filter_recent_completed_matches(parsed)
                 if parsed:
                     self._save_atp_matches_cache('recent', parsed)
                     matches.extend(parsed)
                 else:
-                    cached = self._load_atp_matches_cache('recent')
-                    if cached:
-                        print(f'ATP recent: scraper empty, using cached snapshot ({len(cached)} matches)')
-                        matches.extend(cached[:max(1, int(limit) if isinstance(limit, int) else 20)])
+                    print('ATP recent: scraper returned no completed matches')
 
         return matches[:limit] if tour == 'both' else matches
     
@@ -4160,19 +4230,15 @@ class TennisDataFetcher:
                 timeout=90
             )
             if atp_raw is None:
-                cached = self._load_atp_matches_cache('upcoming')
+                cached = self._load_recent_atp_matches_cache('upcoming', max_age_seconds=8 * 60 * 60)
+                cached = self._filter_upcoming_matches(cached, days=days)
                 if cached:
-                    print(f"ATP upcoming: script failed, using cached snapshot ({len(cached)} matches)")
+                    print(f"ATP upcoming: script failed, using recent cached snapshot ({len(cached)} matches)")
                     matches.extend(cached)
                 else:
                     print(f"ATP upcoming: script failed, returning empty")
             elif len(atp_raw) == 0:
-                cached = self._load_atp_matches_cache('upcoming')
-                if cached:
-                    print(f"ATP upcoming: scraper empty, using cached snapshot ({len(cached)} matches)")
-                    matches.extend(cached)
-                else:
-                    print(f"ATP upcoming: scraper returned empty, no matches found")
+                print(f"ATP upcoming: scraper returned empty, no matches found")
             else:
                 parsed = []
                 for match in atp_raw:
@@ -4181,15 +4247,13 @@ class TennisDataFetcher:
                     enriched = self._enrich_atp_match(match)
                     if enriched:
                         parsed.append(enriched)
+                parsed = self._filter_upcoming_matches(parsed, days=days)
                 if parsed:
                     self._save_atp_matches_cache('upcoming', parsed)
                     print(f"ATP upcoming: loaded {len(parsed)} real matches from scraper")
                     matches.extend(parsed)
                 else:
-                    cached = self._load_atp_matches_cache('upcoming')
-                    if cached:
-                        print(f"ATP upcoming: no parsed matches, using cached snapshot ({len(cached)} matches)")
-                        matches.extend(cached)
+                    print("ATP upcoming: no valid upcoming matches after filtering")
 
         print(f"fetch_upcoming_matches(tour={tour}): returning {len(matches)} total matches")
         return self._attach_upcoming_h2h(matches)

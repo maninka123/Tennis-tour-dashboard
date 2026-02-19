@@ -6,10 +6,20 @@
 // ============================================
 // Configuration
 // ============================================
+const DEFAULT_LOCAL_API_BASE_CANDIDATES = [
+    'http://localhost:5001/api',
+    'http://127.0.0.1:5001/api',
+    'http://localhost:5002/api',
+    'http://127.0.0.1:5002/api'
+];
+
 // Use config.js values, but add missing settings
 const CONFIG = {
     // From config.js
     API_BASE_URL: (window.TennisApp?.CONFIG?.API_BASE_URL) || 'http://localhost:5001/api',
+    API_BASE_CANDIDATES: Array.isArray(window.TennisApp?.CONFIG?.API_BASE_CANDIDATES)
+        ? window.TennisApp.CONFIG.API_BASE_CANDIDATES
+        : DEFAULT_LOCAL_API_BASE_CANDIDATES,
     IS_LOCAL: (window.TennisApp?.CONFIG?.IS_LOCAL) !== false,
     WS_URL: (window.TennisApp?.CONFIG?.API_BASE_URL?.replace(/\/api$/, '')) || window.location.origin || 'http://localhost:5001',
     
@@ -447,11 +457,13 @@ document.addEventListener('error', function(e) {
 // ============================================
 const API = {
     _buildBaseCandidates() {
+        const isLocalHost = /localhost|127\.0\.0\.1/i.test(window.location.hostname || '');
         const resolved = AppState.apiBaseResolved;
         const sources = [
             resolved,
             CONFIG.API_BASE_URL,
-            ...(Array.isArray(CONFIG.API_BASE_CANDIDATES) ? CONFIG.API_BASE_CANDIDATES : [])
+            ...(Array.isArray(CONFIG.API_BASE_CANDIDATES) ? CONFIG.API_BASE_CANDIDATES : []),
+            ...(isLocalHost ? DEFAULT_LOCAL_API_BASE_CANDIDATES : [])
         ];
         const unique = [];
         sources.forEach((base) => {
@@ -493,6 +505,15 @@ const API = {
                 }
 
                 AppState.apiBaseResolved = baseUrl;
+                CONFIG.API_BASE_URL = baseUrl;
+                if (window.TennisApp?.CONFIG) {
+                    window.TennisApp.CONFIG.API_BASE_URL = baseUrl;
+                }
+                try {
+                    localStorage.setItem('tennisApp_apiBaseResolved', baseUrl);
+                } catch (storageErr) {
+                    // Ignore localStorage write failures (privacy mode, quota).
+                }
                 return data;
             } catch (error) {
                 lastError = error;
@@ -1684,12 +1705,38 @@ const App = {
                 wtaTournaments: Array.isArray(wtaTournaments) ? wtaTournaments.length : 0
             });
 
+            let atpUpcomingFinal = Array.isArray(atpUpcoming) ? atpUpcoming : [];
+            let atpRecentFinal = Array.isArray(atpRecent) ? atpRecent : [];
+
+            // ATP scripts are heavier and can transiently return empty when startup calls run in parallel.
+            // Retry once sequentially before rendering empty ATP upcoming/recent sections.
+            if (atpUpcomingFinal.length === 0) {
+                try {
+                    const retryUpcoming = await API.getUpcomingMatches('atp');
+                    if (Array.isArray(retryUpcoming) && retryUpcoming.length > 0) {
+                        atpUpcomingFinal = retryUpcoming;
+                    }
+                } catch (retryErr) {
+                    console.warn('ATP upcoming retry failed:', retryErr);
+                }
+            }
+            if (atpRecentFinal.length === 0) {
+                try {
+                    const retryRecent = await API.getRecentMatches('atp', 15);
+                    if (Array.isArray(retryRecent) && retryRecent.length > 0) {
+                        atpRecentFinal = retryRecent;
+                    }
+                } catch (retryErr) {
+                    console.warn('ATP recent retry failed:', retryErr);
+                }
+            }
+
             // Update state
             AppState.liveScores.atp = atpScores || [];
             AppState.liveScores.wta = wtaScores || [];
-            AppState.upcomingMatches.atp = atpUpcoming || [];
+            AppState.upcomingMatches.atp = atpUpcomingFinal;
             AppState.upcomingMatches.wta = wtaUpcoming || [];
-            AppState.recentMatches.atp = atpRecent || [];
+            AppState.recentMatches.atp = atpRecentFinal;
             AppState.recentMatches.wta = wtaRecent || [];
             AppState.upcomingMatchesUpdatedAt = new Date().toISOString();
             AppState.recentMatchesUpdatedAt = new Date().toISOString();

@@ -16,6 +16,7 @@ import json
 import re
 import requests
 import atexit
+import socket
 from datetime import datetime
 from tennis_api import tennis_fetcher
 from config import Config
@@ -844,26 +845,12 @@ def get_live_scores():
     
     try:
         scores = tennis_fetcher.fetch_live_scores(tour)
-        if tour == 'atp' and not scores:
-            cached_live = _load_json_list(os.path.join(REPO_ROOT, 'data', 'atp_live_matches_cache.json'))
-            if cached_live:
-                scores = _normalize_matches_tour(cached_live, 'ATP')
         return jsonify({
             'success': True,
             'data': scores,
             'count': len(scores)
         })
     except Exception as e:
-        if tour == 'atp':
-            cached_live = _load_json_list(os.path.join(REPO_ROOT, 'data', 'atp_live_matches_cache.json'))
-            if cached_live:
-                payload = _normalize_matches_tour(cached_live, 'ATP')
-                return jsonify({
-                    'success': True,
-                    'data': payload,
-                    'count': len(payload),
-                    'warning': f'Using cached ATP live matches due to fetch error: {str(e)}'
-                })
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
@@ -879,33 +866,12 @@ def get_recent_matches():
         matches = tennis_fetcher.fetch_recent_matches(tour, limit)
         if tour == 'atp':
             matches = _normalize_matches_tour(matches, 'ATP')
-        # Render safety net: if ATP feed is empty, reuse last cached ATP snapshot.
-        if not matches and tour == 'atp':
-            cached = _load_json_list(os.path.join(REPO_ROOT, 'data', 'atp_recent_matches_cache.json'))
-            if cached:
-                matches = _normalize_matches_tour(
-                    cached[:max(1, int(limit) if isinstance(limit, int) else 20)],
-                    'ATP'
-                )
         return jsonify({
             'success': True,
             'data': matches,
             'count': len(matches)
         })
     except Exception as e:
-        if tour == 'atp':
-            cached = _load_json_list(os.path.join(REPO_ROOT, 'data', 'atp_recent_matches_cache.json'))
-            if cached:
-                payload = _normalize_matches_tour(
-                    cached[:max(1, int(limit) if isinstance(limit, int) else 20)],
-                    'ATP'
-                )
-                return jsonify({
-                    'success': True,
-                    'data': payload,
-                    'count': len(payload),
-                    'warning': f'Using cached ATP recent matches due to fetch error: {str(e)}'
-                })
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
@@ -921,27 +887,12 @@ def get_upcoming_matches():
         matches = tennis_fetcher.fetch_upcoming_matches(tour, days=days)
         if tour == 'atp':
             matches = _normalize_matches_tour(matches, 'ATP')
-        # Render safety net: if ATP feed is empty, reuse last cached ATP snapshot.
-        if not matches and tour == 'atp':
-            cached = _load_json_list(os.path.join(REPO_ROOT, 'data', 'atp_upcoming_matches_cache.json'))
-            if cached:
-                matches = _normalize_matches_tour(cached, 'ATP')
         return jsonify({
             'success': True,
             'data': matches,
             'count': len(matches)
         })
     except Exception as e:
-        if tour == 'atp':
-            cached = _load_json_list(os.path.join(REPO_ROOT, 'data', 'atp_upcoming_matches_cache.json'))
-            if cached:
-                payload = _normalize_matches_tour(cached, 'ATP')
-                return jsonify({
-                    'success': True,
-                    'data': payload,
-                    'count': len(payload),
-                    'warning': f'Using cached ATP upcoming matches due to fetch error: {str(e)}'
-                })
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
@@ -1472,20 +1423,55 @@ def server_error(e):
     return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 
+def _can_bind_port(host, port):
+    bind_host = '0.0.0.0' if host in {'0.0.0.0', '', '*'} else host
+    probe = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        probe.bind((bind_host, int(port)))
+        return True
+    except OSError:
+        return False
+    finally:
+        try:
+            probe.close()
+        except Exception:
+            pass
+
+
+def _resolve_runtime_port():
+    # Respect explicit PORT env (Render/production or user override).
+    if os.getenv('PORT'):
+        return Config.PORT
+
+    preferred = Config.PORT
+    fallback_ports = [5001, 5002]
+    candidates = []
+    for port in [preferred, *fallback_ports]:
+        if port not in candidates:
+            candidates.append(port)
+
+    for candidate in candidates:
+        if _can_bind_port(Config.HOST, candidate):
+            return candidate
+    return preferred
+
+
 # ============== Main ==============
 
 if __name__ == '__main__':
+    runtime_port = _resolve_runtime_port()
     print("=" * 50)
     print("Tennis Dashboard API Server")
     print("=" * 50)
-    print(f"Starting server on http://{Config.HOST}:{Config.PORT}")
+    print(f"Starting server on http://{Config.HOST}:{runtime_port}")
     print("WebSocket enabled for real-time updates")
     print(f"SocketIO mode: threading | simple_websocket={HAS_SIMPLE_WEBSOCKET} | allow_upgrades={allow_socket_upgrades}")
     print("=" * 50)
     socketio.run(
         app,
         host=Config.HOST,
-        port=Config.PORT,
+        port=runtime_port,
         debug=Config.DEBUG,
         log_output=True,
         allow_unsafe_werkzeug=True,

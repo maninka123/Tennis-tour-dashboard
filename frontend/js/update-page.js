@@ -21,9 +21,9 @@ const UpdatePage = {
         const grid = document.getElementById('updateGifGrid');
         if (!grid) return;
 
-        const baseUrl = this.backendUrl.replace('/api', '');
         this.gifs = await this.fetchGifFiles();
         if (!this.gifs.length) return;
+        const baseUrl = this.backendUrl.replace('/api', '');
 
         let tiles = [];
         for (let i = 0; i < 4; i++) {
@@ -50,20 +50,43 @@ const UpdatePage = {
     },
 
     async fetchGifFiles() {
-        const urlCandidates = [
-            `${this.backendUrl.replace('/api', '')}/api/intro-gifs`,
-            '/api/intro-gifs'
-        ];
+        const cfgCandidates = Array.isArray(window.TennisApp?.CONFIG?.API_BASE_CANDIDATES)
+            ? window.TennisApp.CONFIG.API_BASE_CANDIDATES
+            : [];
+        const apiBaseCandidates = [];
+        [this.backendUrl, ...cfgCandidates, 'http://localhost:5001/api', 'http://localhost:5002/api']
+            .forEach((value) => {
+                const clean = String(value || '').trim().replace(/\/+$/, '');
+                if (!clean || apiBaseCandidates.includes(clean)) return;
+                apiBaseCandidates.push(clean);
+            });
 
-        for (const url of urlCandidates) {
+        const urlCandidates = apiBaseCandidates.map((base) => ({
+            base,
+            url: `${base.replace('/api', '')}/api/intro-gifs`
+        }));
+        urlCandidates.push({ base: '', url: '/api/intro-gifs' });
+
+        for (const candidate of urlCandidates) {
             try {
-                const response = await fetch(url);
+                const response = await fetch(candidate.url);
                 const result = await response.json();
                 if (result.success && Array.isArray(result.data) && result.data.length) {
+                    if (candidate.base) {
+                        this.backendUrl = candidate.base;
+                        if (window.TennisApp?.CONFIG) {
+                            window.TennisApp.CONFIG.API_BASE_URL = candidate.base;
+                        }
+                        try {
+                            localStorage.setItem('tennisApp_apiBaseResolved', candidate.base);
+                        } catch (storageErr) {
+                            // Ignore localStorage failures.
+                        }
+                    }
                     return result.data;
                 }
             } catch (error) {
-                console.warn(`Update GIF API candidate failed (${url}):`, error);
+                console.warn(`Update GIF API candidate failed (${candidate.url}):`, error);
             }
         }
         const fallback = [];

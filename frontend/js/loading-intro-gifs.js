@@ -42,12 +42,18 @@
     const originFromApiBase = (apiBase) => normalizeBase(apiBase).replace(/\/api\/?$/, '');
 
     const buildApiBaseCandidates = () => {
+        const cfgCandidates = Array.isArray(window.TennisApp?.CONFIG?.API_BASE_CANDIDATES)
+            ? window.TennisApp.CONFIG.API_BASE_CANDIDATES
+            : [];
         const raw = [
             window.TennisApp?.AppState?.apiBaseResolved,
             window.TennisApp?.CONFIG?.API_BASE_URL,
+            ...cfgCandidates,
             `${window.location.origin}/api`,
             'http://localhost:5001/api',
-            'http://127.0.0.1:5001/api'
+            'http://127.0.0.1:5001/api',
+            'http://localhost:5002/api',
+            'http://127.0.0.1:5002/api'
         ];
         const unique = [];
         raw.forEach((item) => {
