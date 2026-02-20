@@ -177,10 +177,36 @@
         };
     }
 
+    function formatRecentStyleRound(round) {
+        const raw = String(round || '').trim();
+        if (!raw) return '';
+        const upper = raw.toUpperCase();
+        if (upper === 'Q') return raw;
+
+        const patterns = [
+            /^Q\s*([1-9])$/,
+            /^QUALIF(?:YING|IER)\s+R\s*([1-9])$/,
+            /^QUALIF(?:YING|IER)\s+ROUND\s*([1-9])$/,
+            /^([1-9])(?:ST|ND|RD|TH)\s+ROUND\s+QUALIF(?:YING|IER)$/,
+            /^ROUND\s*([1-9])\s+QUALIF(?:YING|IER)$/
+        ];
+        for (const pattern of patterns) {
+            const match = upper.match(pattern);
+            if (match) return `Qualifier R${Number(match[1])}`;
+        }
+        return raw;
+    }
+
     function normalizeRound(match) {
-        const roundName = String(match?.round_name || '').trim();
         const round = String(match?.round || '').trim();
-        return roundName || round || '-';
+        const roundName = String(match?.round_name || '').trim();
+
+        // Keep qualifiers aligned with the recent-matches modal by prioritizing `round`.
+        if (/qualif|^q\s*\d*$/i.test(round)) {
+            return formatRecentStyleRound(round);
+        }
+
+        return formatRecentStyleRound(round) || roundName || '-';
     }
 
     function getRecentMatchesSource(stats) {

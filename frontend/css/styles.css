@@ -4046,6 +4046,8 @@ body {
   position: relative;
   z-index: 1;
   align-items: flex-start;
+  --path-stroke: #1f8f6b;
+  --path-glow: rgba(31, 143, 107, 0.35);
 }
 
 .bracket-graph {
@@ -4068,6 +4070,39 @@ body {
   stroke: #ced4da;
   stroke-width: 2;
   stroke-linecap: round;
+  transition: stroke 180ms ease, stroke-width 180ms ease, opacity 180ms ease, filter 180ms ease;
+}
+
+.bracket-container.grand-slam {
+  --path-stroke: #6c5ce7;
+  --path-glow: rgba(108, 92, 231, 0.38);
+}
+.bracket-container.masters-1000,
+.bracket-container.atp-1000,
+.bracket-container.wta-1000 {
+  --path-stroke: #c69a02;
+  --path-glow: rgba(198, 154, 2, 0.35);
+}
+.bracket-container.atp-500,
+.bracket-container.wta-500 {
+  --path-stroke: #00a67f;
+  --path-glow: rgba(0, 166, 127, 0.32);
+}
+.bracket-container.atp-250,
+.bracket-container.wta-250 {
+  --path-stroke: #c9357c;
+  --path-glow: rgba(201, 53, 124, 0.3);
+}
+.bracket-container.atp-125,
+.bracket-container.wta-125 {
+  --path-stroke: #6b7280;
+  --path-glow: rgba(107, 114, 128, 0.28);
+}
+.bracket-container.finals,
+.bracket-container.atp-finals,
+.bracket-container.wta-finals {
+  --path-stroke: #9d2f70;
+  --path-glow: rgba(157, 47, 112, 0.34);
 }
 
 .bracket-round {
@@ -4460,6 +4495,7 @@ body {
   justify-content: center;
   position: relative;
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+  transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease, border-color 180ms ease, filter 180ms ease;
 }
 
 .match-connector {
@@ -4472,6 +4508,47 @@ body {
 }
 
 /* Old connector lines removed in favor of SVG overlay */
+
+.player-row[data-player-path-key] {
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.bracket-graph.player-path-active .bracket-match {
+  opacity: 0.32;
+  filter: saturate(0.75);
+}
+
+.bracket-graph.player-path-active .bracket-match.path-active {
+  opacity: 1;
+  filter: saturate(1.08);
+  border-color: var(--path-stroke);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--path-stroke) 40%, transparent),
+    0 10px 24px rgba(15, 23, 42, 0.16);
+  transform: translateY(-1px) scale(1.015);
+  z-index: 2;
+}
+
+.bracket-graph.player-path-active .player-row.path-player {
+  background: color-mix(in srgb, var(--path-stroke) 16%, transparent);
+  box-shadow: inset 2px 0 0 var(--path-stroke);
+}
+
+.bracket-graph.player-path-active .player-row.path-player .player-name {
+  color: color-mix(in srgb, var(--path-stroke) 82%, #111);
+  font-weight: 700;
+}
+
+.bracket-graph.player-path-active .connector-path {
+  opacity: 0.15;
+}
+
+.bracket-graph.player-path-active .connector-path.path-active {
+  opacity: 1;
+  stroke: var(--path-stroke);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 4px var(--path-glow));
+}
 
 /* ============================================
    Match Popup

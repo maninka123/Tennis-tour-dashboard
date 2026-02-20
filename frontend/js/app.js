@@ -297,6 +297,45 @@ const Utils = {
             .trim();
     },
 
+    normalizeCategoryForTour(category, tour = '', tournamentName = '') {
+        const explicitTour = String(tour || '').trim().toLowerCase();
+        const currentTour = String(window.TennisApp?.AppState?.currentTour || '').trim().toLowerCase();
+        const resolvedTour = explicitTour === 'atp' || explicitTour === 'wta'
+            ? explicitTour
+            : (currentTour === 'atp' || currentTour === 'wta' ? currentTour : 'atp');
+
+        const raw = String(category || '').trim().toLowerCase();
+        const safe = raw
+            .replace(/\s+/g, '_')
+            .replace(/[^a-z0-9_]/g, '_')
+            .replace(/_+/g, '_')
+            .replace(/^_+|_+$/g, '');
+        const sourceText = `${safe} ${String(tournamentName || '').toLowerCase()}`;
+
+        if (safe === 'grand_slam' || /grand\s*slam|australian open|roland garros|wimbledon|us open/.test(sourceText)) {
+            return 'grand_slam';
+        }
+        if (safe === 'masters_1000' || safe === 'atp_1000' || safe === 'wta_1000' || /(^|[^0-9])1000([^0-9]|$)|masters/.test(sourceText)) {
+            return resolvedTour === 'wta' ? 'wta_1000' : 'masters_1000';
+        }
+        if (safe === 'atp_500' || safe === 'wta_500' || /(^|[^0-9])500([^0-9]|$)/.test(sourceText)) {
+            return resolvedTour === 'wta' ? 'wta_500' : 'atp_500';
+        }
+        if (safe === 'atp_250' || safe === 'wta_250' || /(^|[^0-9])250([^0-9]|$)/.test(sourceText)) {
+            return resolvedTour === 'wta' ? 'wta_250' : 'atp_250';
+        }
+        if (safe === 'atp_125' || safe === 'wta_125' || /(^|[^0-9])125([^0-9]|$)/.test(sourceText)) {
+            return resolvedTour === 'wta' ? 'wta_125' : 'atp_125';
+        }
+        if (safe === 'atp_finals' || safe === 'wta_finals' || safe === 'finals' || /finals/.test(sourceText)) {
+            return resolvedTour === 'wta' ? 'wta_finals' : 'atp_finals';
+        }
+        if (safe === 'other' || !safe) {
+            return 'other';
+        }
+        return safe;
+    },
+
     resolveTournamentCategory(tournamentName, fallbackCategory = 'other', tour = '') {
         const explicitTour = String(tour || '').trim().toLowerCase();
         const currentTour = String(window.TennisApp?.AppState?.currentTour || '').trim().toLowerCase();
@@ -305,7 +344,7 @@ const Utils = {
             : (currentTour === 'atp' || currentTour === 'wta' ? currentTour : 'atp');
 
         const normalizedTarget = this.normalizeTournamentKey(tournamentName);
-        const fallback = String(fallbackCategory || '').trim().toLowerCase() || 'other';
+        const fallback = this.normalizeCategoryForTour(fallbackCategory, resolvedTour, tournamentName);
         if (!normalizedTarget) return fallback;
 
         const calendar = window.TennisApp?.AppState?.tournaments?.[resolvedTour];
@@ -319,10 +358,11 @@ const Utils = {
 
         let matchedCategory = '';
         for (const item of calendar) {
-            const itemCategory = String(item?.category || '').trim().toLowerCase();
+            const itemCategory = this.normalizeCategoryForTour(item?.category || '', resolvedTour, item?.name || '');
             if (!itemCategory) continue;
             const rawNames = [
                 item?.name,
+                item?.official_name,
                 item?.title,
                 item?.tournament,
                 item?.location

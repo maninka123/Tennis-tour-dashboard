@@ -11,6 +11,7 @@ const BracketModule = {
     resizeHandler: null,
     loadToken: 0,
     debug: true,
+    pathOutsideClickBound: false,
 
     getActiveTour() {
         return (this.currentBracket?.tournament_tour || window.TennisApp?.AppState?.currentTour || 'atp').toLowerCase();
@@ -1354,6 +1355,141 @@ const BracketModule = {
         return 'surface-hard';
     },
 
+    normalizePlayerPathName(name) {
+        return String(name || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '_')
+            .replace(/_+/g, '_')
+            .replace(/^_+|_+$/g, '');
+    },
+
+    getPlayerPathKey(player) {
+        if (!player) return '';
+        const pid = player?.id;
+        if (pid !== undefined && pid !== null && `${pid}`.trim() !== '') {
+            return `id:${String(pid).trim()}`;
+        }
+        const normalized = this.normalizePlayerPathName(player?.name || player?.display_name || '');
+        return normalized ? `name:${normalized}` : '';
+    },
+
+    isPlayerKeyMatch(player, playerKey) {
+        if (!playerKey || !player) return false;
+        return this.getPlayerPathKey(player) === playerKey;
+    },
+
+    matchIncludesPlayer(match, playerKey) {
+        if (!match || !playerKey) return false;
+        return this.isPlayerKeyMatch(match.player1, playerKey) || this.isPlayerKeyMatch(match.player2, playerKey);
+    },
+
+    isPlayerWinnerInMatch(match, category, playerKey) {
+        const winner = this.resolveMatchWinner(match, category);
+        return !!winner && this.isPlayerKeyMatch(winner, playerKey);
+    },
+
+    getPlayerPathMatchIds(playerKey) {
+        if (!playerKey || !this.currentBracket?.matches) return [];
+        const rounds = Array.isArray(this.currentBracket.matches) ? this.currentBracket.matches : [];
+        const category = this.currentBracket?.tournament_category || 'atp_250';
+        const path = [];
+
+        for (const roundData of rounds) {
+            const matches = Array.isArray(roundData?.matches) ? roundData.matches : [];
+            const found = matches.find((match) => this.matchIncludesPlayer(match, playerKey));
+            if (!found) break;
+
+            const matchId = String(found?.id ?? '').trim();
+            if (!matchId) break;
+            path.push(matchId);
+
+            if (!this.isPlayerWinnerInMatch(found, category, playerKey)) {
+                break;
+            }
+        }
+
+        return path;
+    },
+
+    clearPlayerPathHighlight(root = document) {
+        const container = root?.querySelector?.('.bracket-graph') || root?.closest?.('.bracket-graph') || null;
+        if (!container) return;
+
+        container.classList.remove('player-path-active');
+        delete container.dataset.activePathKey;
+
+        container.querySelectorAll('.bracket-match.path-active, .bracket-match.path-dim').forEach((el) => {
+            el.classList.remove('path-active', 'path-dim');
+        });
+        container.querySelectorAll('.player-row.path-player').forEach((el) => {
+            el.classList.remove('path-player');
+        });
+        container.querySelectorAll('.connector-path.path-active, .connector-path.path-dim').forEach((el) => {
+            el.classList.remove('path-active', 'path-dim');
+        });
+    },
+
+    clearAllPlayerPathHighlights() {
+        const graphs = document.querySelectorAll('.bracket-graph.player-path-active');
+        graphs.forEach((graph) => this.clearPlayerPathHighlight(graph));
+    },
+
+    bindPathOutsideClickReset() {
+        if (this.pathOutsideClickBound) return;
+        this.pathOutsideClickBound = true;
+
+        document.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) return;
+
+            // Keep highlight only when user clicks directly on a player row in bracket tree.
+            const clickedPlayerRow = target.closest('.bracket-graph .player-row[data-player-path-key]');
+            if (clickedPlayerRow) return;
+
+            this.clearAllPlayerPathHighlights();
+        });
+    },
+
+    applyPlayerPathHighlight(root = document, playerKey = '') {
+        const container = root?.querySelector?.('.bracket-graph') || root?.closest?.('.bracket-graph') || null;
+        if (!container || !playerKey) return;
+
+        const pathIds = this.getPlayerPathMatchIds(playerKey);
+        if (!pathIds.length) {
+            this.clearPlayerPathHighlight(container);
+            return;
+        }
+
+        container.dataset.activePathKey = playerKey;
+        container.classList.add('player-path-active');
+
+        const matchSet = new Set(pathIds);
+        const connectorPairs = new Set();
+        for (let i = 0; i < pathIds.length - 1; i += 1) {
+            connectorPairs.add(`${pathIds[i]}=>${pathIds[i + 1]}`);
+        }
+
+        container.querySelectorAll('.bracket-match[data-match-id]').forEach((matchEl) => {
+            const matchId = String(matchEl.dataset.matchId || '');
+            const active = matchSet.has(matchId);
+            matchEl.classList.toggle('path-active', active);
+            matchEl.classList.toggle('path-dim', !active);
+
+            matchEl.querySelectorAll('.player-row[data-player-path-key]').forEach((rowEl) => {
+                rowEl.classList.toggle('path-player', active && rowEl.dataset.playerPathKey === playerKey);
+            });
+        });
+
+        container.querySelectorAll('.connector-path').forEach((pathEl) => {
+            const pairKey = `${String(pathEl.dataset.fromMatchId || '')}=>${String(pathEl.dataset.toMatchId || '')}`;
+            const active = connectorPairs.has(pairKey);
+            pathEl.classList.toggle('path-active', active);
+            pathEl.classList.toggle('path-dim', !active);
+        });
+    },
+
     /**
      * Create match HTML for bracket
      */
@@ -1405,15 +1541,17 @@ const BracketModule = {
         const p2Display = p2?.display_name || p2?.name || '';
         const p1DisplayName = p1 ? `${p1.seed ? `[${p1.seed}] ` : ''}${p1Display}` : 'TBD';
         const p2DisplayName = p2 ? `${p2.seed ? `[${p2.seed}] ` : ''}${p2Display}` : 'TBD';
+        const p1PathKey = this.getPlayerPathKey(p1);
+        const p2PathKey = this.getPlayerPathKey(p2);
 
         return `
             <div class="bracket-match clickable ${match.status}" data-match-id="${match.id}" data-round="${match.round}" data-match-number="${match.match_number}" data-points="${this.getPointsForRound(match.round, category)}">
                 <div class="match-content">
-                    <div class="player-row ${isP1Winner ? 'winner' : ''}">
+                    <div class="player-row ${isP1Winner ? 'winner' : ''}" data-player-path-key="${p1PathKey}">
                         <span class="player-name">${p1DisplayName}</span>
                         ${setsHTML ? `<div class="sets-group">${p1SetScores.join('')}</div>` : ''}
                     </div>
-                    <div class="player-row ${isP2Winner ? 'winner' : ''}">
+                    <div class="player-row ${isP2Winner ? 'winner' : ''}" data-player-path-key="${p2PathKey}">
                         <span class="player-name">${p2DisplayName}</span>
                         ${setsHTML ? `<div class="sets-group">${p2SetScores.join('')}</div>` : ''}
                     </div>
@@ -1462,6 +1600,23 @@ const BracketModule = {
                 this.showMatchModal(match, points);
             }
         });
+
+        if (!container.dataset.pathHoverBound) {
+            container.dataset.pathHoverBound = 'true';
+            this.bindPathOutsideClickReset();
+
+            container.addEventListener('mouseover', (event) => {
+                const rowEl = event.target.closest('.player-row[data-player-path-key]');
+                if (!rowEl || !container.contains(rowEl)) return;
+                const key = String(rowEl.dataset.playerPathKey || '').trim();
+                if (!key) return;
+                this.applyPlayerPathHighlight(container, key);
+            });
+
+            container.addEventListener('mouseleave', () => {
+                this.clearPlayerPathHighlight(container);
+            });
+        }
     },
 
     /**
@@ -1503,6 +1658,8 @@ const BracketModule = {
                 const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
                 path.setAttribute('d', `M${startX} ${startY} L${midX} ${startY} L${midX} ${endY} L${endX} ${endY}`);
                 path.setAttribute('class', 'connector-path');
+                path.dataset.fromMatchId = String(match.id);
+                path.dataset.toMatchId = String(nextMatch.id);
                 svg.appendChild(path);
             });
         });
@@ -1549,7 +1706,11 @@ const BracketModule = {
         if (window.TennisApp?.Scores?.showMatchStats) {
             window.TennisApp.Scores.showMatchStats(null, match, {
                 tournament: this.currentBracket?.tournament_name,
-                round: this.getRoundDisplayName(match.round)
+                round: this.getRoundDisplayName(match.round),
+                category: this.currentBracket?.tournament_category || match?.tournament_category || 'other',
+                tour: this.currentBracket?.tournament_tour || this.getActiveTour(),
+                source: 'bracket_tree',
+                compact: true
             });
             return;
         }

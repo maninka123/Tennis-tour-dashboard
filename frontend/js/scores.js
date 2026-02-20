@@ -1502,8 +1502,15 @@ const ScoresModule = {
         const tournamentName = context.tournament || match.tournament || 'Match Statistics';
         const roundName = match.round || context.round || '';
         const roundLabel = this.getRoundLabel(roundName);
-        const categoryLabel = this.getCategoryLabel(match.tournament_category);
-        const categoryClass = window.TennisApp.Utils.getCategoryClass(match.tournament_category, match.tour);
+        const safeTour = String(context?.tour || match?.tour || tour || '').toLowerCase() === 'wta' ? 'wta' : 'atp';
+        const fallbackCategory = context?.category || match?.tournament_category || 'other';
+        const resolvedCategory = Utils?.resolveTournamentCategory
+            ? Utils.resolveTournamentCategory(tournamentName, fallbackCategory, safeTour)
+            : fallbackCategory;
+        const categoryLabel = Utils?.getCategoryLabelByTour
+            ? Utils.getCategoryLabelByTour(resolvedCategory, safeTour)
+            : this.getCategoryLabel(resolvedCategory);
+        const categoryClass = window.TennisApp.Utils.getCategoryClass(resolvedCategory, safeTour);
         const setSummary = this.formatSetSummary(score, match);
         const setLines = this.formatSetLines(score);
         const player1ModalId = this.resolvePlayerModalId(match.player1);
@@ -1516,6 +1523,15 @@ const ScoresModule = {
         const radarP2Label = Utils?.formatPlayerName
             ? Utils.formatPlayerName(match.player2?.name || 'Player 2')
             : (match.player2?.name || 'Player 2');
+        const compactTreeView = Boolean(context?.compact) || String(context?.source || '').toLowerCase() === 'bracket_tree';
+
+        const modalTitle = modal?.querySelector('.modal-header h3');
+        if (modalTitle) {
+            modalTitle.style.display = compactTreeView ? 'none' : '';
+            if (!compactTreeView && !modalTitle.textContent?.trim()) {
+                modalTitle.textContent = 'Match Statistics';
+            }
+        }
         
         content.innerHTML = `
             <div class="match-stats-title">
@@ -1550,7 +1566,8 @@ const ScoresModule = {
                     </div>
                 </div>
             </div>
-            
+
+            ${compactTreeView ? '' : `
             <div class="match-stats-section">
                 <h4>Service</h4>
                 <div class="stats-grid">
@@ -1625,6 +1642,7 @@ const ScoresModule = {
                     </div>
                 </div>
             </div>
+            `}
         `;
 
         content.querySelectorAll('.match-stats-player-card.clickable').forEach((card) => {
@@ -1645,9 +1663,11 @@ const ScoresModule = {
         });
         
         modal.classList.add('active');
-        this.renderMatchStatsRadars(match, stats);
-        this.loadMatchStatsOnDemand(match, context);
-        this.startLiveModalAutoRefresh(match, context);
+        if (!compactTreeView) {
+            this.renderMatchStatsRadars(match, stats);
+            this.loadMatchStatsOnDemand(match, context);
+            this.startLiveModalAutoRefresh(match, context);
+        }
     },
 
     findCurrentLiveMatch(match) {

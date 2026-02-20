@@ -5022,12 +5022,15 @@ class TennisDataFetcher:
                 continue
 
             title = tournament.get('title') or ''
-            if ' - ' in title:
-                name = title.split(' - ')[0].strip()
+            official_name = self._clean_tournament_name(tournament.get('name') or '')
+            display_name = ''
+            if official_name:
+                display_name = official_name
+            elif ' - ' in title:
+                display_name = title.split(' - ')[0].strip()
             else:
-                name = tournament.get('name') or title or 'Tournament'
-            name = self._clean_tournament_name(name)
-            name = _title_case(name)
+                display_name = title or 'Tournament'
+            name = _title_case(self._clean_tournament_name(display_name))
             level = tournament.get('level') or ''
             category = _normalize_level(level, name)
 
@@ -5066,6 +5069,8 @@ class TennisDataFetcher:
             tournaments.append({
                 'id': tournament.get('tournament_group_id') or tournament.get('order'),
                 'name': name,
+                'official_name': official_name or name,
+                'title': title,
                 'category': category,
                 'location': location or tournament.get('title', ''),
                 'start_date': start_date,
@@ -5147,6 +5152,8 @@ class TennisDataFetcher:
             tournaments.append({
                 'id': tournament.get('tournament_group_id') or tournament.get('id') or tournament.get('order'),
                 'name': tournament.get('name') or tournament.get('title') or 'Tournament',
+                'official_name': tournament.get('name') or tournament.get('title') or 'Tournament',
+                'title': tournament.get('title') or '',
                 'category': category,
                 'location': location or '',
                 'start_date': start_date,
