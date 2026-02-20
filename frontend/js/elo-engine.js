@@ -22,6 +22,8 @@
             wta_250: 0.7,
             atp_125: 0.6,
             wta_125: 0.6,
+            challenger: 0.25,
+            itf: 0.25,
             other: 0.36
         },
         rank_factor: {
@@ -1107,6 +1109,10 @@
             wta_250: '250',
             atp_125: '125',
             wta_125: '125',
+            atp_challenger: 'CH',
+            wta_challenger: 'CH',
+            challenger: 'CH',
+            itf: 'ITF',
             finals: 'FIN',
             atp_finals: 'FIN',
             wta_finals: 'FIN',
@@ -1115,7 +1121,11 @@
 
         return {
             className: className || 'other',
-            label: labels[key] || (key.includes('1000') ? '1000' : 'TOUR')
+            label: labels[key]
+                || (key.includes('1000') ? '1000' : '')
+                || (key.includes('challenger') ? 'CH' : '')
+                || (key.includes('itf') ? 'ITF' : '')
+                || 'TOUR'
         };
     }
 

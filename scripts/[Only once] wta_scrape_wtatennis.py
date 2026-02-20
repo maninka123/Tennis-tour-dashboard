@@ -540,6 +540,12 @@ def _category_from_level(level: str) -> str:
     upper = str(level or "").upper()
     if "GS" in upper or "GRAND" in upper:
         return "grand_slam"
+    if "ITF" in upper:
+        return "itf"
+    if "CH" == upper or "CHALLENGER" in upper:
+        return "challenger"
+    if re.match(r"^W\d{2,3}$", upper):
+        return "itf"
     if "1000" in upper or upper in {"PM", "P1"}:
         return "masters_1000"
     if "500" in upper or upper in {"P5"}:
@@ -555,9 +561,32 @@ def _category_from_level(level: str) -> str:
     return "other"
 
 
+def _category_from_name(name: str) -> str:
+    upper = str(name or "").upper()
+    if not upper:
+        return "other"
+    if any(gs in upper for gs in ("AUSTRALIAN OPEN", "ROLAND GARROS", "WIMBLEDON", "US OPEN")):
+        return "grand_slam"
+    if "ITF" in upper:
+        return "itf"
+    if "CHALLENGER" in upper:
+        return "challenger"
+    if "1000" in upper:
+        return "masters_1000"
+    if "500" in upper:
+        return "atp_500"
+    if "250" in upper:
+        return "atp_250"
+    if "125" in upper:
+        return "atp_125"
+    return "other"
+
+
 def _category_label(category: str) -> str:
     labels = {
         "grand_slam": "Grand Slam",
+        "challenger": "Challenger",
+        "itf": "ITF",
         "masters_1000": "WTA 1000",
         "atp_500": "WTA 500",
         "atp_250": "WTA 250",
@@ -1008,8 +1037,10 @@ def scrape_player_recent_matches(player_id: str, year: int, session: requests.Se
         tournament = row.get("tournament") if isinstance(row.get("tournament"), dict) else {}
         group = tournament.get("tournamentGroup") if isinstance(tournament.get("tournamentGroup"), dict) else {}
         tournament_name = str(row.get("TournamentName") or tournament.get("title") or group.get("name") or "Tournament").strip()
-        level = str(row.get("TournamentLevel") or tournament.get("level") or group.get("level") or "").strip()
+        level = str(tournament.get("level") or group.get("level") or row.get("TournamentLevel") or "").strip()
         category = _category_from_level(level)
+        if category == "other":
+            category = _category_from_name(tournament_name)
         category_label = _category_label(category)
 
         surface = str(row.get("Surface") or tournament.get("surface") or "Hard").title()

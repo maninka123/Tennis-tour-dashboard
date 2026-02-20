@@ -463,10 +463,14 @@ const ScoresModule = {
             wta_250: 3,
             atp_125: 4,
             wta_125: 4,
+            atp_challenger: 5,
+            wta_challenger: 5,
+            challenger: 5,
+            itf: 6,
             finals: 5,
-            other: 6
+            other: 7
         };
-        return priorities[key] ?? 6;
+        return priorities[key] ?? 7;
     },
 
     renderTournamentGroup(group, isLive, renderFn = null) {
@@ -1220,6 +1224,10 @@ const ScoresModule = {
             'wta_250': '250',
             'atp_125': '125',
             'wta_125': '125',
+            'atp_challenger': 'CH',
+            'wta_challenger': 'CH',
+            'challenger': 'CH',
+            'itf': 'ITF',
             'atp_finals': 'Finals',
             'wta_finals': 'Finals',
             'tour': 'Tour',
@@ -1513,10 +1521,12 @@ const ScoresModule = {
         const categoryClass = window.TennisApp.Utils.getCategoryClass(resolvedCategory, safeTour);
         const setSummary = this.formatSetSummary(score, match);
         const setLines = this.formatSetLines(score);
-        const player1ModalId = this.resolvePlayerModalId(match.player1);
-        const player2ModalId = this.resolvePlayerModalId(match.player2);
-        const player1Points = this.resolvePlayerPoints(match.player1);
-        const player2Points = this.resolvePlayerPoints(match.player2);
+        const player1ModalId = this.resolvePlayerModalId(match.player1, safeTour);
+        const player2ModalId = this.resolvePlayerModalId(match.player2, safeTour);
+        const player1Points = this.resolvePlayerPoints(match.player1, safeTour);
+        const player2Points = this.resolvePlayerPoints(match.player2, safeTour);
+        const player1Rank = this.resolvePlayerRank(match.player1, safeTour) ?? match.player1?.rank ?? '-';
+        const player2Rank = this.resolvePlayerRank(match.player2, safeTour) ?? match.player2?.rank ?? '-';
         const radarP1Label = Utils?.formatPlayerName
             ? Utils.formatPlayerName(match.player1?.name || 'Player 1')
             : (match.player1?.name || 'Player 1');
@@ -1546,7 +1556,7 @@ const ScoresModule = {
                     <img class="player-hero-img" src="${Utils.getPlayerImage(match.player1)}" alt="${match.player1.name}" onclick="event.stopPropagation(); PlayerModule.openImageLightbox(this.src, '${match.player1.name.replace(/'/g, "\\'")}')" style="cursor:pointer">
                     <div class="player-hero-name">${match.player1.name}</div>
                     <div class="player-hero-meta-row">
-                        <div class="player-hero-meta">${Utils.getFlag(match.player1.country)} ${match.player1.country} • Rank ${match.player1.rank || '-'}</div>
+                        <div class="player-hero-meta">${Utils.getFlag(match.player1.country)} ${match.player1.country} • Rank ${player1Rank}</div>
                         ${player1Points !== null ? `<span class="player-hero-points-pill">${player1Points.toLocaleString()} pts</span>` : ''}
                     </div>
                 </div>
@@ -1561,7 +1571,7 @@ const ScoresModule = {
                     <img class="player-hero-img" src="${Utils.getPlayerImage(match.player2)}" alt="${match.player2.name}" onclick="event.stopPropagation(); PlayerModule.openImageLightbox(this.src, '${match.player2.name.replace(/'/g, "\\'")}')" style="cursor:pointer">
                     <div class="player-hero-name">${match.player2.name}</div>
                     <div class="player-hero-meta-row">
-                        <div class="player-hero-meta">${Utils.getFlag(match.player2.country)} ${match.player2.country} • Rank ${match.player2.rank || '-'}</div>
+                        <div class="player-hero-meta">${Utils.getFlag(match.player2.country)} ${match.player2.country} • Rank ${player2Rank}</div>
                         ${player2Points !== null ? `<span class="player-hero-points-pill">${player2Points.toLocaleString()} pts</span>` : ''}
                     </div>
                 </div>
@@ -1756,29 +1766,94 @@ const ScoresModule = {
         }
     },
 
-    resolvePlayerModalId(player) {
+    normalizeLookupToken(value) {
+        return String(value || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9\s]/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+    },
+
+    getRankingsListForTour(tourHint = '') {
+        const { AppState } = window.TennisApp || {};
+        const safeTour = String(tourHint || AppState?.currentTour || '').toLowerCase() === 'wta' ? 'wta' : 'atp';
+        const list = AppState?.rankings?.[safeTour] || [];
+        return Array.isArray(list) ? list : [];
+    },
+
+    findRankingRowForPlayer(player, tourHint = '') {
+        if (!player) return null;
+        const list = this.getRankingsListForTour(tourHint);
+        if (!list.length) return null;
+
+        const normalize = (value) => this.normalizeLookupToken(value);
+        const targetName = normalize(player.name);
+        const targetCountry = normalize(player.country);
+        const directId = player?.id ?? player?.player_id ?? player?.playerId ?? player?.profile_id ?? player?.profileId;
+        const targetCode = normalize(player?.player_code || player?.code || '');
+
+        // First try numeric ID match.
+        if (directId !== null && directId !== undefined && directId !== '' && /^\d+$/.test(String(directId).trim())) {
+            const byId = list.find((row) => String(row?.id ?? '').trim() === String(directId).trim());
+            if (byId) return byId;
+        }
+
+        // Then try player_code (important for ATP bracket payloads).
+        if (targetCode) {
+            const byCode = list.find((row) => normalize(row?.player_code || row?.code || '') === targetCode);
+            if (byCode) return byCode;
+        }
+
+        if (!targetName) return null;
+
+        const exact = list.find((row) => {
+            const rowName = normalize(row?.name);
+            const rowCountry = normalize(row?.country);
+            return rowName === targetName && (!targetCountry || rowCountry === targetCountry);
+        });
+        if (exact) return exact;
+
+        const nameOnly = list.find((row) => normalize(row?.name) === targetName);
+        if (nameOnly) return nameOnly;
+
+        // Fallback for abbreviated draw names like "T. Maria".
+        const parts = targetName.split(' ').filter(Boolean);
+        const firstInitial = parts[0]?.[0] || '';
+        const lastName = parts.length ? parts[parts.length - 1] : '';
+        if (firstInitial && lastName) {
+            const byInitialLast = list.find((row) => {
+                const rowParts = normalize(row?.name).split(' ').filter(Boolean);
+                if (!rowParts.length) return false;
+                const rowFirstInitial = rowParts[0]?.[0] || '';
+                const rowLast = rowParts[rowParts.length - 1] || '';
+                return rowFirstInitial === firstInitial && rowLast === lastName;
+            });
+            if (byInitialLast) return byInitialLast;
+        }
+
+        return null;
+    },
+
+    resolvePlayerModalId(player, tourHint = '') {
+        const row = this.findRankingRowForPlayer(player, tourHint);
+        if (row?.id !== undefined && row?.id !== null && row?.id !== '') {
+            return String(row.id);
+        }
         const directId = player?.id
             ?? player?.player_id
             ?? player?.playerId
             ?? player?.profile_id
             ?? player?.profileId;
-        if (directId !== null && directId !== undefined && directId !== '') {
+        // Only allow direct numeric IDs as modal player IDs.
+        if (directId !== null && directId !== undefined && /^\d+$/.test(String(directId).trim())) {
             return String(directId);
         }
-        const { AppState } = window.TennisApp || {};
-        const list = AppState?.rankings?.[AppState?.currentTour] || [];
-        if (!Array.isArray(list) || !player?.name) return '';
-        const normalize = (value) => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
-        const targetName = normalize(player.name);
-        const targetCountry = normalize(player.country);
-        const exact = list.find((row) => normalize(row.name) === targetName && (!targetCountry || normalize(row.country) === targetCountry));
-        if (exact?.id !== undefined && exact?.id !== null) return String(exact.id);
-        const nameOnly = list.find((row) => normalize(row.name) === targetName);
-        if (nameOnly?.id !== undefined && nameOnly?.id !== null) return String(nameOnly.id);
         return '';
     },
 
-    resolvePlayerPoints(player) {
+    resolvePlayerPoints(player, tourHint = '') {
         const parsePoints = (value) => {
             if (typeof value === 'number' && Number.isFinite(value)) return value;
             const cleaned = String(value ?? '').replace(/[^\d]/g, '');
@@ -1788,16 +1863,22 @@ const ScoresModule = {
         };
         const direct = parsePoints(player?.points);
         if (direct !== null) return direct;
-        const { AppState } = window.TennisApp || {};
-        const list = AppState?.rankings?.[AppState?.currentTour] || [];
-        if (!Array.isArray(list) || !player?.name) return null;
-        const normalize = (value) => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
-        const targetName = normalize(player.name);
-        const targetCountry = normalize(player.country);
-        const exact = list.find((row) => normalize(row.name) === targetName && (!targetCountry || normalize(row.country) === targetCountry));
-        if (exact) return parsePoints(exact.points);
-        const nameOnly = list.find((row) => normalize(row.name) === targetName);
-        return parsePoints(nameOnly?.points);
+        const row = this.findRankingRowForPlayer(player, tourHint);
+        return parsePoints(row?.points);
+    },
+
+    resolvePlayerRank(player, tourHint = '') {
+        const parseRank = (value) => {
+            if (typeof value === 'number' && Number.isFinite(value)) return Math.round(value);
+            const cleaned = String(value ?? '').replace(/[^\d]/g, '');
+            if (!cleaned) return null;
+            const num = Number(cleaned);
+            return Number.isFinite(num) ? Math.round(num) : null;
+        };
+        const direct = parseRank(player?.rank);
+        if (direct !== null) return direct;
+        const row = this.findRankingRowForPlayer(player, tourHint);
+        return parseRank(row?.rank);
     },
 
     getMatchKey(match) {

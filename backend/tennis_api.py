@@ -2484,6 +2484,8 @@ class TennisDataFetcher:
             'wta_250': 'WTA 250',
             'atp_125': atp125_label,
             'wta_125': 'WTA 125',
+            'challenger': 'Challenger',
+            'itf': 'ITF',
             'finals': finals_label,
             'atp_finals': 'ATP Finals',
             'wta_finals': 'WTA Finals',

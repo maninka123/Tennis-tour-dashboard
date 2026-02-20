@@ -15,6 +15,8 @@
   --wta-250: #e84393;
   --atp-125: #9ca3af;
   --wta-125: #9ca3af;
+  --challenger: #4f46e5;
+  --itf: #0ea5a2;
   --atp-finals: #b83280;
   --wta-finals: #b83280;
   --finals: #b83280;
@@ -2487,6 +2489,14 @@ body {
   background: rgba(156, 163, 175, 0.3);
   color: #4b5563;
 }
+.category-badge.challenger {
+  background: rgba(59, 130, 246, 0.18);
+  color: #1e3a8a;
+}
+.category-badge.itf {
+  background: rgba(20, 184, 166, 0.18);
+  color: #0f766e;
+}
 .category-badge.atp-finals {
   background: rgba(184, 50, 128, 0.2);
   color: #7a1f54;
@@ -4529,6 +4539,24 @@ body {
   z-index: 2;
 }
 
+.bracket-graph.player-path-active .bracket-match.path-active::before {
+  content: attr(data-round-badge);
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--path-stroke) 88%, #1f2937);
+  background: color-mix(in srgb, var(--bg-card) 92%, #fff);
+  border: 1px solid color-mix(in srgb, var(--path-stroke) 42%, transparent);
+  border-radius: 999px;
+  padding: 1px 7px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.14);
+  pointer-events: none;
+}
+
 .bracket-graph.player-path-active .player-row.path-player {
   background: color-mix(in srgb, var(--path-stroke) 16%, transparent);
   box-shadow: inset 2px 0 0 var(--path-stroke);
@@ -6127,6 +6155,12 @@ img {
 }
 .recent-tournament-card.category-wta-125 {
   border-left-color: var(--wta-125);
+}
+.recent-tournament-card.category-challenger {
+  border-left-color: var(--challenger);
+}
+.recent-tournament-card.category-itf {
+  border-left-color: var(--itf);
 }
 .recent-tournament-card.category-atp-finals {
   border-left-color: var(--atp-finals);

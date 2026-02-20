@@ -278,6 +278,8 @@ const Utils = {
         if (normalized === 'atp_125') return 'atp-125';
         if (normalized === 'wta_125') return 'wta-125';
         if (normalized === '125') return resolvedTour === 'wta' ? 'wta-125' : 'atp-125';
+        if (normalized === 'challenger' || normalized === 'atp_challenger' || normalized === 'wta_challenger') return 'challenger';
+        if (normalized === 'itf' || normalized.startsWith('itf_')) return 'itf';
         if (normalized === 'atp_finals') return 'atp-finals';
         if (normalized === 'wta_finals') return 'wta-finals';
         if (normalized === 'finals') return resolvedTour === 'wta' ? 'wta-finals' : 'atp-finals';
@@ -326,6 +328,12 @@ const Utils = {
         }
         if (safe === 'atp_125' || safe === 'wta_125' || /(^|[^0-9])125([^0-9]|$)/.test(sourceText)) {
             return resolvedTour === 'wta' ? 'wta_125' : 'atp_125';
+        }
+        if (safe === 'challenger' || safe === 'atp_challenger' || safe === 'wta_challenger' || /challenger|\bch\b/.test(sourceText)) {
+            return 'challenger';
+        }
+        if (safe === 'itf' || safe.startsWith('itf_') || /\bitf\b/.test(sourceText)) {
+            return 'itf';
         }
         if (safe === 'atp_finals' || safe === 'wta_finals' || safe === 'finals' || /finals/.test(sourceText)) {
             return resolvedTour === 'wta' ? 'wta_finals' : 'atp_finals';
@@ -410,6 +418,10 @@ const Utils = {
             wta_250: 'WTA 250',
             atp_125: 'ATP 125',
             wta_125: 'WTA 125',
+            atp_challenger: 'Challenger',
+            wta_challenger: 'Challenger',
+            challenger: 'Challenger',
+            itf: 'ITF',
             finals: tourKey === 'wta' ? 'WTA Finals' : 'ATP Finals',
             atp_finals: 'ATP Finals',
             wta_finals: 'WTA Finals',

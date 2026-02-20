@@ -529,6 +529,10 @@ def _category_from_badge(badge_url: str) -> str:
     text = str(badge_url or "").upper()
     if "GS" in text:
         return "grand_slam"
+    if "ITF" in text:
+        return "itf"
+    if "CH" in text or "CHALLENGER" in text:
+        return "challenger"
     if "1000" in text:
         return "masters_1000"
     if "500" in text:
@@ -545,6 +549,8 @@ def _category_from_badge(badge_url: str) -> str:
 def _category_label(category: str) -> str:
     labels = {
         "grand_slam": "Grand Slam",
+        "challenger": "Challenger",
+        "itf": "ITF",
         "masters_1000": "ATP 1000",
         "atp_500": "ATP 500",
         "atp_250": "ATP 250",
