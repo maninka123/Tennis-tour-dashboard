@@ -3455,6 +3455,25 @@ class TennisDataFetcher:
 
         normalized_draw = self._normalize_draw_size(draw_size)
 
+        # Prefer match-number heuristics when available. For WTA global feeds,
+        # numeric RoundID values are not consistently ordered across events,
+        # while MatchID buckets are typically stable for draw rounds.
+        if match_number:
+            if match_number == 1:
+                return 'F'
+            if match_number in (2, 3):
+                return 'SF'
+            if 4 <= match_number <= 7:
+                return 'QF'
+            if 8 <= match_number <= 15:
+                return 'R16'
+            if 16 <= match_number <= 31:
+                return 'R32'
+            if 32 <= match_number <= 63:
+                return 'R64'
+            if 64 <= match_number <= 127:
+                return 'R128'
+
         if round_id.isdigit():
             rid = int(round_id)
             if is_grand_slam:
@@ -3501,21 +3520,6 @@ class TennisDataFetcher:
                 if 1 <= rid <= len(rounds):
                     return rounds[rid - 1]
 
-        if match_number:
-            if match_number == 1:
-                return 'F'
-            if match_number in (2, 3):
-                return 'SF'
-            if 4 <= match_number <= 7:
-                return 'QF'
-            if 8 <= match_number <= 15:
-                return 'R16'
-            if 16 <= match_number <= 31:
-                return 'R32'
-            if 32 <= match_number <= 63:
-                return 'R64'
-            if 64 <= match_number <= 127:
-                return 'R128'
         return ''
 
     def _parse_wta_sets(self, match):
@@ -4216,16 +4220,21 @@ class TennisDataFetcher:
                 args=['--days', str(days)],
                 timeout=90
             )
-            if atp_raw is None:
+
+            def _fallback_atp_upcoming(reason_label):
                 cached = self._load_recent_atp_matches_cache('upcoming', max_age_seconds=8 * 60 * 60)
                 cached = self._filter_upcoming_matches(cached, days=days)
                 if cached:
-                    print(f"ATP upcoming: script failed, using recent cached snapshot ({len(cached)} matches)")
+                    print(f"ATP upcoming: {reason_label}, using recent cached snapshot ({len(cached)} matches)")
                     matches.extend(cached)
-                else:
-                    print(f"ATP upcoming: script failed, returning empty")
+                    return
+
+                print(f"ATP upcoming: {reason_label}, returning empty")
+
+            if atp_raw is None:
+                _fallback_atp_upcoming('script failed')
             elif len(atp_raw) == 0:
-                print(f"ATP upcoming: scraper returned empty, no matches found")
+                _fallback_atp_upcoming('scraper returned empty')
             else:
                 parsed = []
                 for match in atp_raw:
@@ -4240,7 +4249,7 @@ class TennisDataFetcher:
                     print(f"ATP upcoming: loaded {len(parsed)} real matches from scraper")
                     matches.extend(parsed)
                 else:
-                    print("ATP upcoming: no valid upcoming matches after filtering")
+                    _fallback_atp_upcoming('no valid upcoming matches after filtering')
 
         print(f"fetch_upcoming_matches(tour={tour}): returning {len(matches)} total matches")
         return self._attach_upcoming_h2h(matches)

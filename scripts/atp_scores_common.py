@@ -504,7 +504,17 @@ def _extract_schedule_player(side_node: BeautifulSoup) -> Dict[str, Any]:
 
     name_link = side_node.select_one(".name a")
     profile_href = name_link.get("href") if name_link else ""
+    name_node = side_node.select_one(".name")
     player_name = _clean_text(name_link.get_text(" ", strip=True) if name_link else "")
+    if not player_name and name_node:
+        # New schedule markup may render plain text names without an anchor.
+        rank_node = name_node.select_one(".rank")
+        if rank_node:
+            rank_node.extract()
+        player_name = _clean_text(name_node.get_text(" ", strip=True))
+    if player_name:
+        # Drop trailing seed/entry suffixes like "(1)", "(Q)", "(WC)".
+        player_name = re.sub(r"\s*\((?:\d+|[A-Z]{1,3})\)\s*$", "", player_name, flags=re.IGNORECASE).strip()
     player_id = _player_id_from_profile_link(profile_href)
     country = _flag_code_from_node(side_node.select_one(".country"))
 
@@ -555,6 +565,13 @@ def parse_upcoming_matches_from_schedule_page(
                     pass
             continue
 
+        # ATP schedule pages can include WTA order-of-play cards on the same page.
+        # Keep ATP-only entries for this parser.
+        match_type_el = schedule_node.select_one(".schedule-cta .match-type")
+        match_type = _clean_text(match_type_el.get_text(" ", strip=True) if match_type_el else "").upper()
+        if match_type == "WTA":
+            continue
+
         dt_text = _clean_text(schedule_node.get("data-datetime"))
         match_dt = None
         if dt_text:
@@ -592,6 +609,8 @@ def parse_upcoming_matches_from_schedule_page(
         player1 = _extract_schedule_player(player_side)
         player2 = _extract_schedule_player(opponent_side)
         if not player1.get("name") or not player2.get("name"):
+            continue
+        if str(player1.get("name")).strip().upper() == "TBD" or str(player2.get("name")).strip().upper() == "TBD":
             continue
 
         # Skip doubles matches (both sides have 2+ players)

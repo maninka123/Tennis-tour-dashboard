@@ -660,9 +660,7 @@ const ScoresModule = {
         if (!upcomingSection) return;
 
         if (matches.length === 0) {
-            const emptyMessage = isWtaTour
-                ? 'No upcoming matches in the next 2 days'
-                : 'ATP upcoming matches are not loading right now.';
+            const emptyMessage = 'No upcoming matches in the next 2 days';
             upcomingSection.innerHTML = `
                 <div class="section-header">
                     <div class="section-title-stack">
