@@ -22,8 +22,16 @@
   "prize_money_currency": "USD",
   "draw_url": "https://www.atptour.com/en/scores/current/atp-masters-1000-shanghai/5014/draws",
   "scores_url": "https://www.atptour.com/en/scores/current/atp-masters-1000-shanghai/5014/results",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "name": "V. Vacherot",
+    "country": "MON",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/va25"
+  },
+  "runner_up": {
+    "name": "A. Rinderknech",
+    "country": "FRA",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/rc91"
+  },
   "draw": {
     "draw_size": 96,
     "surface": "Hard",
@@ -1162,7 +1170,7 @@
         "seed": null,
         "entry": null,
         "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-        "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+        "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
       },
       "score_string": "6-1 6-2",
       "winner_side": "A"
@@ -3437,7 +3445,7 @@
     },
     {
       "match_id": "ms001",
-      "round_id": "Finals",
+      "round_id": "F",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
@@ -3469,7 +3477,7 @@
     "tournament_category": "masters_1000",
     "tournament_surface": "Hard",
     "tournament_year": 2026,
-    "tournament_status": "upcoming",
+    "tournament_status": "finished",
     "tournament_tour": "atp",
     "draw_size": 96,
     "rounds": [
@@ -3479,7 +3487,7 @@
       "R16",
       "QF",
       "SF",
-      "Finals"
+      "F"
     ],
     "matches": [
       {
@@ -5302,7 +5310,7 @@
               "seed": null,
               "entry": null,
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-              "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+              "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
             },
             "score": {
               "sets": [
@@ -9485,11 +9493,11 @@
         ]
       },
       {
-        "round": "Finals",
+        "round": "F",
         "matches": [
           {
             "id": "ms001",
-            "round": "Finals",
+            "round": "F",
             "match_number": 1,
             "player1": {
               "id": "RC91",
@@ -9535,7 +9543,7 @@
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/va25",
               "profile_url": "https://www.atptour.com/en/players/valentin-vacherot/va25/overview"
             },
-            "points": null,
+            "points": 600,
             "prize_money": null,
             "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2025/5014/ms001"
           }
@@ -9552,7 +9560,12 @@
       "W": 1000
     },
     "round_prize": {},
-    "champion": null,
-    "source": "atp"
+    "champion": {
+      "name": "V. Vacherot",
+      "country": "MON",
+      "image_url": "https://www.atptour.com/-/media/alias/player-headshot/va25"
+    },
+    "source": "atp",
+    "source_year": 2025
   }
 }

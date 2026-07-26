@@ -1,13 +1,13 @@
 {
-  "singles_ranking": "199",
+  "singles_ranking": "189",
   "matches_played": "1",
   "aces": "1",
   "service_games_won": "55.6%",
   "return_games_won": "11.1%",
   "first_serve_won": "60.5%",
   "singles_titles": "0",
-  "won_lost": "3 / 3",
-  "prize_money": "$104,208",
+  "won_lost": "8 / 5",
+  "prize_money": "$114,608",
   "singles_serving_stats": {
     "aces": "1",
     "double_faults": "2",
@@ -32,7 +32,7 @@
     "return_section": "SINGLES RETURN STATS\nReturn Points Won\n32.1%\n1st Return Points Won %\n19.4%\n2nd Return Points Won %\n48.0%\nBreak Points Converted\n50.0%\nReturn Games Won\n11.1%\nReturn Games Played\n9\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-14T03:04:55.152272+00:00",
+  "updated_at": "2026-03-07T07:59:05.098686+00:00",
   "records_tab": {
     "summary": [
       {
@@ -139,11 +139,148 @@
     "year": 2026,
     "tournaments": [
       {
+        "tournament": "ANTALYA 125 #1",
+        "location": "Antalya \u2022 Turkey",
+        "date_range": "24 Feb - 1 Mar 2026",
+        "category": "atp_125",
+        "category_label": "WTA 125",
+        "surface": "CLAY",
+        "surface_key": "clay",
+        "rank": 202,
+        "seed": null,
+        "wta_points_gain": 81.0,
+        "prize_money_won": 8400.0,
+        "draw": "32M/16Q/16D",
+        "matches": [
+          {
+            "round": "Final",
+            "round_name": "F",
+            "tourn_round": 5,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Moyuka Uchijima",
+            "opponent_country": "JPN",
+            "opponent_seed": 3,
+            "opponent_entry": "",
+            "score": "7-5, 7-5",
+            "opponent_rank": 104
+          },
+          {
+            "round": "Semifinals",
+            "round_name": "S",
+            "tourn_round": 4,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Veronika Erjavec",
+            "opponent_country": "SLO",
+            "opponent_seed": 6,
+            "opponent_entry": "",
+            "score": "6-3, 6-1",
+            "opponent_rank": 108
+          },
+          {
+            "round": "Quarterfinals",
+            "round_name": "Q",
+            "tourn_round": 3,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Ekaterine Gorgodze",
+            "opponent_country": "GEO",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-1",
+            "opponent_rank": 170
+          },
+          {
+            "round": "Round of 16",
+            "round_name": "R16",
+            "tourn_round": 2,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Katarina Zavatska",
+            "opponent_country": "UKR",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-1, 6-2",
+            "opponent_rank": 317
+          },
+          {
+            "round": "Round of 32",
+            "round_name": "R32",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Alevtina Ibragimova",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-4, 4-6, 6-1",
+            "opponent_rank": 326
+          }
+        ],
+        "summary": {
+          "rank": 202,
+          "seed": null,
+          "wta_points_gain": "+81",
+          "prize_money_won": "+$8,400",
+          "draw": "32M/16Q/16D"
+        }
+      },
+      {
+        "tournament": "OEIRAS 125 INDOOR #1",
+        "location": "Oeiras \u2022 Portugal",
+        "date_range": "9 Feb - 15 Feb 2026",
+        "category": "atp_125",
+        "category_label": "WTA 125",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 199,
+        "seed": null,
+        "wta_points_gain": 15.0,
+        "prize_money_won": 2000.0,
+        "draw": "32M/16Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "round_name": "R16",
+            "tourn_round": 2,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Dalma Galfi",
+            "opponent_country": "HUN",
+            "opponent_seed": 2,
+            "opponent_entry": "",
+            "score": "6-1, 6-2",
+            "opponent_rank": 90
+          },
+          {
+            "round": "Round of 32",
+            "round_name": "R32",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "En-Shuo Liang",
+            "opponent_country": "TPE",
+            "opponent_seed": null,
+            "opponent_entry": "L",
+            "score": "6-1, 6-4",
+            "opponent_rank": 359
+          }
+        ],
+        "summary": {
+          "rank": 199,
+          "seed": null,
+          "wta_points_gain": "+15",
+          "prize_money_won": "+$2,000",
+          "draw": "32M/16Q/16D"
+        }
+      },
+      {
         "tournament": "CLUJ-NAPOCA",
         "location": "Cluj-Napoca \u2022 Romania",
         "date_range": "1 Feb - 7 Feb 2026",
-        "category": "other",
-        "category_label": "Tour",
+        "category": "atp_250",
+        "category_label": "WTA 250",
         "surface": "HARD",
         "surface_key": "hard",
         "rank": 167,
@@ -253,8 +390,8 @@
         "tournament": "BRISBANE",
         "location": "Brisbane \u2022 Australia",
         "date_range": "4 Jan - 11 Jan 2026",
-        "category": "masters_1000",
-        "category_label": "WTA 1000",
+        "category": "atp_500",
+        "category_label": "WTA 500",
         "surface": "HARD",
         "surface_key": "hard",
         "rank": 174,
@@ -286,6 +423,6 @@
         }
       }
     ],
-    "updated_at": "2026-02-14T03:04:55.151743+00:00"
+    "updated_at": "2026-03-07T07:59:05.098295+00:00"
   }
 }

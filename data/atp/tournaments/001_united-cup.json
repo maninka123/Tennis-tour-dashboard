@@ -22,8 +22,16 @@
   "prize_money_currency": "USD",
   "draw_url": "https://www.atptour.com/en/scores/archive/perth-sydney/9900/2026/country-draws",
   "scores_url": "https://www.atptour.com/en/scores/archive/perth-sydney/9900/2026/country-results",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "name": "POL",
+    "country": "POL",
+    "image_url": null
+  },
+  "runner_up": {
+    "name": "SUI",
+    "country": "SUI",
+    "image_url": null
+  },
   "draw": {
     "draw_size": 18,
     "surface": "Hard",
@@ -196,8 +204,8 @@
       "winner_side": "A"
     },
     {
-      "match_id": "Finals_1",
-      "round_id": "Finals",
+      "match_id": "F_1",
+      "round_id": "F",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
@@ -235,7 +243,7 @@
     "rounds": [
       "QF",
       "SF",
-      "Finals"
+      "F"
     ],
     "matches": [
       {
@@ -513,11 +521,11 @@
         ]
       },
       {
-        "round": "Finals",
+        "round": "F",
         "matches": [
           {
-            "id": "Finals_1",
-            "round": "Finals",
+            "id": "F_1",
+            "round": "F",
             "match_number": 1,
             "player1": {
               "id": null,
@@ -555,7 +563,7 @@
               "image_url": null,
               "profile_url": null
             },
-            "points": null,
+            "points": 300,
             "prize_money": null,
             "stats_url": null
           }
@@ -571,7 +579,13 @@
       "W": 500
     },
     "round_prize": {},
-    "champion": null,
-    "source": "atp"
+    "champion": {
+      "name": "POL",
+      "country": "POL",
+      "image_url": null
+    },
+    "source": "atp",
+    "source_year": 2026,
+    "retrieved_at": "2026-07-26T06:47:39.767305Z"
   }
 }

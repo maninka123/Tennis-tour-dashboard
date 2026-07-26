@@ -1,37 +1,94 @@
 {
-  "singles_titles": "0",
-  "won_lost": "3 - 4",
-  "prize_money": "$6,950,171",
+  "singles_titles": "",
+  "won_lost": "",
+  "prize_money": "",
   "singles_serving_stats": {
-    "aces": "1071",
-    "double_faults": "873",
-    "first_serve_pct": "64%",
-    "first_serve_won": "69%",
-    "second_serve_won": "48%",
-    "break_points_faced": "2150",
-    "break_points_saved": "58%",
-    "service_games_played": "3509",
-    "service_games_won": "74%",
-    "service_points_won_pct": "61%"
+    "aces": "",
+    "double_faults": "",
+    "first_serve_pct": "",
+    "first_serve_won": "",
+    "second_serve_won": "",
+    "break_points_faced": "",
+    "break_points_saved": "",
+    "service_games_played": "",
+    "service_games_won": "{{stats || 0}}%Service Games Played{{stats || 0}}Total Service Points Won{{stats || 0}}%Aces{{stats || 0}}Double Faults{{stats || 0}}1st Serve{{stats || 0}}%1st Serve Points Won{{stats || 0}}%2nd Serve Points Won{{stats || 0}}%Break Points Saved{{stats || 0}}%Break Points Faced{{stats || 0}}",
+    "service_points_won_pct": ""
   },
   "singles_return_stats": {
-    "first_return_points_won_pct": "32%",
-    "second_return_points_won_pct": "50%",
-    "break_points_opportunities": "2237",
-    "break_points_converted": "38%",
-    "return_games_played": "3490",
-    "return_games_won": "24%",
-    "return_points_won": "39%",
-    "total_points_won": "50%"
+    "first_return_points_won_pct": "",
+    "second_return_points_won_pct": "",
+    "break_points_opportunities": "",
+    "break_points_converted": "",
+    "return_games_played": "",
+    "return_games_won": "{{stats || 0}}%Return Games Played{{stats || 0}}Return Points Won{{stats || 0}}%Total Points Won{{stats || 0}}%1st Serve Return Points Won{{stats || 0}}%2nd Serve Return Points Won{{stats || 0}}%Break Points Converted{{stats || 0}}%Break Points Opportunities{{stats || 0}}",
+    "return_points_won": "",
+    "total_points_won": ""
   },
   "raw": {
-    "serve_section": "*   Aces 1071\n*   Double Faults 873\n*   1st Serve 64%\n*   1st Serve Points Won 69%\n*   2nd Serve Points Won 48%\n*   Break Points Faced 2150\n*   Break Points Saved 58%\n*   Service Games Played 3509\n*   Service Games Won 74%\n*   Total Service Points Won 61%",
-    "return_section": "*   1st Serve Return Points Won 32%\n*   2nd Serve Return Points Won 50%\n*   Break Points Opportunities 2237\n*   Break Points Converted 38%\n*   Return Games Played 3490\n*   Return Games Won 24%\n*   Return Points Won 39%\n*   Total Points Won 50%\n\n[![Image 22: Lexus](http://www.atptour.com/-/media/sites/atp-tour/header/lexus-atp-head2head_1.png)](https://www.lexus.eu/discover-lexus/lexus-atp-tour-partnership)\n\n[![Image 23: Alex de Minaur](http://www.atptour.com/-/media/tennis/players/gladiator/2026/01/20/00/47/de-minaur_head_2026_final.png?sc=0&hash=b7a4d9f15b052e06a196f69fbad52a2b) Alex de Minaur AUS](http://www.atptour.com/en/players/alex-de-minaur/dh58/overview)\n\n5\n\nVs\n\nwins\n\n2\n\n[Show H2H Detail](http://www.atptour.com/en/players/atp-head-2-head/alex-de-minaur-vs-ugo-humbert/dh58/hh26)\n\n[![Image 24: Ugo Humbert](http://www.atptour.com/-/media/tennis/players/head-shot/2024/02/23/20/02/humbert_head_2024.png?sc=0&hash=acf1dc38b2e010f598de5371783e8d3d) Ugo Humbert FRA](http://www.atptour.com/en/players/ugo-humbert/hh26/overview)\n\n*   8 Rank 36\n*   26 Age 27\n*   152 lb Weight 160 lb\n*   6'0\"Height 6'2\"\n*   Right-handed Plays Left-handed\n*   2015 Turned Pro 2016\n\nSearch Search Choose Player\n\nHeader 2\n--------"
+    "serve_section": "*   Service Games Won{{stats || 0}}%Service Games Played{{stats || 0}}Total Service Points Won{{stats || 0}}%Aces{{stats || 0}}Double Faults{{stats || 0}}1st Serve{{stats || 0}}%1st Serve Points Won{{stats || 0}}%2nd Serve Points Won{{stats || 0}}%Break Points Saved{{stats || 0}}%Break Points Faced{{stats || 0}}",
+    "return_section": "*   Return Games Won{{stats || 0}}%Return Games Played{{stats || 0}}Return Points Won{{stats || 0}}%Total Points Won{{stats || 0}}%1st Serve Return Points Won{{stats || 0}}%2nd Serve Return Points Won{{stats || 0}}%Break Points Converted{{stats || 0}}%Break Points Opportunities{{stats || 0}}\n\n[![Image 15: H2H Logo Brand](http://www.atptour.com/-/media/sites/atp-tour/header/lexus_atp_head2head_ondark_rgb.png)](https://www.lexus.eu/discover-lexus/lexus-atp-tour-partnership)[Show H2H Detail](http://www.atptour.com/en/players/atp-head-2-head)\n\n[![Image 16](http://www.atptour.com/en/players/jaume-munar/mu94/player-stats) {{player.firstName}}{{player.lastName}} {{player.PlayerCountryCode}} {{player.winCount}} Vs {{opponent.winCount}} ![Image 17](http://www.atptour.com/en/players/jaume-munar/mu94/player-stats) {{opponent.firstName}}{{opponent.lastName}} {{opponent.PlayerCountryCode}}](http://www.atptour.com/en/players/atp-head-2-head)\n\n[![Image 18](http://www.atptour.com/en/players/jaume-munar/mu94/player-stats) {{player.firstName}}{{player.lastName}} {{player.PlayerCountryCode}}](http://www.atptour.com/en/players/jaume-munar/mu94/player-stats)\n\n{{player.winCount}}\n\nVs\n\nwins\n\n{{opponent.winCount}}\n\n[Show H2H Detail](http://www.atptour.com/en/players/jaume-munar/mu94/player-stats)\n\n[![Image 19](http://www.atptour.com/en/players/jaume-munar/mu94/player-stats) {{opponent.firstName}}{{opponent.lastName}} {{opponent.PlayerCountryCode}}](http://www.atptour.com/en/players/jaume-munar/mu94/player-stats)\n\n[Performance Zone](https://www.atptour.com/en/stats/performance-zone)[Win/Loss Index](https://www.atptour.com/en/stats/win-loss-index)\n\n*   {{player.ranking}}Rank{{opponent.ranking}}\n*   {{player.Age ? player.Age : '-'}}Age{{opponent.Age ? opponent.Age : '-'}}\n*   {{getWeightInLB.player}}Weight{{getWeightInLB.opponent}}\n*   {{getHeightInFeetInch.player}}Height{{getHeightInFeetInch.opponent}}\n*   {{getPlayHand.player}}Plays{{getPlayHand.opponent}}\n*   {{player.ProYear ? player.ProYear : '-'}}Turned Pro{{opponent.ProYear ? opponent.ProYear : '-'}}\n\nSearch Search Choose Player\n\n*   {{item.FirstName}} {{item.LastName}}\n\n{{player.firstName}} {{player.lastName}}\n\n{{player.PlayerCountryCode}}\n\n[Performance Zone](https://www.atptour.com/en/stats/performance-zone)[Win/Loss Index](https://www.atptour.com/en/stats/win-loss-index)\n\n{{opponent.firstName}} {{opponent.lastName}}\n\n{{opponent.PlayerCountryCode}}\n\n*   {{item.FirstName}} {{item.LastName}}\n\n## Header 2"
   },
-  "updated_at": "2026-02-14T03:23:35.438912+00:00",
+  "updated_at": "2026-07-26T06:01:49.694834+00:00",
   "recent_matches_tab": {
     "year": 2026,
     "tournaments": [
+      {
+        "tournament": "Rotterdam Rotterdam, Netherlands",
+        "location": "",
+        "date_range": "9 Feb, 26",
+        "category": "atp_500",
+        "category_label": "ATP 500",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "summary": {
+          "rank": "37",
+          "seed": "",
+          "wta_points_gain": "100",
+          "atp_points_gain": "100",
+          "prize_money_won": "\u20ac67,470",
+          "draw": "",
+          "points": "100"
+        },
+        "matches": [
+          {
+            "round": "QF",
+            "result": "L",
+            "opponent_name": "A. Bublik",
+            "opponent_seed": 10,
+            "opponent_rank": null,
+            "opponent_id": "BK92",
+            "opponent_url": "http://www.atptour.com/en/players/alexander-bublik/bk92/overview",
+            "score": "4-6, 7-6(4), 6-7(3)",
+            "score_raw": "4 6 7 6 4 6 7 3 Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/407/ms006"
+          },
+          {
+            "round": "R16",
+            "result": "W",
+            "opponent_name": "K. Khachanov",
+            "opponent_seed": 18,
+            "opponent_rank": null,
+            "opponent_id": "KE29",
+            "opponent_url": "http://www.atptour.com/en/players/karen-khachanov/ke29/overview",
+            "score": "7-6(8), 3-6, 6-3",
+            "score_raw": "7 6 8 3 6 6 3 Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/407/ms012"
+          },
+          {
+            "round": "R32",
+            "result": "W",
+            "opponent_name": "N. Budkov Kjaer",
+            "opponent_seed": 132,
+            "opponent_rank": null,
+            "opponent_id": "B0U4",
+            "opponent_url": "http://www.atptour.com/en/players/nicolai-budkov-kjaer/b0u4/overview",
+            "score": "6-1, 6-3",
+            "score_raw": "6 1 6 3 Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/407/ms025"
+          }
+        ],
+        "tournament_url": "http://www.atptour.com/en/tournaments/rotterdam/407/overview"
+      },
       {
         "tournament": "Australian Open Melbourne, Australia",
         "location": "",
@@ -180,8 +237,8 @@
         "tournament_url": "http://www.atptour.com/en/tournaments/united-cup/9900/overview"
       }
     ],
-    "updated_at": "2026-02-14T03:23:35.437665+00:00"
+    "updated_at": "2026-03-07T06:57:36.332779+00:00"
   },
-  "ytd_prize_money": "$231,432",
-  "career_prize_money": "$6,950,171"
+  "ytd_prize_money": "",
+  "career_prize_money": ""
 }

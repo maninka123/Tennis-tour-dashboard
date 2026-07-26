@@ -22,8 +22,16 @@
   "prize_money_currency": "USD",
   "draw_url": "https://www.atptour.com/en/scores/current/chengdu/7581/draws",
   "scores_url": "https://www.atptour.com/en/scores/current/chengdu/7581/results",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "name": "A. Tabilo",
+    "country": "CHI",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/te30"
+  },
+  "runner_up": {
+    "name": "L. Musetti",
+    "country": "ITA",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ej"
+  },
   "draw": {
     "draw_size": 28,
     "surface": "Hard",
@@ -208,7 +216,7 @@
         "seed": null,
         "entry": null,
         "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-        "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+        "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
       },
       "player_b": {
         "id": "MC65",
@@ -559,7 +567,7 @@
         "seed": null,
         "entry": null,
         "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-        "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+        "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
       },
       "player_b": {
         "id": "M0GZ",
@@ -730,7 +738,7 @@
         "seed": null,
         "entry": null,
         "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-        "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+        "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
       },
       "score_string": "6-7(7) 6-3 2-6",
       "winner_side": "B"
@@ -811,7 +819,7 @@
         "seed": null,
         "entry": null,
         "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-        "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+        "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
       },
       "score_string": "6-3 6-1",
       "winner_side": "A"
@@ -845,7 +853,7 @@
     },
     {
       "match_id": "ms001",
-      "round_id": "Finals",
+      "round_id": "F",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
@@ -877,7 +885,7 @@
     "tournament_category": "atp_250",
     "tournament_surface": "Hard",
     "tournament_year": 2026,
-    "tournament_status": "upcoming",
+    "tournament_status": "finished",
     "tournament_tour": "atp",
     "draw_size": 28,
     "rounds": [
@@ -885,7 +893,7 @@
       "R16",
       "QF",
       "SF",
-      "Finals"
+      "F"
     ],
     "matches": [
       {
@@ -1176,7 +1184,7 @@
               "seed": null,
               "entry": null,
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-              "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+              "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
             },
             "player2": {
               "id": "MC65",
@@ -1215,7 +1223,7 @@
               "seed": null,
               "entry": null,
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-              "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+              "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
             },
             "points": 10,
             "prize_money": null,
@@ -1835,7 +1843,7 @@
               "seed": null,
               "entry": null,
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-              "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+              "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
             },
             "player2": {
               "id": "M0GZ",
@@ -1878,7 +1886,7 @@
               "seed": null,
               "entry": null,
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-              "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+              "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
             },
             "points": 20,
             "prize_money": null,
@@ -2149,7 +2157,7 @@
               "seed": null,
               "entry": null,
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-              "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+              "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
             },
             "score": {
               "sets": [
@@ -2179,7 +2187,7 @@
               "seed": null,
               "entry": null,
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-              "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+              "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
             },
             "points": 45,
             "prize_money": null,
@@ -2318,7 +2326,7 @@
               "seed": null,
               "entry": null,
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-              "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+              "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
             },
             "score": {
               "sets": [
@@ -2401,11 +2409,11 @@
         ]
       },
       {
-        "round": "Finals",
+        "round": "F",
         "matches": [
           {
             "id": "ms001",
-            "round": "Finals",
+            "round": "F",
             "match_number": 1,
             "player1": {
               "id": "M0EJ",
@@ -2455,7 +2463,7 @@
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/te30",
               "profile_url": "https://www.atptour.com/en/players/alejandro-tabilo/te30/overview"
             },
-            "points": null,
+            "points": 150,
             "prize_money": null,
             "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2025/7581/ms001"
           }
@@ -2471,7 +2479,12 @@
       "W": 250
     },
     "round_prize": {},
-    "champion": null,
-    "source": "atp"
+    "champion": {
+      "name": "A. Tabilo",
+      "country": "CHI",
+      "image_url": "https://www.atptour.com/-/media/alias/player-headshot/te30"
+    },
+    "source": "atp",
+    "source_year": 2025
   }
 }

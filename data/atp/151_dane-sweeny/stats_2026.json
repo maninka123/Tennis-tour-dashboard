@@ -1,43 +1,133 @@
 {
-  "singles_titles": "0",
-  "won_lost": "1 - 2",
-  "prize_money": "$776,504",
+  "singles_titles": "",
+  "won_lost": "",
+  "prize_money": "",
   "singles_serving_stats": {
-    "aces": "10",
-    "double_faults": "36",
-    "first_serve_pct": "61%",
-    "first_serve_won": "67%",
-    "second_serve_won": "50%",
-    "break_points_faced": "73",
-    "break_points_saved": "60%",
-    "service_games_played": "113",
-    "service_games_won": "74%",
-    "service_points_won_pct": "60%"
+    "aces": "",
+    "double_faults": "",
+    "first_serve_pct": "",
+    "first_serve_won": "",
+    "second_serve_won": "",
+    "break_points_faced": "",
+    "break_points_saved": "",
+    "service_games_played": "",
+    "service_games_won": "",
+    "service_points_won_pct": ""
   },
   "singles_return_stats": {
-    "first_return_points_won_pct": "25%",
-    "second_return_points_won_pct": "44%",
-    "break_points_opportunities": "49",
-    "break_points_converted": "35%",
-    "return_games_played": "114",
-    "return_games_won": "15%",
-    "return_points_won": "32%",
-    "total_points_won": "46%"
+    "first_return_points_won_pct": "",
+    "second_return_points_won_pct": "",
+    "break_points_opportunities": "",
+    "break_points_converted": "",
+    "return_games_played": "",
+    "return_games_won": "",
+    "return_points_won": "",
+    "total_points_won": ""
   },
   "raw": {
-    "serve_section": "*   Aces 10\n*   Double Faults 36\n*   1st Serve 61%\n*   1st Serve Points Won 67%\n*   2nd Serve Points Won 50%\n*   Break Points Faced 73\n*   Break Points Saved 60%\n*   Service Games Played 113\n*   Service Games Won 74%\n*   Total Service Points Won 60%",
-    "return_section": "*   1st Serve Return Points Won 25%\n*   2nd Serve Return Points Won 44%\n*   Break Points Opportunities 49\n*   Break Points Converted 35%\n*   Return Games Played 114\n*   Return Games Won 15%\n*   Return Points Won 32%\n*   Total Points Won 46%\n\n[![Image 22: Lexus](http://www.atptour.com/-/media/sites/atp-tour/header/lexus-atp-head2head_1.png)](https://www.lexus.eu/discover-lexus/lexus-atp-tour-partnership)\n\n[![Image 23: Alex de Minaur](http://www.atptour.com/-/media/tennis/players/gladiator/2026/01/20/00/47/de-minaur_head_2026_final.png?sc=0&hash=b7a4d9f15b052e06a196f69fbad52a2b) Alex de Minaur AUS](http://www.atptour.com/en/players/alex-de-minaur/dh58/overview)\n\n4\n\nVs\n\nwins\n\n0\n\n[Show H2H Detail](http://www.atptour.com/en/players/atp-head-2-head/alex-de-minaur-vs-botic-van-de-zandschulp/dh58/v812)\n\n[![Image 24: Botic van de Zandschulp](http://www.atptour.com/-/media/tennis/players/head-shot/2024/02/23/17/15/van_de_zandschulp_head_2024.png?sc=0&hash=0285ee5797d4fffc43af893536defb8a) Botic van de Zandschulp NED](http://www.atptour.com/en/players/botic-van-de-zandschulp/v812/overview)\n\n*   8 Rank 65\n*   26 Age 30\n*   152 lb Weight 187 lb\n*   6'0\"Height 6'3\"\n*   Right-handed Plays Right-handed\n*   2015 Turned Pro 2016\n\nSearch Search Choose Player\n\nHeader 2\n--------"
+    "serve_section": "",
+    "return_section": ""
   },
-  "updated_at": "2026-02-13T18:42:27.932277+00:00",
+  "updated_at": "2026-07-26T06:21:42.898129+00:00",
   "recent_matches_tab": {
     "year": 2026,
     "tournaments": [
       {
+        "tournament": "New Delhi New Delhi, India",
+        "location": "",
+        "date_range": "16 Feb, 26",
+        "category": "challenger",
+        "category_label": "Challenger",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "summary": {
+          "rank": "134",
+          "seed": "",
+          "wta_points_gain": "0",
+          "atp_points_gain": "0",
+          "prize_money_won": "$1,045",
+          "draw": "",
+          "points": "0"
+        },
+        "matches": [
+          {
+            "round": "R32",
+            "result": "L",
+            "opponent_name": "B. Zhukayev",
+            "opponent_seed": 292,
+            "opponent_rank": null,
+            "opponent_id": "Z09Z",
+            "opponent_url": "http://www.atptour.com/en/players/beibit-zhukayev/z09z/overview",
+            "score": "7-6(6), 2-6, 2-6",
+            "score_raw": "7 6 6 2 6 2 6 Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/6961/ms016"
+          }
+        ],
+        "tournament_url": "http://www.atptour.com/en/tournaments/new-delhi/6961/overview"
+      },
+      {
+        "tournament": "Brisbane 2 Brisbane, Australia",
+        "location": "",
+        "date_range": "9 Feb, 26",
+        "category": "challenger",
+        "category_label": "Challenger",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "summary": {
+          "rank": "138",
+          "seed": "",
+          "wta_points_gain": "12",
+          "atp_points_gain": "12",
+          "prize_money_won": "$3,095",
+          "draw": "",
+          "points": "12"
+        },
+        "matches": [
+          {
+            "round": "QF",
+            "result": "L",
+            "opponent_name": "H. Moriya",
+            "opponent_seed": 539,
+            "opponent_rank": null,
+            "opponent_id": "MI01",
+            "opponent_url": "http://www.atptour.com/en/players/hiroki-moriya/mi01/overview",
+            "score": "5-7, 6-7(3)",
+            "score_raw": "5 7 6 7 3 Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/2969/ms007"
+          },
+          {
+            "round": "R16",
+            "result": "W",
+            "opponent_name": "M. Imamura",
+            "opponent_seed": 549,
+            "opponent_rank": null,
+            "opponent_id": "I426",
+            "opponent_url": "http://www.atptour.com/en/players/masamichi-imamura/i426/overview",
+            "score": "6-3, 6-2",
+            "score_raw": "6 3 6 2 Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/2969/ms015"
+          },
+          {
+            "round": "R32",
+            "result": "W",
+            "opponent_name": "T. Daniel",
+            "opponent_seed": 377,
+            "opponent_rank": null,
+            "opponent_id": "DA81",
+            "opponent_url": "http://www.atptour.com/en/players/taro-daniel/da81/overview",
+            "score": "7-5, 6-4",
+            "score_raw": "7 5 6 4 Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/2969/ms031"
+          }
+        ],
+        "tournament_url": "http://www.atptour.com/en/tournaments/brisbane-2/2969/overview"
+      },
+      {
         "tournament": "Brisbane 1 Brisbane, Australia",
         "location": "",
         "date_range": "2 Feb, 26",
-        "category": "other",
-        "category_label": "Tour",
+        "category": "challenger",
+        "category_label": "Challenger",
         "surface": "HARD",
         "surface_key": "hard",
         "summary": {
@@ -100,7 +190,7 @@
           },
           {
             "round": "R32",
-            "result": "W",
+            "result": "L",
             "opponent_name": "S. Mitsui",
             "opponent_seed": 537,
             "opponent_rank": null,
@@ -252,8 +342,8 @@
         "tournament_url": "http://www.atptour.com/en/tournaments/brisbane/339/overview"
       }
     ],
-    "updated_at": "2026-02-13T18:42:27.932262+00:00"
+    "updated_at": "2026-03-07T07:26:11.334385+00:00"
   },
-  "ytd_prize_money": "$175,017",
-  "career_prize_money": "$776,504"
+  "ytd_prize_money": "",
+  "career_prize_money": ""
 }

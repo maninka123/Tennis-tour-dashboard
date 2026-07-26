@@ -22,8 +22,16 @@
   "prize_money_currency": "USD",
   "draw_url": "https://www.atptour.com/en/scores/current/winston-salem/6242/draws",
   "scores_url": "https://www.atptour.com/en/scores/current/winston-salem/6242/results",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "name": "M. Fucsovics",
+    "country": "HUN",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f724"
+  },
+  "runner_up": {
+    "name": "B. van de Zandschulp",
+    "country": "NED",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/v812"
+  },
   "draw": {
     "draw_size": 48,
     "surface": "Hard",
@@ -1709,7 +1717,7 @@
     },
     {
       "match_id": "ms001",
-      "round_id": "Finals",
+      "round_id": "F",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
@@ -1741,7 +1749,7 @@
     "tournament_category": "atp_250",
     "tournament_surface": "Hard",
     "tournament_year": 2026,
-    "tournament_status": "upcoming",
+    "tournament_status": "finished",
     "tournament_tour": "atp",
     "draw_size": 48,
     "rounds": [
@@ -1750,7 +1758,7 @@
       "R16",
       "QF",
       "SF",
-      "Finals"
+      "F"
     ],
     "matches": [
       {
@@ -4685,11 +4693,11 @@
         ]
       },
       {
-        "round": "Finals",
+        "round": "F",
         "matches": [
           {
             "id": "ms001",
-            "round": "Finals",
+            "round": "F",
             "match_number": 1,
             "player1": {
               "id": "V812",
@@ -4735,7 +4743,7 @@
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f724",
               "profile_url": "https://www.atptour.com/en/players/marton-fucsovics/f724/overview"
             },
-            "points": null,
+            "points": 150,
             "prize_money": null,
             "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2025/6242/ms001"
           }
@@ -4751,7 +4759,12 @@
       "W": 250
     },
     "round_prize": {},
-    "champion": null,
-    "source": "atp"
+    "champion": {
+      "name": "M. Fucsovics",
+      "country": "HUN",
+      "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f724"
+    },
+    "source": "atp",
+    "source_year": 2025
   }
 }

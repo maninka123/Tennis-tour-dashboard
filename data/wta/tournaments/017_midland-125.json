@@ -12,13 +12,21 @@
   "indoor_outdoor": "I",
   "city": "MIDLAND",
   "country": "USA",
-  "status": "inprogress",
+  "status": "finished",
   "draw_size_singles": 32,
   "draw_size_doubles": 16,
   "prize_money": 115000,
   "prize_money_currency": "USD",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "id": "329198",
+    "name": "Alina Charaeva",
+    "country": "RUS"
+  },
+  "runner_up": {
+    "id": "323087",
+    "name": "Hanyu Guo",
+    "country": "CHN"
+  },
   "draw_year": 2026,
   "draw": {
     "draw_size": 32,
@@ -817,10 +825,10 @@
           },
           {
             "id": "LS026",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "HIBINO, Nao",
+            "result_score": "62 57 64",
+            "winner_slot": "B",
+            "result_name_and_score": "Nao Hibino d. Carolyn Ansari 62 57 64",
             "players": [
               {
                 "slot": "A",
@@ -982,10 +990,10 @@
           },
           {
             "id": "LS031",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[2] VIDMANOVA, Darja",
+            "result_score": "62 61",
+            "winner_slot": "B",
+            "result_name_and_score": "Darja Vidmanova d. Kanon Sawashiro 62 61",
             "players": [
               {
                 "slot": "A",
@@ -1020,10 +1028,10 @@
         "matches": [
           {
             "id": "LS008",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "SEBOV, Katherine",
+            "result_score": "62 62",
+            "winner_slot": "A",
+            "result_name_and_score": "Katherine Sebov d. Kayla Cross 62 62",
             "players": [
               {
                 "slot": "A",
@@ -1053,10 +1061,10 @@
           },
           {
             "id": "LS009",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[8] STOIANA, Mary",
+            "result_score": "62 62",
+            "winner_slot": "B",
+            "result_name_and_score": "Mary Stoiana d. Madison Brengle 62 62",
             "players": [
               {
                 "slot": "A",
@@ -1086,10 +1094,10 @@
           },
           {
             "id": "LS010",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[3] KALIEVA, Elvina",
+            "result_score": "62 62",
+            "winner_slot": "A",
+            "result_name_and_score": "Elvina Kalieva d. Sakura Hosogi 62 62",
             "players": [
               {
                 "slot": "A",
@@ -1119,10 +1127,10 @@
           },
           {
             "id": "LS011",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "GUO, Hanyu",
+            "result_score": "61 10",
+            "winner_slot": "B",
+            "result_name_and_score": "Hanyu Guo d. Katarina Jokic 61 10",
             "players": [
               {
                 "slot": "A",
@@ -1152,10 +1160,10 @@
           },
           {
             "id": "LS012",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[5] CHARAEVA, Alina",
+            "result_score": "64 76(4)",
+            "winner_slot": "A",
+            "result_name_and_score": "Alina Charaeva d. Xiaodi You 64 76(4)",
             "players": [
               {
                 "slot": "A",
@@ -1185,21 +1193,21 @@
           },
           {
             "id": "LS013",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "HIBINO, Nao",
+            "result_score": "62 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Nao Hibino d. Whitney Osuigwe 62 64",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
+                "display": "Nao Hibino",
                 "seed": "",
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 320238,
+                  "first_name": "Nao",
+                  "last_name": "Hibino",
+                  "country": "JPN"
                 }
               },
               {
@@ -1218,10 +1226,10 @@
           },
           {
             "id": "LS014",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "FREY, Anna",
+            "result_score": "64 36 63",
+            "winner_slot": "A",
+            "result_name_and_score": "Anna Frey d. Kayla Day 64 36 63",
             "players": [
               {
                 "slot": "A",
@@ -1251,10 +1259,10 @@
           },
           {
             "id": "LS015",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[2] VIDMANOVA, Darja",
+            "result_score": "62 62",
+            "winner_slot": "B",
+            "result_name_and_score": "Darja Vidmanova d. Gabriela Lee 62 62",
             "players": [
               {
                 "slot": "A",
@@ -1270,14 +1278,14 @@
               },
               {
                 "slot": "B",
-                "display": "N/A",
-                "seed": "",
+                "display": "Darja Vidmanova",
+                "seed": 2,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 329057,
+                  "first_name": "Darja",
+                  "last_name": "Vidmanova",
+                  "country": "CZE"
                 }
               }
             ]
@@ -1289,132 +1297,132 @@
         "matches": [
           {
             "id": "LS004",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[8] STOIANA, Mary",
+            "result_score": "63 64",
+            "winner_slot": "B",
+            "result_name_and_score": "Mary Stoiana d. Katherine Sebov 63 64",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
+                "display": "Katherine Sebov",
                 "seed": "",
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 322214,
+                  "first_name": "Katherine",
+                  "last_name": "Sebov",
+                  "country": "CAN"
                 }
               },
               {
                 "slot": "B",
-                "display": "N/A",
-                "seed": "",
+                "display": "Mary Stoiana",
+                "seed": 8,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 330265,
+                  "first_name": "Mary",
+                  "last_name": "Stoiana",
+                  "country": "USA"
                 }
               }
             ]
           },
           {
             "id": "LS005",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "GUO, Hanyu",
+            "result_score": "62 26 76(8)",
+            "winner_slot": "B",
+            "result_name_and_score": "Hanyu Guo d. Elvina Kalieva 62 26 76(8)",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
-                "seed": "",
+                "display": "Elvina Kalieva",
+                "seed": 3,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 327834,
+                  "first_name": "Elvina",
+                  "last_name": "Kalieva",
+                  "country": "USA"
                 }
               },
               {
                 "slot": "B",
-                "display": "N/A",
+                "display": "Hanyu Guo",
                 "seed": "",
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 323087,
+                  "first_name": "Hanyu",
+                  "last_name": "Guo",
+                  "country": "CHN"
                 }
               }
             ]
           },
           {
             "id": "LS006",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[5] CHARAEVA, Alina",
+            "result_score": "76(5) 63",
+            "winner_slot": "A",
+            "result_name_and_score": "Alina Charaeva d. Nao Hibino 76(5) 63",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
-                "seed": "",
+                "display": "Alina Charaeva",
+                "seed": 5,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 329198,
+                  "first_name": "Alina",
+                  "last_name": "Charaeva",
+                  "country": "RUS"
                 }
               },
               {
                 "slot": "B",
-                "display": "N/A",
+                "display": "Nao Hibino",
                 "seed": "",
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 320238,
+                  "first_name": "Nao",
+                  "last_name": "Hibino",
+                  "country": "JPN"
                 }
               }
             ]
           },
           {
             "id": "LS007",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[2] VIDMANOVA, Darja",
+            "result_score": "62 62",
+            "winner_slot": "B",
+            "result_name_and_score": "Darja Vidmanova d. Anna Frey 62 62",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
+                "display": "Anna Frey",
                 "seed": "",
-                "entry_type": "",
+                "entry_type": "WC",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 333703,
+                  "first_name": "Anna",
+                  "last_name": "Frey",
+                  "country": "USA"
                 }
               },
               {
                 "slot": "B",
-                "display": "N/A",
-                "seed": "",
+                "display": "Darja Vidmanova",
+                "seed": 2,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 329057,
+                  "first_name": "Darja",
+                  "last_name": "Vidmanova",
+                  "country": "CZE"
                 }
               }
             ]
@@ -1426,66 +1434,66 @@
         "matches": [
           {
             "id": "LS002",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "GUO, Hanyu",
+            "result_score": "76(4) 67(2) 75",
+            "winner_slot": "B",
+            "result_name_and_score": "Hanyu Guo d. Mary Stoiana 76(4) 67(2) 75",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
-                "seed": "",
+                "display": "Mary Stoiana",
+                "seed": 8,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 330265,
+                  "first_name": "Mary",
+                  "last_name": "Stoiana",
+                  "country": "USA"
                 }
               },
               {
                 "slot": "B",
-                "display": "N/A",
+                "display": "Hanyu Guo",
                 "seed": "",
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 323087,
+                  "first_name": "Hanyu",
+                  "last_name": "Guo",
+                  "country": "CHN"
                 }
               }
             ]
           },
           {
             "id": "LS003",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[5] CHARAEVA, Alina",
+            "result_score": "36 63 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Alina Charaeva d. Darja Vidmanova 36 63 64",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
-                "seed": "",
+                "display": "Alina Charaeva",
+                "seed": 5,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 329198,
+                  "first_name": "Alina",
+                  "last_name": "Charaeva",
+                  "country": "RUS"
                 }
               },
               {
                 "slot": "B",
-                "display": "N/A",
-                "seed": "",
+                "display": "Darja Vidmanova",
+                "seed": 2,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 329057,
+                  "first_name": "Darja",
+                  "last_name": "Vidmanova",
+                  "country": "CZE"
                 }
               }
             ]
@@ -2801,12 +2809,12 @@
     },
     {
       "match_id": "LS015",
-      "round_id": 4,
+      "round_id": "2",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "U",
-      "scheduled": "2026-02-19T11:00-05:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-19T15:56:41.85+00:00",
+      "duration": "01:07:20",
       "player_a": {
         "id": "319454",
         "name": "Gabriela Lee",
@@ -2817,19 +2825,28 @@
         "name": "Darja Vidmanova",
         "country": "CZE"
       },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
+      "score_string": "6-2,6-2",
+      "result_string": "[2]D. Vidmanova d G. Lee 6-2,6-2",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
     },
     {
       "match_id": "LD007",
-      "round_id": 3,
+      "round_id": "Q",
       "draw_level_type": "M",
       "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-19T12:00-05:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-19T16:52:46.497+00:00",
+      "duration": "01:00:24",
       "player_a": {
         "id": "322631",
         "name": "Alana Smith",
@@ -2840,134 +2857,32 @@
         "name": "Isabelle Haverlag",
         "country": "NED"
       },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
-    },
-    {
-      "match_id": "LD004",
-      "round_id": 3,
-      "draw_level_type": "M",
-      "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-19T14:00-05:00",
-      "duration": null,
-      "player_a": {
-        "id": "316957",
-        "name": "Sabrina Santamaria",
-        "country": "USA"
-      },
-      "player_b": {
-        "id": "329671",
-        "name": "Yiming Dang",
-        "country": "CHN"
-      },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
-    },
-    {
-      "match_id": "LS010",
-      "round_id": 4,
-      "draw_level_type": "M",
-      "draw_match_type": "S",
-      "match_state": "U",
-      "scheduled": "2026-02-19T19:00-05:00",
-      "duration": null,
-      "player_a": {
-        "id": "327834",
-        "name": "Elvina Kalieva",
-        "country": "USA"
-      },
-      "player_b": {
-        "id": "327398",
-        "name": "Sakura Hosogi",
-        "country": "JPN"
-      },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
-    },
-    {
-      "match_id": "LD006",
-      "round_id": 3,
-      "draw_level_type": "M",
-      "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59-05:00",
-      "duration": null,
-      "player_a": {
-        "id": "327773",
-        "name": "Lia Karatancheva",
-        "country": "BUL"
-      },
-      "player_b": {
-        "id": "319413",
-        "name": "Quinn Gleason",
-        "country": "USA"
-      },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
-    },
-    {
-      "match_id": "LD005",
-      "round_id": 3,
-      "draw_level_type": "M",
-      "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59-05:00",
-      "duration": null,
-      "player_a": {
-        "id": "330960",
-        "name": "Kayla Cross",
-        "country": "CAN"
-      },
-      "player_b": {
-        "id": "328878",
-        "name": "Lea Ma",
-        "country": "USA"
-      },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
-    },
-    {
-      "match_id": "LS011",
-      "round_id": 4,
-      "draw_level_type": "M",
-      "draw_match_type": "S",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59-05:00",
-      "duration": null,
-      "player_a": {
-        "id": "321292",
-        "name": "Katarina Jokic",
-        "country": "SRB"
-      },
-      "player_b": {
-        "id": "323087",
-        "name": "Hanyu Guo",
-        "country": "CHN"
-      },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
+      "score_string": "6-1,2-6,1-0(3)",
+      "result_string": "A. Smith / M. Stoiana d [2]I. Haverlag / M. Lumsden 6-1,2-6,1-0(3)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "1"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "1",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
     },
     {
       "match_id": "LS013",
-      "round_id": 4,
+      "round_id": "2",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59-05:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-19T17:17:47.723+00:00",
+      "duration": "01:17:50",
       "player_a": {
         "id": "320238",
         "name": "Nao Hibino",
@@ -2978,10 +2893,502 @@
         "name": "Whitney Osuigwe",
         "country": "USA"
       },
-      "score_string": null,
-      "result_string": null,
+      "score_string": "6-2,6-4",
+      "result_string": "N. Hibino d [4]W. Osuigwe 6-2,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS011",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-19T18:47:44.19+00:00",
+      "duration": "00:43:16",
+      "player_a": {
+        "id": "321292",
+        "name": "Katarina Jokic",
+        "country": "SRB"
+      },
+      "player_b": {
+        "id": "323087",
+        "name": "Hanyu Guo",
+        "country": "CHN"
+      },
+      "score_string": "6-1,1-0 Ret'd",
+      "result_string": "H. Guo d K. Jokic 6-1,1-0 Ret'd",
+      "sets": [
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "0",
+          "b": "1"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD004",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-19T18:50:04.563+00:00",
+      "duration": "01:29:39",
+      "player_a": {
+        "id": "316957",
+        "name": "Sabrina Santamaria",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "329671",
+        "name": "Yiming Dang",
+        "country": "CHN"
+      },
+      "score_string": "6-4,6-3",
+      "result_string": "[1]S. Santamaria / Q. Tang d Y. Dang / X. You 6-4,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD005",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-19T20:20:05.857+00:00",
+      "duration": "01:23:46",
+      "player_a": {
+        "id": "330960",
+        "name": "Kayla Cross",
+        "country": "CAN"
+      },
+      "player_b": {
+        "id": "328878",
+        "name": "Lea Ma",
+        "country": "USA"
+      },
+      "score_string": "6-2,7-6(5)",
+      "result_string": "L. Ma / D. Vidmanova d [4]K. Cross / A. Rogers 6-2,7-6(5)",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "7"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS010",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-19T23:51:51.283+00:00",
+      "duration": "00:56:23",
+      "player_a": {
+        "id": "327834",
+        "name": "Elvina Kalieva",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "327398",
+        "name": "Sakura Hosogi",
+        "country": "JPN"
+      },
+      "score_string": "6-2,6-2",
+      "result_string": "[3]E. Kalieva d S. Hosogi 6-2,6-2",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD006",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-20T01:19:55.14+00:00",
+      "duration": "00:57:32",
+      "player_a": {
+        "id": "327773",
+        "name": "Lia Karatancheva",
+        "country": "BUL"
+      },
+      "player_b": {
+        "id": "319413",
+        "name": "Quinn Gleason",
+        "country": "USA"
+      },
+      "score_string": "6-3,6-2",
+      "result_string": "[3]Q. Gleason / D. Hewitt d L. Karatancheva / H. Kuwata 6-3,6-2",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS007",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-20T15:55:54.37+00:00",
+      "duration": "01:16:50",
+      "player_a": {
+        "id": "333703",
+        "name": "Anna Frey",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "329057",
+        "name": "Darja Vidmanova",
+        "country": "CZE"
+      },
+      "score_string": "6-2,6-2",
+      "result_string": "[2]D. Vidmanova d A. Frey 6-2,6-2",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS006",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-20T17:26:26.64+00:00",
+      "duration": "01:38:03",
+      "player_a": {
+        "id": "329198",
+        "name": "Alina Charaeva",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "320238",
+        "name": "Nao Hibino",
+        "country": "JPN"
+      },
+      "score_string": "7-6(5),6-3",
+      "result_string": "[5]A. Charaeva d N. Hibino 7-6(5),6-3",
+      "sets": [
+        {
+          "a": "7",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD002",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-20T18:51:43.577+00:00",
+      "duration": "01:13:19",
+      "player_a": {
+        "id": "316957",
+        "name": "Sabrina Santamaria",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "328878",
+        "name": "Lea Ma",
+        "country": "USA"
+      },
+      "score_string": "7-5,6-0",
+      "result_string": "[1]S. Santamaria / Q. Tang d L. Ma / D. Vidmanova 7-5,6-0",
+      "sets": [
+        {
+          "a": "7",
+          "b": "5"
+        },
+        {
+          "a": "6",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS004",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-20T19:17:45.677+00:00",
+      "duration": "01:34:54",
+      "player_a": {
+        "id": "322214",
+        "name": "Katherine Sebov",
+        "country": "CAN"
+      },
+      "player_b": {
+        "id": "330265",
+        "name": "Mary Stoiana",
+        "country": "USA"
+      },
+      "score_string": "6-3,6-4",
+      "result_string": "[8]M. Stoiana d K. Sebov 6-3,6-4",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS005",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-20T23:39:58.177+00:00",
+      "duration": "02:22:22",
+      "player_a": {
+        "id": "327834",
+        "name": "Elvina Kalieva",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "323087",
+        "name": "Hanyu Guo",
+        "country": "CHN"
+      },
+      "score_string": "6-2,2-6,7-6(8)",
+      "result_string": "H. Guo d [3]E. Kalieva 6-2,2-6,7-6(8)",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "7"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD003",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-21T02:34:36.96+00:00",
+      "duration": "01:11:30",
+      "player_a": {
+        "id": "319413",
+        "name": "Quinn Gleason",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "322631",
+        "name": "Alana Smith",
+        "country": "USA"
+      },
+      "score_string": "7-5,6-3",
+      "result_string": "A. Smith / M. Stoiana d [3]Q. Gleason / D. Hewitt 7-5,6-3",
+      "sets": [
+        {
+          "a": "5",
+          "b": "7"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS002",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-21T18:48:41.023+00:00",
+      "duration": "03:04:44",
+      "player_a": {
+        "id": "330265",
+        "name": "Mary Stoiana",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "323087",
+        "name": "Hanyu Guo",
+        "country": "CHN"
+      },
+      "score_string": "7-6(4),6-7(2),7-5",
+      "result_string": "H. Guo d [8]M. Stoiana 7-6(4),6-7(2),7-5",
+      "sets": [
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS003",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-21T22:16:07.437+00:00",
+      "duration": "02:23:37",
+      "player_a": {
+        "id": "329198",
+        "name": "Alina Charaeva",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "329057",
+        "name": "Darja Vidmanova",
+        "country": "CZE"
+      },
+      "score_string": "3-6,6-3,6-4",
+      "result_string": "[5]A. Charaeva d [2]D. Vidmanova 3-6,6-3,6-4",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD001",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-21T23:34:35.097+00:00",
+      "duration": "00:00:00",
+      "player_a": {
+        "id": "316957",
+        "name": "Sabrina Santamaria",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "322631",
+        "name": "Alana Smith",
+        "country": "USA"
+      },
+      "score_string": " W/O",
+      "result_string": "[1]S. Santamaria / Q. Tang d A. Smith / M. Stoiana  W/O",
       "sets": [],
-      "winner_side": null
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS001",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-22T16:52:01.573+00:00",
+      "duration": "02:01:24",
+      "player_a": {
+        "id": "323087",
+        "name": "Hanyu Guo",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "329198",
+        "name": "Alina Charaeva",
+        "country": "RUS"
+      },
+      "score_string": "6-4,7-6(4)",
+      "result_string": "[5]A. Charaeva d H. Guo 6-4,7-6(4)",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "7"
+        }
+      ],
+      "winner_side": "B"
     }
   ]
 }

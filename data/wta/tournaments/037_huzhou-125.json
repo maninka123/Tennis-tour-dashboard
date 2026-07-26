@@ -1,0 +1,3418 @@
+{
+  "order": 37,
+  "tournament_group_id": 1142,
+  "name": "HUZHOU 125",
+  "title": "2026 Huzhou Open · HuzhouWuxing - Huzhou, CHN",
+  "level": "WTA 125",
+  "level_number": "WTA 125",
+  "year": 2026,
+  "start_date": "2026-04-27",
+  "end_date": "2026-05-03",
+  "surface": "Clay",
+  "indoor_outdoor": "O",
+  "city": "HUZHOU",
+  "country": "CHN",
+  "status": "finished",
+  "draw_size_singles": 32,
+  "draw_size_doubles": 16,
+  "prize_money": 115000,
+  "prize_money_currency": "USD",
+  "champion": {
+    "id": "315806",
+    "name": "Katarzyna Kawa",
+    "country": "POL"
+  },
+  "runner_up": {
+    "id": "327655",
+    "name": "Veronika Erjavec",
+    "country": "SLO"
+  },
+  "draw_year": 2026,
+  "draw": {
+    "draw_size": 32,
+    "surface": "Clay",
+    "event_type": "LS",
+    "draw_type": "Women's Singles",
+    "draw_lines": [
+      {
+        "pos": 1,
+        "seed": 1,
+        "rank": 100,
+        "entry_type": "",
+        "display": "Veronika Erjavec",
+        "player": {
+          "id": 327655,
+          "first_name": "Veronika",
+          "last_name": "Erjavec",
+          "country": "SLO"
+        }
+      },
+      {
+        "pos": 2,
+        "seed": "",
+        "rank": 623,
+        "entry_type": "WC",
+        "display": "Meiling Wang",
+        "player": {
+          "id": 326162,
+          "first_name": "Meiling",
+          "last_name": "Wang",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 3,
+        "seed": "",
+        "rank": 254,
+        "entry_type": "",
+        "display": "Justina Mikulskyte",
+        "player": {
+          "id": 323677,
+          "first_name": "Justina",
+          "last_name": "Mikulskyte",
+          "country": "LTU"
+        }
+      },
+      {
+        "pos": 4,
+        "seed": "",
+        "rank": 374,
+        "entry_type": "",
+        "display": "Sofya Lansere",
+        "player": {
+          "id": 326481,
+          "first_name": "Sofya",
+          "last_name": "Lansere",
+          "country": "RUS"
+        }
+      },
+      {
+        "pos": 5,
+        "seed": "",
+        "rank": 248,
+        "entry_type": "",
+        "display": "Jessica Pieri",
+        "player": {
+          "id": 321029,
+          "first_name": "Jessica",
+          "last_name": "Pieri",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 6,
+        "seed": "",
+        "rank": 381,
+        "entry_type": "",
+        "display": "Sijia Wei",
+        "player": {
+          "id": 328426,
+          "first_name": "Sijia",
+          "last_name": "Wei",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 7,
+        "seed": "",
+        "rank": 395,
+        "entry_type": "",
+        "display": "Wushuang Zheng",
+        "player": {
+          "id": 321329,
+          "first_name": "Wushuang",
+          "last_name": "Zheng",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 8,
+        "seed": 6,
+        "rank": 165,
+        "entry_type": "",
+        "display": "Ye-Xin Ma",
+        "player": {
+          "id": 322417,
+          "first_name": "Ye-Xin",
+          "last_name": "Ma",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 9,
+        "seed": 4,
+        "rank": 179,
+        "entry_type": "",
+        "display": "Xiyu Wang",
+        "player": {
+          "id": 326160,
+          "first_name": "Xiyu",
+          "last_name": "Wang",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 10,
+        "seed": "",
+        "rank": 406,
+        "entry_type": "Q",
+        "display": "Zhibek Kulambayeva",
+        "player": {
+          "id": 324203,
+          "first_name": "Zhibek",
+          "last_name": "Kulambayeva",
+          "country": "KAZ"
+        }
+      },
+      {
+        "pos": 11,
+        "seed": "",
+        "rank": 274,
+        "entry_type": "",
+        "display": "Anastasia Zolotareva",
+        "player": {
+          "id": 328466,
+          "first_name": "Anastasia",
+          "last_name": "Zolotareva",
+          "country": "RUS"
+        }
+      },
+      {
+        "pos": 12,
+        "seed": "",
+        "rank": 645,
+        "entry_type": "Q",
+        "display": "Chengyiyi Yuan",
+        "player": {
+          "id": 324575,
+          "first_name": "Chengyiyi",
+          "last_name": "Yuan",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 13,
+        "seed": "",
+        "rank": 413,
+        "entry_type": "",
+        "display": "Yufei Ren",
+        "player": {
+          "id": 332913,
+          "first_name": "Yufei",
+          "last_name": "Ren",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 14,
+        "seed": "",
+        "rank": 312,
+        "entry_type": "",
+        "display": "Yidi Yang",
+        "player": {
+          "id": 324323,
+          "first_name": "Yidi",
+          "last_name": "Yang",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 15,
+        "seed": "",
+        "rank": 270,
+        "entry_type": "",
+        "display": "Polona Hercog",
+        "player": {
+          "id": 313968,
+          "first_name": "Polona",
+          "last_name": "Hercog",
+          "country": "SLO"
+        }
+      },
+      {
+        "pos": 16,
+        "seed": 8,
+        "rank": 230,
+        "entry_type": "WC",
+        "display": "Xinyu Gao",
+        "player": {
+          "id": 322925,
+          "first_name": "Xinyu",
+          "last_name": "Gao",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 17,
+        "seed": 7,
+        "rank": 247,
+        "entry_type": "",
+        "display": "Xiaodi You",
+        "player": {
+          "id": 322451,
+          "first_name": "Xiaodi",
+          "last_name": "You",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 18,
+        "seed": "",
+        "rank": 425,
+        "entry_type": "WC",
+        "display": "Jia-Jing Lu",
+        "player": {
+          "id": 313225,
+          "first_name": "Jia-Jing",
+          "last_name": "Lu",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 19,
+        "seed": "",
+        "rank": 271,
+        "entry_type": "",
+        "display": "Dalila Spiteri",
+        "player": {
+          "id": 322510,
+          "first_name": "Dalila",
+          "last_name": "Spiteri",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 20,
+        "seed": "",
+        "rank": 479,
+        "entry_type": "Q",
+        "display": "Varvara Panshina",
+        "player": {
+          "id": 334622,
+          "first_name": "Varvara",
+          "last_name": "Panshina",
+          "country": "RUS"
+        }
+      },
+      {
+        "pos": 21,
+        "seed": "",
+        "rank": 300,
+        "entry_type": "",
+        "display": "Alevtina Ibragimova",
+        "player": {
+          "id": 332575,
+          "first_name": "Alevtina",
+          "last_name": "Ibragimova",
+          "country": "RUS"
+        }
+      },
+      {
+        "pos": 22,
+        "seed": "",
+        "rank": 347,
+        "entry_type": "",
+        "display": "Han Shi",
+        "player": {
+          "id": 329824,
+          "first_name": "Han",
+          "last_name": "Shi",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 23,
+        "seed": "",
+        "rank": 216,
+        "entry_type": "",
+        "display": "Carol Zhao",
+        "player": {
+          "id": 317805,
+          "first_name": "Carol",
+          "last_name": "Zhao",
+          "country": "CAN"
+        }
+      },
+      {
+        "pos": 24,
+        "seed": 3,
+        "rank": 132,
+        "entry_type": "",
+        "display": "Katarzyna Kawa",
+        "player": {
+          "id": 315806,
+          "first_name": "Katarzyna",
+          "last_name": "Kawa",
+          "country": "POL"
+        }
+      },
+      {
+        "pos": 25,
+        "seed": 5,
+        "rank": 175,
+        "entry_type": "",
+        "display": "Hanyu Guo",
+        "player": {
+          "id": 323087,
+          "first_name": "Hanyu",
+          "last_name": "Guo",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 26,
+        "seed": "",
+        "rank": 379,
+        "entry_type": "",
+        "display": "Dalila Jakupovic",
+        "player": {
+          "id": 315294,
+          "first_name": "Dalila",
+          "last_name": "Jakupovic",
+          "country": "SLO"
+        }
+      },
+      {
+        "pos": 27,
+        "seed": "",
+        "rank": 377,
+        "entry_type": "",
+        "display": "Diletta Cherubini",
+        "player": {
+          "id": 328173,
+          "first_name": "Diletta",
+          "last_name": "Cherubini",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 28,
+        "seed": "",
+        "rank": 329,
+        "entry_type": "",
+        "display": "Ekaterina Reyngold",
+        "player": {
+          "id": 328237,
+          "first_name": "Ekaterina",
+          "last_name": "Reyngold",
+          "country": "RUS"
+        }
+      },
+      {
+        "pos": 29,
+        "seed": "",
+        "rank": 287,
+        "entry_type": "",
+        "display": "Sara Saito",
+        "player": {
+          "id": 332175,
+          "first_name": "Sara",
+          "last_name": "Saito",
+          "country": "JPN"
+        }
+      },
+      {
+        "pos": 30,
+        "seed": "",
+        "rank": 423,
+        "entry_type": "",
+        "display": "Xinxin Yao",
+        "player": {
+          "id": 331361,
+          "first_name": "Xinxin",
+          "last_name": "Yao",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 31,
+        "seed": "",
+        "rank": 428,
+        "entry_type": "Q",
+        "display": "Rada Zolotareva",
+        "player": {
+          "id": 332888,
+          "first_name": "Rada",
+          "last_name": "Zolotareva",
+          "country": "RUS"
+        }
+      },
+      {
+        "pos": 32,
+        "seed": 2,
+        "rank": 163,
+        "entry_type": "",
+        "display": "Despina Papamichail",
+        "player": {
+          "id": 316009,
+          "first_name": "Despina",
+          "last_name": "Papamichail",
+          "country": "GRE"
+        }
+      }
+    ],
+    "breakdown": [
+      {
+        "name": "Winner",
+        "points": 125,
+        "prize": "USD 15,500",
+        "id": 1
+      },
+      {
+        "name": "Final",
+        "points": 81,
+        "prize": "USD 8,400",
+        "id": 2
+      },
+      {
+        "name": "Semifinals",
+        "points": 49,
+        "prize": "USD 5,300",
+        "id": 3
+      },
+      {
+        "name": "Quarterfinals",
+        "points": 27,
+        "prize": "USD 3,450",
+        "id": 4
+      },
+      {
+        "name": "Round of 16",
+        "points": 15,
+        "prize": "USD 2,000",
+        "id": 5
+      },
+      {
+        "name": "Round of 32",
+        "points": 1,
+        "prize": "USD 1,200",
+        "id": 6
+      }
+    ],
+    "results": [
+      {
+        "round_id": 5,
+        "matches": [
+          {
+            "id": "LS016",
+            "display_name": "[1] ERJAVEC, Veronika",
+            "result_score": "60 63",
+            "winner_slot": "A",
+            "result_name_and_score": "Veronika Erjavec d. Meiling Wang 60 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Veronika Erjavec",
+                "seed": 1,
+                "entry_type": "",
+                "player": {
+                  "id": 327655,
+                  "first_name": "Veronika",
+                  "last_name": "Erjavec",
+                  "country": "SLO"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Meiling Wang",
+                "seed": "",
+                "entry_type": "WC",
+                "player": {
+                  "id": 326162,
+                  "first_name": "Meiling",
+                  "last_name": "Wang",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS017",
+            "display_name": "LANSERE, Sofya",
+            "result_score": "63 63",
+            "winner_slot": "B",
+            "result_name_and_score": "Sofya Lansere d. Justina Mikulskyte 63 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Justina Mikulskyte",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 323677,
+                  "first_name": "Justina",
+                  "last_name": "Mikulskyte",
+                  "country": "LTU"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Sofya Lansere",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 326481,
+                  "first_name": "Sofya",
+                  "last_name": "Lansere",
+                  "country": "RUS"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS018",
+            "display_name": "WEI, Sijia",
+            "result_score": "76(2) 64",
+            "winner_slot": "B",
+            "result_name_and_score": "Sijia Wei d. Jessica Pieri 76(2) 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Jessica Pieri",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 321029,
+                  "first_name": "Jessica",
+                  "last_name": "Pieri",
+                  "country": "ITA"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Sijia Wei",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 328426,
+                  "first_name": "Sijia",
+                  "last_name": "Wei",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS019",
+            "display_name": "ZHENG, Wushuang",
+            "result_score": "63 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Wushuang Zheng d. Ye-Xin Ma 63 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Wushuang Zheng",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 321329,
+                  "first_name": "Wushuang",
+                  "last_name": "Zheng",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Ye-Xin Ma",
+                "seed": 6,
+                "entry_type": "",
+                "player": {
+                  "id": 322417,
+                  "first_name": "Ye-Xin",
+                  "last_name": "Ma",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS020",
+            "display_name": "[4] WANG, Xiyu",
+            "result_score": "63 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Xiyu Wang d. Zhibek Kulambayeva 63 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Xiyu Wang",
+                "seed": 4,
+                "entry_type": "",
+                "player": {
+                  "id": 326160,
+                  "first_name": "Xiyu",
+                  "last_name": "Wang",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Zhibek Kulambayeva",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 324203,
+                  "first_name": "Zhibek",
+                  "last_name": "Kulambayeva",
+                  "country": "KAZ"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS021",
+            "display_name": "YUAN, Chengyiyi",
+            "result_score": "63 16 63",
+            "winner_slot": "B",
+            "result_name_and_score": "Chengyiyi Yuan d. Anastasia Zolotareva 63 16 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Anastasia Zolotareva",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 328466,
+                  "first_name": "Anastasia",
+                  "last_name": "Zolotareva",
+                  "country": "RUS"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Chengyiyi Yuan",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 324575,
+                  "first_name": "Chengyiyi",
+                  "last_name": "Yuan",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS022",
+            "display_name": "REN, Yufei",
+            "result_score": "62 61",
+            "winner_slot": "A",
+            "result_name_and_score": "Yufei Ren d. Yidi Yang 62 61",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Yufei Ren",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 332913,
+                  "first_name": "Yufei",
+                  "last_name": "Ren",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Yidi Yang",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 324323,
+                  "first_name": "Yidi",
+                  "last_name": "Yang",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS023",
+            "display_name": "HERCOG, Polona",
+            "result_score": "46 76(5) 63",
+            "winner_slot": "A",
+            "result_name_and_score": "Polona Hercog d. Xinyu Gao 46 76(5) 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Polona Hercog",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 313968,
+                  "first_name": "Polona",
+                  "last_name": "Hercog",
+                  "country": "SLO"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Xinyu Gao",
+                "seed": 8,
+                "entry_type": "WC",
+                "player": {
+                  "id": 322925,
+                  "first_name": "Xinyu",
+                  "last_name": "Gao",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS024",
+            "display_name": "LU, Jia-Jing",
+            "result_score": "46 75 75",
+            "winner_slot": "B",
+            "result_name_and_score": "Jia-Jing Lu d. Xiaodi You 46 75 75",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Xiaodi You",
+                "seed": 7,
+                "entry_type": "",
+                "player": {
+                  "id": 322451,
+                  "first_name": "Xiaodi",
+                  "last_name": "You",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Jia-Jing Lu",
+                "seed": "",
+                "entry_type": "WC",
+                "player": {
+                  "id": 313225,
+                  "first_name": "Jia-Jing",
+                  "last_name": "Lu",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS025",
+            "display_name": "PANSHINA, Varvara",
+            "result_score": "64 46 63",
+            "winner_slot": "B",
+            "result_name_and_score": "Varvara Panshina d. Dalila Spiteri 64 46 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Dalila Spiteri",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 322510,
+                  "first_name": "Dalila",
+                  "last_name": "Spiteri",
+                  "country": "ITA"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Varvara Panshina",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 334622,
+                  "first_name": "Varvara",
+                  "last_name": "Panshina",
+                  "country": "RUS"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS026",
+            "display_name": "IBRAGIMOVA, Alevtina",
+            "result_score": "63 26 62",
+            "winner_slot": "A",
+            "result_name_and_score": "Alevtina Ibragimova d. Han Shi 63 26 62",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Alevtina Ibragimova",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 332575,
+                  "first_name": "Alevtina",
+                  "last_name": "Ibragimova",
+                  "country": "RUS"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Han Shi",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 329824,
+                  "first_name": "Han",
+                  "last_name": "Shi",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS027",
+            "display_name": "[3] KAWA, Katarzyna",
+            "result_score": "62 61",
+            "winner_slot": "B",
+            "result_name_and_score": "Katarzyna Kawa d. Carol Zhao 62 61",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Carol Zhao",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 317805,
+                  "first_name": "Carol",
+                  "last_name": "Zhao",
+                  "country": "CAN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Katarzyna Kawa",
+                "seed": 3,
+                "entry_type": "",
+                "player": {
+                  "id": 315806,
+                  "first_name": "Katarzyna",
+                  "last_name": "Kawa",
+                  "country": "POL"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS028",
+            "display_name": "[5] GUO, Hanyu",
+            "result_score": "63 76(3)",
+            "winner_slot": "A",
+            "result_name_and_score": "Hanyu Guo d. Dalila Jakupovic 63 76(3)",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Hanyu Guo",
+                "seed": 5,
+                "entry_type": "",
+                "player": {
+                  "id": 323087,
+                  "first_name": "Hanyu",
+                  "last_name": "Guo",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Dalila Jakupovic",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 315294,
+                  "first_name": "Dalila",
+                  "last_name": "Jakupovic",
+                  "country": "SLO"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS029",
+            "display_name": "CHERUBINI, Diletta",
+            "result_score": "64 63",
+            "winner_slot": "A",
+            "result_name_and_score": "Diletta Cherubini d. Ekaterina Reyngold 64 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Diletta Cherubini",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 328173,
+                  "first_name": "Diletta",
+                  "last_name": "Cherubini",
+                  "country": "ITA"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Ekaterina Reyngold",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 328237,
+                  "first_name": "Ekaterina",
+                  "last_name": "Reyngold",
+                  "country": "RUS"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS030",
+            "display_name": "YAO, Xinxin",
+            "result_score": "62 67(7) 64",
+            "winner_slot": "B",
+            "result_name_and_score": "Xinxin Yao d. Sara Saito 62 67(7) 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Sara Saito",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 332175,
+                  "first_name": "Sara",
+                  "last_name": "Saito",
+                  "country": "JPN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Xinxin Yao",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 331361,
+                  "first_name": "Xinxin",
+                  "last_name": "Yao",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS031",
+            "display_name": "ZOLOTAREVA, Rada",
+            "result_score": "46 61 62",
+            "winner_slot": "A",
+            "result_name_and_score": "Rada Zolotareva d. Despina Papamichail 46 61 62",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Rada Zolotareva",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 332888,
+                  "first_name": "Rada",
+                  "last_name": "Zolotareva",
+                  "country": "RUS"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Despina Papamichail",
+                "seed": 2,
+                "entry_type": "",
+                "player": {
+                  "id": 316009,
+                  "first_name": "Despina",
+                  "last_name": "Papamichail",
+                  "country": "GRE"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "round_id": 4,
+        "matches": [
+          {
+            "id": "LS008",
+            "display_name": "[1] ERJAVEC, Veronika",
+            "result_score": "63 63",
+            "winner_slot": "A",
+            "result_name_and_score": "Veronika Erjavec d. Sofya Lansere 63 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Veronika Erjavec",
+                "seed": 1,
+                "entry_type": "",
+                "player": {
+                  "id": 327655,
+                  "first_name": "Veronika",
+                  "last_name": "Erjavec",
+                  "country": "SLO"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Sofya Lansere",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 326481,
+                  "first_name": "Sofya",
+                  "last_name": "Lansere",
+                  "country": "RUS"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS009",
+            "display_name": "ZHENG, Wushuang",
+            "result_score": 43,
+            "winner_slot": "B",
+            "result_name_and_score": "Wushuang Zheng d. Sijia Wei 43",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Sijia Wei",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 328426,
+                  "first_name": "Sijia",
+                  "last_name": "Wei",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Wushuang Zheng",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 321329,
+                  "first_name": "Wushuang",
+                  "last_name": "Zheng",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS010",
+            "display_name": "[4] WANG, Xiyu",
+            "result_score": "64 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Xiyu Wang d. Chengyiyi Yuan 64 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Xiyu Wang",
+                "seed": 4,
+                "entry_type": "",
+                "player": {
+                  "id": 326160,
+                  "first_name": "Xiyu",
+                  "last_name": "Wang",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Chengyiyi Yuan",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 324575,
+                  "first_name": "Chengyiyi",
+                  "last_name": "Yuan",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS011",
+            "display_name": "HERCOG, Polona",
+            "result_score": "57 61 64",
+            "winner_slot": "B",
+            "result_name_and_score": "Polona Hercog d. Yufei Ren 57 61 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Yufei Ren",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 332913,
+                  "first_name": "Yufei",
+                  "last_name": "Ren",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Polona Hercog",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 313968,
+                  "first_name": "Polona",
+                  "last_name": "Hercog",
+                  "country": "SLO"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS012",
+            "display_name": "PANSHINA, Varvara",
+            "result_score": "61 63",
+            "winner_slot": "B",
+            "result_name_and_score": "Varvara Panshina d. Jia-Jing Lu 61 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Jia-Jing Lu",
+                "seed": "",
+                "entry_type": "WC",
+                "player": {
+                  "id": 313225,
+                  "first_name": "Jia-Jing",
+                  "last_name": "Lu",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Varvara Panshina",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 334622,
+                  "first_name": "Varvara",
+                  "last_name": "Panshina",
+                  "country": "RUS"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS013",
+            "display_name": "[3] KAWA, Katarzyna",
+            "result_score": "64 62",
+            "winner_slot": "B",
+            "result_name_and_score": "Katarzyna Kawa d. Alevtina Ibragimova 64 62",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Alevtina Ibragimova",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 332575,
+                  "first_name": "Alevtina",
+                  "last_name": "Ibragimova",
+                  "country": "RUS"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Katarzyna Kawa",
+                "seed": 3,
+                "entry_type": "",
+                "player": {
+                  "id": 315806,
+                  "first_name": "Katarzyna",
+                  "last_name": "Kawa",
+                  "country": "POL"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS014",
+            "display_name": "[5] GUO, Hanyu",
+            "result_score": "76(0) 60",
+            "winner_slot": "A",
+            "result_name_and_score": "Hanyu Guo d. Diletta Cherubini 76(0) 60",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Hanyu Guo",
+                "seed": 5,
+                "entry_type": "",
+                "player": {
+                  "id": 323087,
+                  "first_name": "Hanyu",
+                  "last_name": "Guo",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Diletta Cherubini",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 328173,
+                  "first_name": "Diletta",
+                  "last_name": "Cherubini",
+                  "country": "ITA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS015",
+            "display_name": "ZOLOTAREVA, Rada",
+            "result_score": "76(3) 26 63",
+            "winner_slot": "B",
+            "result_name_and_score": "Rada Zolotareva d. Xinxin Yao 76(3) 26 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Xinxin Yao",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 331361,
+                  "first_name": "Xinxin",
+                  "last_name": "Yao",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Rada Zolotareva",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 332888,
+                  "first_name": "Rada",
+                  "last_name": "Zolotareva",
+                  "country": "RUS"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "round_id": 3,
+        "matches": [
+          {
+            "id": "LS004",
+            "display_name": "[1] ERJAVEC, Veronika",
+            "result_score": "62 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Veronika Erjavec d. Wushuang Zheng 62 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Veronika Erjavec",
+                "seed": 1,
+                "entry_type": "",
+                "player": {
+                  "id": 327655,
+                  "first_name": "Veronika",
+                  "last_name": "Erjavec",
+                  "country": "SLO"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Wushuang Zheng",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 321329,
+                  "first_name": "Wushuang",
+                  "last_name": "Zheng",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS005",
+            "display_name": "[4] WANG, Xiyu",
+            "result_score": "63 67(5) 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Xiyu Wang d. Polona Hercog 63 67(5) 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Xiyu Wang",
+                "seed": 4,
+                "entry_type": "",
+                "player": {
+                  "id": 326160,
+                  "first_name": "Xiyu",
+                  "last_name": "Wang",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Polona Hercog",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 313968,
+                  "first_name": "Polona",
+                  "last_name": "Hercog",
+                  "country": "SLO"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS006",
+            "display_name": "[3] KAWA, Katarzyna",
+            "result_score": "63 46 61",
+            "winner_slot": "B",
+            "result_name_and_score": "Katarzyna Kawa d. Varvara Panshina 63 46 61",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Varvara Panshina",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 334622,
+                  "first_name": "Varvara",
+                  "last_name": "Panshina",
+                  "country": "RUS"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Katarzyna Kawa",
+                "seed": 3,
+                "entry_type": "",
+                "player": {
+                  "id": 315806,
+                  "first_name": "Katarzyna",
+                  "last_name": "Kawa",
+                  "country": "POL"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS007",
+            "display_name": "[5] GUO, Hanyu",
+            "result_score": "62 61",
+            "winner_slot": "A",
+            "result_name_and_score": "Hanyu Guo d. Rada Zolotareva 62 61",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Hanyu Guo",
+                "seed": 5,
+                "entry_type": "",
+                "player": {
+                  "id": 323087,
+                  "first_name": "Hanyu",
+                  "last_name": "Guo",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Rada Zolotareva",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 332888,
+                  "first_name": "Rada",
+                  "last_name": "Zolotareva",
+                  "country": "RUS"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "round_id": 2,
+        "matches": [
+          {
+            "id": "LS002",
+            "display_name": "[1] ERJAVEC, Veronika",
+            "result_score": "64 76(3)",
+            "winner_slot": "A",
+            "result_name_and_score": "Veronika Erjavec d. Xiyu Wang 64 76(3)",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Veronika Erjavec",
+                "seed": 1,
+                "entry_type": "",
+                "player": {
+                  "id": 327655,
+                  "first_name": "Veronika",
+                  "last_name": "Erjavec",
+                  "country": "SLO"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Xiyu Wang",
+                "seed": 4,
+                "entry_type": "",
+                "player": {
+                  "id": 326160,
+                  "first_name": "Xiyu",
+                  "last_name": "Wang",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS003",
+            "display_name": "[3] KAWA, Katarzyna",
+            "result_score": "64 61",
+            "winner_slot": "A",
+            "result_name_and_score": "Katarzyna Kawa d. Hanyu Guo 64 61",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Katarzyna Kawa",
+                "seed": 3,
+                "entry_type": "",
+                "player": {
+                  "id": 315806,
+                  "first_name": "Katarzyna",
+                  "last_name": "Kawa",
+                  "country": "POL"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Hanyu Guo",
+                "seed": 5,
+                "entry_type": "",
+                "player": {
+                  "id": 323087,
+                  "first_name": "Hanyu",
+                  "last_name": "Guo",
+                  "country": "CHN"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "round_id": 1,
+        "matches": []
+      }
+    ]
+  },
+  "scores_year": 2026,
+  "matches": [
+    {
+      "match_id": "RS014",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-26T02:47:33.197+00:00",
+      "duration": "01:26:51",
+      "player_a": {
+        "id": "332888",
+        "name": "Rada Zolotareva",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "321023",
+        "name": "Qiu Yu Ye",
+        "country": "CHN"
+      },
+      "score_string": "6-3,7-5",
+      "result_string": "[4]R. Zolotareva d Q. Ye 6-3,7-5",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "7",
+          "b": "5"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "RS015",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-26T02:52:34.853+00:00",
+      "duration": "01:49:06",
+      "player_a": {
+        "id": "335195",
+        "name": "Zhang-Qian Wei",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "328976",
+        "name": "Ikumi Yamazaki",
+        "country": "JPN"
+      },
+      "score_string": "7-6(5),6-2",
+      "result_string": "Z. Wei d [5]I. Yamazaki 7-6(5),6-2",
+      "sets": [
+        {
+          "a": "7",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "RS011",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-26T03:42:19.627+00:00",
+      "duration": "01:17:52",
+      "player_a": {
+        "id": "317821",
+        "name": "Hiroko Kuwata",
+        "country": "JPN"
+      },
+      "player_b": {
+        "id": "326546",
+        "name": "Meiqi Guo",
+        "country": "CHN"
+      },
+      "score_string": "6-3,6-3",
+      "result_string": "[7]M. Guo d H. Kuwata 6-3,6-3",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "RS012",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-26T04:37:33.973+00:00",
+      "duration": "01:40:06",
+      "player_a": {
+        "id": "327056",
+        "name": "Jiaqi Wang",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "316554",
+        "name": "Peangtarn Plipuech",
+        "country": "THA"
+      },
+      "score_string": "6-2,6-3",
+      "result_string": "[3]J. Wang d P. Plipuech 6-2,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "RS008",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-26T04:57:33.797+00:00",
+      "duration": "00:59:41",
+      "player_a": {
+        "id": "312180",
+        "name": "Naoko Eto",
+        "country": "JPN"
+      },
+      "player_b": {
+        "id": "319717",
+        "name": "Amy Zhu",
+        "country": "USA"
+      },
+      "score_string": "6-1,6-0",
+      "result_string": "A. Zhu d N. Eto 6-1,6-0",
+      "sets": [
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "0",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "RS010",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-26T05:24:55.28+00:00",
+      "duration": "01:17:28",
+      "player_a": {
+        "id": "324203",
+        "name": "Zhibek Kulambayeva",
+        "country": "KAZ"
+      },
+      "player_b": {
+        "id": "333676",
+        "name": "Shiyu Ye",
+        "country": "CHN"
+      },
+      "score_string": "6-2,6-2",
+      "result_string": "[2]Z. Kulambayeva d S. Ye 6-2,6-2",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "RS009",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-26T06:14:37.55+00:00",
+      "duration": "02:15:28",
+      "player_a": {
+        "id": "333664",
+        "name": "Yujia Huang",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "324575",
+        "name": "Chengyiyi Yuan",
+        "country": "CHN"
+      },
+      "score_string": "7-6(4),6-4",
+      "result_string": "[8]C. Yuan d Y. Huang 7-6(4),6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "RS013",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-26T06:31:47.01+00:00",
+      "duration": "02:30:06",
+      "player_a": {
+        "id": "329671",
+        "name": "Yiming Dang",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "334622",
+        "name": "Varvara Panshina",
+        "country": "RUS"
+      },
+      "score_string": "6-3,3-6,6-4",
+      "result_string": "[6]V. Panshina d Y. Dang 6-3,3-6,6-4",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "RS007",
+      "round_id": "2",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-27T02:45:32.427+00:00",
+      "duration": "01:25:26",
+      "player_a": {
+        "id": "332888",
+        "name": "Rada Zolotareva",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "335195",
+        "name": "Zhang-Qian Wei",
+        "country": "CHN"
+      },
+      "score_string": "6-3,6-1",
+      "result_string": "[4]R. Zolotareva d Z. Wei 6-3,6-1",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "6",
+          "b": "1"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "RS005",
+      "round_id": "2",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-27T02:47:44.99+00:00",
+      "duration": "01:59:07",
+      "player_a": {
+        "id": "324203",
+        "name": "Zhibek Kulambayeva",
+        "country": "KAZ"
+      },
+      "player_b": {
+        "id": "326546",
+        "name": "Meiqi Guo",
+        "country": "CHN"
+      },
+      "score_string": "6-1,7-6(6)",
+      "result_string": "[2]Z. Kulambayeva d [7]M. Guo 6-1,7-6(6)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "1"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "RS006",
+      "round_id": "2",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-27T02:54:22.88+00:00",
+      "duration": "01:21:29",
+      "player_a": {
+        "id": "327056",
+        "name": "Jiaqi Wang",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "334622",
+        "name": "Varvara Panshina",
+        "country": "RUS"
+      },
+      "score_string": "6-2,6-2",
+      "result_string": "[6]V. Panshina d [3]J. Wang 6-2,6-2",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "RS004",
+      "round_id": "2",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-27T04:33:33.16+00:00",
+      "duration": "02:12:11",
+      "player_a": {
+        "id": "319717",
+        "name": "Amy Zhu",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "324575",
+        "name": "Chengyiyi Yuan",
+        "country": "CHN"
+      },
+      "score_string": "6-3,3-6,7-5",
+      "result_string": "[8]C. Yuan d A. Zhu 6-3,3-6,7-5",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS019",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-27T04:35:20.933+00:00",
+      "duration": "01:28:53",
+      "player_a": {
+        "id": "321329",
+        "name": "Wushuang Zheng",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "322417",
+        "name": "Ye-Xin Ma",
+        "country": "CHN"
+      },
+      "score_string": "6-3,6-4",
+      "result_string": "W. Zheng d [6]Y. Ma 6-3,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS017",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-27T05:11:52.237+00:00",
+      "duration": "01:19:21",
+      "player_a": {
+        "id": "323677",
+        "name": "Justina Mikulskyte",
+        "country": "LTU"
+      },
+      "player_b": {
+        "id": "326481",
+        "name": "Sofya Lansere",
+        "country": "RUS"
+      },
+      "score_string": "6-3,6-3",
+      "result_string": "S. Lansere d J. Mikulskyte 6-3,6-3",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS024",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-27T06:22:43.82+00:00",
+      "duration": "03:36:17",
+      "player_a": {
+        "id": "322451",
+        "name": "Xiaodi You",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "313225",
+        "name": "Jia-Jing Lu",
+        "country": "CHN"
+      },
+      "score_string": "4-6,7-5,7-5",
+      "result_string": "J. Lu d [7]X. You 4-6,7-5,7-5",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS018",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-27T06:48:21.517+00:00",
+      "duration": "01:53:49",
+      "player_a": {
+        "id": "321029",
+        "name": "Jessica Pieri",
+        "country": "ITA"
+      },
+      "player_b": {
+        "id": "328426",
+        "name": "Sijia Wei",
+        "country": "CHN"
+      },
+      "score_string": "7-6(2),6-4",
+      "result_string": "S. Wei d J. Pieri 7-6(2),6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS027",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-27T07:00:46.333+00:00",
+      "duration": "01:07:19",
+      "player_a": {
+        "id": "317805",
+        "name": "Carol Zhao",
+        "country": "CAN"
+      },
+      "player_b": {
+        "id": "315806",
+        "name": "Katarzyna Kawa",
+        "country": "POL"
+      },
+      "score_string": "6-2,6-1",
+      "result_string": "[3]K. Kawa d C. Zhao 6-2,6-1",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "1",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD014",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-27T08:46:54.7+00:00",
+      "duration": "01:14:37",
+      "player_a": {
+        "id": "323677",
+        "name": "Justina Mikulskyte",
+        "country": "LTU"
+      },
+      "player_b": {
+        "id": "314129",
+        "name": "Na-Ri Kim",
+        "country": "KOR"
+      },
+      "score_string": "6-2,7-5",
+      "result_string": "J. Mikulskyte / D. Papamichail d N. Kim / J. Wang 6-2,7-5",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "7",
+          "b": "5"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS026",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-27T09:40:41.197+00:00",
+      "duration": "02:19:39",
+      "player_a": {
+        "id": "332575",
+        "name": "Alevtina Ibragimova",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "329824",
+        "name": "Han Shi",
+        "country": "CHN"
+      },
+      "score_string": "6-3,2-6,6-2",
+      "result_string": "A. Ibragimova d H. Shi 6-3,2-6,6-2",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS030",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-28T02:47:39.833+00:00",
+      "duration": "02:35:32",
+      "player_a": {
+        "id": "332175",
+        "name": "Sara Saito",
+        "country": "JPN"
+      },
+      "player_b": {
+        "id": "331361",
+        "name": "Xinxin Yao",
+        "country": "CHN"
+      },
+      "score_string": "6-2,6-7(7),6-4",
+      "result_string": "X. Yao d S. Saito 6-2,6-7(7),6-4",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS016",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-28T02:47:59.563+00:00",
+      "duration": "00:55:25",
+      "player_a": {
+        "id": "327655",
+        "name": "Veronika Erjavec",
+        "country": "SLO"
+      },
+      "player_b": {
+        "id": "326162",
+        "name": "Meiling Wang",
+        "country": "CHN"
+      },
+      "score_string": "6-0,6-3",
+      "result_string": "[1]V. Erjavec d M. Wang 6-0,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "0"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS025",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-28T02:50:09.397+00:00",
+      "duration": "03:09:48",
+      "player_a": {
+        "id": "322510",
+        "name": "Dalila Spiteri",
+        "country": "ITA"
+      },
+      "player_b": {
+        "id": "334622",
+        "name": "Varvara Panshina",
+        "country": "RUS"
+      },
+      "score_string": "6-4,4-6,6-3",
+      "result_string": "V. Panshina d D. Spiteri 6-4,4-6,6-3",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS020",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-28T04:06:06.527+00:00",
+      "duration": "01:58:05",
+      "player_a": {
+        "id": "326160",
+        "name": "Xiyu Wang",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "324203",
+        "name": "Zhibek Kulambayeva",
+        "country": "KAZ"
+      },
+      "score_string": "6-3,6-4",
+      "result_string": "[4]X. Wang d Z. Kulambayeva 6-3,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS021",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-28T05:42:38.443+00:00",
+      "duration": "02:01:26",
+      "player_a": {
+        "id": "328466",
+        "name": "Anastasia Zolotareva",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "324575",
+        "name": "Chengyiyi Yuan",
+        "country": "CHN"
+      },
+      "score_string": "6-3,1-6,6-3",
+      "result_string": "C. Yuan d A. Zolotareva 6-3,1-6,6-3",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "1"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS031",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-28T06:23:39.64+00:00",
+      "duration": "02:08:01",
+      "player_a": {
+        "id": "332888",
+        "name": "Rada Zolotareva",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "316009",
+        "name": "Despina Papamichail",
+        "country": "GRE"
+      },
+      "score_string": "4-6,6-1,6-2",
+      "result_string": "R. Zolotareva d [2]D. Papamichail 4-6,6-1,6-2",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "1"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS028",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-28T06:33:16.11+00:00",
+      "duration": "01:46:17",
+      "player_a": {
+        "id": "323087",
+        "name": "Hanyu Guo",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "315294",
+        "name": "Dalila Jakupovic",
+        "country": "SLO"
+      },
+      "score_string": "6-3,7-6(3)",
+      "result_string": "[5]H. Guo d D. Jakupovic 6-3,7-6(3)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS022",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-28T08:02:10.703+00:00",
+      "duration": "00:56:10",
+      "player_a": {
+        "id": "332913",
+        "name": "Yufei Ren",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "324323",
+        "name": "Yidi Yang",
+        "country": "CHN"
+      },
+      "score_string": "6-2,6-1",
+      "result_string": "Y. Ren d Y. Yang 6-2,6-1",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "1"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS023",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-28T08:30:57.943+00:00",
+      "duration": "03:00:46",
+      "player_a": {
+        "id": "313968",
+        "name": "Polona Hercog",
+        "country": "SLO"
+      },
+      "player_b": {
+        "id": "322925",
+        "name": "Xinyu Gao",
+        "country": "CHN"
+      },
+      "score_string": "4-6,7-6(5),6-3",
+      "result_string": "P. Hercog d [8]X. Gao 4-6,7-6(5),6-3",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD013",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-28T08:46:23.127+00:00",
+      "duration": "01:11:43",
+      "player_a": {
+        "id": "332175",
+        "name": "Sara Saito",
+        "country": "JPN"
+      },
+      "player_b": {
+        "id": "317821",
+        "name": "Hiroko Kuwata",
+        "country": "JPN"
+      },
+      "score_string": "6-4,6-3",
+      "result_string": "[3]H. Kuwata / Y. Li d S. Saito / I. Yamazaki 6-4,6-3",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS029",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-28T09:19:05.883+00:00",
+      "duration": "01:33:30",
+      "player_a": {
+        "id": "328173",
+        "name": "Diletta Cherubini",
+        "country": "ITA"
+      },
+      "player_b": {
+        "id": "328237",
+        "name": "Ekaterina Reyngold",
+        "country": "RUS"
+      },
+      "score_string": "6-4,6-3",
+      "result_string": "D. Cherubini d E. Reyngold 6-4,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD008",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-28T10:14:32.543+00:00",
+      "duration": "01:13:00",
+      "player_a": {
+        "id": "316554",
+        "name": "Peangtarn Plipuech",
+        "country": "THA"
+      },
+      "player_b": {
+        "id": "326481",
+        "name": "Sofya Lansere",
+        "country": "RUS"
+      },
+      "score_string": "6-2,7-5",
+      "result_string": "S. Lansere / A. Zolotareva d [1]P. Plipuech / W. Zheng 6-2,7-5",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD010",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-28T11:06:51.383+00:00",
+      "duration": "01:59:32",
+      "player_a": {
+        "id": "332575",
+        "name": "Alevtina Ibragimova",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "329824",
+        "name": "Han Shi",
+        "country": "CHN"
+      },
+      "score_string": "4-6,7-6(4),1-0(10)",
+      "result_string": "H. Shi / Q. Ye d [4]A. Ibragimova / D. Jakupovic 4-6,7-6(4),1-0(10)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "0",
+          "b": "1"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS009",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-29T03:20:48.58+00:00",
+      "duration": "00:27:31",
+      "player_a": {
+        "id": "328426",
+        "name": "Sijia Wei",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "321329",
+        "name": "Wushuang Zheng",
+        "country": "CHN"
+      },
+      "score_string": "4-3 Ret'd",
+      "result_string": "W. Zheng d S. Wei 4-3 Ret'd",
+      "sets": [
+        {
+          "a": "3",
+          "b": "4"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS008",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-29T03:22:46.753+00:00",
+      "duration": "01:06:11",
+      "player_a": {
+        "id": "327655",
+        "name": "Veronika Erjavec",
+        "country": "SLO"
+      },
+      "player_b": {
+        "id": "326481",
+        "name": "Sofya Lansere",
+        "country": "RUS"
+      },
+      "score_string": "6-3,6-3",
+      "result_string": "[1]V. Erjavec d S. Lansere 6-3,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD009",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-29T04:33:52.79+00:00",
+      "duration": "00:00:00",
+      "player_a": {
+        "id": "329671",
+        "name": "Yiming Dang",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "324203",
+        "name": "Zhibek Kulambayeva",
+        "country": "KAZ"
+      },
+      "score_string": " W/O",
+      "result_string": "Y. Dang / X. You d Z. Kulambayeva / E. Reyngold  W/O",
+      "sets": [],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS012",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-29T04:35:24.52+00:00",
+      "duration": "01:22:39",
+      "player_a": {
+        "id": "313225",
+        "name": "Jia-Jing Lu",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "334622",
+        "name": "Varvara Panshina",
+        "country": "RUS"
+      },
+      "score_string": "6-1,6-3",
+      "result_string": "V. Panshina d J. Lu 6-1,6-3",
+      "sets": [
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS013",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-29T04:45:15.59+00:00",
+      "duration": "01:17:11",
+      "player_a": {
+        "id": "332575",
+        "name": "Alevtina Ibragimova",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "315806",
+        "name": "Katarzyna Kawa",
+        "country": "POL"
+      },
+      "score_string": "6-4,6-2",
+      "result_string": "[3]K. Kawa d A. Ibragimova 6-4,6-2",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD011",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-29T06:16:36.477+00:00",
+      "duration": "01:16:55",
+      "player_a": {
+        "id": "333664",
+        "name": "Yujia Huang",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "326162",
+        "name": "Meiling Wang",
+        "country": "CHN"
+      },
+      "score_string": "6-3,6-4",
+      "result_string": "M. Wang / C. Yuan d Y. Huang / Y. Ma 6-3,6-4",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD015",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-29T06:27:42.29+00:00",
+      "duration": "01:27:05",
+      "player_a": {
+        "id": "327063",
+        "name": "Monique Barry",
+        "country": "NZL"
+      },
+      "player_b": {
+        "id": "319438",
+        "name": "Eudice Chong",
+        "country": "HKG"
+      },
+      "score_string": "2-6,6-4,1-0(9)",
+      "result_string": "[2]E. Chong / H. Wong d M. Barry / A. Osborne 2-6,6-4,1-0(9)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "0",
+          "b": "1"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD012",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-29T07:55:44.603+00:00",
+      "duration": "01:33:02",
+      "player_a": {
+        "id": "326546",
+        "name": "Meiqi Guo",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "334622",
+        "name": "Varvara Panshina",
+        "country": "RUS"
+      },
+      "score_string": "4-6,6-3,1-0(10)",
+      "result_string": "M. Guo / A. Zhu d V. Panshina / R. Zolotareva 4-6,6-3,1-0(10)",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "1",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS011",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-30T02:47:53.81+00:00",
+      "duration": "02:42:33",
+      "player_a": {
+        "id": "332913",
+        "name": "Yufei Ren",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "313968",
+        "name": "Polona Hercog",
+        "country": "SLO"
+      },
+      "score_string": "5-7,6-1,6-4",
+      "result_string": "P. Hercog d Y. Ren 5-7,6-1,6-4",
+      "sets": [
+        {
+          "a": "7",
+          "b": "5"
+        },
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD007",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-30T02:49:02.473+00:00",
+      "duration": "01:18:36",
+      "player_a": {
+        "id": "323677",
+        "name": "Justina Mikulskyte",
+        "country": "LTU"
+      },
+      "player_b": {
+        "id": "319438",
+        "name": "Eudice Chong",
+        "country": "HKG"
+      },
+      "score_string": "6-4,6-4",
+      "result_string": "J. Mikulskyte / D. Papamichail d [2]E. Chong / H. Wong 6-4,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS015",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-30T04:28:45.347+00:00",
+      "duration": "02:45:49",
+      "player_a": {
+        "id": "331361",
+        "name": "Xinxin Yao",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "332888",
+        "name": "Rada Zolotareva",
+        "country": "RUS"
+      },
+      "score_string": "7-6(3),2-6,6-3",
+      "result_string": "R. Zolotareva d X. Yao 7-6(3),2-6,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS010",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-30T05:52:41.187+00:00",
+      "duration": "01:42:16",
+      "player_a": {
+        "id": "326160",
+        "name": "Xiyu Wang",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "324575",
+        "name": "Chengyiyi Yuan",
+        "country": "CHN"
+      },
+      "score_string": "6-4,6-4",
+      "result_string": "[4]X. Wang d C. Yuan 6-4,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD004",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-30T07:26:50.127+00:00",
+      "duration": "01:53:34",
+      "player_a": {
+        "id": "326481",
+        "name": "Sofya Lansere",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "329671",
+        "name": "Yiming Dang",
+        "country": "CHN"
+      },
+      "score_string": "5-7,6-3,1-0(8)",
+      "result_string": "S. Lansere / A. Zolotareva d Y. Dang / X. You 5-7,6-3,1-0(8)",
+      "sets": [
+        {
+          "a": "5",
+          "b": "7"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "1",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS014",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-04-30T07:53:34.057+00:00",
+      "duration": "01:38:37",
+      "player_a": {
+        "id": "323087",
+        "name": "Hanyu Guo",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "328173",
+        "name": "Diletta Cherubini",
+        "country": "ITA"
+      },
+      "score_string": "7-6(0),6-0",
+      "result_string": "[5]H. Guo d D. Cherubini 7-6(0),6-0",
+      "sets": [
+        {
+          "a": "7",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD006",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-30T09:36:51.073+00:00",
+      "duration": "02:00:13",
+      "player_a": {
+        "id": "326546",
+        "name": "Meiqi Guo",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "317821",
+        "name": "Hiroko Kuwata",
+        "country": "JPN"
+      },
+      "score_string": "7-6(9),5-7,1-0(5)",
+      "result_string": "[3]H. Kuwata / Y. Li d M. Guo / A. Zhu 7-6(9),5-7,1-0(5)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "7",
+          "b": "5"
+        },
+        {
+          "a": "0",
+          "b": "1"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD005",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-04-30T09:49:48.373+00:00",
+      "duration": "01:02:55",
+      "player_a": {
+        "id": "329824",
+        "name": "Han Shi",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "326162",
+        "name": "Meiling Wang",
+        "country": "CHN"
+      },
+      "score_string": "6-2,6-1",
+      "result_string": "H. Shi / Q. Ye d M. Wang / C. Yuan 6-2,6-1",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "1"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD003",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-05-01T02:07:14.18+00:00",
+      "duration": "00:00:00",
+      "player_a": {
+        "id": "317821",
+        "name": "Hiroko Kuwata",
+        "country": "JPN"
+      },
+      "player_b": {
+        "id": "323677",
+        "name": "Justina Mikulskyte",
+        "country": "LTU"
+      },
+      "score_string": " W/O",
+      "result_string": "[3]H. Kuwata / Y. Li d J. Mikulskyte / D. Papamichail  W/O",
+      "sets": [],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD002",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-05-01T02:44:00.39+00:00",
+      "duration": "01:19:18",
+      "player_a": {
+        "id": "326481",
+        "name": "Sofya Lansere",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "329824",
+        "name": "Han Shi",
+        "country": "CHN"
+      },
+      "score_string": "6-1,7-6(5)",
+      "result_string": "S. Lansere / A. Zolotareva d H. Shi / Q. Ye 6-1,7-6(5)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "1"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS004",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-05-01T02:48:41.64+00:00",
+      "duration": "01:19:27",
+      "player_a": {
+        "id": "327655",
+        "name": "Veronika Erjavec",
+        "country": "SLO"
+      },
+      "player_b": {
+        "id": "321329",
+        "name": "Wushuang Zheng",
+        "country": "CHN"
+      },
+      "score_string": "6-2,6-4",
+      "result_string": "[1]V. Erjavec d W. Zheng 6-2,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS006",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-05-01T04:32:10.253+00:00",
+      "duration": "02:42:20",
+      "player_a": {
+        "id": "334622",
+        "name": "Varvara Panshina",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "315806",
+        "name": "Katarzyna Kawa",
+        "country": "POL"
+      },
+      "score_string": "6-3,4-6,6-1",
+      "result_string": "[3]K. Kawa d V. Panshina 6-3,4-6,6-1",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "1",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS005",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-05-01T04:32:41.863+00:00",
+      "duration": "03:02:01",
+      "player_a": {
+        "id": "326160",
+        "name": "Xiyu Wang",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "313968",
+        "name": "Polona Hercog",
+        "country": "SLO"
+      },
+      "score_string": "6-3,6-7(5),6-4",
+      "result_string": "[4]X. Wang d P. Hercog 6-3,6-7(5),6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS007",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-05-01T07:55:22.307+00:00",
+      "duration": "01:11:51",
+      "player_a": {
+        "id": "323087",
+        "name": "Hanyu Guo",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "332888",
+        "name": "Rada Zolotareva",
+        "country": "RUS"
+      },
+      "score_string": "6-2,6-1",
+      "result_string": "[5]H. Guo d R. Zolotareva 6-2,6-1",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "1"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS002",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-05-02T04:42:10.04+00:00",
+      "duration": "01:44:47",
+      "player_a": {
+        "id": "327655",
+        "name": "Veronika Erjavec",
+        "country": "SLO"
+      },
+      "player_b": {
+        "id": "326160",
+        "name": "Xiyu Wang",
+        "country": "CHN"
+      },
+      "score_string": "6-4,7-6(3)",
+      "result_string": "[1]V. Erjavec d [4]X. Wang 6-4,7-6(3)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS003",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-05-02T06:55:45.653+00:00",
+      "duration": "01:18:30",
+      "player_a": {
+        "id": "315806",
+        "name": "Katarzyna Kawa",
+        "country": "POL"
+      },
+      "player_b": {
+        "id": "323087",
+        "name": "Hanyu Guo",
+        "country": "CHN"
+      },
+      "score_string": "6-4,6-1",
+      "result_string": "[3]K. Kawa d [5]H. Guo 6-4,6-1",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "1"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD001",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-05-03T04:42:14.203+00:00",
+      "duration": "01:01:33",
+      "player_a": {
+        "id": "326481",
+        "name": "Sofya Lansere",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "317821",
+        "name": "Hiroko Kuwata",
+        "country": "JPN"
+      },
+      "score_string": "6-4,6-1",
+      "result_string": "S. Lansere / A. Zolotareva d [3]H. Kuwata / Y. Li 6-4,6-1",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "1"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS001",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-05-03T06:38:59.07+00:00",
+      "duration": "01:04:33",
+      "player_a": {
+        "id": "327655",
+        "name": "Veronika Erjavec",
+        "country": "SLO"
+      },
+      "player_b": {
+        "id": "315806",
+        "name": "Katarzyna Kawa",
+        "country": "POL"
+      },
+      "score_string": "6-0,6-4",
+      "result_string": "[3]K. Kawa d [1]V. Erjavec 6-0,6-4",
+      "sets": [
+        {
+          "a": "0",
+          "b": "6"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    }
+  ]
+}

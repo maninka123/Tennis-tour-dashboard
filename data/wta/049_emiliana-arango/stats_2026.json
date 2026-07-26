@@ -1,93 +1,746 @@
 {
-  "singles_ranking": "49",
-  "matches_played": "5",
-  "aces": "0",
-  "service_games_won": "41.2%",
-  "return_games_won": "21.6%",
-  "first_serve_won": "52.3%",
+  "singles_ranking": "96",
+  "matches_played": "22",
+  "aces": "17",
+  "service_games_won": "54.9%",
+  "return_games_won": "35.5%",
+  "first_serve_won": "57.3%",
   "singles_titles": "0",
-  "won_lost": "0 / 4",
-  "prize_money": "$138,110",
+  "won_lost": "10 / 19",
+  "prize_money": "$514,961",
   "singles_serving_stats": {
-    "aces": "0",
-    "double_faults": "7",
-    "first_serve_pct": "64.8%",
-    "first_serve_won": "52.3%",
-    "second_serve_won": "39.0%",
-    "break_points_saved": "45.9%",
-    "service_points_won_pct": "47.6%",
-    "service_games_won": "41.2%",
-    "service_games_played": "34"
+    "aces": "17",
+    "double_faults": "51",
+    "first_serve_pct": "69.9%",
+    "first_serve_won": "57.3%",
+    "second_serve_won": "43.4%",
+    "break_points_saved": "51.0%",
+    "service_points_won_pct": "53.1%",
+    "service_games_won": "54.9%",
+    "service_games_played": "226"
   },
   "singles_return_stats": {
-    "return_points_won": "39.9%",
-    "first_return_points_won_pct": "37.8%",
-    "second_return_points_won_pct": "44.3%",
-    "break_points_converted": "25.0%",
-    "return_games_won": "21.6%",
-    "return_games_played": "37"
+    "return_points_won": "44.6%",
+    "first_return_points_won_pct": "38.8%",
+    "second_return_points_won_pct": "54.7%",
+    "break_points_converted": "40.3%",
+    "return_games_won": "35.5%",
+    "return_games_played": "234"
   },
   "raw": {
-    "serving_section": "SINGLES SERVING STATS\nAces\n0\nDouble Faults\n7\n1st Serve %\n64.8%\n1st Serve Won\n52.3%\n2nd Serve Won\n39.0%\nBreak Points Saved\n45.9%\nService Points Won %\n47.6%\nService Games Won\n41.2%\nService Games Played\n34",
-    "return_section": "SINGLES RETURN STATS\nReturn Points Won\n39.9%\n1st Return Points Won %\n37.8%\n2nd Return Points Won %\n44.3%\nBreak Points Converted\n25.0%\nReturn Games Won\n21.6%\nReturn Games Played\n37\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
+    "serving_section": "SINGLES SERVING STATS\nAces\n17\nDouble Faults\n51\n1st Serve %\n69.9%\n1st Serve Won\n57.3%\n2nd Serve Won\n43.4%\nBreak Points Saved\n51.0%\nService Points Won %\n53.1%\nService Games Won\n54.9%\nService Games Played\n226",
+    "return_section": "SINGLES RETURN STATS\nReturn Points Won\n44.6%\n1st Return Points Won %\n38.8%\n2nd Return Points Won %\n54.7%\nBreak Points Converted\n40.3%\nReturn Games Won\n35.5%\nReturn Games Played\n234\n\n* For purposes of the player profile, individual player stats are cumulative for the calendar year and not calculated using a minimum match requirement.\n\nRANK HISTORY\nYEARLY RANKINGS\nWEEK BY WEEK\nSINGLES"
   },
   "records": [],
-  "updated_at": "2026-02-14T02:47:21.495032+00:00",
+  "updated_at": "2026-07-26T06:35:36.458308+00:00",
   "records_tab": {
     "summary": [
       {
         "event": "Australian Open",
-        "best_result": "R128",
+        "best_result": "",
         "best_years": "",
         "total_wl": ""
       },
       {
         "event": "Roland Garros",
-        "best_result": "R64",
+        "best_result": "",
         "best_years": "",
         "total_wl": ""
       },
       {
         "event": "Wimbledon",
-        "best_result": "R128",
+        "best_result": "",
         "best_years": "",
         "total_wl": ""
       },
       {
         "event": "US Open",
-        "best_result": "R128",
+        "best_result": "1x Quarter Final",
         "best_years": "",
         "total_wl": ""
       }
     ],
-    "yearly": [
-      {
-        "year": "2026",
-        "australian_open": "R128",
-        "roland_garros": "-",
-        "french_open": "-",
-        "wimbledon": "-",
-        "us_open": "-"
-      },
-      {
-        "year": "2025",
-        "australian_open": "-",
-        "roland_garros": "R64",
-        "french_open": "R64",
-        "wimbledon": "R128",
-        "us_open": "R128"
-      }
-    ]
+    "yearly": []
   },
   "recent_matches_tab": {
     "year": 2026,
     "tournaments": [
       {
+        "tournament": "IASI",
+        "location": "Iasi \u2022 Romania",
+        "date_range": "13 Jul - 19 Jul 2026",
+        "category": "atp_250",
+        "category_label": "WTA 250",
+        "surface": "CLAY",
+        "surface_key": "clay",
+        "rank": 96,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 3065.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "round_name": "R32",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Tamara Zidansek",
+            "opponent_country": "SLO",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "5-7, 6-2, 6-3",
+            "opponent_rank": 148
+          }
+        ],
+        "summary": {
+          "rank": 96,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$3,065",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "BASTAD 125",
+        "location": "Bastad \u2022 Sweden",
+        "date_range": "6 Jul - 11 Jul 2026",
+        "category": "atp_125",
+        "category_label": "WTA 125",
+        "surface": "CLAY",
+        "surface_key": "clay",
+        "rank": 97,
+        "seed": 6,
+        "wta_points_gain": 15.0,
+        "prize_money_won": 2400.0,
+        "draw": "32M/0Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "round_name": "R16",
+            "tourn_round": 2,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Paula Badosa",
+            "opponent_country": "ESP",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 141
+          },
+          {
+            "round": "Round of 32",
+            "round_name": "R32",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Lea Nilsson",
+            "opponent_country": "SWE",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-2, 6-2",
+            "opponent_rank": 486
+          }
+        ],
+        "summary": {
+          "rank": 97,
+          "seed": 6,
+          "wta_points_gain": "+15",
+          "prize_money_won": "+$2,400",
+          "draw": "32M/0Q/16D"
+        }
+      },
+      {
+        "tournament": "WIMBLEDON",
+        "location": "Wimbledon \u2022 Great Britain",
+        "date_range": "29 Jun - 12 Jul 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "GRASS",
+        "surface_key": "grass",
+        "rank": 97,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 107157.0,
+        "draw": "128M/128Q/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "round_name": "R128",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Anastasia Gasanova",
+            "opponent_country": "RUS",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-3, 6-1",
+            "opponent_rank": 225
+          }
+        ],
+        "summary": {
+          "rank": 97,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$107,157",
+          "draw": "128M/128Q/64D"
+        }
+      },
+      {
+        "tournament": "EASTBOURNE",
+        "location": "Eastbourne \u2022 Great Britain",
+        "date_range": "22 Jun - 27 Jun 2026",
+        "category": "atp_250",
+        "category_label": "WTA 250",
+        "surface": "GRASS",
+        "surface_key": "grass",
+        "rank": 101,
+        "seed": null,
+        "wta_points_gain": 48.0,
+        "prize_money_won": 7545.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "round_name": "R16",
+            "tourn_round": 2,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Caty Mcnally",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-0",
+            "opponent_rank": 50
+          },
+          {
+            "round": "Round of 32",
+            "round_name": "R32",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Maya Joint",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(2), 6-4",
+            "opponent_rank": 53
+          },
+          {
+            "round": "Qualifying R2",
+            "round_name": "R16",
+            "tourn_round": 2,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Sofia Johnson",
+            "opponent_country": "GBR",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-3, 6-2",
+            "opponent_rank": 587
+          },
+          {
+            "round": "Qualifying R1",
+            "round_name": "R32",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Alycia Parks",
+            "opponent_country": "USA",
+            "opponent_seed": 9,
+            "opponent_entry": "",
+            "score": "4-6, 6-3, 7-5",
+            "opponent_rank": 80
+          }
+        ],
+        "summary": {
+          "rank": 101,
+          "seed": null,
+          "wta_points_gain": "+48",
+          "prize_money_won": "+$7,545",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "NOTTINGHAM",
+        "location": "Nottingham \u2022 Great Britain",
+        "date_range": "15 Jun - 21 Jun 2026",
+        "category": "atp_250",
+        "category_label": "WTA 250",
+        "surface": "GRASS",
+        "surface_key": "grass",
+        "rank": 100,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 1460.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "round_name": "R32",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Anna Bondar",
+            "opponent_country": "HUN",
+            "opponent_seed": 8,
+            "opponent_entry": "",
+            "score": "6-3, 6-4",
+            "opponent_rank": 74
+          }
+        ],
+        "summary": {
+          "rank": 100,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$1,460",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "ROLAND GARROS",
+        "location": "Paris \u2022 France",
+        "date_range": "24 May - 7 Jun 2026",
+        "category": "grand_slam",
+        "category_label": "Grand Slam",
+        "surface": "CLAY",
+        "surface_key": "clay",
+        "rank": 94,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 101501.0,
+        "draw": "128M/128Q/64D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "round_name": "R128",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Marina Bassols Ribera",
+            "opponent_country": "ESP",
+            "opponent_seed": null,
+            "opponent_entry": "Q",
+            "score": "6-3, 6-4",
+            "opponent_rank": 175
+          }
+        ],
+        "summary": {
+          "rank": 94,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$101,501",
+          "draw": "128M/128Q/64D"
+        }
+      },
+      {
+        "tournament": "RABAT",
+        "location": "Rabat \u2022 Morocco",
+        "date_range": "18 May - 23 May 2026",
+        "category": "atp_250",
+        "category_label": "WTA 250",
+        "surface": "CLAY",
+        "surface_key": "clay",
+        "rank": 98,
+        "seed": null,
+        "wta_points_gain": 30.0,
+        "prize_money_won": 4285.0,
+        "draw": "32M/16Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "round_name": "R16",
+            "tourn_round": 2,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Anna Bondar",
+            "opponent_country": "HUN",
+            "opponent_seed": 5,
+            "opponent_entry": "",
+            "score": "7-6(6), 1-6, 6-0",
+            "opponent_rank": 58
+          },
+          {
+            "round": "Round of 32",
+            "round_name": "R32",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Ella Seidel",
+            "opponent_country": "GER",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 4-6, 6-1",
+            "opponent_rank": 97
+          }
+        ],
+        "summary": {
+          "rank": 98,
+          "seed": null,
+          "wta_points_gain": "+30",
+          "prize_money_won": "+$4,285",
+          "draw": "32M/16Q/16D"
+        }
+      },
+      {
+        "tournament": "ROME",
+        "location": "Rome \u2022 Italy",
+        "date_range": "5 May - 17 May 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "CLAY",
+        "surface_key": "clay",
+        "rank": 85,
+        "seed": 7,
+        "wta_points_gain": 2.0,
+        "prize_money_won": 6505.0,
+        "draw": "128M/48Q/32D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "round_name": "R64",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Noemi Basiletti",
+            "opponent_country": "ITA",
+            "opponent_seed": null,
+            "opponent_entry": "W",
+            "score": "6-4, 6-3",
+            "opponent_rank": 427
+          }
+        ],
+        "summary": {
+          "rank": 85,
+          "seed": 7,
+          "wta_points_gain": "+2",
+          "prize_money_won": "+$6,505",
+          "draw": "128M/48Q/32D"
+        }
+      },
+      {
+        "tournament": "LA BISBAL D'EMPORD\u00c1 125",
+        "location": "La Bisbal D'Empord\u00e1 \u2022 Spain",
+        "date_range": "27 Apr - 3 May 2026",
+        "category": "atp_125",
+        "category_label": "WTA 125",
+        "surface": "CLAY",
+        "surface_key": "clay",
+        "rank": 86,
+        "seed": null,
+        "wta_points_gain": 1.0,
+        "prize_money_won": 1250.0,
+        "draw": "32M/8Q/8D",
+        "matches": [
+          {
+            "round": "Round of 32",
+            "round_name": "R32",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Daria Kasatkina",
+            "opponent_country": "AUS",
+            "opponent_seed": 7,
+            "opponent_entry": "W",
+            "score": "6-2, 3-6, 7-6(5)",
+            "opponent_rank": 75
+          }
+        ],
+        "summary": {
+          "rank": 86,
+          "seed": null,
+          "wta_points_gain": "+1",
+          "prize_money_won": "+$1,250",
+          "draw": "32M/8Q/8D"
+        }
+      },
+      {
+        "tournament": "MADRID 1000",
+        "location": "Madrid \u2022 Spain",
+        "date_range": "21 Apr - 3 May 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "CLAY",
+        "surface_key": "clay",
+        "rank": 86,
+        "seed": null,
+        "wta_points_gain": 35.0,
+        "prize_money_won": 31585.0,
+        "draw": "128M/48Q/32D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "round_name": "R64",
+            "tourn_round": 2,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Linda Noskova",
+            "opponent_country": "CZE",
+            "opponent_seed": 13,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 13
+          },
+          {
+            "round": "Round of 128",
+            "round_name": "R128",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Talia Gibson",
+            "opponent_country": "AUS",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 6-2",
+            "opponent_rank": 58
+          }
+        ],
+        "summary": {
+          "rank": 86,
+          "seed": null,
+          "wta_points_gain": "+35",
+          "prize_money_won": "+$31,585",
+          "draw": "128M/48Q/32D"
+        }
+      },
+      {
+        "tournament": "BOGOTA",
+        "location": "Bogota \u2022 Colombia",
+        "date_range": "30 Mar - 5 Apr 2026",
+        "category": "atp_250",
+        "category_label": "WTA 250",
+        "surface": "CLAY",
+        "surface_key": "clay",
+        "rank": 106,
+        "seed": null,
+        "wta_points_gain": 98.0,
+        "prize_money_won": 12331.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Semifinals",
+            "round_name": "S",
+            "tourn_round": 4,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Panna Udvardy",
+            "opponent_country": "HUN",
+            "opponent_seed": 8,
+            "opponent_entry": "",
+            "score": "6-7(6), 6-3, 7-6(5)",
+            "opponent_rank": 92
+          },
+          {
+            "round": "Quarterfinals",
+            "round_name": "Q",
+            "tourn_round": 3,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Varvara Lepchenko",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-4, 6-3",
+            "opponent_rank": 155
+          },
+          {
+            "round": "Round of 16",
+            "round_name": "R16",
+            "tourn_round": 2,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Guiomar Maristany Zuleta De Reales",
+            "opponent_country": "ESP",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-5, 6-2",
+            "opponent_rank": 178
+          },
+          {
+            "round": "Round of 32",
+            "round_name": "R32",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Maria Lourdes Carle",
+            "opponent_country": "ARG",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "1-6, 6-2, 6-0",
+            "opponent_rank": 177
+          }
+        ],
+        "summary": {
+          "rank": 106,
+          "seed": null,
+          "wta_points_gain": "+98",
+          "prize_money_won": "+$12,331",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "MIAMI",
+        "location": "Miami \u2022 Fl, United States",
+        "date_range": "17 Mar - 29 Mar 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 109,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 24335.0,
+        "draw": "128M/48Q/32D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "round_name": "R128",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Oksana Selekhmeteva",
+            "opponent_country": "ESP",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-3, 4-6, 6-3",
+            "opponent_rank": 71
+          }
+        ],
+        "summary": {
+          "rank": 109,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$24,335",
+          "draw": "128M/48Q/32D"
+        }
+      },
+      {
+        "tournament": "INDIAN WELLS",
+        "location": "Indian Wells \u2022 Ca, United States",
+        "date_range": "4 Mar - 15 Mar 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 108,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 16260.0,
+        "draw": "128M/48Q/32D",
+        "matches": [
+          {
+            "round": "Round of 128",
+            "round_name": "R128",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Hailey Baptiste",
+            "opponent_country": "USA",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "2-6, 6-2, 6-3",
+            "opponent_rank": 43
+          }
+        ],
+        "summary": {
+          "rank": 108,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$16,260",
+          "draw": "128M/48Q/32D"
+        }
+      },
+      {
+        "tournament": "M\u00c9RIDA",
+        "location": "M\u00e9rida \u2022 Mexico",
+        "date_range": "23 Feb - 1 Mar 2026",
+        "category": "atp_500",
+        "category_label": "WTA 500",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 59,
+        "seed": null,
+        "wta_points_gain": 60.0,
+        "prize_money_won": 17795.0,
+        "draw": "32M/24Q/16D",
+        "matches": [
+          {
+            "round": "Round of 16",
+            "round_name": "R16",
+            "tourn_round": 2,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Marie Bouzkova",
+            "opponent_country": "CZE",
+            "opponent_seed": 4,
+            "opponent_entry": "",
+            "score": "2-6, 6-1, 2-0",
+            "opponent_rank": 34
+          },
+          {
+            "round": "Round of 32",
+            "round_name": "R32",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "W",
+            "opponent_name": "Anastasia Potapova",
+            "opponent_country": "AUT",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "7-6(0), 6-2",
+            "opponent_rank": 91
+          }
+        ],
+        "summary": {
+          "rank": 59,
+          "seed": null,
+          "wta_points_gain": "+60",
+          "prize_money_won": "+$17,795",
+          "draw": "32M/24Q/16D"
+        }
+      },
+      {
+        "tournament": "DOHA",
+        "location": "Doha \u2022 Qatar",
+        "date_range": "8 Feb - 14 Feb 2026",
+        "category": "masters_1000",
+        "category_label": "WTA 1000",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "rank": 49,
+        "seed": null,
+        "wta_points_gain": 10.0,
+        "prize_money_won": 18300.0,
+        "draw": "64M/32Q/32D",
+        "matches": [
+          {
+            "round": "Round of 64",
+            "round_name": "R64",
+            "tourn_round": 1,
+            "draw_level_type": "",
+            "result": "L",
+            "opponent_name": "Xinyu Wang",
+            "opponent_country": "CHN",
+            "opponent_seed": null,
+            "opponent_entry": "",
+            "score": "6-1, 7-5",
+            "opponent_rank": 33
+          }
+        ],
+        "summary": {
+          "rank": 49,
+          "seed": null,
+          "wta_points_gain": "+10",
+          "prize_money_won": "+$18,300",
+          "draw": "64M/32Q/32D"
+        }
+      },
+      {
         "tournament": "OSTRAVA",
         "location": "Ostrava \u2022 Czech Republic",
         "date_range": "1 Feb - 7 Feb 2026",
-        "category": "other",
-        "category_label": "Tour",
+        "category": "atp_250",
+        "category_label": "WTA 250",
         "surface": "HARD",
         "surface_key": "hard",
         "rank": 46,
@@ -143,7 +796,7 @@
         "seed": null,
         "wta_points_gain": 10.0,
         "prize_money_won": 97113.0,
-        "draw": "128M/64D",
+        "draw": "128M/128Q/64D",
         "matches": [
           {
             "round": "Round of 128",
@@ -164,15 +817,15 @@
           "seed": null,
           "wta_points_gain": "+10",
           "prize_money_won": "+$97,113",
-          "draw": "128M/64D"
+          "draw": "128M/128Q/64D"
         }
       },
       {
         "tournament": "HOBART",
         "location": "Hobart \u2022 Australia",
         "date_range": "12 Jan - 17 Jan 2026",
-        "category": "other",
-        "category_label": "Tour",
+        "category": "atp_250",
+        "category_label": "WTA 250",
         "surface": "HARD",
         "surface_key": "hard",
         "rank": 50,
@@ -207,15 +860,15 @@
         "tournament": "BRISBANE",
         "location": "Brisbane \u2022 Australia",
         "date_range": "4 Jan - 11 Jan 2026",
-        "category": "masters_1000",
-        "category_label": "WTA 1000",
+        "category": "atp_500",
+        "category_label": "WTA 500",
         "surface": "HARD",
         "surface_key": "hard",
         "rank": 48,
         "seed": null,
         "wta_points_gain": 1.0,
         "prize_money_won": 11920.0,
-        "draw": "48M/16D",
+        "draw": "64M/24Q/16D",
         "matches": [
           {
             "round": "Round of 64",
@@ -236,10 +889,10 @@
           "seed": null,
           "wta_points_gain": "+1",
           "prize_money_won": "+$11,920",
-          "draw": "48M/16D"
+          "draw": "64M/24Q/16D"
         }
       }
     ],
-    "updated_at": "2026-02-14T02:47:21.494864+00:00"
+    "updated_at": "2026-07-26T06:35:36.457252+00:00"
   }
 }

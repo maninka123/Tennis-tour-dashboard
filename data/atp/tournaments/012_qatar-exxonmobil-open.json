@@ -15,15 +15,23 @@
   "city": "Doha",
   "country": "Qatar",
   "location": "Doha, Qatar",
-  "status": "in_progress",
+  "status": "finished",
   "draw_size_singles": 32,
   "draw_size_doubles": 16,
   "prize_money": "$3,116,195",
   "prize_money_currency": "USD",
-  "draw_url": "https://www.atptour.com/en/scores/current/doha/451/draws",
-  "scores_url": "https://www.atptour.com/en/scores/current/doha/451/results",
-  "champion": null,
-  "runner_up": null,
+  "draw_url": "https://www.atptour.com/en/scores/archive/doha/451/2026/draws",
+  "scores_url": "https://www.atptour.com/en/scores/archive/doha/451/2026/results",
+  "champion": {
+    "name": "C. Alcaraz",
+    "country": "ESP",
+    "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png"
+  },
+  "runner_up": {
+    "name": "A. Fils",
+    "country": "FRA",
+    "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png"
+  },
   "draw": {
     "draw_size": 32,
     "surface": "Hard",
@@ -34,840 +42,840 @@
   },
   "matches": [
     {
-      "match_id": "ms016",
+      "match_id": "169694",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "A0E2",
+        "id": "3782",
         "name": "C. Alcaraz",
         "country": "ESP",
         "seed": 1,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/a0e2",
-        "profile_url": "https://www.atptour.com/en/players/carlos-alcaraz/a0e2/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
       },
       "player_b": {
-        "id": "RC91",
+        "id": "3511",
         "name": "A. Rinderknech",
         "country": "FRA",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/rc91",
-        "profile_url": "https://www.atptour.com/en/players/arthur-rinderknech/rc91/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3511.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3511/arthur-rinderknech"
       },
-      "score_string": "6-4 7-6(5)",
+      "score_string": "6-4 7-6",
       "winner_side": "A"
     },
     {
-      "match_id": "ms017",
+      "match_id": "169696",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "R0EB",
+        "id": "4022",
         "name": "V. Royer",
         "country": "FRA",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/r0eb",
-        "profile_url": "https://www.atptour.com/en/players/valentin-royer/r0eb/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4022.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/4022/valentin-royer"
       },
       "player_b": {
-        "id": "H996",
+        "id": "1613",
         "name": "P. Herbert",
         "country": "FRA",
         "seed": null,
-        "entry": "Q",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/h996",
-        "profile_url": "https://www.atptour.com/en/players/pierre-hugues-herbert/h996/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/1613.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/1613/pierre-hugues-herbert"
       },
       "score_string": "6-0 6-3",
       "winner_side": "A"
     },
     {
-      "match_id": "ms018",
+      "match_id": "169690",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "F724",
+        "id": "1862",
         "name": "M. Fucsovics",
         "country": "HUN",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f724",
-        "profile_url": "https://www.atptour.com/en/players/marton-fucsovics/f724/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/1862.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/1862/marton-fucsovics"
       },
       "player_b": {
-        "id": "HF80",
+        "id": "10077",
         "name": "H. Habib",
-        "country": "LBN",
+        "country": "LIB",
         "seed": null,
-        "entry": "WC",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/hf80",
-        "profile_url": "https://www.atptour.com/en/players/hady-habib/hf80/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10077.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/10077/hady-habib"
       },
       "score_string": "6-3 6-3",
       "winner_side": "A"
     },
     {
-      "match_id": "ms019",
+      "match_id": "169692",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "M0HU",
+        "id": "7608",
         "name": "S. Mochizuki",
         "country": "JPN",
         "seed": null,
-        "entry": "LL",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0hu",
-        "profile_url": "https://www.atptour.com/en/players/shintaro-mochizuki/m0hu/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7608.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/7608/shintaro-mochizuki"
       },
       "player_b": {
-        "id": "KE29",
+        "id": "2367",
         "name": "K. Khachanov",
         "country": "RUS",
         "seed": 7,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ke29",
-        "profile_url": "https://www.atptour.com/en/players/karen-khachanov/ke29/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2367.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2367/karen-khachanov"
       },
       "score_string": "1-6 6-3 4-6",
       "winner_side": "B"
     },
     {
-      "match_id": "ms020",
+      "match_id": "169687",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "MM58",
+        "id": "2383",
         "name": "D. Medvedev",
         "country": "RUS",
         "seed": 4,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/mm58",
-        "profile_url": "https://www.atptour.com/en/players/daniil-medvedev/mm58/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2383.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2383/daniil-medvedev"
       },
       "player_b": {
-        "id": "S0RE",
+        "id": "10073",
         "name": "J. Shang",
         "country": "CHN",
         "seed": null,
-        "entry": "PR",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0re",
-        "profile_url": "https://www.atptour.com/en/players/juncheng-shang/s0re/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10073.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/10073/shang-juncheng"
       },
       "score_string": "6-4 6-2",
       "winner_side": "A"
     },
     {
-      "match_id": "ms021",
+      "match_id": "169689",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "EA13",
+        "id": "3696",
         "name": "M. Echargui",
         "country": "TUN",
         "seed": null,
-        "entry": "WC",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ea13",
-        "profile_url": "https://www.atptour.com/en/players/moez-echargui/ea13/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3696.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3696/moez-echargui"
       },
       "player_b": {
-        "id": "TE51",
+        "id": "2869",
         "name": "S. Tsitsipas",
         "country": "GRE",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/te51",
-        "profile_url": "https://www.atptour.com/en/players/stefanos-tsitsipas/te51/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2869.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2869/stefanos-tsitsipas"
       },
       "score_string": "4-6 4-6",
       "winner_side": "B"
     },
     {
-      "match_id": "ms022",
+      "match_id": "169685",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "HH26",
+        "id": "3085",
         "name": "U. Humbert",
         "country": "FRA",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/hh26",
-        "profile_url": "https://www.atptour.com/en/players/ugo-humbert/hh26/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3085.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3085/ugo-humbert"
       },
       "player_b": {
-        "id": "M0CI",
+        "id": "9213",
         "name": "F. Marozsan",
         "country": "HUN",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ci",
-        "profile_url": "https://www.atptour.com/en/players/fabian-marozsan/m0ci/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9213.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/9213/fabian-marozsan"
       },
       "score_string": "3-6 1-6",
       "winner_side": "B"
     },
     {
-      "match_id": "ms023",
+      "match_id": "169686",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "D0C1",
+        "id": "3897",
         "name": "J. de Jong",
         "country": "NED",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/d0c1",
-        "profile_url": "https://www.atptour.com/en/players/jesper-de-jong/d0c1/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3897.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3897/jesper-de-jong"
       },
       "player_b": {
-        "id": "RE44",
+        "id": "2642",
         "name": "A. Rublev",
         "country": "RUS",
         "seed": 5,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/re44",
-        "profile_url": "https://www.atptour.com/en/players/andrey-rublev/re44/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2642.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2642/andrey-rublev"
       },
       "score_string": "4-6 3-6",
       "winner_side": "B"
     },
     {
-      "match_id": "ms024",
+      "match_id": "169684",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "L0BV",
+        "id": "3754",
         "name": "J. Lehecka",
         "country": "CZE",
         "seed": 8,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/l0bv",
-        "profile_url": "https://www.atptour.com/en/players/jiri-lehecka/l0bv/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3754.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3754/jiri-lehecka"
       },
       "player_b": {
-        "id": "B0CD",
+        "id": "3621",
         "name": "J. Brooksby",
         "country": "USA",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/b0cd",
-        "profile_url": "https://www.atptour.com/en/players/jenson-brooksby/b0cd/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3621.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3621/jenson-brooksby"
       },
       "score_string": "6-3 6-3",
       "winner_side": "A"
     },
     {
-      "match_id": "ms025",
+      "match_id": "169698",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "BU13",
+        "id": "3356",
         "name": "Z. Bergs",
         "country": "BEL",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/bu13",
-        "profile_url": "https://www.atptour.com/en/players/zizou-bergs/bu13/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3356.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3356/zizou-bergs"
       },
       "player_b": {
-        "id": "M0GZ",
+        "id": "8885",
         "name": "G. Mpetshi Perricard",
         "country": "FRA",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0gz",
-        "profile_url": "https://www.atptour.com/en/players/giovanni-mpetshi-perricard/m0gz/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/8885.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/8885/giovanni-mpetshi-perricard"
       },
-      "score_string": "6-3 6-7(7) 6-4",
+      "score_string": "6-3 6-7 6-4",
       "winner_side": "A"
     },
     {
-      "match_id": "ms026",
+      "match_id": "169699",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "F0F1",
+        "id": "10052",
         "name": "A. Fils",
         "country": "FRA",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f0f1",
-        "profile_url": "https://www.atptour.com/en/players/arthur-fils/f0f1/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
       },
       "player_b": {
-        "id": "MQ75",
+        "id": "2416",
         "name": "K. Majchrzak",
         "country": "POL",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/mq75",
-        "profile_url": "https://www.atptour.com/en/players/kamil-majchrzak/mq75/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2416.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2416/kamil-majchrzak"
       },
-      "score_string": "6-7(7) 6-3 6-4",
+      "score_string": "6-7 6-3 6-4",
       "winner_side": "A"
     },
     {
-      "match_id": "ms027",
+      "match_id": "169695",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "CD85",
+        "id": "1590",
         "name": "P. Carreno Busta",
         "country": "ESP",
         "seed": null,
-        "entry": "Q",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/cd85",
-        "profile_url": "https://www.atptour.com/en/players/pablo-carreno-busta/cd85/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/1590.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/1590/pablo-carreno-busta"
       },
       "player_b": {
-        "id": "HB64",
+        "id": "2362",
         "name": "Q. Halys",
         "country": "FRA",
         "seed": null,
-        "entry": "LL",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/hb64",
-        "profile_url": "https://www.atptour.com/en/players/quentin-halys/hb64/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2362.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2362/quentin-halys"
       },
       "score_string": "6-4 5-7 3-6",
       "winner_side": "B"
     },
     {
-      "match_id": "ms028",
+      "match_id": "169697",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "M0NI",
+        "id": "10319",
         "name": "J. Mensik",
         "country": "CZE",
         "seed": 6,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ni",
-        "profile_url": "https://www.atptour.com/en/players/jakub-mensik/m0ni/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10319.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/10319/jakub-mensik"
       },
       "player_b": {
-        "id": "CH12",
+        "id": "2720",
         "name": "J. Choinski",
         "country": "GBR",
         "seed": null,
-        "entry": "Q",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ch12",
-        "profile_url": "https://www.atptour.com/en/players/jan-choinski/ch12/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2720.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2720/jan-choinski"
       },
-      "score_string": "6-7(8) 6-2 6-4",
+      "score_string": "6-7 6-2 6-4",
       "winner_side": "A"
     },
     {
-      "match_id": "ms029",
+      "match_id": "169691",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "Z371",
-        "name": "Z. Zhang",
+        "id": "3024",
+        "name": "Z. Zhizhen",
         "country": "CHN",
         "seed": null,
-        "entry": "PR",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/z371",
-        "profile_url": "https://www.atptour.com/en/players/zhizhen-zhang/z371/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3024.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3024/zhang-zhizhen"
       },
       "player_b": {
-        "id": "CF59",
+        "id": "2012",
         "name": "R. Carballes Baena",
         "country": "ESP",
         "seed": null,
-        "entry": "Q",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/cf59",
-        "profile_url": "https://www.atptour.com/en/players/roberto-carballes-baena/cf59/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2012.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2012/roberto-carballes-baena"
       },
       "score_string": "6-4 6-4",
       "winner_side": "A"
     },
     {
-      "match_id": "ms030",
+      "match_id": "169693",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "AC39",
+        "id": "3300",
         "name": "M. Zayid",
         "country": "QAT",
         "seed": null,
-        "entry": "WC",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ac39",
-        "profile_url": "https://www.atptour.com/en/players/mubarak-shannan-zayid/ac39/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3300.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3300/mubarak-shannan-zayid"
       },
       "player_b": {
-        "id": "P09Z",
+        "id": "2862",
         "name": "A. Popyrin",
         "country": "AUS",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/p09z",
-        "profile_url": "https://www.atptour.com/en/players/alexei-popyrin/p09z/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2862.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2862/alexei-popyrin"
       },
       "score_string": "0-6 2-6",
       "winner_side": "B"
     },
     {
-      "match_id": "ms031",
+      "match_id": "169688",
       "round_id": "R32",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "M0FH",
+        "id": "3811",
         "name": "T. Machac",
         "country": "CZE",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0fh",
-        "profile_url": "https://www.atptour.com/en/players/tomas-machac/m0fh/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3811.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3811/tomas-machac"
       },
       "player_b": {
-        "id": "S0AG",
+        "id": "3623",
         "name": "J. Sinner",
         "country": "ITA",
         "seed": 2,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0ag",
-        "profile_url": "https://www.atptour.com/en/players/jannik-sinner/s0ag/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3623.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3623/jannik-sinner"
       },
       "score_string": "1-6 4-6",
       "winner_side": "B"
     },
     {
-      "match_id": "ms008",
+      "match_id": "169703",
       "round_id": "R16",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "A0E2",
+        "id": "3782",
         "name": "C. Alcaraz",
         "country": "ESP",
         "seed": 1,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/a0e2",
-        "profile_url": "https://www.atptour.com/en/players/carlos-alcaraz/a0e2/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
       },
       "player_b": {
-        "id": "R0EB",
+        "id": "4022",
         "name": "V. Royer",
         "country": "FRA",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/r0eb",
-        "profile_url": "https://www.atptour.com/en/players/valentin-royer/r0eb/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4022.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/4022/valentin-royer"
       },
       "score_string": "6-2 7-5",
       "winner_side": "A"
     },
     {
-      "match_id": "ms009",
+      "match_id": "169700",
       "round_id": "R16",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "F724",
+        "id": "1862",
         "name": "M. Fucsovics",
         "country": "HUN",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f724",
-        "profile_url": "https://www.atptour.com/en/players/marton-fucsovics/f724/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/1862.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/1862/marton-fucsovics"
       },
       "player_b": {
-        "id": "KE29",
+        "id": "2367",
         "name": "K. Khachanov",
         "country": "RUS",
         "seed": 7,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ke29",
-        "profile_url": "https://www.atptour.com/en/players/karen-khachanov/ke29/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2367.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2367/karen-khachanov"
       },
       "score_string": "2-6 6-4 4-6",
       "winner_side": "B"
     },
     {
-      "match_id": "ms010",
+      "match_id": "169701",
       "round_id": "R16",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "MM58",
+        "id": "2383",
         "name": "D. Medvedev",
         "country": "RUS",
         "seed": 4,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/mm58",
-        "profile_url": "https://www.atptour.com/en/players/daniil-medvedev/mm58/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2383.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2383/daniil-medvedev"
       },
       "player_b": {
-        "id": "TE51",
+        "id": "2869",
         "name": "S. Tsitsipas",
         "country": "GRE",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/te51",
-        "profile_url": "https://www.atptour.com/en/players/stefanos-tsitsipas/te51/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2869.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2869/stefanos-tsitsipas"
       },
       "score_string": "3-6 4-6",
       "winner_side": "B"
     },
     {
-      "match_id": "ms011",
+      "match_id": "169702",
       "round_id": "R16",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "M0CI",
+        "id": "9213",
         "name": "F. Marozsan",
         "country": "HUN",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ci",
-        "profile_url": "https://www.atptour.com/en/players/fabian-marozsan/m0ci/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9213.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/9213/fabian-marozsan"
       },
       "player_b": {
-        "id": "RE44",
+        "id": "2642",
         "name": "A. Rublev",
         "country": "RUS",
         "seed": 5,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/re44",
-        "profile_url": "https://www.atptour.com/en/players/andrey-rublev/re44/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2642.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2642/andrey-rublev"
       },
       "score_string": "2-6 4-6",
       "winner_side": "B"
     },
     {
-      "match_id": "ms012",
+      "match_id": "169706",
       "round_id": "R16",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "L0BV",
+        "id": "3754",
         "name": "J. Lehecka",
         "country": "CZE",
         "seed": 8,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/l0bv",
-        "profile_url": "https://www.atptour.com/en/players/jiri-lehecka/l0bv/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3754.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3754/jiri-lehecka"
       },
       "player_b": {
-        "id": "BU13",
+        "id": "3356",
         "name": "Z. Bergs",
         "country": "BEL",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/bu13",
-        "profile_url": "https://www.atptour.com/en/players/zizou-bergs/bu13/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3356.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3356/zizou-bergs"
       },
       "score_string": "6-2 6-1",
       "winner_side": "A"
     },
     {
-      "match_id": "ms013",
+      "match_id": "169707",
       "round_id": "R16",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "F0F1",
+        "id": "10052",
         "name": "A. Fils",
         "country": "FRA",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f0f1",
-        "profile_url": "https://www.atptour.com/en/players/arthur-fils/f0f1/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
       },
       "player_b": {
-        "id": "HB64",
+        "id": "2362",
         "name": "Q. Halys",
         "country": "FRA",
         "seed": null,
-        "entry": "LL",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/hb64",
-        "profile_url": "https://www.atptour.com/en/players/quentin-halys/hb64/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2362.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2362/quentin-halys"
       },
-      "score_string": "6-1 7-6(7)",
+      "score_string": "6-1 7-6",
       "winner_side": "A"
     },
     {
-      "match_id": "ms014",
+      "match_id": "169704",
       "round_id": "R16",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "M0NI",
+        "id": "10319",
         "name": "J. Mensik",
         "country": "CZE",
         "seed": 6,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ni",
-        "profile_url": "https://www.atptour.com/en/players/jakub-mensik/m0ni/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10319.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/10319/jakub-mensik"
       },
       "player_b": {
-        "id": "Z371",
-        "name": "Z. Zhang",
+        "id": "3024",
+        "name": "Z. Zhizhen",
         "country": "CHN",
         "seed": null,
-        "entry": "PR",
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/z371",
-        "profile_url": "https://www.atptour.com/en/players/zhizhen-zhang/z371/overview"
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3024.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3024/zhang-zhizhen"
       },
       "score_string": "6-3 6-2",
       "winner_side": "A"
     },
     {
-      "match_id": "ms015",
+      "match_id": "169705",
       "round_id": "R16",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
       "player_a": {
-        "id": "P09Z",
+        "id": "2862",
         "name": "A. Popyrin",
         "country": "AUS",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/p09z",
-        "profile_url": "https://www.atptour.com/en/players/alexei-popyrin/p09z/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2862.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2862/alexei-popyrin"
       },
       "player_b": {
-        "id": "S0AG",
+        "id": "3623",
         "name": "J. Sinner",
         "country": "ITA",
         "seed": 2,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0ag",
-        "profile_url": "https://www.atptour.com/en/players/jannik-sinner/s0ag/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3623.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3623/jannik-sinner"
       },
       "score_string": "3-6 5-7",
       "winner_side": "B"
     },
     {
-      "match_id": "QF_1",
+      "match_id": "169709",
       "round_id": "QF",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "P",
+      "match_state": "F",
       "player_a": {
-        "id": "A0E2",
+        "id": "3782",
         "name": "C. Alcaraz",
         "country": "ESP",
         "seed": 1,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/a0e2",
-        "profile_url": "https://www.atptour.com/en/players/carlos-alcaraz/a0e2/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
       },
       "player_b": {
-        "id": "KE29",
+        "id": "2367",
         "name": "K. Khachanov",
         "country": "RUS",
         "seed": 7,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ke29",
-        "profile_url": "https://www.atptour.com/en/players/karen-khachanov/ke29/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2367.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2367/karen-khachanov"
       },
-      "score_string": "",
-      "winner_side": null
+      "score_string": "6-7 6-4 6-3",
+      "winner_side": "A"
     },
     {
-      "match_id": "QF_2",
+      "match_id": "169710",
       "round_id": "QF",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "P",
+      "match_state": "F",
       "player_a": {
-        "id": "TE51",
+        "id": "2869",
         "name": "S. Tsitsipas",
         "country": "GRE",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/te51",
-        "profile_url": "https://www.atptour.com/en/players/stefanos-tsitsipas/te51/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2869.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2869/stefanos-tsitsipas"
       },
       "player_b": {
-        "id": "RE44",
+        "id": "2642",
         "name": "A. Rublev",
         "country": "RUS",
         "seed": 5,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/re44",
-        "profile_url": "https://www.atptour.com/en/players/andrey-rublev/re44/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2642.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2642/andrey-rublev"
       },
-      "score_string": "",
-      "winner_side": null
+      "score_string": "3-6 6-7",
+      "winner_side": "B"
     },
     {
-      "match_id": "QF_3",
+      "match_id": "169725",
       "round_id": "QF",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "P",
+      "match_state": "F",
       "player_a": {
-        "id": "L0BV",
+        "id": "3754",
         "name": "J. Lehecka",
         "country": "CZE",
         "seed": 8,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/l0bv",
-        "profile_url": "https://www.atptour.com/en/players/jiri-lehecka/l0bv/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3754.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3754/jiri-lehecka"
       },
       "player_b": {
-        "id": "F0F1",
+        "id": "10052",
         "name": "A. Fils",
         "country": "FRA",
         "seed": null,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f0f1",
-        "profile_url": "https://www.atptour.com/en/players/arthur-fils/f0f1/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
       },
-      "score_string": "",
-      "winner_side": null
+      "score_string": "3-6 3-6",
+      "winner_side": "B"
     },
     {
-      "match_id": "QF_4",
+      "match_id": "169708",
       "round_id": "QF",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "P",
+      "match_state": "F",
       "player_a": {
-        "id": "M0NI",
+        "id": "10319",
         "name": "J. Mensik",
         "country": "CZE",
         "seed": 6,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ni",
-        "profile_url": "https://www.atptour.com/en/players/jakub-mensik/m0ni/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10319.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/10319/jakub-mensik"
       },
       "player_b": {
-        "id": "S0AG",
+        "id": "3623",
         "name": "J. Sinner",
         "country": "ITA",
         "seed": 2,
         "entry": null,
-        "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0ag",
-        "profile_url": "https://www.atptour.com/en/players/jannik-sinner/s0ag/overview"
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3623.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3623/jannik-sinner"
       },
-      "score_string": "",
-      "winner_side": null
-    },
-    {
-      "match_id": "SF_1",
-      "round_id": "SF",
-      "draw_level_type": "M",
-      "draw_match_type": "S",
-      "match_state": "P",
-      "player_a": {
-        "id": null,
-        "name": "TBA",
-        "country": null,
-        "seed": null,
-        "entry": null,
-        "image_url": null,
-        "profile_url": null
-      },
-      "player_b": {
-        "id": null,
-        "name": "TBA",
-        "country": null,
-        "seed": null,
-        "entry": null,
-        "image_url": null,
-        "profile_url": null
-      },
-      "score_string": "",
+      "score_string": "7-6 2-6 6-3",
       "winner_side": "A"
     },
     {
-      "match_id": "SF_2",
+      "match_id": "169712",
       "round_id": "SF",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "P",
+      "match_state": "F",
       "player_a": {
-        "id": null,
-        "name": "TBA",
-        "country": null,
-        "seed": null,
+        "id": "3782",
+        "name": "C. Alcaraz",
+        "country": "ESP",
+        "seed": 1,
         "entry": null,
-        "image_url": null,
-        "profile_url": null
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
       },
       "player_b": {
-        "id": null,
-        "name": "TBA",
-        "country": null,
-        "seed": null,
+        "id": "2642",
+        "name": "A. Rublev",
+        "country": "RUS",
+        "seed": 5,
         "entry": null,
-        "image_url": null,
-        "profile_url": null
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2642.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2642/andrey-rublev"
       },
-      "score_string": "",
+      "score_string": "7-6 6-4",
       "winner_side": "A"
     },
     {
-      "match_id": "F_1",
+      "match_id": "169711",
+      "round_id": "SF",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "10052",
+        "name": "A. Fils",
+        "country": "FRA",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
+      },
+      "player_b": {
+        "id": "10319",
+        "name": "J. Mensik",
+        "country": "CZE",
+        "seed": 6,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10319.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/10319/jakub-mensik"
+      },
+      "score_string": "6-4 7-6",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "169719",
       "round_id": "F",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "P",
+      "match_state": "F",
       "player_a": {
-        "id": null,
-        "name": "TBA",
-        "country": null,
-        "seed": null,
+        "id": "3782",
+        "name": "C. Alcaraz",
+        "country": "ESP",
+        "seed": 1,
         "entry": null,
-        "image_url": null,
-        "profile_url": null
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
       },
       "player_b": {
-        "id": null,
-        "name": "TBA",
-        "country": null,
+        "id": "10052",
+        "name": "A. Fils",
+        "country": "FRA",
         "seed": null,
         "entry": null,
-        "image_url": null,
-        "profile_url": null
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
       },
-      "score_string": "",
+      "score_string": "6-2 6-1",
       "winner_side": "A"
     }
   ],
@@ -877,7 +885,7 @@
     "tournament_category": "atp_500",
     "tournament_surface": "Hard",
     "tournament_year": 2026,
-    "tournament_status": "in_progress",
+    "tournament_status": "finished",
     "tournament_tour": "atp",
     "draw_size": 32,
     "rounds": [
@@ -892,26 +900,26 @@
         "round": "R32",
         "matches": [
           {
-            "id": "ms016",
+            "id": "169694",
             "round": "R32",
             "match_number": 1,
             "player1": {
-              "id": "A0E2",
+              "id": "3782",
               "name": "C. Alcaraz",
               "country": "ESP",
               "seed": 1,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/a0e2",
-              "profile_url": "https://www.atptour.com/en/players/carlos-alcaraz/a0e2/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
             },
             "player2": {
-              "id": "RC91",
+              "id": "3511",
               "name": "A. Rinderknech",
               "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/rc91",
-              "profile_url": "https://www.atptour.com/en/players/arthur-rinderknech/rc91/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3511.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3511/arthur-rinderknech"
             },
             "score": {
               "sets": [
@@ -931,39 +939,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "A0E2",
+              "id": "3782",
               "name": "C. Alcaraz",
               "country": "ESP",
               "seed": 1,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/a0e2",
-              "profile_url": "https://www.atptour.com/en/players/carlos-alcaraz/a0e2/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms016"
+            "stats_url": null,
+            "scheduled_at": "2026-02-17T16:40Z"
           },
           {
-            "id": "ms017",
+            "id": "169696",
             "round": "R32",
             "match_number": 2,
             "player1": {
-              "id": "R0EB",
+              "id": "4022",
               "name": "V. Royer",
               "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/r0eb",
-              "profile_url": "https://www.atptour.com/en/players/valentin-royer/r0eb/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4022.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/4022/valentin-royer"
             },
             "player2": {
-              "id": "H996",
+              "id": "1613",
               "name": "P. Herbert",
               "country": "FRA",
               "seed": null,
-              "entry": "Q",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/h996",
-              "profile_url": "https://www.atptour.com/en/players/pierre-hugues-herbert/h996/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/1613.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/1613/pierre-hugues-herbert"
             },
             "score": {
               "sets": [
@@ -979,39 +988,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "R0EB",
+              "id": "4022",
               "name": "V. Royer",
               "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/r0eb",
-              "profile_url": "https://www.atptour.com/en/players/valentin-royer/r0eb/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4022.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/4022/valentin-royer"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms017"
+            "stats_url": null,
+            "scheduled_at": "2026-02-16T12:05Z"
           },
           {
-            "id": "ms018",
+            "id": "169690",
             "round": "R32",
             "match_number": 3,
             "player1": {
-              "id": "F724",
+              "id": "1862",
               "name": "M. Fucsovics",
               "country": "HUN",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f724",
-              "profile_url": "https://www.atptour.com/en/players/marton-fucsovics/f724/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/1862.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/1862/marton-fucsovics"
             },
             "player2": {
-              "id": "HF80",
+              "id": "10077",
               "name": "H. Habib",
-              "country": "LBN",
+              "country": "LIB",
               "seed": null,
-              "entry": "WC",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/hf80",
-              "profile_url": "https://www.atptour.com/en/players/hady-habib/hf80/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10077.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10077/hady-habib"
             },
             "score": {
               "sets": [
@@ -1027,39 +1037,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "F724",
+              "id": "1862",
               "name": "M. Fucsovics",
               "country": "HUN",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f724",
-              "profile_url": "https://www.atptour.com/en/players/marton-fucsovics/f724/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/1862.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/1862/marton-fucsovics"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms018"
+            "stats_url": null,
+            "scheduled_at": "2026-02-17T10:35Z"
           },
           {
-            "id": "ms019",
+            "id": "169692",
             "round": "R32",
             "match_number": 4,
             "player1": {
-              "id": "M0HU",
+              "id": "7608",
               "name": "S. Mochizuki",
               "country": "JPN",
               "seed": null,
-              "entry": "LL",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0hu",
-              "profile_url": "https://www.atptour.com/en/players/shintaro-mochizuki/m0hu/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7608.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7608/shintaro-mochizuki"
             },
             "player2": {
-              "id": "KE29",
+              "id": "2367",
               "name": "K. Khachanov",
               "country": "RUS",
               "seed": 7,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ke29",
-              "profile_url": "https://www.atptour.com/en/players/karen-khachanov/ke29/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2367.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2367/karen-khachanov"
             },
             "score": {
               "sets": [
@@ -1079,39 +1090,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "KE29",
+              "id": "2367",
               "name": "K. Khachanov",
               "country": "RUS",
               "seed": 7,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ke29",
-              "profile_url": "https://www.atptour.com/en/players/karen-khachanov/ke29/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2367.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2367/karen-khachanov"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms019"
+            "stats_url": null,
+            "scheduled_at": "2026-02-17T12:25Z"
           },
           {
-            "id": "ms020",
+            "id": "169687",
             "round": "R32",
             "match_number": 5,
             "player1": {
-              "id": "MM58",
+              "id": "2383",
               "name": "D. Medvedev",
               "country": "RUS",
               "seed": 4,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/mm58",
-              "profile_url": "https://www.atptour.com/en/players/daniil-medvedev/mm58/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2383.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2383/daniil-medvedev"
             },
             "player2": {
-              "id": "S0RE",
+              "id": "10073",
               "name": "J. Shang",
               "country": "CHN",
               "seed": null,
-              "entry": "PR",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0re",
-              "profile_url": "https://www.atptour.com/en/players/juncheng-shang/s0re/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10073.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10073/shang-juncheng"
             },
             "score": {
               "sets": [
@@ -1127,39 +1139,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "MM58",
+              "id": "2383",
               "name": "D. Medvedev",
               "country": "RUS",
               "seed": 4,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/mm58",
-              "profile_url": "https://www.atptour.com/en/players/daniil-medvedev/mm58/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2383.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2383/daniil-medvedev"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms020"
+            "stats_url": null,
+            "scheduled_at": "2026-02-16T18:10Z"
           },
           {
-            "id": "ms021",
+            "id": "169689",
             "round": "R32",
             "match_number": 6,
             "player1": {
-              "id": "EA13",
+              "id": "3696",
               "name": "M. Echargui",
               "country": "TUN",
               "seed": null,
-              "entry": "WC",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ea13",
-              "profile_url": "https://www.atptour.com/en/players/moez-echargui/ea13/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3696.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3696/moez-echargui"
             },
             "player2": {
-              "id": "TE51",
+              "id": "2869",
               "name": "S. Tsitsipas",
               "country": "GRE",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/te51",
-              "profile_url": "https://www.atptour.com/en/players/stefanos-tsitsipas/te51/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2869.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2869/stefanos-tsitsipas"
             },
             "score": {
               "sets": [
@@ -1175,39 +1188,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "TE51",
+              "id": "2869",
               "name": "S. Tsitsipas",
               "country": "GRE",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/te51",
-              "profile_url": "https://www.atptour.com/en/players/stefanos-tsitsipas/te51/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2869.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2869/stefanos-tsitsipas"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms021"
+            "stats_url": null,
+            "scheduled_at": "2026-02-17T10:40Z"
           },
           {
-            "id": "ms022",
+            "id": "169685",
             "round": "R32",
             "match_number": 7,
             "player1": {
-              "id": "HH26",
+              "id": "3085",
               "name": "U. Humbert",
               "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/hh26",
-              "profile_url": "https://www.atptour.com/en/players/ugo-humbert/hh26/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3085.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3085/ugo-humbert"
             },
             "player2": {
-              "id": "M0CI",
+              "id": "9213",
               "name": "F. Marozsan",
               "country": "HUN",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ci",
-              "profile_url": "https://www.atptour.com/en/players/fabian-marozsan/m0ci/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9213.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9213/fabian-marozsan"
             },
             "score": {
               "sets": [
@@ -1223,39 +1237,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "M0CI",
+              "id": "9213",
               "name": "F. Marozsan",
               "country": "HUN",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ci",
-              "profile_url": "https://www.atptour.com/en/players/fabian-marozsan/m0ci/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9213.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9213/fabian-marozsan"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms022"
+            "stats_url": null,
+            "scheduled_at": "2026-02-17T13:45Z"
           },
           {
-            "id": "ms023",
+            "id": "169686",
             "round": "R32",
             "match_number": 8,
             "player1": {
-              "id": "D0C1",
+              "id": "3897",
               "name": "J. de Jong",
               "country": "NED",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/d0c1",
-              "profile_url": "https://www.atptour.com/en/players/jesper-de-jong/d0c1/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3897.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3897/jesper-de-jong"
             },
             "player2": {
-              "id": "RE44",
+              "id": "2642",
               "name": "A. Rublev",
               "country": "RUS",
               "seed": 5,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/re44",
-              "profile_url": "https://www.atptour.com/en/players/andrey-rublev/re44/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2642.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2642/andrey-rublev"
             },
             "score": {
               "sets": [
@@ -1271,39 +1286,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "RE44",
+              "id": "2642",
               "name": "A. Rublev",
               "country": "RUS",
               "seed": 5,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/re44",
-              "profile_url": "https://www.atptour.com/en/players/andrey-rublev/re44/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2642.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2642/andrey-rublev"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms023"
+            "stats_url": null,
+            "scheduled_at": "2026-02-17T18:45Z"
           },
           {
-            "id": "ms024",
+            "id": "169684",
             "round": "R32",
             "match_number": 9,
             "player1": {
-              "id": "L0BV",
+              "id": "3754",
               "name": "J. Lehecka",
               "country": "CZE",
               "seed": 8,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/l0bv",
-              "profile_url": "https://www.atptour.com/en/players/jiri-lehecka/l0bv/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3754.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3754/jiri-lehecka"
             },
             "player2": {
-              "id": "B0CD",
+              "id": "3621",
               "name": "J. Brooksby",
               "country": "USA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/b0cd",
-              "profile_url": "https://www.atptour.com/en/players/jenson-brooksby/b0cd/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3621.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3621/jenson-brooksby"
             },
             "score": {
               "sets": [
@@ -1319,39 +1335,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "L0BV",
+              "id": "3754",
               "name": "J. Lehecka",
               "country": "CZE",
               "seed": 8,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/l0bv",
-              "profile_url": "https://www.atptour.com/en/players/jiri-lehecka/l0bv/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3754.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3754/jiri-lehecka"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms024"
+            "stats_url": null,
+            "scheduled_at": "2026-02-17T12:05Z"
           },
           {
-            "id": "ms025",
+            "id": "169698",
             "round": "R32",
             "match_number": 10,
             "player1": {
-              "id": "BU13",
+              "id": "3356",
               "name": "Z. Bergs",
               "country": "BEL",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/bu13",
-              "profile_url": "https://www.atptour.com/en/players/zizou-bergs/bu13/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3356.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3356/zizou-bergs"
             },
             "player2": {
-              "id": "M0GZ",
+              "id": "8885",
               "name": "G. Mpetshi Perricard",
               "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0gz",
-              "profile_url": "https://www.atptour.com/en/players/giovanni-mpetshi-perricard/m0gz/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/8885.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/8885/giovanni-mpetshi-perricard"
             },
             "score": {
               "sets": [
@@ -1375,39 +1392,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "BU13",
+              "id": "3356",
               "name": "Z. Bergs",
               "country": "BEL",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/bu13",
-              "profile_url": "https://www.atptour.com/en/players/zizou-bergs/bu13/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3356.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3356/zizou-bergs"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms025"
+            "stats_url": null,
+            "scheduled_at": "2026-02-17T14:45Z"
           },
           {
-            "id": "ms026",
+            "id": "169699",
             "round": "R32",
             "match_number": 11,
             "player1": {
-              "id": "F0F1",
+              "id": "10052",
               "name": "A. Fils",
               "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f0f1",
-              "profile_url": "https://www.atptour.com/en/players/arthur-fils/f0f1/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
             },
             "player2": {
-              "id": "MQ75",
+              "id": "2416",
               "name": "K. Majchrzak",
               "country": "POL",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/mq75",
-              "profile_url": "https://www.atptour.com/en/players/kamil-majchrzak/mq75/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2416.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2416/kamil-majchrzak"
             },
             "score": {
               "sets": [
@@ -1431,39 +1449,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "F0F1",
+              "id": "10052",
               "name": "A. Fils",
               "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f0f1",
-              "profile_url": "https://www.atptour.com/en/players/arthur-fils/f0f1/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms026"
+            "stats_url": null,
+            "scheduled_at": "2026-02-16T14:05Z"
           },
           {
-            "id": "ms027",
+            "id": "169695",
             "round": "R32",
             "match_number": 12,
             "player1": {
-              "id": "CD85",
+              "id": "1590",
               "name": "P. Carreno Busta",
               "country": "ESP",
               "seed": null,
-              "entry": "Q",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/cd85",
-              "profile_url": "https://www.atptour.com/en/players/pablo-carreno-busta/cd85/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/1590.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/1590/pablo-carreno-busta"
             },
             "player2": {
-              "id": "HB64",
+              "id": "2362",
               "name": "Q. Halys",
               "country": "FRA",
               "seed": null,
-              "entry": "LL",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/hb64",
-              "profile_url": "https://www.atptour.com/en/players/quentin-halys/hb64/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2362.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2362/quentin-halys"
             },
             "score": {
               "sets": [
@@ -1483,39 +1502,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "HB64",
+              "id": "2362",
               "name": "Q. Halys",
               "country": "FRA",
               "seed": null,
-              "entry": "LL",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/hb64",
-              "profile_url": "https://www.atptour.com/en/players/quentin-halys/hb64/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2362.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2362/quentin-halys"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms027"
+            "stats_url": null,
+            "scheduled_at": "2026-02-17T10:40Z"
           },
           {
-            "id": "ms028",
+            "id": "169697",
             "round": "R32",
             "match_number": 13,
             "player1": {
-              "id": "M0NI",
+              "id": "10319",
               "name": "J. Mensik",
               "country": "CZE",
               "seed": 6,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ni",
-              "profile_url": "https://www.atptour.com/en/players/jakub-mensik/m0ni/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10319.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10319/jakub-mensik"
             },
             "player2": {
-              "id": "CH12",
+              "id": "2720",
               "name": "J. Choinski",
               "country": "GBR",
               "seed": null,
-              "entry": "Q",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ch12",
-              "profile_url": "https://www.atptour.com/en/players/jan-choinski/ch12/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2720.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2720/jan-choinski"
             },
             "score": {
               "sets": [
@@ -1539,39 +1559,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "M0NI",
+              "id": "10319",
               "name": "J. Mensik",
               "country": "CZE",
               "seed": 6,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ni",
-              "profile_url": "https://www.atptour.com/en/players/jakub-mensik/m0ni/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10319.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10319/jakub-mensik"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms028"
+            "stats_url": null,
+            "scheduled_at": "2026-02-16T12:05Z"
           },
           {
-            "id": "ms029",
+            "id": "169691",
             "round": "R32",
             "match_number": 14,
             "player1": {
-              "id": "Z371",
-              "name": "Z. Zhang",
+              "id": "3024",
+              "name": "Z. Zhizhen",
               "country": "CHN",
               "seed": null,
-              "entry": "PR",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/z371",
-              "profile_url": "https://www.atptour.com/en/players/zhizhen-zhang/z371/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3024.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3024/zhang-zhizhen"
             },
             "player2": {
-              "id": "CF59",
+              "id": "2012",
               "name": "R. Carballes Baena",
               "country": "ESP",
               "seed": null,
-              "entry": "Q",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/cf59",
-              "profile_url": "https://www.atptour.com/en/players/roberto-carballes-baena/cf59/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2012.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2012/roberto-carballes-baena"
             },
             "score": {
               "sets": [
@@ -1587,39 +1608,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "Z371",
-              "name": "Z. Zhang",
+              "id": "3024",
+              "name": "Z. Zhizhen",
               "country": "CHN",
               "seed": null,
-              "entry": "PR",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/z371",
-              "profile_url": "https://www.atptour.com/en/players/zhizhen-zhang/z371/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3024.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3024/zhang-zhizhen"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms029"
+            "stats_url": null,
+            "scheduled_at": "2026-02-17T13:15Z"
           },
           {
-            "id": "ms030",
+            "id": "169693",
             "round": "R32",
             "match_number": 15,
             "player1": {
-              "id": "AC39",
+              "id": "3300",
               "name": "M. Zayid",
               "country": "QAT",
               "seed": null,
-              "entry": "WC",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ac39",
-              "profile_url": "https://www.atptour.com/en/players/mubarak-shannan-zayid/ac39/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3300.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3300/mubarak-shannan-zayid"
             },
             "player2": {
-              "id": "P09Z",
+              "id": "2862",
               "name": "A. Popyrin",
               "country": "AUS",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/p09z",
-              "profile_url": "https://www.atptour.com/en/players/alexei-popyrin/p09z/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2862.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2862/alexei-popyrin"
             },
             "score": {
               "sets": [
@@ -1635,39 +1657,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "P09Z",
+              "id": "2862",
               "name": "A. Popyrin",
               "country": "AUS",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/p09z",
-              "profile_url": "https://www.atptour.com/en/players/alexei-popyrin/p09z/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2862.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2862/alexei-popyrin"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms030"
+            "stats_url": null,
+            "scheduled_at": "2026-02-16T10:40Z"
           },
           {
-            "id": "ms031",
+            "id": "169688",
             "round": "R32",
             "match_number": 16,
             "player1": {
-              "id": "M0FH",
+              "id": "3811",
               "name": "T. Machac",
               "country": "CZE",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0fh",
-              "profile_url": "https://www.atptour.com/en/players/tomas-machac/m0fh/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3811.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3811/tomas-machac"
             },
             "player2": {
-              "id": "S0AG",
+              "id": "3623",
               "name": "J. Sinner",
               "country": "ITA",
               "seed": 2,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0ag",
-              "profile_url": "https://www.atptour.com/en/players/jannik-sinner/s0ag/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3623.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3623/jannik-sinner"
             },
             "score": {
               "sets": [
@@ -1683,17 +1706,18 @@
             },
             "status": "finished",
             "winner": {
-              "id": "S0AG",
+              "id": "3623",
               "name": "J. Sinner",
               "country": "ITA",
               "seed": 2,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0ag",
-              "profile_url": "https://www.atptour.com/en/players/jannik-sinner/s0ag/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3623.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3623/jannik-sinner"
             },
             "points": 20,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms031"
+            "stats_url": null,
+            "scheduled_at": "2026-02-16T16:40Z"
           }
         ]
       },
@@ -1701,26 +1725,26 @@
         "round": "R16",
         "matches": [
           {
-            "id": "ms008",
+            "id": "169703",
             "round": "R16",
             "match_number": 1,
             "player1": {
-              "id": "A0E2",
+              "id": "3782",
               "name": "C. Alcaraz",
               "country": "ESP",
               "seed": 1,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/a0e2",
-              "profile_url": "https://www.atptour.com/en/players/carlos-alcaraz/a0e2/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
             },
             "player2": {
-              "id": "R0EB",
+              "id": "4022",
               "name": "V. Royer",
               "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/r0eb",
-              "profile_url": "https://www.atptour.com/en/players/valentin-royer/r0eb/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4022.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/4022/valentin-royer"
             },
             "score": {
               "sets": [
@@ -1736,39 +1760,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "A0E2",
+              "id": "3782",
               "name": "C. Alcaraz",
               "country": "ESP",
               "seed": 1,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/a0e2",
-              "profile_url": "https://www.atptour.com/en/players/carlos-alcaraz/a0e2/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
             },
             "points": 45,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms008"
+            "stats_url": null,
+            "scheduled_at": "2026-02-18T18:25Z"
           },
           {
-            "id": "ms009",
+            "id": "169700",
             "round": "R16",
             "match_number": 2,
             "player1": {
-              "id": "F724",
+              "id": "1862",
               "name": "M. Fucsovics",
               "country": "HUN",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f724",
-              "profile_url": "https://www.atptour.com/en/players/marton-fucsovics/f724/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/1862.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/1862/marton-fucsovics"
             },
             "player2": {
-              "id": "KE29",
+              "id": "2367",
               "name": "K. Khachanov",
               "country": "RUS",
               "seed": 7,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ke29",
-              "profile_url": "https://www.atptour.com/en/players/karen-khachanov/ke29/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2367.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2367/karen-khachanov"
             },
             "score": {
               "sets": [
@@ -1788,39 +1813,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "KE29",
+              "id": "2367",
               "name": "K. Khachanov",
               "country": "RUS",
               "seed": 7,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ke29",
-              "profile_url": "https://www.atptour.com/en/players/karen-khachanov/ke29/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2367.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2367/karen-khachanov"
             },
             "points": 45,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms009"
+            "stats_url": null,
+            "scheduled_at": "2026-02-18T10:40Z"
           },
           {
-            "id": "ms010",
+            "id": "169701",
             "round": "R16",
             "match_number": 3,
             "player1": {
-              "id": "MM58",
+              "id": "2383",
               "name": "D. Medvedev",
               "country": "RUS",
               "seed": 4,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/mm58",
-              "profile_url": "https://www.atptour.com/en/players/daniil-medvedev/mm58/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2383.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2383/daniil-medvedev"
             },
             "player2": {
-              "id": "TE51",
+              "id": "2869",
               "name": "S. Tsitsipas",
               "country": "GRE",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/te51",
-              "profile_url": "https://www.atptour.com/en/players/stefanos-tsitsipas/te51/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2869.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2869/stefanos-tsitsipas"
             },
             "score": {
               "sets": [
@@ -1836,39 +1862,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "TE51",
+              "id": "2869",
               "name": "S. Tsitsipas",
               "country": "GRE",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/te51",
-              "profile_url": "https://www.atptour.com/en/players/stefanos-tsitsipas/te51/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2869.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2869/stefanos-tsitsipas"
             },
             "points": 45,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms010"
+            "stats_url": null,
+            "scheduled_at": "2026-02-18T13:00Z"
           },
           {
-            "id": "ms011",
+            "id": "169702",
             "round": "R16",
             "match_number": 4,
             "player1": {
-              "id": "M0CI",
+              "id": "9213",
               "name": "F. Marozsan",
               "country": "HUN",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ci",
-              "profile_url": "https://www.atptour.com/en/players/fabian-marozsan/m0ci/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9213.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9213/fabian-marozsan"
             },
             "player2": {
-              "id": "RE44",
+              "id": "2642",
               "name": "A. Rublev",
               "country": "RUS",
               "seed": 5,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/re44",
-              "profile_url": "https://www.atptour.com/en/players/andrey-rublev/re44/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2642.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2642/andrey-rublev"
             },
             "score": {
               "sets": [
@@ -1884,39 +1911,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "RE44",
+              "id": "2642",
               "name": "A. Rublev",
               "country": "RUS",
               "seed": 5,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/re44",
-              "profile_url": "https://www.atptour.com/en/players/andrey-rublev/re44/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2642.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2642/andrey-rublev"
             },
             "points": 45,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms011"
+            "stats_url": null,
+            "scheduled_at": "2026-02-18T14:35Z"
           },
           {
-            "id": "ms012",
+            "id": "169706",
             "round": "R16",
             "match_number": 5,
             "player1": {
-              "id": "L0BV",
+              "id": "3754",
               "name": "J. Lehecka",
               "country": "CZE",
               "seed": 8,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/l0bv",
-              "profile_url": "https://www.atptour.com/en/players/jiri-lehecka/l0bv/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3754.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3754/jiri-lehecka"
             },
             "player2": {
-              "id": "BU13",
+              "id": "3356",
               "name": "Z. Bergs",
               "country": "BEL",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/bu13",
-              "profile_url": "https://www.atptour.com/en/players/zizou-bergs/bu13/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3356.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3356/zizou-bergs"
             },
             "score": {
               "sets": [
@@ -1932,39 +1960,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "L0BV",
+              "id": "3754",
               "name": "J. Lehecka",
               "country": "CZE",
               "seed": 8,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/l0bv",
-              "profile_url": "https://www.atptour.com/en/players/jiri-lehecka/l0bv/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3754.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3754/jiri-lehecka"
             },
             "points": 45,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms012"
+            "stats_url": null,
+            "scheduled_at": "2026-02-18T12:40Z"
           },
           {
-            "id": "ms013",
+            "id": "169707",
             "round": "R16",
             "match_number": 6,
             "player1": {
-              "id": "F0F1",
+              "id": "10052",
               "name": "A. Fils",
               "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f0f1",
-              "profile_url": "https://www.atptour.com/en/players/arthur-fils/f0f1/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
             },
             "player2": {
-              "id": "HB64",
+              "id": "2362",
               "name": "Q. Halys",
               "country": "FRA",
               "seed": null,
-              "entry": "LL",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/hb64",
-              "profile_url": "https://www.atptour.com/en/players/quentin-halys/hb64/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2362.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2362/quentin-halys"
             },
             "score": {
               "sets": [
@@ -1984,39 +2013,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "F0F1",
+              "id": "10052",
               "name": "A. Fils",
               "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f0f1",
-              "profile_url": "https://www.atptour.com/en/players/arthur-fils/f0f1/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
             },
             "points": 45,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms013"
+            "stats_url": null,
+            "scheduled_at": "2026-02-18T12:30Z"
           },
           {
-            "id": "ms014",
+            "id": "169704",
             "round": "R16",
             "match_number": 7,
             "player1": {
-              "id": "M0NI",
+              "id": "10319",
               "name": "J. Mensik",
               "country": "CZE",
               "seed": 6,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ni",
-              "profile_url": "https://www.atptour.com/en/players/jakub-mensik/m0ni/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10319.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10319/jakub-mensik"
             },
             "player2": {
-              "id": "Z371",
-              "name": "Z. Zhang",
+              "id": "3024",
+              "name": "Z. Zhizhen",
               "country": "CHN",
               "seed": null,
-              "entry": "PR",
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/z371",
-              "profile_url": "https://www.atptour.com/en/players/zhizhen-zhang/z371/overview"
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3024.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3024/zhang-zhizhen"
             },
             "score": {
               "sets": [
@@ -2032,39 +2062,40 @@
             },
             "status": "finished",
             "winner": {
-              "id": "M0NI",
+              "id": "10319",
               "name": "J. Mensik",
               "country": "CZE",
               "seed": 6,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ni",
-              "profile_url": "https://www.atptour.com/en/players/jakub-mensik/m0ni/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10319.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10319/jakub-mensik"
             },
             "points": 45,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms014"
+            "stats_url": null,
+            "scheduled_at": "2026-02-18T16:00Z"
           },
           {
-            "id": "ms015",
+            "id": "169705",
             "round": "R16",
             "match_number": 8,
             "player1": {
-              "id": "P09Z",
+              "id": "2862",
               "name": "A. Popyrin",
               "country": "AUS",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/p09z",
-              "profile_url": "https://www.atptour.com/en/players/alexei-popyrin/p09z/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2862.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2862/alexei-popyrin"
             },
             "player2": {
-              "id": "S0AG",
+              "id": "3623",
               "name": "J. Sinner",
               "country": "ITA",
               "seed": 2,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0ag",
-              "profile_url": "https://www.atptour.com/en/players/jannik-sinner/s0ag/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3623.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3623/jannik-sinner"
             },
             "score": {
               "sets": [
@@ -2080,17 +2111,18 @@
             },
             "status": "finished",
             "winner": {
-              "id": "S0AG",
+              "id": "3623",
               "name": "J. Sinner",
               "country": "ITA",
               "seed": 2,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0ag",
-              "profile_url": "https://www.atptour.com/en/players/jannik-sinner/s0ag/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3623.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3623/jannik-sinner"
             },
             "points": 45,
             "prize_money": null,
-            "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2026/451/ms015"
+            "stats_url": null,
+            "scheduled_at": "2026-02-18T16:40Z"
           }
         ]
       },
@@ -2098,120 +2130,220 @@
         "round": "QF",
         "matches": [
           {
-            "id": "QF_1",
+            "id": "169709",
             "round": "QF",
             "match_number": 1,
             "player1": {
-              "id": "A0E2",
+              "id": "3782",
               "name": "C. Alcaraz",
               "country": "ESP",
               "seed": 1,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/a0e2",
-              "profile_url": "https://www.atptour.com/en/players/carlos-alcaraz/a0e2/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
             },
             "player2": {
-              "id": "KE29",
+              "id": "2367",
               "name": "K. Khachanov",
               "country": "RUS",
               "seed": 7,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ke29",
-              "profile_url": "https://www.atptour.com/en/players/karen-khachanov/ke29/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2367.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2367/karen-khachanov"
             },
-            "score": null,
-            "status": "scheduled",
-            "winner": null,
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 7,
+                  "tiebreak": {
+                    "p1": 3,
+                    "p2": 7
+                  }
+                },
+                {
+                  "p1": 6,
+                  "p2": 4
+                },
+                {
+                  "p1": 6,
+                  "p2": 3
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3782",
+              "name": "C. Alcaraz",
+              "country": "ESP",
+              "seed": 1,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
+            },
             "points": 90,
             "prize_money": null,
-            "stats_url": null
+            "stats_url": null,
+            "scheduled_at": "2026-02-19T16:40Z"
           },
           {
-            "id": "QF_2",
+            "id": "169710",
             "round": "QF",
             "match_number": 2,
             "player1": {
-              "id": "TE51",
+              "id": "2869",
               "name": "S. Tsitsipas",
               "country": "GRE",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/te51",
-              "profile_url": "https://www.atptour.com/en/players/stefanos-tsitsipas/te51/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2869.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2869/stefanos-tsitsipas"
             },
             "player2": {
-              "id": "RE44",
+              "id": "2642",
               "name": "A. Rublev",
               "country": "RUS",
               "seed": 5,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/re44",
-              "profile_url": "https://www.atptour.com/en/players/andrey-rublev/re44/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2642.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2642/andrey-rublev"
             },
-            "score": null,
-            "status": "scheduled",
-            "winner": null,
+            "score": {
+              "sets": [
+                {
+                  "p1": 3,
+                  "p2": 6
+                },
+                {
+                  "p1": 6,
+                  "p2": 7,
+                  "tiebreak": {
+                    "p1": 2,
+                    "p2": 7
+                  }
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "2642",
+              "name": "A. Rublev",
+              "country": "RUS",
+              "seed": 5,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2642.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2642/andrey-rublev"
+            },
             "points": 90,
             "prize_money": null,
-            "stats_url": null
+            "stats_url": null,
+            "scheduled_at": "2026-02-19T12:10Z"
           },
           {
-            "id": "QF_3",
+            "id": "169725",
             "round": "QF",
             "match_number": 3,
             "player1": {
-              "id": "L0BV",
+              "id": "3754",
               "name": "J. Lehecka",
               "country": "CZE",
               "seed": 8,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/l0bv",
-              "profile_url": "https://www.atptour.com/en/players/jiri-lehecka/l0bv/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3754.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3754/jiri-lehecka"
             },
             "player2": {
-              "id": "F0F1",
+              "id": "10052",
               "name": "A. Fils",
               "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/f0f1",
-              "profile_url": "https://www.atptour.com/en/players/arthur-fils/f0f1/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
             },
-            "score": null,
-            "status": "scheduled",
-            "winner": null,
+            "score": {
+              "sets": [
+                {
+                  "p1": 3,
+                  "p2": 6
+                },
+                {
+                  "p1": 3,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "10052",
+              "name": "A. Fils",
+              "country": "FRA",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
+            },
             "points": 90,
             "prize_money": null,
-            "stats_url": null
+            "stats_url": null,
+            "scheduled_at": "2026-02-19T14:10Z"
           },
           {
-            "id": "QF_4",
+            "id": "169708",
             "round": "QF",
             "match_number": 4,
             "player1": {
-              "id": "M0NI",
+              "id": "10319",
               "name": "J. Mensik",
               "country": "CZE",
               "seed": 6,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/m0ni",
-              "profile_url": "https://www.atptour.com/en/players/jakub-mensik/m0ni/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10319.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10319/jakub-mensik"
             },
             "player2": {
-              "id": "S0AG",
+              "id": "3623",
               "name": "J. Sinner",
               "country": "ITA",
               "seed": 2,
               "entry": null,
-              "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0ag",
-              "profile_url": "https://www.atptour.com/en/players/jannik-sinner/s0ag/overview"
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3623.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3623/jannik-sinner"
             },
-            "score": null,
-            "status": "scheduled",
-            "winner": null,
+            "score": {
+              "sets": [
+                {
+                  "p1": 7,
+                  "p2": 6,
+                  "tiebreak": {
+                    "p1": 7,
+                    "p2": 3
+                  }
+                },
+                {
+                  "p1": 2,
+                  "p2": 6
+                },
+                {
+                  "p1": 6,
+                  "p2": 3
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "10319",
+              "name": "J. Mensik",
+              "country": "CZE",
+              "seed": 6,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10319.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10319/jakub-mensik"
+            },
             "points": 90,
             "prize_money": null,
-            "stats_url": null
+            "stats_url": null,
+            "scheduled_at": "2026-02-19T19:30Z"
           }
         ]
       },
@@ -2219,62 +2351,110 @@
         "round": "SF",
         "matches": [
           {
-            "id": "SF_1",
+            "id": "169712",
             "round": "SF",
             "match_number": 1,
             "player1": {
-              "id": null,
-              "name": "TBA",
-              "country": null,
-              "seed": null,
+              "id": "3782",
+              "name": "C. Alcaraz",
+              "country": "ESP",
+              "seed": 1,
               "entry": null,
-              "image_url": null,
-              "profile_url": null
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
             },
             "player2": {
-              "id": null,
-              "name": "TBA",
-              "country": null,
-              "seed": null,
+              "id": "2642",
+              "name": "A. Rublev",
+              "country": "RUS",
+              "seed": 5,
               "entry": null,
-              "image_url": null,
-              "profile_url": null
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2642.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2642/andrey-rublev"
             },
-            "score": null,
-            "status": "scheduled",
-            "winner": null,
+            "score": {
+              "sets": [
+                {
+                  "p1": 7,
+                  "p2": 6,
+                  "tiebreak": {
+                    "p1": 7,
+                    "p2": 3
+                  }
+                },
+                {
+                  "p1": 6,
+                  "p2": 4
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3782",
+              "name": "C. Alcaraz",
+              "country": "ESP",
+              "seed": 1,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
+            },
             "points": 180,
             "prize_money": null,
-            "stats_url": null
+            "stats_url": null,
+            "scheduled_at": "2026-02-20T16:40Z"
           },
           {
-            "id": "SF_2",
+            "id": "169711",
             "round": "SF",
             "match_number": 2,
             "player1": {
-              "id": null,
-              "name": "TBA",
-              "country": null,
+              "id": "10052",
+              "name": "A. Fils",
+              "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": null,
-              "profile_url": null
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
             },
             "player2": {
-              "id": null,
-              "name": "TBA",
-              "country": null,
+              "id": "10319",
+              "name": "J. Mensik",
+              "country": "CZE",
+              "seed": 6,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10319.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10319/jakub-mensik"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 4
+                },
+                {
+                  "p1": 7,
+                  "p2": 6,
+                  "tiebreak": {
+                    "p1": 7,
+                    "p2": 4
+                  }
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "10052",
+              "name": "A. Fils",
+              "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": null,
-              "profile_url": null
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
             },
-            "score": null,
-            "status": "scheduled",
-            "winner": null,
             "points": 180,
             "prize_money": null,
-            "stats_url": null
+            "stats_url": null,
+            "scheduled_at": "2026-02-20T19:05Z"
           }
         ]
       },
@@ -2282,33 +2462,53 @@
         "round": "F",
         "matches": [
           {
-            "id": "F_1",
+            "id": "169719",
             "round": "F",
             "match_number": 1,
             "player1": {
-              "id": null,
-              "name": "TBA",
-              "country": null,
-              "seed": null,
+              "id": "3782",
+              "name": "C. Alcaraz",
+              "country": "ESP",
+              "seed": 1,
               "entry": null,
-              "image_url": null,
-              "profile_url": null
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
             },
             "player2": {
-              "id": null,
-              "name": "TBA",
-              "country": null,
+              "id": "10052",
+              "name": "A. Fils",
+              "country": "FRA",
               "seed": null,
               "entry": null,
-              "image_url": null,
-              "profile_url": null
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10052.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/10052/arthur-fils"
             },
-            "score": null,
-            "status": "scheduled",
-            "winner": null,
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 2
+                },
+                {
+                  "p1": 6,
+                  "p2": 1
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3782",
+              "name": "C. Alcaraz",
+              "country": "ESP",
+              "seed": 1,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3782/carlos-alcaraz"
+            },
             "points": 300,
             "prize_money": null,
-            "stats_url": null
+            "stats_url": null,
+            "scheduled_at": "2026-02-21T18:15Z"
           }
         ]
       }
@@ -2322,7 +2522,16 @@
       "W": 500
     },
     "round_prize": {},
-    "champion": null,
-    "source": "atp"
-  }
+    "champion": {
+      "name": "C. Alcaraz",
+      "country": "ESP",
+      "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3782.png"
+    },
+    "source": "espn",
+    "source_year": 2026,
+    "retrieved_at": "2026-07-26T06:47:44.266900Z",
+    "source_event_id": "119-2026",
+    "source_url": "https://www.espn.com/tennis/bracket/_/year/2026/tournamentId/119/type/1"
+  },
+  "espn_event_id": "119-2026"
 }

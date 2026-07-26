@@ -1,43 +1,145 @@
 {
-  "singles_titles": "0",
-  "won_lost": "2 - 0",
-  "prize_money": "$421,433",
+  "singles_titles": "",
+  "won_lost": "",
+  "prize_money": "",
   "singles_serving_stats": {
-    "aces": "7",
-    "double_faults": "6",
-    "first_serve_pct": "61%",
-    "first_serve_won": "60%",
-    "second_serve_won": "36%",
-    "break_points_faced": "19",
-    "break_points_saved": "32%",
-    "service_games_played": "27",
-    "service_games_won": "52%",
-    "service_points_won_pct": "51%"
+    "aces": "",
+    "double_faults": "",
+    "first_serve_pct": "",
+    "first_serve_won": "",
+    "second_serve_won": "",
+    "break_points_faced": "",
+    "break_points_saved": "",
+    "service_games_played": "",
+    "service_games_won": "",
+    "service_points_won_pct": ""
   },
   "singles_return_stats": {
-    "first_return_points_won_pct": "29%",
-    "second_return_points_won_pct": "41%",
-    "break_points_opportunities": "10",
-    "break_points_converted": "30%",
-    "return_games_played": "26",
-    "return_games_won": "12%",
-    "return_points_won": "34%",
-    "total_points_won": "42%"
+    "first_return_points_won_pct": "",
+    "second_return_points_won_pct": "",
+    "break_points_opportunities": "",
+    "break_points_converted": "",
+    "return_games_played": "",
+    "return_games_won": "",
+    "return_points_won": "",
+    "total_points_won": ""
   },
   "raw": {
-    "serve_section": "*   Aces 7\n*   Double Faults 6\n*   1st Serve 61%\n*   1st Serve Points Won 60%\n*   2nd Serve Points Won 36%\n*   Break Points Faced 19\n*   Break Points Saved 32%\n*   Service Games Played 27\n*   Service Games Won 52%\n*   Total Service Points Won 51%",
-    "return_section": "*   1st Serve Return Points Won 29%\n*   2nd Serve Return Points Won 41%\n*   Break Points Opportunities 10\n*   Break Points Converted 30%\n*   Return Games Played 26\n*   Return Games Won 12%\n*   Return Points Won 34%\n*   Total Points Won 42%\n\n[![Image 22: Lexus](http://www.atptour.com/-/media/sites/atp-tour/header/lexus-atp-head2head_1.png)](https://www.lexus.eu/discover-lexus/lexus-atp-tour-partnership)\n\n[![Image 23: Taylor Fritz](http://www.atptour.com/-/media/tennis/players/head-shot/2024/10/09/18/25/fritz_head_2024_october.png?sc=0&hash=9037a7f34b60355b51d54991bf4b4eac) Taylor Fritz USA](http://www.atptour.com/en/players/taylor-fritz/fb98/overview)\n\n3\n\nVs\n\nwins\n\n1\n\n[Show H2H Detail](http://www.atptour.com/en/players/atp-head-2-head/taylor-fritz-vs-sebastian-korda/fb98/k0ah)\n\n[![Image 24: Sebastian Korda](http://www.atptour.com/-/media/tennis/players/head-shot/2024/02/06/20/39/korda_head_2024.png?sc=0&hash=9fffbde510e308b3d301a524c9b38b00) Sebastian Korda USA](http://www.atptour.com/en/players/sebastian-korda/k0ah/overview)\n\n*   7 Rank 53\n*   28 Age 25\n*   189 lb Weight 180 lb\n*   6'5\"Height 6'5\"\n*   Right-handed Plays Right-handed\n*   2015 Turned Pro 2018\n\nSearch Search Choose Player\n\nHeader 2\n--------"
+    "serve_section": "",
+    "return_section": ""
   },
-  "updated_at": "2026-02-13T18:50:18.224989+00:00",
+  "updated_at": "2026-07-26T06:25:59.627748+00:00",
   "recent_matches_tab": {
     "year": 2026,
     "tournaments": [
       {
+        "tournament": "Acapulco Acapulco, Mexico",
+        "location": "",
+        "date_range": "23 Feb, 26",
+        "category": "atp_500",
+        "category_label": "ATP 500",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "summary": {
+          "rank": "181",
+          "seed": "",
+          "wta_points_gain": "13",
+          "atp_points_gain": "13",
+          "prize_money_won": "$9,870",
+          "draw": "",
+          "points": "13"
+        },
+        "matches": [
+          {
+            "round": "Q2",
+            "result": "L",
+            "opponent_name": "E. Ymer",
+            "opponent_seed": 190,
+            "opponent_rank": null,
+            "opponent_id": "Y218",
+            "opponent_url": "http://www.atptour.com/en/players/elias-ymer/y218/overview",
+            "score": "4-6, 4-6",
+            "score_raw": "4 6 4 6 Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/807/qs007"
+          },
+          {
+            "round": "Q1",
+            "result": "L",
+            "opponent_name": "B. Tomic",
+            "opponent_seed": 191,
+            "opponent_rank": null,
+            "opponent_id": "TA46",
+            "opponent_url": "http://www.atptour.com/en/players/bernard-tomic/ta46/overview",
+            "score": "6-3, 3-0",
+            "score_raw": "RET 6 3 3 0 (RET) Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/807/qs015"
+          }
+        ],
+        "tournament_url": "http://www.atptour.com/en/tournaments/acapulco/807/overview"
+      },
+      {
+        "tournament": "Delray Beach Delray Beach, United States",
+        "location": "",
+        "date_range": "16 Feb, 26",
+        "category": "atp_250",
+        "category_label": "ATP 250",
+        "surface": "HARD",
+        "surface_key": "hard",
+        "summary": {
+          "rank": "179",
+          "seed": "",
+          "wta_points_gain": "0",
+          "atp_points_gain": "0",
+          "prize_money_won": "$2,050",
+          "draw": "",
+          "points": "0"
+        },
+        "matches": [
+          {
+            "round": "Q1",
+            "result": "L",
+            "opponent_name": "D. Svrcina",
+            "opponent_seed": 99,
+            "opponent_rank": null,
+            "opponent_id": "S0GD",
+            "opponent_url": "http://www.atptour.com/en/players/dalibor-svrcina/s0gd/overview",
+            "score": "6-3, 1-6, 4-6",
+            "score_raw": "6 3 1 6 4 6 Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/499/qs010"
+          },
+          {
+            "round": "RR",
+            "result": "W",
+            "opponent_name": "R. Bennani",
+            "opponent_seed": 556,
+            "opponent_rank": null,
+            "opponent_id": "B0PU",
+            "opponent_url": "http://www.atptour.com/en/players/reda-bennani/b0pu/overview",
+            "score": "6-1, 4-6, 6-2",
+            "score_raw": "6 1 4 6 6 2 Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/5247/ms000"
+          },
+          {
+            "round": "RR",
+            "result": "W",
+            "opponent_name": "T. Baadi",
+            "opponent_seed": 582,
+            "opponent_rank": null,
+            "opponent_id": "B0D6",
+            "opponent_url": "http://www.atptour.com/en/players/taha-baadi/b0d6/overview",
+            "score": "6-3, 6-2",
+            "score_raw": "6 3 6 2 Bye",
+            "match_stats_url": "http://www.atptour.com/en/scores/match-stats/archive/2026/5247/ms000"
+          }
+        ],
+        "tournament_url": "http://www.atptour.com/en/tournaments/delray-beach/499/overview"
+      },
+      {
         "tournament": "Oeiras 1 Oeiras, Portugal",
         "location": "",
         "date_range": "19 Jan, 26",
-        "category": "other",
-        "category_label": "Tour",
+        "category": "challenger",
+        "category_label": "Challenger",
         "surface": "HARD",
         "surface_key": "hard",
         "summary": {
@@ -126,8 +228,8 @@
         "tournament": "Canberra Canberra, Australia",
         "location": "",
         "date_range": "5 Jan, 26",
-        "category": "other",
-        "category_label": "Tour",
+        "category": "challenger",
+        "category_label": "Challenger",
         "surface": "HARD",
         "surface_key": "hard",
         "summary": {
@@ -180,8 +282,8 @@
         "tournament_url": "http://www.atptour.com/en/tournaments/canberra/7393/overview"
       }
     ],
-    "updated_at": "2026-02-13T18:50:18.224975+00:00"
+    "updated_at": "2026-03-07T07:32:27.495121+00:00"
   },
-  "ytd_prize_money": "$43,572",
-  "career_prize_money": "$421,433"
+  "ytd_prize_money": "",
+  "career_prize_money": ""
 }

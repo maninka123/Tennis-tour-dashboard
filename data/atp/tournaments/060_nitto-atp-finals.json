@@ -22,8 +22,16 @@
   "prize_money_currency": "USD",
   "draw_url": "https://www.atptour.com/en/scores/current/nitto-atp-finals/605/players-draws",
   "scores_url": "https://www.atptour.com/en/scores/current/nitto-atp-finals/605/results",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "name": "J. Sinner",
+    "country": "ITA",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0ag"
+  },
+  "runner_up": {
+    "name": "C. Alcaraz",
+    "country": "ESP",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/a0e2"
+  },
   "draw": {
     "draw_size": 8,
     "surface": "Hard (Indoor)",
@@ -88,8 +96,8 @@
       "winner_side": "A"
     },
     {
-      "match_id": "Finals_1",
-      "round_id": "Finals",
+      "match_id": "F_1",
+      "round_id": "F",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
@@ -121,12 +129,12 @@
     "tournament_category": "finals",
     "tournament_surface": "Hard (Indoor)",
     "tournament_year": 2026,
-    "tournament_status": "upcoming",
+    "tournament_status": "finished",
     "tournament_tour": "atp",
     "draw_size": 8,
     "rounds": [
       "SF",
-      "Finals"
+      "F"
     ],
     "matches": [
       {
@@ -231,11 +239,11 @@
         ]
       },
       {
-        "round": "Finals",
+        "round": "F",
         "matches": [
           {
-            "id": "Finals_1",
-            "round": "Finals",
+            "id": "F_1",
+            "round": "F",
             "match_number": 1,
             "player1": {
               "id": "A0E2",
@@ -281,7 +289,7 @@
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0ag",
               "profile_url": "https://www.atptour.com/en/players/jannik-sinner/s0ag/overview"
             },
-            "points": null,
+            "points": 500,
             "prize_money": null,
             "stats_url": null
           }
@@ -295,7 +303,12 @@
       "W": 1500
     },
     "round_prize": {},
-    "champion": null,
-    "source": "atp"
+    "champion": {
+      "name": "J. Sinner",
+      "country": "ITA",
+      "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0ag"
+    },
+    "source": "atp",
+    "source_year": 2025
   }
 }

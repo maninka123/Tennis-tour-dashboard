@@ -22,8 +22,16 @@
   "prize_money_currency": "USD",
   "draw_url": "https://www.atptour.com/en/scores/current/almaty/9410/draws",
   "scores_url": "https://www.atptour.com/en/scores/current/almaty/9410/results",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "name": "D. Medvedev",
+    "country": "RUS",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/mm58"
+  },
+  "runner_up": {
+    "name": "C. Moutet",
+    "country": "FRA",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/mw02"
+  },
   "draw": {
     "draw_size": 28,
     "surface": "Hard (Indoor)",
@@ -109,7 +117,7 @@
         "seed": null,
         "entry": null,
         "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-        "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+        "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
       },
       "score_string": "6-7(7) 6-7(14)",
       "winner_side": "B"
@@ -505,7 +513,7 @@
         "seed": null,
         "entry": null,
         "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-        "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+        "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
       },
       "player_b": {
         "id": "MW02",
@@ -845,7 +853,7 @@
     },
     {
       "match_id": "ms001",
-      "round_id": "Finals",
+      "round_id": "F",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
@@ -877,7 +885,7 @@
     "tournament_category": "atp_250",
     "tournament_surface": "Hard (Indoor)",
     "tournament_year": 2026,
-    "tournament_status": "upcoming",
+    "tournament_status": "finished",
     "tournament_tour": "atp",
     "draw_size": 28,
     "rounds": [
@@ -885,7 +893,7 @@
       "R16",
       "QF",
       "SF",
-      "Finals"
+      "F"
     ],
     "matches": [
       {
@@ -1000,7 +1008,7 @@
               "seed": null,
               "entry": null,
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-              "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+              "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
             },
             "score": {
               "sets": [
@@ -1030,7 +1038,7 @@
               "seed": null,
               "entry": null,
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-              "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+              "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
             },
             "points": 10,
             "prize_money": null,
@@ -1735,7 +1743,7 @@
               "seed": null,
               "entry": null,
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/s0h2",
-              "profile_url": "https://www.atptour.com/en/players/alexander-shevchenko/s0h2/overview"
+              "profile_url": "https://www.atptour.com/en/players/aleksandr-shevchenko/s0h2/overview"
             },
             "player2": {
               "id": "MW02",
@@ -2393,11 +2401,11 @@
         ]
       },
       {
-        "round": "Finals",
+        "round": "F",
         "matches": [
           {
             "id": "ms001",
-            "round": "Finals",
+            "round": "F",
             "match_number": 1,
             "player1": {
               "id": "MW02",
@@ -2443,7 +2451,7 @@
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/mm58",
               "profile_url": "https://www.atptour.com/en/players/daniil-medvedev/mm58/overview"
             },
-            "points": null,
+            "points": 150,
             "prize_money": null,
             "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2025/9410/ms001"
           }
@@ -2459,7 +2467,12 @@
       "W": 250
     },
     "round_prize": {},
-    "champion": null,
-    "source": "atp"
+    "champion": {
+      "name": "D. Medvedev",
+      "country": "RUS",
+      "image_url": "https://www.atptour.com/-/media/alias/player-headshot/mm58"
+    },
+    "source": "atp",
+    "source_year": 2025
   }
 }

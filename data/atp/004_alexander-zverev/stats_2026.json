@@ -1,34 +1,34 @@
 {
-  "singles_titles": "0",
-  "won_lost": "6 - 2",
-  "prize_money": "$59,278,967",
+  "singles_titles": "",
+  "won_lost": "",
+  "prize_money": "",
   "singles_serving_stats": {
-    "aces": "6117",
-    "double_faults": "2552",
-    "first_serve_pct": "67%",
-    "first_serve_won": "75%",
-    "second_serve_won": "51%",
-    "break_points_faced": "3897",
-    "break_points_saved": "62%",
-    "service_games_played": "9305",
-    "service_games_won": "84%",
-    "service_points_won_pct": "67%"
+    "aces": "",
+    "double_faults": "",
+    "first_serve_pct": "",
+    "first_serve_won": "",
+    "second_serve_won": "",
+    "break_points_faced": "",
+    "break_points_saved": "",
+    "service_games_played": "",
+    "service_games_won": "{{stats || 0}}%Service Games Played{{stats || 0}}Total Service Points Won{{stats || 0}}%Aces{{stats || 0}}Double Faults{{stats || 0}}1st Serve{{stats || 0}}%1st Serve Points Won{{stats || 0}}%2nd Serve Points Won{{stats || 0}}%Break Points Saved{{stats || 0}}%Break Points Faced{{stats || 0}}",
+    "service_points_won_pct": ""
   },
   "singles_return_stats": {
-    "first_return_points_won_pct": "30%",
-    "second_return_points_won_pct": "51%",
-    "break_points_opportunities": "5571",
-    "break_points_converted": "41%",
-    "return_games_played": "9328",
-    "return_games_won": "24%",
-    "return_points_won": "38%",
-    "total_points_won": "52%"
+    "first_return_points_won_pct": "",
+    "second_return_points_won_pct": "",
+    "break_points_opportunities": "",
+    "break_points_converted": "",
+    "return_games_played": "",
+    "return_games_won": "{{stats || 0}}%Return Games Played{{stats || 0}}Return Points Won{{stats || 0}}%Total Points Won{{stats || 0}}%1st Serve Return Points Won{{stats || 0}}%2nd Serve Return Points Won{{stats || 0}}%Break Points Converted{{stats || 0}}%Break Points Opportunities{{stats || 0}}",
+    "return_points_won": "",
+    "total_points_won": ""
   },
   "raw": {
-    "serve_section": "*   Aces 6117\n*   Double Faults 2552\n*   1st Serve 67%\n*   1st Serve Points Won 75%\n*   2nd Serve Points Won 51%\n*   Break Points Faced 3897\n*   Break Points Saved 62%\n*   Service Games Played 9305\n*   Service Games Won 84%\n*   Total Service Points Won 67%",
-    "return_section": "*   1st Serve Return Points Won 30%\n*   2nd Serve Return Points Won 51%\n*   Break Points Opportunities 5571\n*   Break Points Converted 41%\n*   Return Games Played 9328\n*   Return Games Won 24%\n*   Return Points Won 38%\n*   Total Points Won 52%\n\n[![Image 22: Lexus](http://www.atptour.com/-/media/sites/atp-tour/header/lexus-atp-head2head_1.png)](https://www.lexus.eu/discover-lexus/lexus-atp-tour-partnership)\n\n[![Image 23: Alex de Minaur](http://www.atptour.com/-/media/tennis/players/gladiator/2026/01/20/00/47/de-minaur_head_2026_final.png?sc=0&hash=b7a4d9f15b052e06a196f69fbad52a2b) Alex de Minaur AUS](http://www.atptour.com/en/players/alex-de-minaur/dh58/overview)\n\n5\n\nVs\n\nwins\n\n2\n\n[Show H2H Detail](http://www.atptour.com/en/players/atp-head-2-head/alex-de-minaur-vs-ugo-humbert/dh58/hh26)\n\n[![Image 24: Ugo Humbert](http://www.atptour.com/-/media/tennis/players/head-shot/2024/02/23/20/02/humbert_head_2024.png?sc=0&hash=acf1dc38b2e010f598de5371783e8d3d) Ugo Humbert FRA](http://www.atptour.com/en/players/ugo-humbert/hh26/overview)\n\n*   8 Rank 36\n*   26 Age 27\n*   152 lb Weight 160 lb\n*   6'0\"Height 6'2\"\n*   Right-handed Plays Left-handed\n*   2015 Turned Pro 2016\n\nSearch Search Choose Player\n\nHeader 2\n--------"
+    "serve_section": "*   Service Games Won{{stats || 0}}%Service Games Played{{stats || 0}}Total Service Points Won{{stats || 0}}%Aces{{stats || 0}}Double Faults{{stats || 0}}1st Serve{{stats || 0}}%1st Serve Points Won{{stats || 0}}%2nd Serve Points Won{{stats || 0}}%Break Points Saved{{stats || 0}}%Break Points Faced{{stats || 0}}",
+    "return_section": "*   Return Games Won{{stats || 0}}%Return Games Played{{stats || 0}}Return Points Won{{stats || 0}}%Total Points Won{{stats || 0}}%1st Serve Return Points Won{{stats || 0}}%2nd Serve Return Points Won{{stats || 0}}%Break Points Converted{{stats || 0}}%Break Points Opportunities{{stats || 0}}\n\n[![Image 15: H2H Logo Brand](http://www.atptour.com/-/media/sites/atp-tour/header/lexus_atp_head2head_ondark_rgb.png)](https://www.lexus.eu/discover-lexus/lexus-atp-tour-partnership)[Show H2H Detail](http://www.atptour.com/en/players/atp-head-2-head)\n\n[![Image 16](http://www.atptour.com/en/players/alexander-zverev/z355/player-stats) {{player.firstName}}{{player.lastName}} {{player.PlayerCountryCode}} {{player.winCount}} Vs {{opponent.winCount}} ![Image 17](http://www.atptour.com/en/players/alexander-zverev/z355/player-stats) {{opponent.firstName}}{{opponent.lastName}} {{opponent.PlayerCountryCode}}](http://www.atptour.com/en/players/atp-head-2-head)\n\n[![Image 18](http://www.atptour.com/en/players/alexander-zverev/z355/player-stats) {{player.firstName}}{{player.lastName}} {{player.PlayerCountryCode}}](http://www.atptour.com/en/players/alexander-zverev/z355/player-stats)\n\n{{player.winCount}}\n\nVs\n\nwins\n\n{{opponent.winCount}}\n\n[Show H2H Detail](http://www.atptour.com/en/players/alexander-zverev/z355/player-stats)\n\n[![Image 19](http://www.atptour.com/en/players/alexander-zverev/z355/player-stats) {{opponent.firstName}}{{opponent.lastName}} {{opponent.PlayerCountryCode}}](http://www.atptour.com/en/players/alexander-zverev/z355/player-stats)\n\n[Performance Zone](https://www.atptour.com/en/stats/performance-zone)[Win/Loss Index](https://www.atptour.com/en/stats/win-loss-index)\n\n*   {{player.ranking}}Rank{{opponent.ranking}}\n*   {{player.Age ? player.Age : '-'}}Age{{opponent.Age ? opponent.Age : '-'}}\n*   {{getWeightInLB.player}}Weight{{getWeightInLB.opponent}}\n*   {{getHeightInFeetInch.player}}Height{{getHeightInFeetInch.opponent}}\n*   {{getPlayHand.player}}Plays{{getPlayHand.opponent}}\n*   {{player.ProYear ? player.ProYear : '-'}}Turned Pro{{opponent.ProYear ? opponent.ProYear : '-'}}\n\nSearch Search Choose Player\n\n*   {{item.FirstName}} {{item.LastName}}\n\n{{player.firstName}} {{player.lastName}}\n\n{{player.PlayerCountryCode}}\n\n[Performance Zone](https://www.atptour.com/en/stats/performance-zone)[Win/Loss Index](https://www.atptour.com/en/stats/win-loss-index)\n\n{{opponent.firstName}} {{opponent.lastName}}\n\n{{opponent.PlayerCountryCode}}\n\n*   {{item.FirstName}} {{item.LastName}}\n\n## Header 2"
   },
-  "updated_at": "2026-02-14T03:13:58.891321+00:00",
+  "updated_at": "2026-07-26T05:54:46.226493+00:00",
   "recent_matches_tab": {
     "year": 2026,
     "tournaments": [
@@ -171,8 +171,8 @@
         "tournament_url": "http://www.atptour.com/en/tournaments/united-cup/9900/overview"
       }
     ],
-    "updated_at": "2026-02-14T03:13:58.891291+00:00"
+    "updated_at": "2026-02-19T13:50:39.380793+00:00"
   },
-  "ytd_prize_money": "$1,144,375",
-  "career_prize_money": "$59,278,967"
+  "ytd_prize_money": "",
+  "career_prize_money": ""
 }

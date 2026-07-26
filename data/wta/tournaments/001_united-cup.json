@@ -17,10 +17,19 @@
   "draw_size_doubles": 0,
   "prize_money": 5903345,
   "prize_money_currency": "USD",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "name": "POL",
+    "country": "POL",
+    "image_url": null
+  },
+  "runner_up": {
+    "name": "SUI",
+    "country": "SUI",
+    "image_url": null
+  },
   "draw_year": null,
   "draw": null,
   "scores_year": 2026,
-  "matches": []
+  "matches": [],
+  "shared_draw_source": "atp_united_cup"
 }

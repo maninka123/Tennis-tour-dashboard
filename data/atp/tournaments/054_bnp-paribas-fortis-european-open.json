@@ -22,8 +22,16 @@
   "prize_money_currency": "USD",
   "draw_url": "https://www.atptour.com/en/scores/current/brussels/7485/draws",
   "scores_url": "https://www.atptour.com/en/scores/current/brussels/7485/results",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "name": "F. Auger-Aliassime",
+    "country": "CAN",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ag37"
+  },
+  "runner_up": {
+    "name": "J. Lehecka",
+    "country": "CZE",
+    "image_url": "https://www.atptour.com/-/media/alias/player-headshot/l0bv"
+  },
   "draw": {
     "draw_size": 28,
     "surface": "Hard (Indoor)",
@@ -845,7 +853,7 @@
     },
     {
       "match_id": "ms001",
-      "round_id": "Finals",
+      "round_id": "F",
       "draw_level_type": "M",
       "draw_match_type": "S",
       "match_state": "F",
@@ -877,7 +885,7 @@
     "tournament_category": "atp_250",
     "tournament_surface": "Hard (Indoor)",
     "tournament_year": 2026,
-    "tournament_status": "upcoming",
+    "tournament_status": "finished",
     "tournament_tour": "atp",
     "draw_size": 28,
     "rounds": [
@@ -885,7 +893,7 @@
       "R16",
       "QF",
       "SF",
-      "Finals"
+      "F"
     ],
     "matches": [
       {
@@ -2425,11 +2433,11 @@
         ]
       },
       {
-        "round": "Finals",
+        "round": "F",
         "matches": [
           {
             "id": "ms001",
-            "round": "Finals",
+            "round": "F",
             "match_number": 1,
             "player1": {
               "id": "L0BV",
@@ -2483,7 +2491,7 @@
               "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ag37",
               "profile_url": "https://www.atptour.com/en/players/felix-auger-aliassime/ag37/overview"
             },
-            "points": null,
+            "points": 150,
             "prize_money": null,
             "stats_url": "https://www.atptour.com/en/scores/stats-centre/archive/2025/7485/ms001"
           }
@@ -2499,7 +2507,12 @@
       "W": 250
     },
     "round_prize": {},
-    "champion": null,
-    "source": "atp"
+    "champion": {
+      "name": "F. Auger-Aliassime",
+      "country": "CAN",
+      "image_url": "https://www.atptour.com/-/media/alias/player-headshot/ag37"
+    },
+    "source": "atp",
+    "source_year": 2025
   }
 }

@@ -12,13 +12,21 @@
   "indoor_outdoor": "I",
   "city": "LES SABLES D'OLONNE",
   "country": "FRA",
-  "status": "inprogress",
+  "status": "finished",
   "draw_size_singles": 32,
   "draw_size_doubles": 8,
   "prize_money": 115000,
   "prize_money_currency": "USD",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "id": "330149",
+    "name": "Dominika Salkova",
+    "country": "CZE"
+  },
+  "runner_up": {
+    "id": "318080",
+    "name": "Andrea Lazaro Garcia",
+    "country": "ESP"
+  },
   "draw_year": 2026,
   "draw": {
     "draw_size": 32,
@@ -1053,10 +1061,10 @@
           },
           {
             "id": "LS009",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "KORNEEVA, Alina",
+            "result_score": "63 60",
+            "winner_slot": "B",
+            "result_name_and_score": "Alina Korneeva d. Harmony Tan 63 60",
             "players": [
               {
                 "slot": "A",
@@ -1185,10 +1193,10 @@
           },
           {
             "id": "LS013",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "FERRO, Fiona",
+            "result_score": "61 32",
+            "winner_slot": "B",
+            "result_name_and_score": "Fiona Ferro d. Kristina Mladenovic 61 32",
             "players": [
               {
                 "slot": "A",
@@ -1218,10 +1226,10 @@
           },
           {
             "id": "LS014",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "LAZARO GARCIA, Andrea",
+            "result_score": "36 64 75",
+            "winner_slot": "A",
+            "result_name_and_score": "Andrea Lazaro Garcia d. Manon Leonard 36 64 75",
             "players": [
               {
                 "slot": "A",
@@ -1289,10 +1297,10 @@
         "matches": [
           {
             "id": "LS004",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "KORNEEVA, Alina",
+            "result_score": "61 62",
+            "winner_slot": "B",
+            "result_name_and_score": "Alina Korneeva d. Carol Young Suh Lee 61 62",
             "players": [
               {
                 "slot": "A",
@@ -1308,24 +1316,24 @@
               },
               {
                 "slot": "B",
-                "display": "N/A",
+                "display": "Alina Korneeva",
                 "seed": "",
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 331330,
+                  "first_name": "Alina",
+                  "last_name": "Korneeva",
+                  "country": "RUS"
                 }
               }
             ]
           },
           {
             "id": "LS005",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[8] SALKOVA, Dominika",
+            "result_score": "26 64 62",
+            "winner_slot": "B",
+            "result_name_and_score": "Dominika Salkova d. Mona Barthel 26 64 62",
             "players": [
               {
                 "slot": "A",
@@ -1355,10 +1363,10 @@
           },
           {
             "id": "LS006",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "FERRO, Fiona",
+            "result_score": "64 63",
+            "winner_slot": "B",
+            "result_name_and_score": "Fiona Ferro d. Sofia Costoulas 64 63",
             "players": [
               {
                 "slot": "A",
@@ -1374,35 +1382,35 @@
               },
               {
                 "slot": "B",
-                "display": "N/A",
+                "display": "Fiona Ferro",
                 "seed": "",
-                "entry_type": "",
+                "entry_type": "WC",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 319969,
+                  "first_name": "Fiona",
+                  "last_name": "Ferro",
+                  "country": "FRA"
                 }
               }
             ]
           },
           {
             "id": "LS007",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "LAZARO GARCIA, Andrea",
+            "result_score": "64 63",
+            "winner_slot": "A",
+            "result_name_and_score": "Andrea Lazaro Garcia d. Diana Martynov 64 63",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
+                "display": "Andrea Lazaro Garcia",
                 "seed": "",
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 318080,
+                  "first_name": "Andrea",
+                  "last_name": "Lazaro Garcia",
+                  "country": "ESP"
                 }
               },
               {
@@ -1426,66 +1434,66 @@
         "matches": [
           {
             "id": "LS002",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[8] SALKOVA, Dominika",
+            "result_score": "76(5) 62",
+            "winner_slot": "B",
+            "result_name_and_score": "Dominika Salkova d. Alina Korneeva 76(5) 62",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
+                "display": "Alina Korneeva",
                 "seed": "",
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 331330,
+                  "first_name": "Alina",
+                  "last_name": "Korneeva",
+                  "country": "RUS"
                 }
               },
               {
                 "slot": "B",
-                "display": "N/A",
-                "seed": "",
+                "display": "Dominika Salkova",
+                "seed": 8,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 330149,
+                  "first_name": "Dominika",
+                  "last_name": "Salkova",
+                  "country": "CZE"
                 }
               }
             ]
           },
           {
             "id": "LS003",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "LAZARO GARCIA, Andrea",
+            "result_score": "62 62",
+            "winner_slot": "B",
+            "result_name_and_score": "Andrea Lazaro Garcia d. Fiona Ferro 62 62",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
+                "display": "Fiona Ferro",
                 "seed": "",
-                "entry_type": "",
+                "entry_type": "WC",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 319969,
+                  "first_name": "Fiona",
+                  "last_name": "Ferro",
+                  "country": "FRA"
                 }
               },
               {
                 "slot": "B",
-                "display": "N/A",
+                "display": "Andrea Lazaro Garcia",
                 "seed": "",
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 318080,
+                  "first_name": "Andrea",
+                  "last_name": "Lazaro Garcia",
+                  "country": "ESP"
                 }
               }
             ]
@@ -2330,12 +2338,12 @@
     },
     {
       "match_id": "LD007",
-      "round_id": 3,
+      "round_id": "Q",
       "draw_level_type": "M",
       "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-19T13:00+01:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-19T11:49:19.94+00:00",
+      "duration": "01:40:08",
       "player_a": {
         "id": "318925",
         "name": "Alicia Barnett",
@@ -2346,65 +2354,32 @@
         "name": "Madeleine Brooks",
         "country": "GBR"
       },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
-    },
-    {
-      "match_id": "LD005",
-      "round_id": 3,
-      "draw_level_type": "M",
-      "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-19T14:30+01:00",
-      "duration": null,
-      "player_a": {
-        "id": "329383",
-        "name": "Carol Young Suh Lee",
-        "country": "USA"
-      },
-      "player_b": {
-        "id": "318201",
-        "name": "Camilla Rosatello",
-        "country": "ITA"
-      },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
-    },
-    {
-      "match_id": "LS013",
-      "round_id": 4,
-      "draw_level_type": "M",
-      "draw_match_type": "S",
-      "match_state": "U",
-      "scheduled": "2026-02-19T16:30+01:00",
-      "duration": null,
-      "player_a": {
-        "id": "315616",
-        "name": "Kristina Mladenovic",
-        "country": "FRA"
-      },
-      "player_b": {
-        "id": "319969",
-        "name": "Fiona Ferro",
-        "country": "FRA"
-      },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
+      "score_string": "6-3,4-6,1-0(6)",
+      "result_string": "A. Barnett / E. Lechemia d [2]M. Brooks / A. Moratelli 6-3,4-6,1-0(6)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "1",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
     },
     {
       "match_id": "LS009",
-      "round_id": 4,
+      "round_id": "2",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59+01:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-19T13:55:07.283+00:00",
+      "duration": "01:02:35",
       "player_a": {
         "id": "320016",
         "name": "Harmony Tan",
@@ -2415,19 +2390,60 @@
         "name": "Alina Korneeva",
         "country": "RUS"
       },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
+      "score_string": "6-3,6-0",
+      "result_string": "A. Korneeva d H. Tan 6-3,6-0",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "0",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS013",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-19T15:21:57.26+00:00",
+      "duration": "00:59:41",
+      "player_a": {
+        "id": "315616",
+        "name": "Kristina Mladenovic",
+        "country": "FRA"
+      },
+      "player_b": {
+        "id": "319969",
+        "name": "Fiona Ferro",
+        "country": "FRA"
+      },
+      "score_string": "6-1,3-2 Ret'd",
+      "result_string": "F. Ferro d K. Mladenovic 6-1,3-2 Ret'd",
+      "sets": [
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "3"
+        }
+      ],
+      "winner_side": "B"
     },
     {
       "match_id": "LS014",
-      "round_id": 4,
+      "round_id": "2",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59+01:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-19T16:51:35.87+00:00",
+      "duration": "02:34:50",
       "player_a": {
         "id": "318080",
         "name": "Andrea Lazaro Garcia",
@@ -2438,10 +2454,387 @@
         "name": "Manon Leonard",
         "country": "FRA"
       },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
+      "score_string": "3-6,6-4,7-5",
+      "result_string": "A. Lazaro Garcia d M. Leonard 3-6,6-4,7-5",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "7",
+          "b": "5"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS004",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-20T09:48:56.07+00:00",
+      "duration": "01:09:16",
+      "player_a": {
+        "id": "329383",
+        "name": "Carol Young Suh Lee",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "331330",
+        "name": "Alina Korneeva",
+        "country": "RUS"
+      },
+      "score_string": "6-1,6-2",
+      "result_string": "A. Korneeva d C. Lee 6-1,6-2",
+      "sets": [
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS006",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-20T11:46:56.757+00:00",
+      "duration": "01:25:19",
+      "player_a": {
+        "id": "330451",
+        "name": "Sofia Costoulas",
+        "country": "BEL"
+      },
+      "player_b": {
+        "id": "319969",
+        "name": "Fiona Ferro",
+        "country": "FRA"
+      },
+      "score_string": "6-4,6-3",
+      "result_string": "F. Ferro d [6]S. Costoulas 6-4,6-3",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD002",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-20T13:24:06.143+00:00",
+      "duration": "00:48:41",
+      "player_a": {
+        "id": "318181",
+        "name": "Estelle Cascino",
+        "country": "FRA"
+      },
+      "player_b": {
+        "id": "329383",
+        "name": "Carol Young Suh Lee",
+        "country": "USA"
+      },
+      "score_string": "6-1,6-2",
+      "result_string": "C. Lee / A. Siskova d [1]E. Cascino / S. Feng 6-1,6-2",
+      "sets": [
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS005",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-20T13:36:35.023+00:00",
+      "duration": "01:45:40",
+      "player_a": {
+        "id": "315365",
+        "name": "Mona Barthel",
+        "country": "GER"
+      },
+      "player_b": {
+        "id": "330149",
+        "name": "Dominika Salkova",
+        "country": "CZE"
+      },
+      "score_string": "2-6,6-4,6-2",
+      "result_string": "[8]D. Salkova d M. Barthel 2-6,6-4,6-2",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD006",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-20T15:35:21.147+00:00",
+      "duration": "01:12:24",
+      "player_a": {
+        "id": "319969",
+        "name": "Fiona Ferro",
+        "country": "FRA"
+      },
+      "player_b": {
+        "id": "320735",
+        "name": "Aliona Bolsova",
+        "country": "ESP"
+      },
+      "score_string": "6-3,2-6,1-0(3)",
+      "result_string": "A. Bolsova / I. Burillo d F. Ferro / H. Tan 6-3,2-6,1-0(3)",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "0",
+          "b": "1"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS007",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-20T17:03:30.427+00:00",
+      "duration": "01:30:24",
+      "player_a": {
+        "id": "318080",
+        "name": "Andrea Lazaro Garcia",
+        "country": "ESP"
+      },
+      "player_b": {
+        "id": "328625",
+        "name": "Diana Martynov",
+        "country": "FRA"
+      },
+      "score_string": "6-4,6-3",
+      "result_string": "A. Lazaro Garcia d D. Martynov 6-4,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD003",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-21T11:53:22.853+00:00",
+      "duration": "01:19:20",
+      "player_a": {
+        "id": "320735",
+        "name": "Aliona Bolsova",
+        "country": "ESP"
+      },
+      "player_b": {
+        "id": "318925",
+        "name": "Alicia Barnett",
+        "country": "GBR"
+      },
+      "score_string": "3-6,6-3,1-0(2)",
+      "result_string": "A. Bolsova / I. Burillo d A. Barnett / E. Lechemia 3-6,6-3,1-0(2)",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "1",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS002",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-21T13:50:23.757+00:00",
+      "duration": "01:28:11",
+      "player_a": {
+        "id": "331330",
+        "name": "Alina Korneeva",
+        "country": "RUS"
+      },
+      "player_b": {
+        "id": "330149",
+        "name": "Dominika Salkova",
+        "country": "CZE"
+      },
+      "score_string": "7-6(5),6-2",
+      "result_string": "[8]D. Salkova d A. Korneeva 7-6(5),6-2",
+      "sets": [
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS003",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-21T15:39:27.803+00:00",
+      "duration": "01:33:05",
+      "player_a": {
+        "id": "319969",
+        "name": "Fiona Ferro",
+        "country": "FRA"
+      },
+      "player_b": {
+        "id": "318080",
+        "name": "Andrea Lazaro Garcia",
+        "country": "ESP"
+      },
+      "score_string": "6-2,6-2",
+      "result_string": "A. Lazaro Garcia d F. Ferro 6-2,6-2",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD001",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-22T11:49:30.177+00:00",
+      "duration": "01:15:28",
+      "player_a": {
+        "id": "329383",
+        "name": "Carol Young Suh Lee",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "320735",
+        "name": "Aliona Bolsova",
+        "country": "ESP"
+      },
+      "score_string": "6-2,6-3",
+      "result_string": "C. Lee / A. Siskova d A. Bolsova / I. Burillo 6-2,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS001",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-22T13:50:33.757+00:00",
+      "duration": "01:04:01",
+      "player_a": {
+        "id": "330149",
+        "name": "Dominika Salkova",
+        "country": "CZE"
+      },
+      "player_b": {
+        "id": "318080",
+        "name": "Andrea Lazaro Garcia",
+        "country": "ESP"
+      },
+      "score_string": "6-4,6-0",
+      "result_string": "[8]D. Salkova d A. Lazaro Garcia 6-4,6-0",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
     }
   ]
 }

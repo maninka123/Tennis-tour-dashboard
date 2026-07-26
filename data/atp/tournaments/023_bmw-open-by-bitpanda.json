@@ -15,15 +15,23 @@
   "city": "Munich",
   "country": "Germany",
   "location": "Munich, Germany",
-  "status": "upcoming",
+  "status": "finished",
   "draw_size_singles": 32,
   "draw_size_doubles": 16,
   "prize_money": "€2,814,655",
   "prize_money_currency": "USD",
-  "draw_url": "https://www.atptour.com/en/scores/current/munich/308/draws",
-  "scores_url": "https://www.atptour.com/en/scores/current/munich/308/results",
-  "champion": null,
-  "runner_up": null,
+  "draw_url": "https://www.atptour.com/en/scores/archive/munich/308/2026/draws",
+  "scores_url": "https://www.atptour.com/en/scores/archive/munich/308/2026/results",
+  "champion": {
+    "name": "B. Shelton",
+    "country": "USA",
+    "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png"
+  },
+  "runner_up": {
+    "name": "F. Cobolli",
+    "country": "ITA",
+    "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png"
+  },
   "draw": {
     "draw_size": 32,
     "surface": "Clay",
@@ -32,18 +40,2483 @@
     "breakdown": [],
     "results": []
   },
-  "matches": [],
+  "matches": [
+    {
+      "match_id": "173956",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "2375",
+        "name": "A. Zverev",
+        "country": "GER",
+        "seed": 1,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2375.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2375/alexander-zverev"
+      },
+      "player_b": {
+        "id": "2874",
+        "name": "M. Kecmanovic",
+        "country": "SER",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2874.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2874/miomir-kecmanovic"
+      },
+      "score_string": "6-3 3-6 7-6",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173943",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "3885",
+        "name": "G. Diallo",
+        "country": "CAN",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3885.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3885/gabriel-diallo"
+      },
+      "player_b": {
+        "id": "4026",
+        "name": "V. Sachko",
+        "country": "UKR",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4026.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/4026/vitaliy-sachko"
+      },
+      "score_string": "6-1 6-2",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173941",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "3310",
+        "name": "B. Van De Zandschulp",
+        "country": "NED",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3310.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3310/botic-van-de-zandschulp"
+      },
+      "player_b": {
+        "id": "3481",
+        "name": "M. Huesler",
+        "country": "SUI",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3481.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3481/marc-andrea-huesler"
+      },
+      "score_string": "7-6 6-3",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173950",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "2638",
+        "name": "S. Nagal",
+        "country": "IND",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2638.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2638/sumit-nagal"
+      },
+      "player_b": {
+        "id": "3700",
+        "name": "F. Cerundolo",
+        "country": "ARG",
+        "seed": 5,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3700.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3700/francisco-cerundolo"
+      },
+      "score_string": "2-6 2-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173948",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "7602",
+        "name": "F. Cobolli",
+        "country": "ITA",
+        "seed": 4,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+      },
+      "player_b": {
+        "id": "14709",
+        "name": "D. Dedura",
+        "country": "GER",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/14709.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/14709/diego-dedura"
+      },
+      "score_string": "6-4 7-5",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173947",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "3356",
+        "name": "Z. Bergs",
+        "country": "BEL",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3356.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3356/zizou-bergs"
+      },
+      "player_b": {
+        "id": "8447",
+        "name": "M. Topo",
+        "country": "GER",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/8447.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/8447/marko-topo"
+      },
+      "score_string": "6-1 6-4",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173946",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "11678",
+        "name": "J. Engel",
+        "country": "GER",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11678.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/11678/justin-engel"
+      },
+      "player_b": {
+        "id": "3809",
+        "name": "V. Kopriva",
+        "country": "CZE",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3809.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3809/vit-kopriva"
+      },
+      "score_string": "3-6 7-5 2-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173955",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "3024",
+        "name": "Z. Zhizhen",
+        "country": "CHN",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3024.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3024/zhang-zhizhen"
+      },
+      "player_b": {
+        "id": "7833",
+        "name": "L. Darderi",
+        "country": "ITA",
+        "seed": 6,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7833.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/7833/luciano-darderi"
+      },
+      "score_string": "6-7 6-3 1-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173954",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "3319",
+        "name": "T. Griekspoor",
+        "country": "NED",
+        "seed": 8,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3319.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3319/tallon-griekspoor"
+      },
+      "player_b": {
+        "id": "2860",
+        "name": "D. Shapovalov",
+        "country": "CAN",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2860.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2860/denis-shapovalov"
+      },
+      "score_string": "4-6 6-3 2-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173953",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "9213",
+        "name": "F. Marozsan",
+        "country": "HUN",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9213.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/9213/fabian-marozsan"
+      },
+      "player_b": {
+        "id": "2869",
+        "name": "S. Tsitsipas",
+        "country": "GRE",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2869.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2869/stefanos-tsitsipas"
+      },
+      "score_string": "3-6 7-6 6-4",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173952",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "464",
+        "name": "M. Cilic",
+        "country": "CRO",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/464.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/464/marin-cilic"
+      },
+      "player_b": {
+        "id": "3203",
+        "name": "D. Altmaier",
+        "country": "GER",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3203.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3203/daniel-altmaier"
+      },
+      "score_string": "2-6 3-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173945",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "2635",
+        "name": "A. Molcan",
+        "country": "SVK",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2635.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2635/alex-molcan"
+      },
+      "player_b": {
+        "id": "2865",
+        "name": "A. Bublik",
+        "country": "KAZ",
+        "seed": 3,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2865.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2865/alexander-bublik"
+      },
+      "score_string": "6-4 6-2",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173944",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "3511",
+        "name": "A. Rinderknech",
+        "country": "FRA",
+        "seed": 7,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3511.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3511/arthur-rinderknech"
+      },
+      "player_b": {
+        "id": "11400",
+        "name": "A. Michelsen",
+        "country": "USA",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11400.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/11400/alex-michelsen"
+      },
+      "score_string": "6-3 6-3",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173942",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "2970",
+        "name": "A. Tabilo",
+        "country": "CHI",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2970.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2970/alejandro-tabilo"
+      },
+      "player_b": {
+        "id": "11745",
+        "name": "J. Fonseca",
+        "country": "BRA",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11745.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/11745/joao-fonseca"
+      },
+      "score_string": "6-7 3-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173951",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "11757",
+        "name": "A. Blockx",
+        "country": "BEL",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11757.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/11757/alexander-blockx"
+      },
+      "player_b": {
+        "id": "3322",
+        "name": "Y. Hanfmann",
+        "country": "GER",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3322.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3322/yannick-hanfmann"
+      },
+      "score_string": "7-6 6-2",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173949",
+      "round_id": "R32",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "3772",
+        "name": "E. Nava",
+        "country": "USA",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3772.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3772/emilio-nava"
+      },
+      "player_b": {
+        "id": "9250",
+        "name": "B. Shelton",
+        "country": "USA",
+        "seed": 2,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+      },
+      "score_string": "6-7 6-3 3-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173961",
+      "round_id": "R16",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "2375",
+        "name": "A. Zverev",
+        "country": "GER",
+        "seed": 1,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2375.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2375/alexander-zverev"
+      },
+      "player_b": {
+        "id": "3885",
+        "name": "G. Diallo",
+        "country": "CAN",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3885.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3885/gabriel-diallo"
+      },
+      "score_string": "6-1 6-2",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173960",
+      "round_id": "R16",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "3310",
+        "name": "B. Van De Zandschulp",
+        "country": "NED",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3310.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3310/botic-van-de-zandschulp"
+      },
+      "player_b": {
+        "id": "3700",
+        "name": "F. Cerundolo",
+        "country": "ARG",
+        "seed": 5,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3700.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3700/francisco-cerundolo"
+      },
+      "score_string": "3-6 0-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173964",
+      "round_id": "R16",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "7602",
+        "name": "F. Cobolli",
+        "country": "ITA",
+        "seed": 4,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+      },
+      "player_b": {
+        "id": "3356",
+        "name": "Z. Bergs",
+        "country": "BEL",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3356.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3356/zizou-bergs"
+      },
+      "score_string": "6-2 6-3",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173963",
+      "round_id": "R16",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "3809",
+        "name": "V. Kopriva",
+        "country": "CZE",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3809.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3809/vit-kopriva"
+      },
+      "player_b": {
+        "id": "7833",
+        "name": "L. Darderi",
+        "country": "ITA",
+        "seed": 6,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7833.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/7833/luciano-darderi"
+      },
+      "score_string": "2-6 6-4 6-1",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173962",
+      "round_id": "R16",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "2860",
+        "name": "D. Shapovalov",
+        "country": "CAN",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2860.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2860/denis-shapovalov"
+      },
+      "player_b": {
+        "id": "9213",
+        "name": "F. Marozsan",
+        "country": "HUN",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9213.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/9213/fabian-marozsan"
+      },
+      "score_string": "7-6 6-2",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173959",
+      "round_id": "R16",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "3203",
+        "name": "D. Altmaier",
+        "country": "GER",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3203.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3203/daniel-altmaier"
+      },
+      "player_b": {
+        "id": "2635",
+        "name": "A. Molcan",
+        "country": "SVK",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2635.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2635/alex-molcan"
+      },
+      "score_string": "4-6 6-7",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173958",
+      "round_id": "R16",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "3511",
+        "name": "A. Rinderknech",
+        "country": "FRA",
+        "seed": 7,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3511.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3511/arthur-rinderknech"
+      },
+      "player_b": {
+        "id": "11745",
+        "name": "J. Fonseca",
+        "country": "BRA",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11745.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/11745/joao-fonseca"
+      },
+      "score_string": "3-6 2-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173957",
+      "round_id": "R16",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "11757",
+        "name": "A. Blockx",
+        "country": "BEL",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11757.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/11757/alexander-blockx"
+      },
+      "player_b": {
+        "id": "9250",
+        "name": "B. Shelton",
+        "country": "USA",
+        "seed": 2,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+      },
+      "score_string": "4-6 6-7",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173965",
+      "round_id": "QF",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "2375",
+        "name": "A. Zverev",
+        "country": "GER",
+        "seed": 1,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2375.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2375/alexander-zverev"
+      },
+      "player_b": {
+        "id": "3700",
+        "name": "F. Cerundolo",
+        "country": "ARG",
+        "seed": 5,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3700.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3700/francisco-cerundolo"
+      },
+      "score_string": "5-7 6-0 6-2",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173968",
+      "round_id": "QF",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "7602",
+        "name": "F. Cobolli",
+        "country": "ITA",
+        "seed": 4,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+      },
+      "player_b": {
+        "id": "3809",
+        "name": "V. Kopriva",
+        "country": "CZE",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3809.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/3809/vit-kopriva"
+      },
+      "score_string": "6-3 6-2",
+      "winner_side": "A"
+    },
+    {
+      "match_id": "173967",
+      "round_id": "QF",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "2860",
+        "name": "D. Shapovalov",
+        "country": "CAN",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2860.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2860/denis-shapovalov"
+      },
+      "player_b": {
+        "id": "2635",
+        "name": "A. Molcan",
+        "country": "SVK",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2635.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2635/alex-molcan"
+      },
+      "score_string": "4-6 4-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173966",
+      "round_id": "QF",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "11745",
+        "name": "J. Fonseca",
+        "country": "BRA",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11745.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/11745/joao-fonseca"
+      },
+      "player_b": {
+        "id": "9250",
+        "name": "B. Shelton",
+        "country": "USA",
+        "seed": 2,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+      },
+      "score_string": "3-6 6-3 3-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173969",
+      "round_id": "SF",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "2375",
+        "name": "A. Zverev",
+        "country": "GER",
+        "seed": 1,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2375.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2375/alexander-zverev"
+      },
+      "player_b": {
+        "id": "7602",
+        "name": "F. Cobolli",
+        "country": "ITA",
+        "seed": 4,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+      },
+      "score_string": "3-6 3-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173970",
+      "round_id": "SF",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "2635",
+        "name": "A. Molcan",
+        "country": "SVK",
+        "seed": null,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2635.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/2635/alex-molcan"
+      },
+      "player_b": {
+        "id": "9250",
+        "name": "B. Shelton",
+        "country": "USA",
+        "seed": 2,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+      },
+      "score_string": "3-6 4-6",
+      "winner_side": "B"
+    },
+    {
+      "match_id": "173971",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "player_a": {
+        "id": "7602",
+        "name": "F. Cobolli",
+        "country": "ITA",
+        "seed": 4,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+      },
+      "player_b": {
+        "id": "9250",
+        "name": "B. Shelton",
+        "country": "USA",
+        "seed": 2,
+        "entry": null,
+        "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+        "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+      },
+      "score_string": "2-6 5-7",
+      "winner_side": "B"
+    }
+  ],
   "bracket": {
     "tournament_id": 308,
     "tournament_name": "BMW Open by Bitpanda",
     "tournament_category": "atp_500",
     "tournament_surface": "Clay",
     "tournament_year": 2026,
-    "tournament_status": "upcoming",
+    "tournament_status": "finished",
     "tournament_tour": "atp",
     "draw_size": 32,
-    "rounds": [],
-    "matches": [],
+    "rounds": [
+      "R32",
+      "R16",
+      "QF",
+      "SF",
+      "F"
+    ],
+    "matches": [
+      {
+        "round": "R32",
+        "matches": [
+          {
+            "id": "173956",
+            "round": "R32",
+            "match_number": 1,
+            "player1": {
+              "id": "2375",
+              "name": "A. Zverev",
+              "country": "GER",
+              "seed": 1,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2375.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2375/alexander-zverev"
+            },
+            "player2": {
+              "id": "2874",
+              "name": "M. Kecmanovic",
+              "country": "SER",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2874.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2874/miomir-kecmanovic"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 3
+                },
+                {
+                  "p1": 3,
+                  "p2": 6
+                },
+                {
+                  "p1": 7,
+                  "p2": 6,
+                  "tiebreak": {
+                    "p1": 7,
+                    "p2": 2
+                  }
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "2375",
+              "name": "A. Zverev",
+              "country": "GER",
+              "seed": 1,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2375.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2375/alexander-zverev"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-14T11:00Z"
+          },
+          {
+            "id": "173943",
+            "round": "R32",
+            "match_number": 2,
+            "player1": {
+              "id": "3885",
+              "name": "G. Diallo",
+              "country": "CAN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3885.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3885/gabriel-diallo"
+            },
+            "player2": {
+              "id": "4026",
+              "name": "V. Sachko",
+              "country": "UKR",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4026.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/4026/vitaliy-sachko"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 1
+                },
+                {
+                  "p1": 6,
+                  "p2": 2
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3885",
+              "name": "G. Diallo",
+              "country": "CAN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3885.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3885/gabriel-diallo"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-13T11:15Z"
+          },
+          {
+            "id": "173941",
+            "round": "R32",
+            "match_number": 3,
+            "player1": {
+              "id": "3310",
+              "name": "B. Van De Zandschulp",
+              "country": "NED",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3310.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3310/botic-van-de-zandschulp"
+            },
+            "player2": {
+              "id": "3481",
+              "name": "M. Huesler",
+              "country": "SUI",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3481.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3481/marc-andrea-huesler"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 7,
+                  "p2": 6,
+                  "tiebreak": {
+                    "p1": 9,
+                    "p2": 7
+                  }
+                },
+                {
+                  "p1": 6,
+                  "p2": 3
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3310",
+              "name": "B. Van De Zandschulp",
+              "country": "NED",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3310.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3310/botic-van-de-zandschulp"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-13T09:05Z"
+          },
+          {
+            "id": "173950",
+            "round": "R32",
+            "match_number": 4,
+            "player1": {
+              "id": "2638",
+              "name": "S. Nagal",
+              "country": "IND",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2638.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2638/sumit-nagal"
+            },
+            "player2": {
+              "id": "3700",
+              "name": "F. Cerundolo",
+              "country": "ARG",
+              "seed": 5,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3700.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3700/francisco-cerundolo"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 2,
+                  "p2": 6
+                },
+                {
+                  "p1": 2,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3700",
+              "name": "F. Cerundolo",
+              "country": "ARG",
+              "seed": 5,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3700.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3700/francisco-cerundolo"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-13T11:10Z"
+          },
+          {
+            "id": "173948",
+            "round": "R32",
+            "match_number": 5,
+            "player1": {
+              "id": "7602",
+              "name": "F. Cobolli",
+              "country": "ITA",
+              "seed": 4,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+            },
+            "player2": {
+              "id": "14709",
+              "name": "D. Dedura",
+              "country": "GER",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/14709.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/14709/diego-dedura"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 4
+                },
+                {
+                  "p1": 7,
+                  "p2": 5
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "7602",
+              "name": "F. Cobolli",
+              "country": "ITA",
+              "seed": 4,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-14T11:30Z"
+          },
+          {
+            "id": "173947",
+            "round": "R32",
+            "match_number": 6,
+            "player1": {
+              "id": "3356",
+              "name": "Z. Bergs",
+              "country": "BEL",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3356.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3356/zizou-bergs"
+            },
+            "player2": {
+              "id": "8447",
+              "name": "M. Topo",
+              "country": "GER",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/8447.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/8447/marko-topo"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 1
+                },
+                {
+                  "p1": 6,
+                  "p2": 4
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3356",
+              "name": "Z. Bergs",
+              "country": "BEL",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3356.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3356/zizou-bergs"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-14T14:00Z"
+          },
+          {
+            "id": "173946",
+            "round": "R32",
+            "match_number": 7,
+            "player1": {
+              "id": "11678",
+              "name": "J. Engel",
+              "country": "GER",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11678.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/11678/justin-engel"
+            },
+            "player2": {
+              "id": "3809",
+              "name": "V. Kopriva",
+              "country": "CZE",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3809.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3809/vit-kopriva"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 3,
+                  "p2": 6
+                },
+                {
+                  "p1": 7,
+                  "p2": 5
+                },
+                {
+                  "p1": 2,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3809",
+              "name": "V. Kopriva",
+              "country": "CZE",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3809.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3809/vit-kopriva"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-14T11:30Z"
+          },
+          {
+            "id": "173955",
+            "round": "R32",
+            "match_number": 8,
+            "player1": {
+              "id": "3024",
+              "name": "Z. Zhizhen",
+              "country": "CHN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3024.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3024/zhang-zhizhen"
+            },
+            "player2": {
+              "id": "7833",
+              "name": "L. Darderi",
+              "country": "ITA",
+              "seed": 6,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7833.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7833/luciano-darderi"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 7,
+                  "tiebreak": {
+                    "p1": 5,
+                    "p2": 7
+                  }
+                },
+                {
+                  "p1": 6,
+                  "p2": 3
+                },
+                {
+                  "p1": 1,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "7833",
+              "name": "L. Darderi",
+              "country": "ITA",
+              "seed": 6,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7833.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7833/luciano-darderi"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-14T09:05Z"
+          },
+          {
+            "id": "173954",
+            "round": "R32",
+            "match_number": 9,
+            "player1": {
+              "id": "3319",
+              "name": "T. Griekspoor",
+              "country": "NED",
+              "seed": 8,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3319.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3319/tallon-griekspoor"
+            },
+            "player2": {
+              "id": "2860",
+              "name": "D. Shapovalov",
+              "country": "CAN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2860.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2860/denis-shapovalov"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 4,
+                  "p2": 6
+                },
+                {
+                  "p1": 6,
+                  "p2": 3
+                },
+                {
+                  "p1": 2,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "2860",
+              "name": "D. Shapovalov",
+              "country": "CAN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2860.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2860/denis-shapovalov"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-14T09:05Z"
+          },
+          {
+            "id": "173953",
+            "round": "R32",
+            "match_number": 10,
+            "player1": {
+              "id": "9213",
+              "name": "F. Marozsan",
+              "country": "HUN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9213.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9213/fabian-marozsan"
+            },
+            "player2": {
+              "id": "2869",
+              "name": "S. Tsitsipas",
+              "country": "GRE",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2869.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2869/stefanos-tsitsipas"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 3,
+                  "p2": 6
+                },
+                {
+                  "p1": 7,
+                  "p2": 6,
+                  "tiebreak": {
+                    "p1": 7,
+                    "p2": 5
+                  }
+                },
+                {
+                  "p1": 6,
+                  "p2": 4
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "9213",
+              "name": "F. Marozsan",
+              "country": "HUN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9213.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9213/fabian-marozsan"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-15T10:50Z"
+          },
+          {
+            "id": "173952",
+            "round": "R32",
+            "match_number": 11,
+            "player1": {
+              "id": "464",
+              "name": "M. Cilic",
+              "country": "CRO",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/464.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/464/marin-cilic"
+            },
+            "player2": {
+              "id": "3203",
+              "name": "D. Altmaier",
+              "country": "GER",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3203.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3203/daniel-altmaier"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 2,
+                  "p2": 6
+                },
+                {
+                  "p1": 3,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3203",
+              "name": "D. Altmaier",
+              "country": "GER",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3203.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3203/daniel-altmaier"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-14T13:15Z"
+          },
+          {
+            "id": "173945",
+            "round": "R32",
+            "match_number": 12,
+            "player1": {
+              "id": "2635",
+              "name": "A. Molcan",
+              "country": "SVK",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2635.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2635/alex-molcan"
+            },
+            "player2": {
+              "id": "2865",
+              "name": "A. Bublik",
+              "country": "KAZ",
+              "seed": 3,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2865.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2865/alexander-bublik"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 4
+                },
+                {
+                  "p1": 6,
+                  "p2": 2
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "2635",
+              "name": "A. Molcan",
+              "country": "SVK",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2635.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2635/alex-molcan"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-14T13:40Z"
+          },
+          {
+            "id": "173944",
+            "round": "R32",
+            "match_number": 13,
+            "player1": {
+              "id": "3511",
+              "name": "A. Rinderknech",
+              "country": "FRA",
+              "seed": 7,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3511.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3511/arthur-rinderknech"
+            },
+            "player2": {
+              "id": "11400",
+              "name": "A. Michelsen",
+              "country": "USA",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11400.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/11400/alex-michelsen"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 3
+                },
+                {
+                  "p1": 6,
+                  "p2": 3
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3511",
+              "name": "A. Rinderknech",
+              "country": "FRA",
+              "seed": 7,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3511.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3511/arthur-rinderknech"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-13T09:10Z"
+          },
+          {
+            "id": "173942",
+            "round": "R32",
+            "match_number": 14,
+            "player1": {
+              "id": "2970",
+              "name": "A. Tabilo",
+              "country": "CHI",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2970.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2970/alejandro-tabilo"
+            },
+            "player2": {
+              "id": "11745",
+              "name": "J. Fonseca",
+              "country": "BRA",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11745.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/11745/joao-fonseca"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 7,
+                  "tiebreak": {
+                    "p1": 1,
+                    "p2": 7
+                  }
+                },
+                {
+                  "p1": 3,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "11745",
+              "name": "J. Fonseca",
+              "country": "BRA",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11745.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/11745/joao-fonseca"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-14T09:10Z"
+          },
+          {
+            "id": "173951",
+            "round": "R32",
+            "match_number": 15,
+            "player1": {
+              "id": "11757",
+              "name": "A. Blockx",
+              "country": "BEL",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11757.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/11757/alexander-blockx"
+            },
+            "player2": {
+              "id": "3322",
+              "name": "Y. Hanfmann",
+              "country": "GER",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3322.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3322/yannick-hanfmann"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 7,
+                  "p2": 6,
+                  "tiebreak": {
+                    "p1": 7,
+                    "p2": 2
+                  }
+                },
+                {
+                  "p1": 6,
+                  "p2": 2
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "11757",
+              "name": "A. Blockx",
+              "country": "BEL",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11757.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/11757/alexander-blockx"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-13T15:20Z"
+          },
+          {
+            "id": "173949",
+            "round": "R32",
+            "match_number": 16,
+            "player1": {
+              "id": "3772",
+              "name": "E. Nava",
+              "country": "USA",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3772.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3772/emilio-nava"
+            },
+            "player2": {
+              "id": "9250",
+              "name": "B. Shelton",
+              "country": "USA",
+              "seed": 2,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 7,
+                  "tiebreak": {
+                    "p1": 4,
+                    "p2": 7
+                  }
+                },
+                {
+                  "p1": 6,
+                  "p2": 3
+                },
+                {
+                  "p1": 3,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "9250",
+              "name": "B. Shelton",
+              "country": "USA",
+              "seed": 2,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+            },
+            "points": 20,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-13T12:50Z"
+          }
+        ]
+      },
+      {
+        "round": "R16",
+        "matches": [
+          {
+            "id": "173961",
+            "round": "R16",
+            "match_number": 1,
+            "player1": {
+              "id": "2375",
+              "name": "A. Zverev",
+              "country": "GER",
+              "seed": 1,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2375.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2375/alexander-zverev"
+            },
+            "player2": {
+              "id": "3885",
+              "name": "G. Diallo",
+              "country": "CAN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3885.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3885/gabriel-diallo"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 1
+                },
+                {
+                  "p1": 6,
+                  "p2": 2
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "2375",
+              "name": "A. Zverev",
+              "country": "GER",
+              "seed": 1,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2375.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2375/alexander-zverev"
+            },
+            "points": 45,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-16T12:40Z"
+          },
+          {
+            "id": "173960",
+            "round": "R16",
+            "match_number": 2,
+            "player1": {
+              "id": "3310",
+              "name": "B. Van De Zandschulp",
+              "country": "NED",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3310.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3310/botic-van-de-zandschulp"
+            },
+            "player2": {
+              "id": "3700",
+              "name": "F. Cerundolo",
+              "country": "ARG",
+              "seed": 5,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3700.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3700/francisco-cerundolo"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 3,
+                  "p2": 6
+                },
+                {
+                  "p1": 0,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3700",
+              "name": "F. Cerundolo",
+              "country": "ARG",
+              "seed": 5,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3700.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3700/francisco-cerundolo"
+            },
+            "points": 45,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-16T09:10Z"
+          },
+          {
+            "id": "173964",
+            "round": "R16",
+            "match_number": 3,
+            "player1": {
+              "id": "7602",
+              "name": "F. Cobolli",
+              "country": "ITA",
+              "seed": 4,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+            },
+            "player2": {
+              "id": "3356",
+              "name": "Z. Bergs",
+              "country": "BEL",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3356.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3356/zizou-bergs"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 2
+                },
+                {
+                  "p1": 6,
+                  "p2": 3
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "7602",
+              "name": "F. Cobolli",
+              "country": "ITA",
+              "seed": 4,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+            },
+            "points": 45,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-15T13:45Z"
+          },
+          {
+            "id": "173963",
+            "round": "R16",
+            "match_number": 4,
+            "player1": {
+              "id": "3809",
+              "name": "V. Kopriva",
+              "country": "CZE",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3809.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3809/vit-kopriva"
+            },
+            "player2": {
+              "id": "7833",
+              "name": "L. Darderi",
+              "country": "ITA",
+              "seed": 6,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7833.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7833/luciano-darderi"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 2,
+                  "p2": 6
+                },
+                {
+                  "p1": 6,
+                  "p2": 4
+                },
+                {
+                  "p1": 6,
+                  "p2": 1
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "3809",
+              "name": "V. Kopriva",
+              "country": "CZE",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3809.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3809/vit-kopriva"
+            },
+            "points": 45,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-15T15:15Z"
+          },
+          {
+            "id": "173962",
+            "round": "R16",
+            "match_number": 5,
+            "player1": {
+              "id": "2860",
+              "name": "D. Shapovalov",
+              "country": "CAN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2860.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2860/denis-shapovalov"
+            },
+            "player2": {
+              "id": "9213",
+              "name": "F. Marozsan",
+              "country": "HUN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9213.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9213/fabian-marozsan"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 7,
+                  "p2": 6,
+                  "tiebreak": {
+                    "p1": 7,
+                    "p2": 4
+                  }
+                },
+                {
+                  "p1": 6,
+                  "p2": 2
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "2860",
+              "name": "D. Shapovalov",
+              "country": "CAN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2860.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2860/denis-shapovalov"
+            },
+            "points": 45,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-16T14:10Z"
+          },
+          {
+            "id": "173959",
+            "round": "R16",
+            "match_number": 6,
+            "player1": {
+              "id": "3203",
+              "name": "D. Altmaier",
+              "country": "GER",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3203.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3203/daniel-altmaier"
+            },
+            "player2": {
+              "id": "2635",
+              "name": "A. Molcan",
+              "country": "SVK",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2635.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2635/alex-molcan"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 4,
+                  "p2": 6
+                },
+                {
+                  "p1": 6,
+                  "p2": 7,
+                  "tiebreak": {
+                    "p1": 10,
+                    "p2": 12
+                  }
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "2635",
+              "name": "A. Molcan",
+              "country": "SVK",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2635.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2635/alex-molcan"
+            },
+            "points": 45,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-16T10:35Z"
+          },
+          {
+            "id": "173958",
+            "round": "R16",
+            "match_number": 7,
+            "player1": {
+              "id": "3511",
+              "name": "A. Rinderknech",
+              "country": "FRA",
+              "seed": 7,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3511.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3511/arthur-rinderknech"
+            },
+            "player2": {
+              "id": "11745",
+              "name": "J. Fonseca",
+              "country": "BRA",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11745.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/11745/joao-fonseca"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 3,
+                  "p2": 6
+                },
+                {
+                  "p1": 2,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "11745",
+              "name": "J. Fonseca",
+              "country": "BRA",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11745.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/11745/joao-fonseca"
+            },
+            "points": 45,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-15T09:10Z"
+          },
+          {
+            "id": "173957",
+            "round": "R16",
+            "match_number": 8,
+            "player1": {
+              "id": "11757",
+              "name": "A. Blockx",
+              "country": "BEL",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11757.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/11757/alexander-blockx"
+            },
+            "player2": {
+              "id": "9250",
+              "name": "B. Shelton",
+              "country": "USA",
+              "seed": 2,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 4,
+                  "p2": 6
+                },
+                {
+                  "p1": 6,
+                  "p2": 7,
+                  "tiebreak": {
+                    "p1": 8,
+                    "p2": 10
+                  }
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "9250",
+              "name": "B. Shelton",
+              "country": "USA",
+              "seed": 2,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+            },
+            "points": 45,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-15T11:35Z"
+          }
+        ]
+      },
+      {
+        "round": "QF",
+        "matches": [
+          {
+            "id": "173965",
+            "round": "QF",
+            "match_number": 1,
+            "player1": {
+              "id": "2375",
+              "name": "A. Zverev",
+              "country": "GER",
+              "seed": 1,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2375.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2375/alexander-zverev"
+            },
+            "player2": {
+              "id": "3700",
+              "name": "F. Cerundolo",
+              "country": "ARG",
+              "seed": 5,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3700.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3700/francisco-cerundolo"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 5,
+                  "p2": 7
+                },
+                {
+                  "p1": 6,
+                  "p2": 0
+                },
+                {
+                  "p1": 6,
+                  "p2": 2
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "2375",
+              "name": "A. Zverev",
+              "country": "GER",
+              "seed": 1,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2375.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2375/alexander-zverev"
+            },
+            "points": 90,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-17T11:00Z"
+          },
+          {
+            "id": "173968",
+            "round": "QF",
+            "match_number": 2,
+            "player1": {
+              "id": "7602",
+              "name": "F. Cobolli",
+              "country": "ITA",
+              "seed": 4,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+            },
+            "player2": {
+              "id": "3809",
+              "name": "V. Kopriva",
+              "country": "CZE",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3809.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/3809/vit-kopriva"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 6,
+                  "p2": 3
+                },
+                {
+                  "p1": 6,
+                  "p2": 2
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "7602",
+              "name": "F. Cobolli",
+              "country": "ITA",
+              "seed": 4,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+            },
+            "points": 90,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-17T09:10Z"
+          },
+          {
+            "id": "173967",
+            "round": "QF",
+            "match_number": 3,
+            "player1": {
+              "id": "2860",
+              "name": "D. Shapovalov",
+              "country": "CAN",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2860.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2860/denis-shapovalov"
+            },
+            "player2": {
+              "id": "2635",
+              "name": "A. Molcan",
+              "country": "SVK",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2635.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2635/alex-molcan"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 4,
+                  "p2": 6
+                },
+                {
+                  "p1": 4,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "2635",
+              "name": "A. Molcan",
+              "country": "SVK",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2635.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2635/alex-molcan"
+            },
+            "points": 90,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-17T15:40Z"
+          },
+          {
+            "id": "173966",
+            "round": "QF",
+            "match_number": 4,
+            "player1": {
+              "id": "11745",
+              "name": "J. Fonseca",
+              "country": "BRA",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/11745.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/11745/joao-fonseca"
+            },
+            "player2": {
+              "id": "9250",
+              "name": "B. Shelton",
+              "country": "USA",
+              "seed": 2,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 3,
+                  "p2": 6
+                },
+                {
+                  "p1": 6,
+                  "p2": 3
+                },
+                {
+                  "p1": 3,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "9250",
+              "name": "B. Shelton",
+              "country": "USA",
+              "seed": 2,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+            },
+            "points": 90,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-17T13:35Z"
+          }
+        ]
+      },
+      {
+        "round": "SF",
+        "matches": [
+          {
+            "id": "173969",
+            "round": "SF",
+            "match_number": 1,
+            "player1": {
+              "id": "2375",
+              "name": "A. Zverev",
+              "country": "GER",
+              "seed": 1,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2375.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2375/alexander-zverev"
+            },
+            "player2": {
+              "id": "7602",
+              "name": "F. Cobolli",
+              "country": "ITA",
+              "seed": 4,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 3,
+                  "p2": 6
+                },
+                {
+                  "p1": 3,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "7602",
+              "name": "F. Cobolli",
+              "country": "ITA",
+              "seed": 4,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+            },
+            "points": 180,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-18T11:40Z"
+          },
+          {
+            "id": "173970",
+            "round": "SF",
+            "match_number": 2,
+            "player1": {
+              "id": "2635",
+              "name": "A. Molcan",
+              "country": "SVK",
+              "seed": null,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2635.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/2635/alex-molcan"
+            },
+            "player2": {
+              "id": "9250",
+              "name": "B. Shelton",
+              "country": "USA",
+              "seed": 2,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 3,
+                  "p2": 6
+                },
+                {
+                  "p1": 4,
+                  "p2": 6
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "9250",
+              "name": "B. Shelton",
+              "country": "USA",
+              "seed": 2,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+            },
+            "points": 180,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-18T13:30Z"
+          }
+        ]
+      },
+      {
+        "round": "F",
+        "matches": [
+          {
+            "id": "173971",
+            "round": "F",
+            "match_number": 1,
+            "player1": {
+              "id": "7602",
+              "name": "F. Cobolli",
+              "country": "ITA",
+              "seed": 4,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7602.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/7602/flavio-cobolli"
+            },
+            "player2": {
+              "id": "9250",
+              "name": "B. Shelton",
+              "country": "USA",
+              "seed": 2,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+            },
+            "score": {
+              "sets": [
+                {
+                  "p1": 2,
+                  "p2": 6
+                },
+                {
+                  "p1": 5,
+                  "p2": 7
+                }
+              ]
+            },
+            "status": "finished",
+            "winner": {
+              "id": "9250",
+              "name": "B. Shelton",
+              "country": "USA",
+              "seed": 2,
+              "entry": null,
+              "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png",
+              "profile_url": "https://www.espn.com/tennis/player/_/id/9250/ben-shelton"
+            },
+            "points": 300,
+            "prize_money": null,
+            "stats_url": null,
+            "scheduled_at": "2026-04-19T11:40Z"
+          }
+        ]
+      }
+    ],
     "round_points": {
       "R32": 20,
       "R16": 45,
@@ -53,7 +2526,16 @@
       "W": 500
     },
     "round_prize": {},
-    "champion": null,
-    "source": "atp"
-  }
+    "champion": {
+      "name": "B. Shelton",
+      "country": "USA",
+      "image_url": "https://a.espncdn.com/i/headshots/tennis/players/full/9250.png"
+    },
+    "source": "espn",
+    "source_year": 2026,
+    "retrieved_at": "2026-07-26T06:47:49.800082Z",
+    "source_event_id": "12-2026",
+    "source_url": "https://www.espn.com/tennis/bracket/_/year/2026/tournamentId/12/type/1"
+  },
+  "espn_event_id": "12-2026"
 }

@@ -1,0 +1,2912 @@
+{
+  "order": 53,
+  "tournament_group_id": 1171,
+  "name": "MODENA 125",
+  "title": "Memorial Eugenio Fontana - Modena, ITA",
+  "level": "WTA 125",
+  "level_number": "WTA 125",
+  "year": 2026,
+  "start_date": "2026-06-08",
+  "end_date": "2026-06-14",
+  "surface": "Clay",
+  "indoor_outdoor": "O",
+  "city": "MODENA",
+  "country": "ITA",
+  "status": "finished",
+  "draw_size_singles": 32,
+  "draw_size_doubles": 8,
+  "prize_money": 115000,
+  "prize_money_currency": "USD",
+  "champion": {
+    "id": "315806",
+    "name": "Katarzyna Kawa",
+    "country": "POL"
+  },
+  "runner_up": {
+    "id": "322280",
+    "name": "Lucia Bronzetti",
+    "country": "ITA"
+  },
+  "draw_year": 2026,
+  "draw": {
+    "draw_size": 32,
+    "surface": "Clay",
+    "event_type": "LS",
+    "draw_type": "Women's Singles",
+    "draw_lines": [
+      {
+        "pos": 1,
+        "seed": 1,
+        "rank": 111,
+        "entry_type": "",
+        "display": "Victoria Jimenez Kasintseva",
+        "player": {
+          "id": 330352,
+          "first_name": "Victoria",
+          "last_name": "Jimenez Kasintseva",
+          "country": "AND"
+        }
+      },
+      {
+        "pos": 2,
+        "seed": "",
+        "rank": 258,
+        "entry_type": "",
+        "display": "Jessica Pieri",
+        "player": {
+          "id": 321029,
+          "first_name": "Jessica",
+          "last_name": "Pieri",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 3,
+        "seed": "",
+        "rank": "",
+        "entry_type": "Q",
+        "display": "Noemi Basiletti",
+        "player": {
+          "id": 330574,
+          "first_name": "Noemi",
+          "last_name": "Basiletti",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 4,
+        "seed": "",
+        "rank": 162,
+        "entry_type": "",
+        "display": "Varvara Lepchenko",
+        "player": {
+          "id": 120420,
+          "first_name": "Varvara",
+          "last_name": "Lepchenko",
+          "country": "USA"
+        }
+      },
+      {
+        "pos": 5,
+        "seed": "",
+        "rank": 164,
+        "entry_type": "",
+        "display": "Leyre Romero Gormaz",
+        "player": {
+          "id": 326891,
+          "first_name": "Leyre",
+          "last_name": "Romero Gormaz",
+          "country": "ESP"
+        }
+      },
+      {
+        "pos": 6,
+        "seed": "",
+        "rank": 194,
+        "entry_type": "",
+        "display": "Xiaodi You",
+        "player": {
+          "id": 322451,
+          "first_name": "Xiaodi",
+          "last_name": "You",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 7,
+        "seed": "",
+        "rank": 302,
+        "entry_type": "WC",
+        "display": "Giorgia Pedone",
+        "player": {
+          "id": 330372,
+          "first_name": "Giorgia",
+          "last_name": "Pedone",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 8,
+        "seed": 6,
+        "rank": 114,
+        "entry_type": "",
+        "display": "Mayar Sherif",
+        "player": {
+          "id": 318711,
+          "first_name": "Mayar",
+          "last_name": "Sherif",
+          "country": "EGY"
+        }
+      },
+      {
+        "pos": 9,
+        "seed": 3,
+        "rank": 117,
+        "entry_type": "",
+        "display": "Dominika Salkova",
+        "player": {
+          "id": 330149,
+          "first_name": "Dominika",
+          "last_name": "Salkova",
+          "country": "CZE"
+        }
+      },
+      {
+        "pos": 10,
+        "seed": "",
+        "rank": 226,
+        "entry_type": "",
+        "display": "Alice Tubello",
+        "player": {
+          "id": 325406,
+          "first_name": "Alice",
+          "last_name": "Tubello",
+          "country": "FRA"
+        }
+      },
+      {
+        "pos": 11,
+        "seed": "",
+        "rank": 492,
+        "entry_type": "WC",
+        "display": "Martina Trevisan",
+        "player": {
+          "id": 316266,
+          "first_name": "Martina",
+          "last_name": "Trevisan",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 12,
+        "seed": "",
+        "rank": 267,
+        "entry_type": "WC",
+        "display": "Jennifer Ruggeri",
+        "player": {
+          "id": 329217,
+          "first_name": "Jennifer",
+          "last_name": "Ruggeri",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 13,
+        "seed": "",
+        "rank": 166,
+        "entry_type": "",
+        "display": "Noma Noha Akugue",
+        "player": {
+          "id": 328631,
+          "first_name": "Noma",
+          "last_name": "Noha Akugue",
+          "country": "GER"
+        }
+      },
+      {
+        "pos": 14,
+        "seed": "",
+        "rank": "",
+        "entry_type": "Q",
+        "display": "Tiantsoa Rakotomanga Rajaonah",
+        "player": {
+          "id": 330970,
+          "first_name": "Tiantsoa",
+          "last_name": "Rakotomanga Rajaonah",
+          "country": "FRA"
+        }
+      },
+      {
+        "pos": 15,
+        "seed": "",
+        "rank": 138,
+        "entry_type": "",
+        "display": "Katarzyna Kawa",
+        "player": {
+          "id": 315806,
+          "first_name": "Katarzyna",
+          "last_name": "Kawa",
+          "country": "POL"
+        }
+      },
+      {
+        "pos": 16,
+        "seed": 8,
+        "rank": 141,
+        "entry_type": "",
+        "display": "Lisa Pigato",
+        "player": {
+          "id": 328193,
+          "first_name": "Lisa",
+          "last_name": "Pigato",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 17,
+        "seed": 7,
+        "rank": 133,
+        "entry_type": "",
+        "display": "Tamara Zidansek",
+        "player": {
+          "id": 323079,
+          "first_name": "Tamara",
+          "last_name": "Zidansek",
+          "country": "SLO"
+        }
+      },
+      {
+        "pos": 18,
+        "seed": "",
+        "rank": 356,
+        "entry_type": "WC",
+        "display": "Federica Urgesi",
+        "player": {
+          "id": 330420,
+          "first_name": "Federica",
+          "last_name": "Urgesi",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 19,
+        "seed": "",
+        "rank": "",
+        "entry_type": "Q",
+        "display": "Victoria Bosio",
+        "player": {
+          "id": 318480,
+          "first_name": "Victoria",
+          "last_name": "Bosio",
+          "country": "ARG"
+        }
+      },
+      {
+        "pos": 20,
+        "seed": "",
+        "rank": 171,
+        "entry_type": "",
+        "display": "Nuria Brancaccio",
+        "player": {
+          "id": 325433,
+          "first_name": "Nuria",
+          "last_name": "Brancaccio",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 21,
+        "seed": "",
+        "rank": 221,
+        "entry_type": "",
+        "display": "Xinyu Gao",
+        "player": {
+          "id": 322925,
+          "first_name": "Xinyu",
+          "last_name": "Gao",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 22,
+        "seed": "",
+        "rank": 173,
+        "entry_type": "",
+        "display": "Lucia Bronzetti",
+        "player": {
+          "id": 322280,
+          "first_name": "Lucia",
+          "last_name": "Bronzetti",
+          "country": "ITA"
+        }
+      },
+      {
+        "pos": 23,
+        "seed": "",
+        "rank": 151,
+        "entry_type": "",
+        "display": "Andrea Lazaro Garcia",
+        "player": {
+          "id": 318080,
+          "first_name": "Andrea",
+          "last_name": "Lazaro Garcia",
+          "country": "ESP"
+        }
+      },
+      {
+        "pos": 24,
+        "seed": 4,
+        "rank": 121,
+        "entry_type": "",
+        "display": "Julia Grabher",
+        "player": {
+          "id": 320316,
+          "first_name": "Julia",
+          "last_name": "Grabher",
+          "country": "AUT"
+        }
+      },
+      {
+        "pos": 25,
+        "seed": 5,
+        "rank": 139,
+        "entry_type": "",
+        "display": "Kaitlin Quevedo",
+        "player": {
+          "id": 331742,
+          "first_name": "Kaitlin",
+          "last_name": "Quevedo",
+          "country": "ESP"
+        }
+      },
+      {
+        "pos": 26,
+        "seed": "",
+        "rank": "",
+        "entry_type": "Q",
+        "display": "Jazmin Ortenzi",
+        "player": {
+          "id": 327283,
+          "first_name": "Jazmin",
+          "last_name": "Ortenzi",
+          "country": "ARG"
+        }
+      },
+      {
+        "pos": 27,
+        "seed": "",
+        "rank": 179,
+        "entry_type": "",
+        "display": "Jeline Vandromme",
+        "player": {
+          "id": 331852,
+          "first_name": "Jeline",
+          "last_name": "Vandromme",
+          "country": "BEL"
+        }
+      },
+      {
+        "pos": 28,
+        "seed": "",
+        "rank": 190,
+        "entry_type": "",
+        "display": "Angela Fita Boluda",
+        "player": {
+          "id": 322355,
+          "first_name": "Angela",
+          "last_name": "Fita Boluda",
+          "country": "ESP"
+        }
+      },
+      {
+        "pos": 29,
+        "seed": "",
+        "rank": 142,
+        "entry_type": "",
+        "display": "Xiyu Wang",
+        "player": {
+          "id": 326160,
+          "first_name": "Xiyu",
+          "last_name": "Wang",
+          "country": "CHN"
+        }
+      },
+      {
+        "pos": 30,
+        "seed": "",
+        "rank": 156,
+        "entry_type": "",
+        "display": "Laura Samson",
+        "player": {
+          "id": 333944,
+          "first_name": "Laura",
+          "last_name": "Samson",
+          "country": "CZE"
+        }
+      },
+      {
+        "pos": 31,
+        "seed": "",
+        "rank": 176,
+        "entry_type": "",
+        "display": "Marina Bassols Ribera",
+        "player": {
+          "id": 324128,
+          "first_name": "Marina",
+          "last_name": "Bassols Ribera",
+          "country": "ESP"
+        }
+      },
+      {
+        "pos": 32,
+        "seed": 2,
+        "rank": 112,
+        "entry_type": "",
+        "display": "Darja Semenistaja",
+        "player": {
+          "id": 329457,
+          "first_name": "Darja",
+          "last_name": "Semenistaja",
+          "country": "LAT"
+        }
+      }
+    ],
+    "breakdown": [
+      {
+        "name": "Winner",
+        "points": 125,
+        "prize": "EUR 13,480",
+        "id": 1
+      },
+      {
+        "name": "Final",
+        "points": 81,
+        "prize": "EUR 7,304",
+        "id": 2
+      },
+      {
+        "name": "Semifinals",
+        "points": 49,
+        "prize": "EUR 5,044",
+        "id": 3
+      },
+      {
+        "name": "Quarterfinals",
+        "points": 27,
+        "prize": "EUR 3,478",
+        "id": 4
+      },
+      {
+        "name": "Round of 16",
+        "points": 15,
+        "prize": "EUR 1,740",
+        "id": 5
+      },
+      {
+        "name": "Round of 32",
+        "points": 1,
+        "prize": "EUR 1,086",
+        "id": 6
+      }
+    ],
+    "results": [
+      {
+        "round_id": 5,
+        "matches": [
+          {
+            "id": "LS016",
+            "display_name": "[1] JIMENEZ KASINTSEVA, Victoria",
+            "result_score": "62 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Victoria Jimenez Kasintseva d. Jessica Pieri 62 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Victoria Jimenez Kasintseva",
+                "seed": 1,
+                "entry_type": "",
+                "player": {
+                  "id": 330352,
+                  "first_name": "Victoria",
+                  "last_name": "Jimenez Kasintseva",
+                  "country": "AND"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Jessica Pieri",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 321029,
+                  "first_name": "Jessica",
+                  "last_name": "Pieri",
+                  "country": "ITA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS017",
+            "display_name": "LEPCHENKO, Varvara",
+            "result_score": "62 63",
+            "winner_slot": "B",
+            "result_name_and_score": "Varvara Lepchenko d. Noemi Basiletti 62 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Noemi Basiletti",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 330574,
+                  "first_name": "Noemi",
+                  "last_name": "Basiletti",
+                  "country": "ITA"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Varvara Lepchenko",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 120420,
+                  "first_name": "Varvara",
+                  "last_name": "Lepchenko",
+                  "country": "USA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS018",
+            "display_name": "ROMERO GORMAZ, Leyre",
+            "result_score": "64 61",
+            "winner_slot": "A",
+            "result_name_and_score": "Leyre Romero Gormaz d. Xiaodi You 64 61",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Leyre Romero Gormaz",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 326891,
+                  "first_name": "Leyre",
+                  "last_name": "Romero Gormaz",
+                  "country": "ESP"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Xiaodi You",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 322451,
+                  "first_name": "Xiaodi",
+                  "last_name": "You",
+                  "country": "CHN"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS019",
+            "display_name": "[6] SHERIF, Mayar",
+            "result_score": "62 60",
+            "winner_slot": "B",
+            "result_name_and_score": "Mayar Sherif d. Giorgia Pedone 62 60",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Giorgia Pedone",
+                "seed": "",
+                "entry_type": "WC",
+                "player": {
+                  "id": 330372,
+                  "first_name": "Giorgia",
+                  "last_name": "Pedone",
+                  "country": "ITA"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Mayar Sherif",
+                "seed": 6,
+                "entry_type": "",
+                "player": {
+                  "id": 318711,
+                  "first_name": "Mayar",
+                  "last_name": "Sherif",
+                  "country": "EGY"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS020",
+            "display_name": "[3] SALKOVA, Dominika",
+            "result_score": "61 36 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Dominika Salkova d. Alice Tubello 61 36 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Dominika Salkova",
+                "seed": 3,
+                "entry_type": "",
+                "player": {
+                  "id": 330149,
+                  "first_name": "Dominika",
+                  "last_name": "Salkova",
+                  "country": "CZE"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Alice Tubello",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 325406,
+                  "first_name": "Alice",
+                  "last_name": "Tubello",
+                  "country": "FRA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS021",
+            "display_name": "TREVISAN, Martina",
+            "result_score": "60 63",
+            "winner_slot": "A",
+            "result_name_and_score": "Martina Trevisan d. Jennifer Ruggeri 60 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Martina Trevisan",
+                "seed": "",
+                "entry_type": "WC",
+                "player": {
+                  "id": 316266,
+                  "first_name": "Martina",
+                  "last_name": "Trevisan",
+                  "country": "ITA"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Jennifer Ruggeri",
+                "seed": "",
+                "entry_type": "WC",
+                "player": {
+                  "id": 329217,
+                  "first_name": "Jennifer",
+                  "last_name": "Ruggeri",
+                  "country": "ITA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS022",
+            "display_name": "NOHA AKUGUE, Noma",
+            "result_score": "64 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Noma Noha Akugue d. Tiantsoa Rakotomanga Rajaonah 64 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Noma Noha Akugue",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 328631,
+                  "first_name": "Noma",
+                  "last_name": "Noha Akugue",
+                  "country": "GER"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Tiantsoa Rakotomanga Rajaonah",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 330970,
+                  "first_name": "Tiantsoa",
+                  "last_name": "Rakotomanga Rajaonah",
+                  "country": "FRA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS023",
+            "display_name": "KAWA, Katarzyna",
+            "result_score": "64 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Katarzyna Kawa d. Lisa Pigato 64 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Katarzyna Kawa",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 315806,
+                  "first_name": "Katarzyna",
+                  "last_name": "Kawa",
+                  "country": "POL"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Lisa Pigato",
+                "seed": 8,
+                "entry_type": "",
+                "player": {
+                  "id": 328193,
+                  "first_name": "Lisa",
+                  "last_name": "Pigato",
+                  "country": "ITA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS024",
+            "display_name": "[7] ZIDANSEK, Tamara",
+            "result_score": "75 60",
+            "winner_slot": "A",
+            "result_name_and_score": "Tamara Zidansek d. Federica Urgesi 75 60",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Tamara Zidansek",
+                "seed": 7,
+                "entry_type": "",
+                "player": {
+                  "id": 323079,
+                  "first_name": "Tamara",
+                  "last_name": "Zidansek",
+                  "country": "SLO"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Federica Urgesi",
+                "seed": "",
+                "entry_type": "WC",
+                "player": {
+                  "id": 330420,
+                  "first_name": "Federica",
+                  "last_name": "Urgesi",
+                  "country": "ITA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS025",
+            "display_name": "BRANCACCIO, Nuria",
+            "result_score": "64 75",
+            "winner_slot": "B",
+            "result_name_and_score": "Nuria Brancaccio d. Victoria Bosio 64 75",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Victoria Bosio",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 318480,
+                  "first_name": "Victoria",
+                  "last_name": "Bosio",
+                  "country": "ARG"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Nuria Brancaccio",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 325433,
+                  "first_name": "Nuria",
+                  "last_name": "Brancaccio",
+                  "country": "ITA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS026",
+            "display_name": "BRONZETTI, Lucia",
+            "result_score": "46 63 61",
+            "winner_slot": "B",
+            "result_name_and_score": "Lucia Bronzetti d. Xinyu Gao 46 63 61",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Xinyu Gao",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 322925,
+                  "first_name": "Xinyu",
+                  "last_name": "Gao",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Lucia Bronzetti",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 322280,
+                  "first_name": "Lucia",
+                  "last_name": "Bronzetti",
+                  "country": "ITA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS027",
+            "display_name": "[4] GRABHER, Julia",
+            "result_score": "64 62",
+            "winner_slot": "B",
+            "result_name_and_score": "Julia Grabher d. Andrea Lazaro Garcia 64 62",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Andrea Lazaro Garcia",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 318080,
+                  "first_name": "Andrea",
+                  "last_name": "Lazaro Garcia",
+                  "country": "ESP"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Julia Grabher",
+                "seed": 4,
+                "entry_type": "",
+                "player": {
+                  "id": 320316,
+                  "first_name": "Julia",
+                  "last_name": "Grabher",
+                  "country": "AUT"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS028",
+            "display_name": "[5] QUEVEDO, Kaitlin",
+            "result_score": "63 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Kaitlin Quevedo d. Jazmin Ortenzi 63 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Kaitlin Quevedo",
+                "seed": 5,
+                "entry_type": "",
+                "player": {
+                  "id": 331742,
+                  "first_name": "Kaitlin",
+                  "last_name": "Quevedo",
+                  "country": "ESP"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Jazmin Ortenzi",
+                "seed": "",
+                "entry_type": "Q",
+                "player": {
+                  "id": 327283,
+                  "first_name": "Jazmin",
+                  "last_name": "Ortenzi",
+                  "country": "ARG"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS029",
+            "display_name": "VANDROMME, Jeline",
+            "result_score": "64 63",
+            "winner_slot": "A",
+            "result_name_and_score": "Jeline Vandromme d. Angela Fita Boluda 64 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Jeline Vandromme",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 331852,
+                  "first_name": "Jeline",
+                  "last_name": "Vandromme",
+                  "country": "BEL"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Angela Fita Boluda",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 322355,
+                  "first_name": "Angela",
+                  "last_name": "Fita Boluda",
+                  "country": "ESP"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS030",
+            "display_name": "SAMSON, Laura",
+            "result_score": "76(3) 75",
+            "winner_slot": "B",
+            "result_name_and_score": "Laura Samson d. Xiyu Wang 76(3) 75",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Xiyu Wang",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 326160,
+                  "first_name": "Xiyu",
+                  "last_name": "Wang",
+                  "country": "CHN"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Laura Samson",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 333944,
+                  "first_name": "Laura",
+                  "last_name": "Samson",
+                  "country": "CZE"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS031",
+            "display_name": "[2] SEMENISTAJA, Darja",
+            "result_score": "63 26 75",
+            "winner_slot": "B",
+            "result_name_and_score": "Darja Semenistaja d. Marina Bassols Ribera 63 26 75",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Marina Bassols Ribera",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 324128,
+                  "first_name": "Marina",
+                  "last_name": "Bassols Ribera",
+                  "country": "ESP"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Darja Semenistaja",
+                "seed": 2,
+                "entry_type": "",
+                "player": {
+                  "id": 329457,
+                  "first_name": "Darja",
+                  "last_name": "Semenistaja",
+                  "country": "LAT"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "round_id": 4,
+        "matches": [
+          {
+            "id": "LS008",
+            "display_name": "[1] JIMENEZ KASINTSEVA, Victoria",
+            "result_score": "62 62",
+            "winner_slot": "A",
+            "result_name_and_score": "Victoria Jimenez Kasintseva d. Varvara Lepchenko 62 62",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Victoria Jimenez Kasintseva",
+                "seed": 1,
+                "entry_type": "",
+                "player": {
+                  "id": 330352,
+                  "first_name": "Victoria",
+                  "last_name": "Jimenez Kasintseva",
+                  "country": "AND"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Varvara Lepchenko",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 120420,
+                  "first_name": "Varvara",
+                  "last_name": "Lepchenko",
+                  "country": "USA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS009",
+            "display_name": "ROMERO GORMAZ, Leyre",
+            "result_score": "64 62",
+            "winner_slot": "A",
+            "result_name_and_score": "Leyre Romero Gormaz d. Mayar Sherif 64 62",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Leyre Romero Gormaz",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 326891,
+                  "first_name": "Leyre",
+                  "last_name": "Romero Gormaz",
+                  "country": "ESP"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Mayar Sherif",
+                "seed": 6,
+                "entry_type": "",
+                "player": {
+                  "id": 318711,
+                  "first_name": "Mayar",
+                  "last_name": "Sherif",
+                  "country": "EGY"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS010",
+            "display_name": "[3] SALKOVA, Dominika",
+            "result_score": "61 76(5)",
+            "winner_slot": "A",
+            "result_name_and_score": "Dominika Salkova d. Martina Trevisan 61 76(5)",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Dominika Salkova",
+                "seed": 3,
+                "entry_type": "",
+                "player": {
+                  "id": 330149,
+                  "first_name": "Dominika",
+                  "last_name": "Salkova",
+                  "country": "CZE"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Martina Trevisan",
+                "seed": "",
+                "entry_type": "WC",
+                "player": {
+                  "id": 316266,
+                  "first_name": "Martina",
+                  "last_name": "Trevisan",
+                  "country": "ITA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS011",
+            "display_name": "KAWA, Katarzyna",
+            "result_score": "76(4) 61",
+            "winner_slot": "B",
+            "result_name_and_score": "Katarzyna Kawa d. Noma Noha Akugue 76(4) 61",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Noma Noha Akugue",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 328631,
+                  "first_name": "Noma",
+                  "last_name": "Noha Akugue",
+                  "country": "GER"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Katarzyna Kawa",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 315806,
+                  "first_name": "Katarzyna",
+                  "last_name": "Kawa",
+                  "country": "POL"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS012",
+            "display_name": "BRANCACCIO, Nuria",
+            "result_score": "62 62",
+            "winner_slot": "B",
+            "result_name_and_score": "Nuria Brancaccio d. Tamara Zidansek 62 62",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Tamara Zidansek",
+                "seed": 7,
+                "entry_type": "",
+                "player": {
+                  "id": 323079,
+                  "first_name": "Tamara",
+                  "last_name": "Zidansek",
+                  "country": "SLO"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Nuria Brancaccio",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 325433,
+                  "first_name": "Nuria",
+                  "last_name": "Brancaccio",
+                  "country": "ITA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS013",
+            "display_name": "BRONZETTI, Lucia",
+            "result_score": "76(6) 76(4)",
+            "winner_slot": "A",
+            "result_name_and_score": "Lucia Bronzetti d. Julia Grabher 76(6) 76(4)",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Lucia Bronzetti",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 322280,
+                  "first_name": "Lucia",
+                  "last_name": "Bronzetti",
+                  "country": "ITA"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Julia Grabher",
+                "seed": 4,
+                "entry_type": "",
+                "player": {
+                  "id": 320316,
+                  "first_name": "Julia",
+                  "last_name": "Grabher",
+                  "country": "AUT"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS014",
+            "display_name": "[5] QUEVEDO, Kaitlin",
+            "result_score": "63 36 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Kaitlin Quevedo d. Jeline Vandromme 63 36 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Kaitlin Quevedo",
+                "seed": 5,
+                "entry_type": "",
+                "player": {
+                  "id": 331742,
+                  "first_name": "Kaitlin",
+                  "last_name": "Quevedo",
+                  "country": "ESP"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Jeline Vandromme",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 331852,
+                  "first_name": "Jeline",
+                  "last_name": "Vandromme",
+                  "country": "BEL"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS015",
+            "display_name": "SAMSON, Laura",
+            "result_score": "62 75",
+            "winner_slot": "A",
+            "result_name_and_score": "Laura Samson d. Darja Semenistaja 62 75",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Laura Samson",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 333944,
+                  "first_name": "Laura",
+                  "last_name": "Samson",
+                  "country": "CZE"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Darja Semenistaja",
+                "seed": 2,
+                "entry_type": "",
+                "player": {
+                  "id": 329457,
+                  "first_name": "Darja",
+                  "last_name": "Semenistaja",
+                  "country": "LAT"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "round_id": 3,
+        "matches": [
+          {
+            "id": "LS004",
+            "display_name": "[1] JIMENEZ KASINTSEVA, Victoria",
+            "result_score": "63 76(3)",
+            "winner_slot": "A",
+            "result_name_and_score": "Victoria Jimenez Kasintseva d. Leyre Romero Gormaz 63 76(3)",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Victoria Jimenez Kasintseva",
+                "seed": 1,
+                "entry_type": "",
+                "player": {
+                  "id": 330352,
+                  "first_name": "Victoria",
+                  "last_name": "Jimenez Kasintseva",
+                  "country": "AND"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Leyre Romero Gormaz",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 326891,
+                  "first_name": "Leyre",
+                  "last_name": "Romero Gormaz",
+                  "country": "ESP"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS005",
+            "display_name": "KAWA, Katarzyna",
+            "result_score": "61 61",
+            "winner_slot": "B",
+            "result_name_and_score": "Katarzyna Kawa d. Dominika Salkova 61 61",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Dominika Salkova",
+                "seed": 3,
+                "entry_type": "",
+                "player": {
+                  "id": 330149,
+                  "first_name": "Dominika",
+                  "last_name": "Salkova",
+                  "country": "CZE"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Katarzyna Kawa",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 315806,
+                  "first_name": "Katarzyna",
+                  "last_name": "Kawa",
+                  "country": "POL"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS006",
+            "display_name": "BRONZETTI, Lucia",
+            "result_score": "64 62",
+            "winner_slot": "B",
+            "result_name_and_score": "Lucia Bronzetti d. Nuria Brancaccio 64 62",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Nuria Brancaccio",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 325433,
+                  "first_name": "Nuria",
+                  "last_name": "Brancaccio",
+                  "country": "ITA"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Lucia Bronzetti",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 322280,
+                  "first_name": "Lucia",
+                  "last_name": "Bronzetti",
+                  "country": "ITA"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS007",
+            "display_name": "SAMSON, Laura",
+            "result_score": "63 64",
+            "winner_slot": "B",
+            "result_name_and_score": "Laura Samson d. Kaitlin Quevedo 63 64",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Kaitlin Quevedo",
+                "seed": 5,
+                "entry_type": "",
+                "player": {
+                  "id": 331742,
+                  "first_name": "Kaitlin",
+                  "last_name": "Quevedo",
+                  "country": "ESP"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Laura Samson",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 333944,
+                  "first_name": "Laura",
+                  "last_name": "Samson",
+                  "country": "CZE"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "round_id": 2,
+        "matches": [
+          {
+            "id": "LS002",
+            "display_name": "KAWA, Katarzyna",
+            "result_score": "26 64 63",
+            "winner_slot": "B",
+            "result_name_and_score": "Katarzyna Kawa d. Victoria Jimenez Kasintseva 26 64 63",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Victoria Jimenez Kasintseva",
+                "seed": 1,
+                "entry_type": "",
+                "player": {
+                  "id": 330352,
+                  "first_name": "Victoria",
+                  "last_name": "Jimenez Kasintseva",
+                  "country": "AND"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Katarzyna Kawa",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 315806,
+                  "first_name": "Katarzyna",
+                  "last_name": "Kawa",
+                  "country": "POL"
+                }
+              }
+            ]
+          },
+          {
+            "id": "LS003",
+            "display_name": "BRONZETTI, Lucia",
+            "result_score": "76(3) 61",
+            "winner_slot": "A",
+            "result_name_and_score": "Lucia Bronzetti d. Laura Samson 76(3) 61",
+            "players": [
+              {
+                "slot": "A",
+                "display": "Lucia Bronzetti",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 322280,
+                  "first_name": "Lucia",
+                  "last_name": "Bronzetti",
+                  "country": "ITA"
+                }
+              },
+              {
+                "slot": "B",
+                "display": "Laura Samson",
+                "seed": "",
+                "entry_type": "",
+                "player": {
+                  "id": 333944,
+                  "first_name": "Laura",
+                  "last_name": "Samson",
+                  "country": "CZE"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "round_id": 1,
+        "matches": []
+      }
+    ]
+  },
+  "scores_year": 2026,
+  "matches": [
+    {
+      "match_id": "RS005",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-07T07:53:59.103+00:00",
+      "duration": "01:42:05",
+      "player_a": {
+        "id": "327283",
+        "name": "Jazmin Ortenzi",
+        "country": "ARG"
+      },
+      "player_b": {
+        "id": "330550",
+        "name": "Viola Turini",
+        "country": "ITA"
+      },
+      "score_string": "0-6,7-5,6-0",
+      "result_string": "[2]J. Ortenzi d V. Turini 0-6,7-5,6-0",
+      "sets": [
+        {
+          "a": "0",
+          "b": "6"
+        },
+        {
+          "a": "7",
+          "b": "5"
+        },
+        {
+          "a": "6",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "RS004",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-07T09:57:57.237+00:00",
+      "duration": "02:42:42",
+      "player_a": {
+        "id": "330970",
+        "name": "Tiantsoa Rakotomanga Rajaonah",
+        "country": "FRA"
+      },
+      "player_b": {
+        "id": "318839",
+        "name": "Chloe Paquet",
+        "country": "FRA"
+      },
+      "score_string": "6-2,5-7,6-3",
+      "result_string": "[1]T. Rakotomanga Rajaonah d C. Paquet 6-2,5-7,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "RS006",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-07T13:04:57.967+00:00",
+      "duration": "02:44:42",
+      "player_a": {
+        "id": "318480",
+        "name": "Victoria Bosio",
+        "country": "ARG"
+      },
+      "player_b": {
+        "id": "331531",
+        "name": "Francesca Pace",
+        "country": "ITA"
+      },
+      "score_string": "6-2,5-7,7-6(7)",
+      "result_string": "[3]V. Bosio d F. Pace 6-2,5-7,7-6(7)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "RS007",
+      "round_id": "1",
+      "draw_level_type": "Q",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-07T15:59:16.337+00:00",
+      "duration": "01:55:51",
+      "player_a": {
+        "id": "330574",
+        "name": "Noemi Basiletti",
+        "country": "ITA"
+      },
+      "player_b": {
+        "id": "329308",
+        "name": "Beatrice Ricci",
+        "country": "ITA"
+      },
+      "score_string": "6-2,1-6,6-0",
+      "result_string": "[4]N. Basiletti d B. Ricci 6-2,1-6,6-0",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS030",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-08T10:21:14.597+00:00",
+      "duration": "02:16:58",
+      "player_a": {
+        "id": "326160",
+        "name": "Xiyu Wang",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "333944",
+        "name": "Laura Samson",
+        "country": "CZE"
+      },
+      "score_string": "7-6(3),7-5",
+      "result_string": "L. Samson d X. Wang 7-6(3),7-5",
+      "sets": [
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS028",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-08T13:02:53.507+00:00",
+      "duration": "01:59:04",
+      "player_a": {
+        "id": "331742",
+        "name": "Kaitlin Quevedo",
+        "country": "ESP"
+      },
+      "player_b": {
+        "id": "327283",
+        "name": "Jazmin Ortenzi",
+        "country": "ARG"
+      },
+      "score_string": "6-3,6-4",
+      "result_string": "[5]K. Quevedo d J. Ortenzi 6-3,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS022",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-08T14:27:25.41+00:00",
+      "duration": "01:25:52",
+      "player_a": {
+        "id": "328631",
+        "name": "Noma Noha Akugue",
+        "country": "GER"
+      },
+      "player_b": {
+        "id": "330970",
+        "name": "Tiantsoa Rakotomanga Rajaonah",
+        "country": "FRA"
+      },
+      "score_string": "6-4,6-4",
+      "result_string": "N. Noha Akugue d T. Rakotomanga Rajaonah 6-4,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS021",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-08T15:49:10.48+00:00",
+      "duration": "01:24:01",
+      "player_a": {
+        "id": "316266",
+        "name": "Martina Trevisan",
+        "country": "ITA"
+      },
+      "player_b": {
+        "id": "329217",
+        "name": "Jennifer Ruggeri",
+        "country": "ITA"
+      },
+      "score_string": "6-0,6-3",
+      "result_string": "M. Trevisan d J. Ruggeri 6-0,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "0"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS029",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-08T16:10:44.577+00:00",
+      "duration": "01:31:49",
+      "player_a": {
+        "id": "331852",
+        "name": "Jeline Vandromme",
+        "country": "BEL"
+      },
+      "player_b": {
+        "id": "322355",
+        "name": "Angela Fita Boluda",
+        "country": "ESP"
+      },
+      "score_string": "6-4,6-3",
+      "result_string": "J. Vandromme d A. Fita Boluda 6-4,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS023",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-08T18:17:24.663+00:00",
+      "duration": "01:31:48",
+      "player_a": {
+        "id": "315806",
+        "name": "Katarzyna Kawa",
+        "country": "POL"
+      },
+      "player_b": {
+        "id": "328193",
+        "name": "Lisa Pigato",
+        "country": "ITA"
+      },
+      "score_string": "6-4,6-4",
+      "result_string": "K. Kawa d [8]L. Pigato 6-4,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS024",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-09T10:51:59.247+00:00",
+      "duration": "01:39:50",
+      "player_a": {
+        "id": "323079",
+        "name": "Tamara Zidansek",
+        "country": "SLO"
+      },
+      "player_b": {
+        "id": "330420",
+        "name": "Federica Urgesi",
+        "country": "ITA"
+      },
+      "score_string": "7-5,6-0",
+      "result_string": "[7]T. Zidansek d F. Urgesi 7-5,6-0",
+      "sets": [
+        {
+          "a": "7",
+          "b": "5"
+        },
+        {
+          "a": "6",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS031",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-09T10:57:50.63+00:00",
+      "duration": "02:37:19",
+      "player_a": {
+        "id": "324128",
+        "name": "Marina Bassols Ribera",
+        "country": "ESP"
+      },
+      "player_b": {
+        "id": "329457",
+        "name": "Darja Semenistaja",
+        "country": "LAT"
+      },
+      "score_string": "6-3,2-6,7-5",
+      "result_string": "[2]D. Semenistaja d M. Bassols Ribera 6-3,2-6,7-5",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS020",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-09T11:54:04.867+00:00",
+      "duration": "01:55:23",
+      "player_a": {
+        "id": "330149",
+        "name": "Dominika Salkova",
+        "country": "CZE"
+      },
+      "player_b": {
+        "id": "325406",
+        "name": "Alice Tubello",
+        "country": "FRA"
+      },
+      "score_string": "6-1,3-6,6-4",
+      "result_string": "[3]D. Salkova d A. Tubello 6-1,3-6,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "1"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS026",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-09T12:54:18.18+00:00",
+      "duration": "02:10:33",
+      "player_a": {
+        "id": "322925",
+        "name": "Xinyu Gao",
+        "country": "CHN"
+      },
+      "player_b": {
+        "id": "322280",
+        "name": "Lucia Bronzetti",
+        "country": "ITA"
+      },
+      "score_string": "4-6,6-3,6-1",
+      "result_string": "L. Bronzetti d X. Gao 4-6,6-3,6-1",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "1",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS025",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-09T13:46:41.623+00:00",
+      "duration": "01:33:58",
+      "player_a": {
+        "id": "318480",
+        "name": "Victoria Bosio",
+        "country": "ARG"
+      },
+      "player_b": {
+        "id": "325433",
+        "name": "Nuria Brancaccio",
+        "country": "ITA"
+      },
+      "score_string": "6-4,7-5",
+      "result_string": "N. Brancaccio d V. Bosio 6-4,7-5",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS018",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-09T14:14:16.773+00:00",
+      "duration": "01:36:07",
+      "player_a": {
+        "id": "326891",
+        "name": "Leyre Romero Gormaz",
+        "country": "ESP"
+      },
+      "player_b": {
+        "id": "322451",
+        "name": "Xiaodi You",
+        "country": "CHN"
+      },
+      "score_string": "6-4,6-1",
+      "result_string": "L. Romero Gormaz d X. You 6-4,6-1",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "1"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS027",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-09T15:44:03.193+00:00",
+      "duration": "01:34:28",
+      "player_a": {
+        "id": "318080",
+        "name": "Andrea Lazaro Garcia",
+        "country": "ESP"
+      },
+      "player_b": {
+        "id": "320316",
+        "name": "Julia Grabher",
+        "country": "AUT"
+      },
+      "score_string": "6-4,6-2",
+      "result_string": "[4]J. Grabher d A. Lazaro Garcia 6-4,6-2",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS019",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-09T15:54:41.623+00:00",
+      "duration": "01:17:55",
+      "player_a": {
+        "id": "330372",
+        "name": "Giorgia Pedone",
+        "country": "ITA"
+      },
+      "player_b": {
+        "id": "318711",
+        "name": "Mayar Sherif",
+        "country": "EGY"
+      },
+      "score_string": "6-2,6-0",
+      "result_string": "[6]M. Sherif d G. Pedone 6-2,6-0",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "0",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS016",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-09T17:28:59.64+00:00",
+      "duration": "01:42:29",
+      "player_a": {
+        "id": "330352",
+        "name": "Victoria Jimenez Kasintseva",
+        "country": "AND"
+      },
+      "player_b": {
+        "id": "321029",
+        "name": "Jessica Pieri",
+        "country": "ITA"
+      },
+      "score_string": "6-2,6-4",
+      "result_string": "[1]V. Jimenez Kasintseva d J. Pieri 6-2,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS017",
+      "round_id": "1",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-09T18:18:38.743+00:00",
+      "duration": "01:15:18",
+      "player_a": {
+        "id": "330574",
+        "name": "Noemi Basiletti",
+        "country": "ITA"
+      },
+      "player_b": {
+        "id": "120420",
+        "name": "Varvara Lepchenko",
+        "country": "USA"
+      },
+      "score_string": "6-2,6-3",
+      "result_string": "V. Lepchenko d N. Basiletti 6-2,6-3",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD007",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-06-10T09:55:17.107+00:00",
+      "duration": "01:42:33",
+      "player_a": {
+        "id": "325433",
+        "name": "Nuria Brancaccio",
+        "country": "ITA"
+      },
+      "player_b": {
+        "id": "323183",
+        "name": "I-Hsuan Cho",
+        "country": "TPE"
+      },
+      "score_string": "4-6,6-2,1-0(7)",
+      "result_string": "[2]I. Cho / Y. Cho d N. Brancaccio / L. Pigato 4-6,6-2,1-0(7)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "0",
+          "b": "1"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS011",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-10T09:57:34.503+00:00",
+      "duration": "01:39:53",
+      "player_a": {
+        "id": "328631",
+        "name": "Noma Noha Akugue",
+        "country": "GER"
+      },
+      "player_b": {
+        "id": "315806",
+        "name": "Katarzyna Kawa",
+        "country": "POL"
+      },
+      "score_string": "7-6(4),6-1",
+      "result_string": "K. Kawa d N. Noha Akugue 7-6(4),6-1",
+      "sets": [
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "1",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS014",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-10T11:51:42.267+00:00",
+      "duration": "02:30:15",
+      "player_a": {
+        "id": "331742",
+        "name": "Kaitlin Quevedo",
+        "country": "ESP"
+      },
+      "player_b": {
+        "id": "331852",
+        "name": "Jeline Vandromme",
+        "country": "BEL"
+      },
+      "score_string": "6-3,3-6,6-4",
+      "result_string": "[5]K. Quevedo d J. Vandromme 6-3,3-6,6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD004",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-06-10T11:55:45.983+00:00",
+      "duration": "01:46:39",
+      "player_a": {
+        "id": "318001",
+        "name": "Nicole Fossa Huergo",
+        "country": "ARG"
+      },
+      "player_b": {
+        "id": "330352",
+        "name": "Victoria Jimenez Kasintseva",
+        "country": "AND"
+      },
+      "score_string": "7-5,6-3",
+      "result_string": "[1]N. Fossa Huergo / N. Radisic d V. Jimenez Kasintseva / X. You 7-5,6-3",
+      "sets": [
+        {
+          "a": "7",
+          "b": "5"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS015",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-10T13:53:11.763+00:00",
+      "duration": "01:49:03",
+      "player_a": {
+        "id": "333944",
+        "name": "Laura Samson",
+        "country": "CZE"
+      },
+      "player_b": {
+        "id": "329457",
+        "name": "Darja Semenistaja",
+        "country": "LAT"
+      },
+      "score_string": "6-2,7-5",
+      "result_string": "L. Samson d [2]D. Semenistaja 6-2,7-5",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "7",
+          "b": "5"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS010",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-10T14:44:21.177+00:00",
+      "duration": "01:36:46",
+      "player_a": {
+        "id": "330149",
+        "name": "Dominika Salkova",
+        "country": "CZE"
+      },
+      "player_b": {
+        "id": "316266",
+        "name": "Martina Trevisan",
+        "country": "ITA"
+      },
+      "score_string": "6-1,7-6(5)",
+      "result_string": "[3]D. Salkova d M. Trevisan 6-1,7-6(5)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "1"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS009",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-11T10:56:01.75+00:00",
+      "duration": "01:46:25",
+      "player_a": {
+        "id": "326891",
+        "name": "Leyre Romero Gormaz",
+        "country": "ESP"
+      },
+      "player_b": {
+        "id": "318711",
+        "name": "Mayar Sherif",
+        "country": "EGY"
+      },
+      "score_string": "6-4,6-2",
+      "result_string": "L. Romero Gormaz d [6]M. Sherif 6-4,6-2",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS012",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-11T12:55:22.927+00:00",
+      "duration": "01:16:18",
+      "player_a": {
+        "id": "323079",
+        "name": "Tamara Zidansek",
+        "country": "SLO"
+      },
+      "player_b": {
+        "id": "325433",
+        "name": "Nuria Brancaccio",
+        "country": "ITA"
+      },
+      "score_string": "6-2,6-2",
+      "result_string": "N. Brancaccio d [7]T. Zidansek 6-2,6-2",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD006",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-06-11T13:55:16.293+00:00",
+      "duration": "02:01:23",
+      "player_a": {
+        "id": "318907",
+        "name": "Rutuja Bhosale",
+        "country": "IND"
+      },
+      "player_b": {
+        "id": "316942",
+        "name": "Yvonne Cavalle-Reimers",
+        "country": "ESP"
+      },
+      "score_string": "3-6,7-5,1-0(11)",
+      "result_string": "Y. Cavalle-Reimers / L. Salden d R. Bhosale / E. Cascino 3-6,7-5,1-0(11)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        },
+        {
+          "a": "0",
+          "b": "1"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS008",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-11T15:49:31.55+00:00",
+      "duration": "01:17:34",
+      "player_a": {
+        "id": "330352",
+        "name": "Victoria Jimenez Kasintseva",
+        "country": "AND"
+      },
+      "player_b": {
+        "id": "120420",
+        "name": "Varvara Lepchenko",
+        "country": "USA"
+      },
+      "score_string": "6-2,6-2",
+      "result_string": "[1]V. Jimenez Kasintseva d V. Lepchenko 6-2,6-2",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD005",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-06-11T16:11:55.937+00:00",
+      "duration": "01:23:27",
+      "player_a": {
+        "id": "314660",
+        "name": "Ekaterine Gorgodze",
+        "country": "GEO"
+      },
+      "player_b": {
+        "id": "330574",
+        "name": "Noemi Basiletti",
+        "country": "ITA"
+      },
+      "score_string": "7-5,6-4",
+      "result_string": "E. Gorgodze / N. Karamoko d N. Basiletti / G. Pedone 7-5,6-4",
+      "sets": [
+        {
+          "a": "7",
+          "b": "5"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS013",
+      "round_id": "2",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-11T18:24:57.723+00:00",
+      "duration": "02:24:10",
+      "player_a": {
+        "id": "322280",
+        "name": "Lucia Bronzetti",
+        "country": "ITA"
+      },
+      "player_b": {
+        "id": "320316",
+        "name": "Julia Grabher",
+        "country": "AUT"
+      },
+      "score_string": "7-6(6),7-6(4)",
+      "result_string": "L. Bronzetti d [4]J. Grabher 7-6(6),7-6(4)",
+      "sets": [
+        {
+          "a": "7",
+          "b": "6"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS005",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-12T10:52:25.753+00:00",
+      "duration": "00:59:46",
+      "player_a": {
+        "id": "330149",
+        "name": "Dominika Salkova",
+        "country": "CZE"
+      },
+      "player_b": {
+        "id": "315806",
+        "name": "Katarzyna Kawa",
+        "country": "POL"
+      },
+      "score_string": "6-1,6-1",
+      "result_string": "K. Kawa d [3]D. Salkova 6-1,6-1",
+      "sets": [
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "1",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS004",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-12T12:14:41.42+00:00",
+      "duration": "01:46:37",
+      "player_a": {
+        "id": "330352",
+        "name": "Victoria Jimenez Kasintseva",
+        "country": "AND"
+      },
+      "player_b": {
+        "id": "326891",
+        "name": "Leyre Romero Gormaz",
+        "country": "ESP"
+      },
+      "score_string": "6-3,7-6(3)",
+      "result_string": "[1]V. Jimenez Kasintseva d L. Romero Gormaz 6-3,7-6(3)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD002",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-06-12T14:26:54.95+00:00",
+      "duration": "01:35:45",
+      "player_a": {
+        "id": "318001",
+        "name": "Nicole Fossa Huergo",
+        "country": "ARG"
+      },
+      "player_b": {
+        "id": "314660",
+        "name": "Ekaterine Gorgodze",
+        "country": "GEO"
+      },
+      "score_string": "6-4,7-5",
+      "result_string": "E. Gorgodze / N. Karamoko d [1]N. Fossa Huergo / N. Radisic 6-4,7-5",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        },
+        {
+          "a": "0",
+          "b": "0"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD003",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-06-12T15:12:47+00:00",
+      "duration": "02:03:24",
+      "player_a": {
+        "id": "316942",
+        "name": "Yvonne Cavalle-Reimers",
+        "country": "ESP"
+      },
+      "player_b": {
+        "id": "323183",
+        "name": "I-Hsuan Cho",
+        "country": "TPE"
+      },
+      "score_string": "6-4,6-7(1),1-0(7)",
+      "result_string": "Y. Cavalle-Reimers / L. Salden d [2]I. Cho / Y. Cho 6-4,6-7(1),1-0(7)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "1",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS006",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-12T16:20:27.44+00:00",
+      "duration": "01:32:59",
+      "player_a": {
+        "id": "325433",
+        "name": "Nuria Brancaccio",
+        "country": "ITA"
+      },
+      "player_b": {
+        "id": "322280",
+        "name": "Lucia Bronzetti",
+        "country": "ITA"
+      },
+      "score_string": "6-4,6-2",
+      "result_string": "L. Bronzetti d N. Brancaccio 6-4,6-2",
+      "sets": [
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS007",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-12T18:23:07.797+00:00",
+      "duration": "01:27:15",
+      "player_a": {
+        "id": "331742",
+        "name": "Kaitlin Quevedo",
+        "country": "ESP"
+      },
+      "player_b": {
+        "id": "333944",
+        "name": "Laura Samson",
+        "country": "CZE"
+      },
+      "score_string": "6-3,6-4",
+      "result_string": "L. Samson d [5]K. Quevedo 6-3,6-4",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD001",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-06-13T14:25:03.603+00:00",
+      "duration": "01:17:58",
+      "player_a": {
+        "id": "314660",
+        "name": "Ekaterine Gorgodze",
+        "country": "GEO"
+      },
+      "player_b": {
+        "id": "316942",
+        "name": "Yvonne Cavalle-Reimers",
+        "country": "ESP"
+      },
+      "score_string": "6-3,6-4",
+      "result_string": "Y. Cavalle-Reimers / L. Salden d E. Gorgodze / N. Karamoko 6-3,6-4",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS002",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-13T16:17:49.8+00:00",
+      "duration": "02:28:28",
+      "player_a": {
+        "id": "330352",
+        "name": "Victoria Jimenez Kasintseva",
+        "country": "AND"
+      },
+      "player_b": {
+        "id": "315806",
+        "name": "Katarzyna Kawa",
+        "country": "POL"
+      },
+      "score_string": "2-6,6-4,6-3",
+      "result_string": "K. Kawa d [1]V. Jimenez Kasintseva 2-6,6-4,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS003",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-13T19:05:24.007+00:00",
+      "duration": "01:54:26",
+      "player_a": {
+        "id": "322280",
+        "name": "Lucia Bronzetti",
+        "country": "ITA"
+      },
+      "player_b": {
+        "id": "333944",
+        "name": "Laura Samson",
+        "country": "CZE"
+      },
+      "score_string": "7-6(3),6-1",
+      "result_string": "L. Bronzetti d L. Samson 7-6(3),6-1",
+      "sets": [
+        {
+          "a": "7",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "1"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS001",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-06-14T17:46:30.4+00:00",
+      "duration": "02:36:28",
+      "player_a": {
+        "id": "315806",
+        "name": "Katarzyna Kawa",
+        "country": "POL"
+      },
+      "player_b": {
+        "id": "322280",
+        "name": "Lucia Bronzetti",
+        "country": "ITA"
+      },
+      "score_string": "6-1,4-6,7-6(6)",
+      "result_string": "K. Kawa d L. Bronzetti 6-1,4-6,7-6(6)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "1"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        }
+      ],
+      "winner_side": "A"
+    }
+  ]
+}

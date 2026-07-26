@@ -12,13 +12,21 @@
   "indoor_outdoor": "O",
   "city": "DUBAI",
   "country": "UAE",
-  "status": "inprogress",
+  "status": "finished",
   "draw_size_singles": 56,
   "draw_size_doubles": 28,
   "prize_money": 4088211,
   "prize_money_currency": "USD",
-  "champion": null,
-  "runner_up": null,
+  "champion": {
+    "id": "316956",
+    "name": "Jessica Pegula",
+    "country": "USA"
+  },
+  "runner_up": {
+    "id": "316738",
+    "name": "Elina Svitolina",
+    "country": "UKR"
+  },
   "draw_year": 2026,
   "draw": {
     "draw_size": 64,
@@ -2772,10 +2780,10 @@
         "matches": [
           {
             "id": "LS004",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[7] SVITOLINA, Elina",
+            "result_score": "36 62 63",
+            "winner_slot": "B",
+            "result_name_and_score": "Elina Svitolina d. Antonia Ruzic 36 62 63",
             "players": [
               {
                 "slot": "A",
@@ -2805,10 +2813,10 @@
           },
           {
             "id": "LS005",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[3] GAUFF, Coco",
+            "result_score": "60 62",
+            "winner_slot": "A",
+            "result_name_and_score": "Coco Gauff d. Alexandra Eala 60 62",
             "players": [
               {
                 "slot": "A",
@@ -2838,10 +2846,10 @@
           },
           {
             "id": "LS006",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[4] PEGULA, Jessica",
+            "result_score": "63 26 64",
+            "winner_slot": "B",
+            "result_name_and_score": "Jessica Pegula d. Clara Tauson 63 26 64",
             "players": [
               {
                 "slot": "A",
@@ -2871,10 +2879,10 @@
           },
           {
             "id": "LS007",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[2] ANISIMOVA, Amanda",
+            "result_score": "26 75 76(4)",
+            "winner_slot": "B",
+            "result_name_and_score": "Amanda Anisimova d. Mirra Andreeva 26 75 76(4)",
             "players": [
               {
                 "slot": "A",
@@ -2909,66 +2917,66 @@
         "matches": [
           {
             "id": "LS002",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[7] SVITOLINA, Elina",
+            "result_score": "64 67(13) 64",
+            "winner_slot": "A",
+            "result_name_and_score": "Elina Svitolina d. Coco Gauff 64 67(13) 64",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
-                "seed": "",
+                "display": "Elina Svitolina",
+                "seed": 7,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 316738,
+                  "first_name": "Elina",
+                  "last_name": "Svitolina",
+                  "country": "UKR"
                 }
               },
               {
                 "slot": "B",
-                "display": "N/A",
-                "seed": "",
+                "display": "Coco Gauff",
+                "seed": 3,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 328560,
+                  "first_name": "Coco",
+                  "last_name": "Gauff",
+                  "country": "USA"
                 }
               }
             ]
           },
           {
             "id": "LS003",
-            "display_name": "",
-            "result_score": "",
-            "winner_slot": "",
-            "result_name_and_score": "",
+            "display_name": "[4] PEGULA, Jessica",
+            "result_score": "16 64 63",
+            "winner_slot": "A",
+            "result_name_and_score": "Jessica Pegula d. Amanda Anisimova 16 64 63",
             "players": [
               {
                 "slot": "A",
-                "display": "N/A",
-                "seed": "",
+                "display": "Jessica Pegula",
+                "seed": 4,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 316956,
+                  "first_name": "Jessica",
+                  "last_name": "Pegula",
+                  "country": "USA"
                 }
               },
               {
                 "slot": "B",
-                "display": "N/A",
-                "seed": "",
+                "display": "Amanda Anisimova",
+                "seed": 2,
                 "entry_type": "",
                 "player": {
-                  "id": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "country": ""
+                  "id": 326384,
+                  "first_name": "Amanda",
+                  "last_name": "Anisimova",
+                  "country": "USA"
                 }
               }
             ]
@@ -6017,36 +6025,13 @@
       "winner_side": "B"
     },
     {
-      "match_id": "LD006",
-      "round_id": 3,
-      "draw_level_type": "M",
-      "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-19T14:00+04:00",
-      "duration": null,
-      "player_a": {
-        "id": "314701",
-        "name": "Lyudmyla Kichenok",
-        "country": "UKR"
-      },
-      "player_b": {
-        "id": "319731",
-        "name": "Anna Danilina",
-        "country": "KAZ"
-      },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
-    },
-    {
       "match_id": "LS006",
-      "round_id": 3,
+      "round_id": "Q",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "U",
-      "scheduled": "2026-02-19T14:00+04:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-19T09:45:53.877+00:00",
+      "duration": "01:55:54",
       "player_a": {
         "id": "327793",
         "name": "Clara Tauson",
@@ -6057,65 +6042,68 @@
         "name": "Jessica Pegula",
         "country": "USA"
       },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
+      "score_string": "6-3,2-6,6-4",
+      "result_string": "[4]J. Pegula d [12]C. Tauson 6-3,2-6,6-4",
+      "sets": [
+        {
+          "a": "3",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
     },
     {
-      "match_id": "LS005",
-      "round_id": 3,
-      "draw_level_type": "M",
-      "draw_match_type": "S",
-      "match_state": "U",
-      "scheduled": "2026-02-19T19:00+04:00",
-      "duration": null,
-      "player_a": {
-        "id": "328560",
-        "name": "Coco Gauff",
-        "country": "USA"
-      },
-      "player_b": {
-        "id": "330332",
-        "name": "Alexandra Eala",
-        "country": "PHI"
-      },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
-    },
-    {
-      "match_id": "LD007",
-      "round_id": 3,
+      "match_id": "LD006",
+      "round_id": "Q",
       "draw_level_type": "M",
       "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59+04:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-19T09:51:22.563+00:00",
+      "duration": "01:28:30",
       "player_a": {
-        "id": "314445",
-        "name": "Gabriela Dabrowski",
-        "country": "CAN"
+        "id": "314701",
+        "name": "Lyudmyla Kichenok",
+        "country": "UKR"
       },
       "player_b": {
-        "id": "316060",
-        "name": "Giuliana Olmos",
-        "country": "MEX"
+        "id": "319731",
+        "name": "Anna Danilina",
+        "country": "KAZ"
       },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
+      "score_string": "6-1,4-6,1-0(6)",
+      "result_string": "[4]A. Danilina / A. Krunic d L. Kichenok / D. Krawczyk 6-1,4-6,1-0(6)",
+      "sets": [
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "0",
+          "b": "1"
+        }
+      ],
+      "winner_side": "B"
     },
     {
       "match_id": "LD004",
-      "round_id": 3,
+      "round_id": "Q",
       "draw_level_type": "M",
       "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59+04:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-19T11:39:29.937+00:00",
+      "duration": "01:41:54",
       "player_a": {
         "id": "310926",
         "name": "Laura Siegemund",
@@ -6126,42 +6114,28 @@
         "name": "Storm Hunter",
         "country": "AUS"
       },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
-    },
-    {
-      "match_id": "LD005",
-      "round_id": 3,
-      "draw_level_type": "M",
-      "draw_match_type": "D",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59+04:00",
-      "duration": null,
-      "player_a": {
-        "id": "315741",
-        "name": "Hao-Ching Chan",
-        "country": "TPE"
-      },
-      "player_b": {
-        "id": "320319",
-        "name": "Jaqueline Cristian",
-        "country": "ROU"
-      },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
+      "score_string": "7-6(4),6-4",
+      "result_string": "L. Siegemund / V. Zvonareva d [7]S. Hunter / K. Siniakova 7-6(4),6-4",
+      "sets": [
+        {
+          "a": "7",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
     },
     {
       "match_id": "LS007",
-      "round_id": 3,
+      "round_id": "Q",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59+04:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-19T12:12:18.51+00:00",
+      "duration": "02:38:17",
       "player_a": {
         "id": "331809",
         "name": "Mirra Andreeva",
@@ -6172,19 +6146,136 @@
         "name": "Amanda Anisimova",
         "country": "USA"
       },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
+      "score_string": "2-6,7-5,7-6(4)",
+      "result_string": "[2]A. Anisimova d [5]M. Andreeva 2-6,7-5,7-6(4)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "5",
+          "b": "7"
+        },
+        {
+          "a": "6",
+          "b": "7"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD007",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-19T13:50:46.723+00:00",
+      "duration": "01:24:31",
+      "player_a": {
+        "id": "314445",
+        "name": "Gabriela Dabrowski",
+        "country": "CAN"
+      },
+      "player_b": {
+        "id": "316060",
+        "name": "Giuliana Olmos",
+        "country": "MEX"
+      },
+      "score_string": "6-2,4-6,1-0(12)",
+      "result_string": "[5]G. Dabrowski / L. Stefani d G. Olmos / J. Pegula 6-2,4-6,1-0(12)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "2"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        },
+        {
+          "a": "1",
+          "b": "0"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS005",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-19T15:06:38.14+00:00",
+      "duration": "01:07:23",
+      "player_a": {
+        "id": "328560",
+        "name": "Coco Gauff",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "330332",
+        "name": "Alexandra Eala",
+        "country": "PHI"
+      },
+      "score_string": "6-0,6-2",
+      "result_string": "[3]C. Gauff d A. Eala 6-0,6-2",
+      "sets": [
+        {
+          "a": "6",
+          "b": "0"
+        },
+        {
+          "a": "6",
+          "b": "2"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD005",
+      "round_id": "Q",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-19T15:37:03.567+00:00",
+      "duration": "01:24:41",
+      "player_a": {
+        "id": "315741",
+        "name": "Hao-Ching Chan",
+        "country": "TPE"
+      },
+      "player_b": {
+        "id": "320319",
+        "name": "Jaqueline Cristian",
+        "country": "ROU"
+      },
+      "score_string": "3-6,6-2,1-0(8)",
+      "result_string": "J. Cristian / E. Ruse d H. Chan / C. Tauson 3-6,6-2,1-0(8)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "0",
+          "b": "1"
+        }
+      ],
+      "winner_side": "B"
     },
     {
       "match_id": "LS004",
-      "round_id": 3,
+      "round_id": "Q",
       "draw_level_type": "M",
       "draw_match_type": "S",
-      "match_state": "U",
-      "scheduled": "2026-02-19T23:59+04:00",
-      "duration": null,
+      "match_state": "F",
+      "scheduled": "2026-02-19T16:36:34.74+00:00",
+      "duration": "02:02:20",
       "player_a": {
         "id": "329505",
         "name": "Antonia Ruzic",
@@ -6195,10 +6286,227 @@
         "name": "Elina Svitolina",
         "country": "UKR"
       },
-      "score_string": null,
-      "result_string": null,
-      "sets": [],
-      "winner_side": null
+      "score_string": "3-6,6-2,6-3",
+      "result_string": "[7]E. Svitolina d A. Ruzic 3-6,6-2,6-3",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD003",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-20T09:21:25.683+00:00",
+      "duration": "01:29:12",
+      "player_a": {
+        "id": "319731",
+        "name": "Anna Danilina",
+        "country": "KAZ"
+      },
+      "player_b": {
+        "id": "314445",
+        "name": "Gabriela Dabrowski",
+        "country": "CAN"
+      },
+      "score_string": "4-6,6-2,1-0(6)",
+      "result_string": "[5]G. Dabrowski / L. Stefani d [4]A. Danilina / A. Krunic 4-6,6-2,1-0(6)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "0",
+          "b": "1"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LD002",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-20T11:27:39.143+00:00",
+      "duration": "01:59:14",
+      "player_a": {
+        "id": "310926",
+        "name": "Laura Siegemund",
+        "country": "GER"
+      },
+      "player_b": {
+        "id": "320319",
+        "name": "Jaqueline Cristian",
+        "country": "ROU"
+      },
+      "score_string": "6-3,7-6(6)",
+      "result_string": "L. Siegemund / V. Zvonareva d J. Cristian / E. Ruse 6-3,7-6(6)",
+      "sets": [
+        {
+          "a": "6",
+          "b": "3"
+        },
+        {
+          "a": "7",
+          "b": "6"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS003",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-20T13:34:47.293+00:00",
+      "duration": "02:02:31",
+      "player_a": {
+        "id": "316956",
+        "name": "Jessica Pegula",
+        "country": "USA"
+      },
+      "player_b": {
+        "id": "326384",
+        "name": "Amanda Anisimova",
+        "country": "USA"
+      },
+      "score_string": "1-6,6-4,6-3",
+      "result_string": "[4]J. Pegula d [2]A. Anisimova 1-6,6-4,6-3",
+      "sets": [
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "3"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LS002",
+      "round_id": "S",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-20T15:59:53.43+00:00",
+      "duration": "03:03:40",
+      "player_a": {
+        "id": "316738",
+        "name": "Elina Svitolina",
+        "country": "UKR"
+      },
+      "player_b": {
+        "id": "328560",
+        "name": "Coco Gauff",
+        "country": "USA"
+      },
+      "score_string": "6-4,6-7(13),6-4",
+      "result_string": "[7]E. Svitolina d [3]C. Gauff 6-4,6-7(13),6-4",
+      "sets": [
+        {
+          "a": "6",
+          "b": "4"
+        },
+        {
+          "a": "6",
+          "b": "7"
+        },
+        {
+          "a": "6",
+          "b": "4"
+        }
+      ],
+      "winner_side": "A"
+    },
+    {
+      "match_id": "LD001",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "D",
+      "match_state": "F",
+      "scheduled": "2026-02-21T12:05:46.733+00:00",
+      "duration": "01:13:36",
+      "player_a": {
+        "id": "310926",
+        "name": "Laura Siegemund",
+        "country": "GER"
+      },
+      "player_b": {
+        "id": "314445",
+        "name": "Gabriela Dabrowski",
+        "country": "CAN"
+      },
+      "score_string": "6-1,6-3",
+      "result_string": "[5]G. Dabrowski / L. Stefani d L. Siegemund / V. Zvonareva 6-1,6-3",
+      "sets": [
+        {
+          "a": "1",
+          "b": "6"
+        },
+        {
+          "a": "3",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
+    },
+    {
+      "match_id": "LS001",
+      "round_id": "F",
+      "draw_level_type": "M",
+      "draw_match_type": "S",
+      "match_state": "F",
+      "scheduled": "2026-02-21T14:46:29.527+00:00",
+      "duration": "01:12:54",
+      "player_a": {
+        "id": "316738",
+        "name": "Elina Svitolina",
+        "country": "UKR"
+      },
+      "player_b": {
+        "id": "316956",
+        "name": "Jessica Pegula",
+        "country": "USA"
+      },
+      "score_string": "6-2,6-4",
+      "result_string": "[4]J. Pegula d [7]E. Svitolina 6-2,6-4",
+      "sets": [
+        {
+          "a": "2",
+          "b": "6"
+        },
+        {
+          "a": "4",
+          "b": "6"
+        }
+      ],
+      "winner_side": "B"
     }
   ]
 }
