@@ -11,6 +11,7 @@ export const APP_CONFIG = {
 };
 
 export const CATEGORY_LABELS = {
+  olympics: 'Olympics',
   'grand-slam': 'Grand Slam',
   'masters-1000': 'WTA 1000',
   'atp-500': 'WTA 500',

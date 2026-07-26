@@ -49,6 +49,11 @@ const state = {
   styleClusterModel: null,
   dnaTournamentKey: '',
   dnaTournamentPlayerKey: '',
+  titlesModal: {
+    playerKey: '',
+    category: 'all',
+    expandedEventKey: '',
+  },
 };
 
 const dom = {
@@ -103,6 +108,12 @@ const dom = {
   tournamentModalMeta: document.getElementById('tournamentModalMeta'),
   tournamentModalBody: document.getElementById('tournamentModalBody'),
   tournamentModalClose: document.getElementById('tournamentModalClose'),
+
+  titlesModal: document.getElementById('titlesModal'),
+  titlesModalTitle: document.getElementById('titlesModalTitle'),
+  titlesModalMeta: document.getElementById('titlesModalMeta'),
+  titlesModalBody: document.getElementById('titlesModalBody'),
+  titlesModalClose: document.getElementById('titlesModalClose'),
 
   recordCategoryFilter: document.getElementById('recordCategoryFilter'),
   recordsTable: document.getElementById('recordsTable'),
@@ -310,7 +321,7 @@ function renderPlayerHero() {
   dom.playerHero.innerHTML = `
     <div class="player-hero-head">
       ${heroImage}
-      <div>
+      <div class="player-hero-identity">
         <div class="player-name-line">
           ${getFlagHtml(player.countryCode)}
           <h3>${escapeHtml(player.name)}</h3>
@@ -320,6 +331,73 @@ function renderPlayerHero() {
           ${metaParts.join('<span>&bull;</span>')}
         </div>
       </div>
+      ${renderTrophyCase(player)}
+    </div>
+  `;
+}
+
+// No Olympic-rings emoji exists, so draw the rings inline.
+const OLYMPIC_RINGS_SVG = `
+  <svg class="olympic-rings" viewBox="0 0 62 30" role="img" aria-label="Olympic rings" focusable="false">
+    <g fill="none" stroke-width="3">
+      <circle cx="11" cy="11" r="8.5" stroke="#0081c8"></circle>
+      <circle cx="31" cy="11" r="8.5" stroke="#231f20"></circle>
+      <circle cx="51" cy="11" r="8.5" stroke="#ee334e"></circle>
+      <circle cx="21" cy="19" r="8.5" stroke="#fcb131"></circle>
+      <circle cx="41" cy="19" r="8.5" stroke="#00a651"></circle>
+    </g>
+  </svg>
+`;
+
+const TROPHY_CHIP_ICONS = {
+  olympics: OLYMPIC_RINGS_SVG,
+  'grand-slam': '🏆',
+  finals: '👑',
+  'masters-1000': '🥇',
+  'atp-500': '🥈',
+  'atp-250': '🥉',
+  'atp-125': '🎾',
+  other: '🎫',
+};
+
+function renderTrophyCase(player) {
+  const summary = service.getPlayerTitles(player.key);
+  if (!summary) return '';
+
+  if (!summary.total) {
+    return '<div class="trophy-case empty"><span class="trophy-case-empty">No titles in this archive</span></div>';
+  }
+
+  const chips = summary.byCategory
+    .filter((group) => group.count > 0)
+    .map((group) => `
+      <button
+        type="button"
+        class="trophy-chip ${group.category}"
+        data-titles-category="${escapeHtml(group.category)}"
+        title="${escapeHtml(`${group.count} ${group.label} title${group.count === 1 ? '' : 's'} — click for details`)}"
+      >
+        <span class="trophy-chip-icon">${TROPHY_CHIP_ICONS[group.category] || '🏆'}</span>
+        <span class="trophy-chip-text">
+          <span class="trophy-chip-count">${formatNumber(group.count)}</span>
+          <span class="trophy-chip-label">${escapeHtml(group.label)}</span>
+        </span>
+      </button>
+    `).join('');
+
+  return `
+    <div class="trophy-case">
+      <div class="trophy-case-head">
+        <span class="trophy-case-title">Trophy Case</span>
+        <button type="button" class="trophy-chip total" data-titles-category="all" title="All titles in this archive">
+          <span class="trophy-chip-icon">🏆</span>
+          <span class="trophy-chip-text">
+            <span class="trophy-chip-count">${formatNumber(summary.total)}</span>
+            <span class="trophy-chip-label">Total Titles</span>
+          </span>
+        </button>
+      </div>
+      <div class="trophy-chip-row">${chips}</div>
     </div>
   `;
 }
@@ -614,7 +692,7 @@ function getRankingChartHeightPx() {
 }
 
 const SURFACE_CLASS_ORDER = ['surface-hard', 'surface-clay', 'surface-grass', 'surface-indoor', 'surface-carpet'];
-const CATEGORY_KEY_ORDER = ['grand-slam', 'masters-1000', 'finals', 'atp-500', 'atp-250', 'atp-125', 'other'];
+const CATEGORY_KEY_ORDER = ['olympics', 'grand-slam', 'masters-1000', 'finals', 'atp-500', 'atp-250', 'atp-125', 'other'];
 const OPPONENT_BUCKETS = [
   { label: 'Top 5', max: 5 },
   { label: 'Top 10', max: 10 },
@@ -2625,6 +2703,147 @@ function closeTournamentModal() {
   }
 }
 
+function renderTitleRunRows(playerKey, eventKey) {
+  const run = service.getPlayerTitleRun(playerKey, eventKey);
+  if (!run.length) {
+    return '<div class="small-note">No match rows recorded for this event.</div>';
+  }
+
+  const rows = run.map((row) => `
+    <tr>
+      <td><span class="round-pill">${escapeHtml(row.round || '-')}</span></td>
+      <td>
+        <span class="title-run-opponent">
+          ${getFlagHtml(row.opponentCountryCode)}
+          <span>${escapeHtml(row.opponentName)}</span>
+          ${Number.isFinite(row.opponentRank) && row.opponentRank > 0 ? `<span class="title-run-rank">#${row.opponentRank}</span>` : ''}
+        </span>
+      </td>
+      <td><span class="result-pill ${row.result}">${row.result}</span></td>
+      <td class="title-run-score">${escapeHtml(row.score || '-')}</td>
+      <td>${Number.isFinite(row.minutes) && row.minutes > 0 ? `${row.minutes} min` : '-'}</td>
+    </tr>
+  `).join('');
+
+  return `
+    <div class="table-wrap title-run-wrap">
+      <table class="data-table title-run-table">
+        <thead><tr><th>Round</th><th>Opponent</th><th>Result</th><th>Score</th><th>Time</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderTitleCard(playerKey, title) {
+  const expanded = state.titlesModal.expandedEventKey === title.eventKey;
+  const finalLine = title.finalOpponent
+    ? `def. ${title.finalOpponent}${Number.isFinite(title.finalOpponentRank) && title.finalOpponentRank > 0 ? ` (#${title.finalOpponentRank})` : ''}${title.finalScore ? ` — ${title.finalScore}` : ''}`
+    : 'Final details unavailable';
+
+  return `
+    <article class="title-card ${expanded ? 'expanded' : ''}">
+      <button type="button" class="title-card-head" data-title-event="${escapeHtml(title.eventKey)}" aria-expanded="${expanded ? 'true' : 'false'}">
+        <span class="title-card-year">${title.year}</span>
+        <span class="title-card-main">
+          <span class="title-card-name">${escapeHtml(title.tournament)}</span>
+          <span class="title-card-tags">
+            <span class="category-badge ${title.category}">${escapeHtml(getCategoryLabel(title.category))}</span>
+            <span class="surface-pill ${title.surfaceClass}">${escapeHtml(getSurfaceLabel(title.surfaceClass))}</span>
+            <span class="title-card-run">${title.wins}-${title.losses} run</span>
+          </span>
+          <span class="title-card-final">${escapeHtml(finalLine)}</span>
+        </span>
+        <span class="title-card-toggle">${expanded ? 'Hide results ▲' : 'View results ▼'}</span>
+      </button>
+      ${expanded ? `<div class="title-card-body">${renderTitleRunRows(playerKey, title.eventKey)}</div>` : ''}
+    </article>
+  `;
+}
+
+function renderTitlesModal() {
+  if (!dom.titlesModalBody) return;
+
+  const playerKey = state.titlesModal.playerKey;
+  const summary = service.getPlayerTitles(playerKey);
+  if (!summary) {
+    dom.titlesModalBody.innerHTML = '<div class="empty-placeholder">No player selected.</div>';
+    return;
+  }
+
+  const selected = state.titlesModal.category;
+  const group = selected === 'all'
+    ? null
+    : summary.byCategory.find((entry) => entry.category === selected);
+  const titles = group ? group.titles : summary.titles;
+  const scopeLabel = group ? group.label : 'All Titles';
+
+  if (dom.titlesModalTitle) {
+    dom.titlesModalTitle.textContent = `${summary.player.name} — ${scopeLabel}`;
+  }
+  if (dom.titlesModalMeta) {
+    const years = titles.map((t) => t.year).filter(Number.isFinite);
+    const span = years.length ? `${Math.min(...years)}–${Math.max(...years)}` : '-';
+    dom.titlesModalMeta.textContent = `${formatNumber(titles.length)} title${titles.length === 1 ? '' : 's'} • ${span} • click a title to see the full winning run`;
+  }
+
+  const filterChips = [
+    { category: 'all', label: 'All', count: summary.total },
+    ...summary.byCategory.filter((entry) => entry.count > 0),
+  ].map((entry) => `
+    <button
+      type="button"
+      class="titles-filter-chip ${entry.category} ${entry.category === selected ? 'active' : ''}"
+      data-titles-filter="${escapeHtml(entry.category)}"
+    >${escapeHtml(entry.label)} <span class="titles-filter-count">${formatNumber(entry.count)}</span></button>
+  `).join('');
+
+  const byYear = new Map();
+  for (const title of titles) {
+    if (!byYear.has(title.year)) byYear.set(title.year, []);
+    byYear.get(title.year).push(title);
+  }
+
+  const yearSections = Array.from(byYear.entries())
+    .sort((a, b) => b[0] - a[0])
+    .map(([year, rows]) => `
+      <section class="titles-year-block">
+        <header class="titles-year-head">
+          <span class="titles-year">${year}</span>
+          <span class="titles-year-count">${rows.length} title${rows.length === 1 ? '' : 's'}</span>
+        </header>
+        <div class="titles-year-list">
+          ${rows.map((title) => renderTitleCard(playerKey, title)).join('')}
+        </div>
+      </section>
+    `).join('');
+
+  dom.titlesModalBody.innerHTML = `
+    <div class="titles-filter-row">${filterChips}</div>
+    ${yearSections || '<div class="empty-placeholder">No titles in this category.</div>'}
+  `;
+}
+
+function openTitlesModal(category = 'all') {
+  if (!dom.titlesModal || !state.activePlayerKey) return;
+  state.titlesModal.playerKey = state.activePlayerKey;
+  state.titlesModal.category = category;
+  state.titlesModal.expandedEventKey = '';
+  renderTitlesModal();
+  dom.titlesModal.classList.add('open');
+  dom.titlesModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+}
+
+function closeTitlesModal() {
+  if (!dom.titlesModal) return;
+  dom.titlesModal.classList.remove('open');
+  dom.titlesModal.setAttribute('aria-hidden', 'true');
+  if (!dom.imageViewer?.classList.contains('open') && !dom.tournamentModal?.classList.contains('open')) {
+    document.body.classList.remove('modal-open');
+  }
+}
+
 function renderHolderPills(holders) {
   if (!Array.isArray(holders) || holders.length === 0) return '-';
   const latestDatasetYear = getDatasetLatestYear();
@@ -3201,6 +3420,42 @@ function bindEvents() {
     });
   }
 
+  if (dom.playerHero) {
+    dom.playerHero.addEventListener('click', (event) => {
+      const chip = event.target.closest('[data-titles-category]');
+      if (!chip) return;
+      openTitlesModal(chip.dataset.titlesCategory || 'all');
+    });
+  }
+
+  if (dom.titlesModalClose) {
+    dom.titlesModalClose.addEventListener('click', closeTitlesModal);
+  }
+
+  if (dom.titlesModal) {
+    dom.titlesModal.addEventListener('click', (event) => {
+      if (event.target.closest('[data-modal-close]')) {
+        closeTitlesModal();
+        return;
+      }
+
+      const filter = event.target.closest('[data-titles-filter]');
+      if (filter) {
+        state.titlesModal.category = filter.dataset.titlesFilter || 'all';
+        state.titlesModal.expandedEventKey = '';
+        renderTitlesModal();
+        return;
+      }
+
+      const head = event.target.closest('[data-title-event]');
+      if (head) {
+        const eventKey = head.dataset.titleEvent || '';
+        state.titlesModal.expandedEventKey = state.titlesModal.expandedEventKey === eventKey ? '' : eventKey;
+        renderTitlesModal();
+      }
+    });
+  }
+
   dom.recordCategoryFilter.addEventListener('change', () => {
     state.recordCategory = dom.recordCategoryFilter.value;
     state.selectedRecordKey = '';
@@ -3227,6 +3482,10 @@ function bindEvents() {
     if (event.key !== 'Escape') return;
     if (dom.imageViewer?.classList.contains('open')) {
       closeImageViewer();
+      return;
+    }
+    if (dom.titlesModal?.classList.contains('open')) {
+      closeTitlesModal();
       return;
     }
     if (dom.tournamentModal?.classList.contains('open')) {

@@ -89,10 +89,15 @@ function looksLikeFinals(name) {
   return /(tour finals|atp finals|masters cup|year end championships|world tour finals)/i.test(name);
 }
 
+function looksLikeOlympics(name) {
+  return /olympic/i.test(name);
+}
+
 export function deriveCategory(levelRaw, tournamentName = '') {
   const level = String(levelRaw || '').trim().toUpperCase();
   const name = String(tournamentName || '');
 
+  if (level === 'O' || looksLikeOlympics(name)) return 'olympics';
   if (level === 'G' || looksLikeGrandSlam(name)) return 'grand-slam';
   if (level === 'M' || looksLikeMasters(name)) return 'masters-1000';
   if (level === 'F' || looksLikeFinals(name)) return 'finals';

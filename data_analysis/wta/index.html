@@ -79,6 +79,7 @@
               <label>Tournament Type
                 <select id="playerCategoryFilter">
                   <option value="all">All types</option>
+                  <option value="olympics">Olympics</option>
                   <option value="grand-slam">Grand Slam</option>
                   <option value="masters-1000">WTA 1000</option>
                   <option value="finals">WTA Finals</option>
@@ -163,6 +164,7 @@
             <label>Type
               <select id="tournamentCategoryFilter">
                 <option value="all">All types</option>
+                <option value="olympics">Olympics</option>
                 <option value="grand-slam">Grand Slam</option>
                   <option value="masters-1000">WTA 1000</option>
                   <option value="finals">WTA Finals</option>
@@ -235,6 +237,20 @@
           <button id="tournamentModalClose" class="modal-close" type="button" aria-label="Close tournament details">✕</button>
         </header>
         <div id="tournamentModalBody" class="modal-body"></div>
+      </section>
+    </div>
+
+    <div id="titlesModal" class="modal-shell" aria-hidden="true">
+      <div class="modal-backdrop" data-modal-close></div>
+      <section class="modal-card titles-modal-card" role="dialog" aria-modal="true" aria-labelledby="titlesModalTitle">
+        <header class="modal-head">
+          <div>
+            <h3 id="titlesModalTitle">Titles</h3>
+            <p id="titlesModalMeta" class="small-note">Championship runs from the archive</p>
+          </div>
+          <button id="titlesModalClose" class="modal-close" type="button" aria-label="Close titles details">✕</button>
+        </header>
+        <div id="titlesModalBody" class="modal-body"></div>
       </section>
     </div>
   </div>

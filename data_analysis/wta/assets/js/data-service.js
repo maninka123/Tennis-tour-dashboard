@@ -391,6 +391,7 @@ export class DataService {
         'surface-carpet': { wins: 0, losses: 0 },
       },
       category: {
+        olympics: { wins: 0, losses: 0 },
         'grand-slam': { wins: 0, losses: 0 },
         'masters-1000': { wins: 0, losses: 0 },
         'atp-500': { wins: 0, losses: 0 },
@@ -772,6 +773,115 @@ export class DataService {
     }
 
     return rows.sort((a, b) => b.dateSort - a.dateSort);
+  }
+
+  #eventKeyFor(match) {
+    if (match.tourneyId) return `id:${match.tourneyId}`;
+    return `nm:${normalizeKey(match.tournament)}:${match.year}`;
+  }
+
+  /**
+   * Every event the player won (beat someone in the final), grouped by
+   * tournament tier so the trophy case can be rendered prestige-first.
+   */
+  getPlayerTitles(playerKey) {
+    const player = this.players.get(playerKey);
+    if (!player) return null;
+
+    const events = new Map();
+    for (const index of player.matchIndexes) {
+      const match = this.matches[index];
+      if (!match) continue;
+      const eventKey = this.#eventKeyFor(match);
+      const view = this.#toPerspective(match, playerKey);
+
+      let event = events.get(eventKey);
+      if (!event) {
+        event = {
+          eventKey,
+          tournament: match.tournament,
+          year: match.year,
+          category: match.category,
+          categoryLabel: match.categoryLabel,
+          surfaceClass: match.surfaceClass,
+          drawSize: match.drawSize,
+          dateIso: match.dateIso,
+          dateSort: match.dateSort,
+          wins: 0,
+          losses: 0,
+          matches: 0,
+          won: false,
+          finalOpponent: '',
+          finalOpponentCountry: '',
+          finalOpponentRank: null,
+          finalScore: '',
+          playerRank: null,
+        };
+        events.set(eventKey, event);
+      }
+
+      event.matches += 1;
+      if (view.result === 'W') event.wins += 1;
+      else event.losses += 1;
+
+      if (match.dateSort < event.dateSort || !event.dateSort) {
+        event.dateIso = match.dateIso;
+        event.dateSort = match.dateSort;
+      }
+
+      if (String(match.round || '').toUpperCase() === 'F' && view.result === 'W') {
+        event.won = true;
+        event.finalOpponent = view.opponentName;
+        event.finalOpponentCountry = view.opponentCountryCode;
+        event.finalOpponentRank = view.opponentRank;
+        event.finalScore = view.score;
+        event.playerRank = view.playerRank;
+      }
+    }
+
+    const titles = Array.from(events.values())
+      .filter((event) => event.won)
+      .sort((a, b) => b.dateSort - a.dateSort);
+
+    // Olympic gold outranks everything, then majors, then the regular tiers.
+    const order = ['olympics', 'grand-slam', 'finals', 'masters-1000', 'atp-500', 'atp-250', 'atp-125', 'other'];
+    const byCategory = order.map((category) => {
+      const rows = titles.filter((title) => title.category === category);
+      return {
+        category,
+        label: CATEGORY_LABELS[category] || getCategoryLabel(category),
+        count: rows.length,
+        titles: rows,
+      };
+    });
+
+    return {
+      player,
+      total: titles.length,
+      titles,
+      byCategory,
+    };
+  }
+
+  /** Full run of matches the player played at one event, first round first. */
+  getPlayerTitleRun(playerKey, eventKey) {
+    const player = this.players.get(playerKey);
+    if (!player || !eventKey) return [];
+
+    const rows = [];
+    for (const index of player.matchIndexes) {
+      const match = this.matches[index];
+      if (!match) continue;
+      if (this.#eventKeyFor(match) !== eventKey) continue;
+      rows.push({
+        ...this.#toPerspective(match, playerKey),
+        roundWeight: roundWeight(match.round),
+        matchNum: match.matchNum,
+      });
+    }
+
+    return rows.sort((a, b) => a.roundWeight - b.roundWeight
+      || (a.matchNum || 0) - (b.matchNum || 0));
   }
 
   getPlayerRivalries(playerKey, limit = 60) {

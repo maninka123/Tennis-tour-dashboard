@@ -1,0 +1,2022 @@
+{
+  "email": "pasinduranasinghe12345@gmail.com",
+  "enabled": true,
+  "rules": [
+    {
+      "id": "rule_20260214160309634416",
+      "name": "ATP_Finals",
+      "enabled": true,
+      "event_type": "upcoming_match",
+      "tour": "atp",
+      "round_mode": "any",
+      "round_value": "",
+      "condition_group": "all",
+      "categories": [
+        "atp_1000"
+      ],
+      "tournaments": [],
+      "players": [
+        "jannik sinner",
+        "carlos alcaraz"
+      ],
+      "tracked_player": "jannik sinner",
+      "conditions": [],
+      "quiet_hours_enabled": false,
+      "quiet_start_hour": 23,
+      "quiet_end_hour": 7,
+      "timezone_offset": "+00:00",
+      "cooldown_minutes": 0,
+      "channels": [
+        "email"
+      ],
+      "severity": "normal",
+      "params": {
+        "upset_min_rank_gap": 20,
+        "set_number": 1,
+        "deciding_mode": "deciding_set",
+        "ranking_milestone": "top_100",
+        "title_target": 1,
+        "rival_player": "",
+        "h2h_min_losses": 2,
+        "surface_value": "",
+        "window_hours": 24,
+        "emit_on_first_seen": true,
+        "stage_rounds": [
+          "QF",
+          "SF",
+          "F"
+        ]
+      },
+      "created_at": "2026-02-14T16:03:09.634502+00:00"
+    }
+  ],
+  "sent_events": {
+    "4b3d571bc30d63f98fa2aa69cec36de979335c86": "2026-02-13T17:41:09.739724+00:00",
+    "23f44efde11ecfbbefe5412f95c6643f57b271de": "2026-02-13T17:41:09.739788+00:00",
+    "c22ef23c031a654d44c955347669b8e2f9f3d68c": "2026-02-13T17:41:09.739793+00:00",
+    "8cc9317f5e270de22c39c6969b0d4610f5f2d6bb": "2026-02-13T17:41:09.739795+00:00",
+    "04f193d67d3ab8b82d4b26b2f78576ff6c3f2eab": "2026-02-13T17:41:09.739798+00:00",
+    "ef7f9112d636bb06ef06661e0cad995b9110a3be": "2026-02-13T17:41:09.739800+00:00",
+    "f5c786e6cac37cbbf078746b12f503134b7c266e": "2026-02-13T17:41:09.739803+00:00",
+    "e10bf3502fc4c2f3f41ca04c73220d8eb56f9bd7": "2026-02-13T17:41:09.739805+00:00",
+    "ffae9107d0cbc78f1770e2d03413671582b65103": "2026-02-13T17:41:09.739836+00:00",
+    "9a378149ca5fc26159be407e8de477c38b6893d6": "2026-02-13T17:41:09.739867+00:00",
+    "aace91d0bddd12a6ab48a8da9749bc7a9d986b7a": "2026-02-13T17:41:09.739870+00:00",
+    "991388fd2d6b1c712a8395299a1a524a8cfc0171": "2026-02-13T17:41:09.740305+00:00",
+    "9b1f7fdc9f2a1615a6e4cb46d9df07f1c2bb5ec1": "2026-02-13T17:41:09.740315+00:00",
+    "7f4166cc3b29b3bcb749602bcc702cb0f5b4efb6": "2026-02-13T17:41:09.740317+00:00",
+    "ef8d9de3b260163fa69f952b3f25be7afd48ff1a": "2026-02-13T17:41:09.740318+00:00",
+    "1ea3d73138c4f996fecc672c7732bffaf8935c6d": "2026-02-13T17:41:09.740319+00:00",
+    "6521ef031f94511f96a56686e2007b18f30dc3b4": "2026-02-13T17:41:09.740321+00:00",
+    "24ebb0067b7317f838bdac456cbdd1640d1f727a": "2026-02-13T17:41:09.740322+00:00",
+    "6896bcc4e69312a28b32b70e58f42188e6215590": "2026-02-13T17:41:09.740323+00:00",
+    "e1007b20fe0670c58414cedb03ae35c2a5878ce7": "2026-02-13T17:41:09.740324+00:00",
+    "127080b1f738afb8958fdafa5aa1b7ebd3ab0107": "2026-02-13T17:41:09.740325+00:00",
+    "27f6582f4dfd86354e6aaffa48f19ebca95184d2": "2026-02-13T17:41:09.740325+00:00",
+    "d2d0f1c525333079bb9f818b05872a3d34c9d7cd": "2026-02-13T17:41:09.740329+00:00",
+    "46705d41565e6fbcfa058b682fbdbbad0e3b85f5": "2026-02-13T17:41:09.740330+00:00",
+    "c96a429b0b94fb98a7ca3939fee8fdb3b511c5b1": "2026-02-13T17:41:09.740330+00:00",
+    "d9acd5095de414831c32f1f9fec801df60b34ffa": "2026-02-13T17:41:09.740331+00:00",
+    "ba8ee33fb583b87a8bf18c120ed6598db77aa7b5": "2026-02-13T17:41:09.740332+00:00",
+    "55d6ad556f86ce09e9c96387d18cd893e7e3115e": "2026-02-13T17:41:09.740333+00:00",
+    "f3f13e1e04a61b2c846c323eb039699ec9758e80": "2026-02-13T17:41:09.740333+00:00",
+    "7b8fd5a1f9b249656d2e727307cb6dda93e85da9": "2026-02-13T17:41:09.740334+00:00",
+    "ffd3e8a5177d66c882842410850a50c657f4beaf": "2026-02-13T17:41:09.740335+00:00",
+    "7052113449ad18efd99cdcb32cb226821ec82bb1": "2026-02-13T17:41:09.740336+00:00",
+    "a3f6975dae865ba20b4286002821694333d8f81d": "2026-02-13T17:41:09.740337+00:00",
+    "f0d79adfed7cc670573fcf183d4fe749c352ff1f": "2026-02-13T17:41:09.740345+00:00",
+    "440a2b04a9961c7e882409e93e6f6accb54804b8": "2026-02-13T17:41:09.740348+00:00",
+    "9367e2b5d530d1defc8459d10f9323ddc714cbe5": "2026-02-13T17:41:09.740349+00:00",
+    "bb551ce7229503235f95ad4a0dbaf78b2d2896d8": "2026-02-13T17:41:09.740350+00:00",
+    "7297f78624476fbd6a181bb5cf8acf124af07d5b": "2026-02-13T17:41:09.740351+00:00",
+    "9137e5ccca056303da5ab1d45cb7a37ccfe48ce2": "2026-02-13T17:41:09.740352+00:00",
+    "71c9b9470a97c5787110c202793441bc52f69b05": "2026-02-13T17:41:09.740353+00:00",
+    "35d27dd6c8250ff993961c3429854712c02a4e29": "2026-02-14T12:30:31.857527+00:00",
+    "05cb90b338093037b1d0cbcd08228e43972ff714": "2026-02-14T12:30:31.857533+00:00",
+    "721efaaa96514bc453b0b6dc99908e391d7ae5e1": "2026-02-14T12:47:39.194863+00:00",
+    "dbc6a71ca09bfc745461cec310b1964dc970ddd5": "2026-02-14T12:47:39.194873+00:00",
+    "743342a179315efc64ab71a247b62b4c8676fef0": "2026-02-14T12:47:39.194876+00:00",
+    "f04223b2c7f0265d3babd58924ad8f478b9c0f6b": "2026-02-14T12:47:39.194880+00:00",
+    "52dc86e55a86914566e2a633547314b9ee76b015": "2026-02-14T12:47:39.194883+00:00",
+    "cebe528669c68de342ab6b09f30b09401a14243f": "2026-02-14T12:47:39.194886+00:00",
+    "d0554a2d7c0deb3166a2e4262b5473bac957c5c4": "2026-02-14T12:47:39.194889+00:00",
+    "08c7a6d4a1389e6ae4d88f575ea68a074be21e2f": "2026-02-14T12:47:39.194892+00:00",
+    "cddda0fa3d9e184dafed76e42b45de3e03249296": "2026-02-14T12:47:39.194895+00:00",
+    "2dbed1d0d2417c121569f25ae6c93e655d80a68c": "2026-02-14T12:47:39.194898+00:00",
+    "29455eeae284a3ceac2e89d36a939ed70965b095": "2026-02-14T12:47:39.194901+00:00",
+    "c4304ec96adbe9088fa90a7475e33537a5e0e4c6": "2026-02-14T12:47:39.194904+00:00",
+    "0aa378f22b7e6b4ef1b5f03519d33f8abd9d06d4": "2026-02-14T12:47:39.194907+00:00",
+    "dbcbd44dd7890b5541b5728b72c027e676da45f4": "2026-02-14T12:47:39.194909+00:00",
+    "f21eac69aecfeb55d0bcb51ad931792f75947fab": "2026-02-14T12:47:39.194912+00:00",
+    "74da0c106cdd1ecd4d448984e57c466262dffdc2": "2026-02-14T12:47:39.194915+00:00",
+    "01c43b3cb59bcc3f6a14e7eae2ac76c37beb128c": "2026-02-14T12:47:39.194917+00:00",
+    "42b3e9766d1d23800c275b1df0dd901be58a9da7": "2026-02-14T12:47:39.194920+00:00",
+    "e4ca231b623e466148035f7d53078c0e67a4ed57": "2026-02-14T12:47:39.194922+00:00",
+    "8f2dc1bcb06aec0b4c2584e208007a2894dc8f87": "2026-02-14T12:47:39.194925+00:00",
+    "d2630d87236fa0291010f8805592466c8808444b": "2026-02-14T12:47:39.194963+00:00",
+    "755e9773ff3c28e5a6a08d71c70caf8acb718b0f": "2026-02-14T12:47:39.194968+00:00",
+    "36fbd4b86be59cf0610f5fd383957f2c9a57aad7": "2026-02-14T12:47:39.194971+00:00",
+    "ef6c8bc03fccdc34eb91219f0388f6ffb987d119": "2026-02-14T12:47:39.194973+00:00",
+    "177feb99e576f08102d817ca39c182be7d39f455": "2026-02-14T12:47:39.194975+00:00",
+    "14e57b31bea51c37812a15b8b2d342af6de6a0b2": "2026-02-14T12:47:39.194976+00:00",
+    "8c406f7f43fac4b4b865166af01fe135d91b35f3": "2026-02-14T12:58:21.779751+00:00",
+    "b02bd91f47ed6adcb80f86e5deafbb41454f5535": "2026-02-14T12:58:21.779756+00:00",
+    "ba5a90d37e6acbc0a0e27616c4785781a29b31e0": "2026-02-14T13:08:49.207405+00:00",
+    "3698136a918688f0990786eedfefaba5b8fbc2e9": "2026-02-14T13:10:32.831367+00:00",
+    "19ef6b0905d5930c8967677f48f8a1e5302a680d": "2026-02-14T13:16:58.196076+00:00",
+    "b1e2f7aa63e10fa2824e988f19006d99fab416a1": "2026-02-14T13:20:20.563399+00:00",
+    "e24a814c48a0cfe0b502c7b0861111b24581c708": "2026-02-14T14:43:07.579132+00:00",
+    "5bbf5c1a1ee42ba43c63b7c4aebcbf8826ace8ce": "2026-02-14T13:31:34.789037+00:00",
+    "e09a44059502aaa1d8ea6691a08fd636b0758fb6": "2026-02-14T14:43:07.579137+00:00",
+    "6b3e7bf1394a8586b78b4fa10d30b0b42b68393e": "2026-02-14T14:43:07.579139+00:00",
+    "a6d491e79f42706bc23cf6b23b99e5d8bd16aeb2": "2026-02-14T14:43:07.579142+00:00",
+    "f256c21d9c8d9299561cb8241f4cd7dcee79c957": "2026-02-14T14:43:07.579145+00:00",
+    "dd748da5483ebe90831d151366813d8887ca6163": "2026-02-14T14:43:07.579148+00:00",
+    "984d332479919b4a49fa9a3a454fa9eaee32aeb3": "2026-02-14T14:43:07.579150+00:00",
+    "a27fd9e2fdca1ed758944f70f4addd9d3cbdc695": "2026-02-14T14:43:07.579152+00:00",
+    "f050244ee02f9792407f715f8f768191811402ce": "2026-02-14T14:43:07.579155+00:00",
+    "fa2d06137a2d3f07521b56b612ea7b7bf4869863": "2026-02-14T14:43:07.579157+00:00",
+    "22a0ced6ca9ff216d00ff0fd9a733b2b28f33cc7": "2026-02-14T14:43:07.579159+00:00",
+    "2fe572759f34703ecf44beb0bfa692c8a1c0302a": "2026-02-14T14:43:07.579161+00:00",
+    "15cf5e5de92b78af7cd60f8b12fb6af5465158a9": "2026-02-14T14:43:07.579163+00:00",
+    "b35f8882bd57235cc23b88a15022e3a9ecf1aa23": "2026-02-14T15:06:21.752787+00:00",
+    "e95c26963590156841d35734b236f16cb3a1c98d": "2026-02-14T15:08:35.059726+00:00",
+    "c68d414f5beead3fe690e96c62c5303b1280ea2a": "2026-02-14T15:08:35.059730+00:00",
+    "97f11d062c29015f77ad3a4ad9b65707d325ebef": "2026-02-14T15:08:35.059732+00:00",
+    "b280e582dc0250b01aa73fa63b73fbbd28733f6c": "2026-02-14T15:08:35.059734+00:00",
+    "bffba1ba348233f0571a96460ceeb189bed3a1a6": "2026-02-14T15:08:35.059745+00:00",
+    "fff5105040bc4dcd9b6e1ccfd199cffe5b058812": "2026-02-14T15:08:35.059748+00:00",
+    "97ae97c15ccb0c5c9d7b3d9c97da15e16671a3fd": "2026-02-14T15:08:35.059750+00:00",
+    "92229eca89608c71d9a7aa3d0830ead1990abecb": "2026-02-14T15:08:35.059751+00:00",
+    "6bbee23f574b5182b9f0e26183060090b0020c5c": "2026-02-14T15:08:35.059753+00:00",
+    "279d2c4e59d1e4f3e3dfae1d5853f99b8892224f": "2026-02-14T15:08:35.059755+00:00",
+    "9ee54a32a29a501d74bc3e926ee615084668ac0c": "2026-02-14T15:08:35.059757+00:00",
+    "282b88450fa2cda8219a01f521f95cf369c4e096": "2026-02-14T15:08:35.059758+00:00",
+    "8442038ccf4b5301c001cac877a1a8a5283f94c7": "2026-02-14T15:10:21.623840+00:00",
+    "90dc0b4b42ff4ba5fb9c32fbd178db70efea099d": "2026-02-15T08:37:39.707523+00:00",
+    "3374f880e493ac496c461fec46283504ad15565c": "2026-02-15T08:42:49.354688+00:00",
+    "2660bfee52b825269d3b12f38d3da3c95a1523d5": "2026-02-15T08:42:49.354693+00:00"
+  },
+  "rule_state": {
+    "rule_20260213142015542360": {
+      "last_sent_at": "2026-02-13T17:41:09.739624+00:00"
+    },
+    "rule_20260213173206292171": {
+      "set_progress": {}
+    },
+    "rule_20260213174012080375": {},
+    "rule_20260214121046469154": {},
+    "rule_20260214122955916144": {
+      "last_sent_at": "2026-02-14T12:30:31.857445+00:00"
+    },
+    "rule_20260214124453152738": {},
+    "rule_20260214124726037995": {
+      "last_sent_at": "2026-02-14T12:47:39.194811+00:00"
+    },
+    "rule_20260214125810008260": {
+      "last_sent_at": "2026-02-14T12:58:21.779733+00:00"
+    },
+    "rule_20260214130824651000": {
+      "last_sent_at": "2026-02-14T13:08:49.207372+00:00"
+    },
+    "rule_20260214131017510771": {
+      "last_sent_at": "2026-02-14T13:10:32.831354+00:00"
+    },
+    "rule_20260214131554326631": {
+      "last_sent_at": "2026-02-14T13:20:20.563364+00:00"
+    },
+    "rule_20260214132612692149": {
+      "last_sent_at": "2026-02-14T14:43:07.579112+00:00"
+    },
+    "rule_20260214150609916052": {
+      "ranking_state": {
+        "carlos alcaraz": {
+          "rank": 1,
+          "career_high": 1,
+          "titles": 1
+        }
+      },
+      "last_sent_at": "2026-02-14T15:06:21.752772+00:00"
+    },
+    "rule_20260214150824324487": {
+      "last_sent_at": "2026-02-15T08:42:49.354662+00:00"
+    },
+    "rule_20260214160309634416": {}
+  },
+  "history": [
+    {
+      "timestamp": "2026-02-22T01:54:12.582058+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T18:44:12.564697+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T18:39:12.557135+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T18:34:12.547390+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T18:29:12.548473+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T18:24:12.561002+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T18:19:12.562164+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T18:14:12.647922+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T18:09:12.984392+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T18:04:12.553161+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:59:12.558313+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:54:12.562316+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:49:12.558912+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:44:12.548048+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:39:12.566533+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:34:12.541265+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:29:12.569347+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:24:12.553894+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:19:12.556728+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:14:12.546768+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:09:12.554458+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T17:04:12.563355+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:59:12.552036+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:54:12.541845+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:49:12.561205+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:44:12.546817+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:39:12.554021+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:34:12.555660+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:29:12.569474+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:24:12.550841+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:19:12.546688+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:14:12.547936+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:09:12.562381+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T16:04:12.560571+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:59:12.567241+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:54:12.550307+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:49:12.550211+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:44:12.567018+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:39:12.549765+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:34:12.555460+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:29:12.546350+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:24:12.540854+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:19:12.541284+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:14:12.561138+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:09:12.556731+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T15:04:12.554673+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:59:12.556078+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:54:12.538347+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:49:12.562432+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:44:12.554122+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:39:12.555612+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:34:12.544546+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:29:12.558702+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:24:12.555683+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:19:12.556110+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:14:12.559041+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:09:12.554789+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T14:04:12.561215+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:59:12.555012+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:54:12.570307+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:49:12.545386+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:44:12.548727+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:39:12.547234+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:34:12.550762+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:29:12.546246+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:24:12.569712+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:19:12.569882+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:14:12.552210+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:09:12.574339+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T13:04:12.555911+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:59:12.555329+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:54:12.573307+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:49:12.549405+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:44:12.545413+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:39:12.559399+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:34:12.561941+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:29:12.559467+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:24:12.555624+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:19:12.564262+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:14:12.547370+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:09:12.545750+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T12:04:12.546829+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T11:59:12.549520+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T11:54:12.550547+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T11:49:12.564178+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T11:44:12.546539+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T11:39:12.548237+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-21T11:34:12.551985+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T17:04:12.554136+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:59:12.551422+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:54:12.552927+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:49:12.547120+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:44:12.554122+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:39:12.547408+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:34:12.552926+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:29:12.551327+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:24:12.554077+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:19:12.547451+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:14:12.547168+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:09:12.553806+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T16:04:12.557957+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T15:54:12.556032+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T15:49:12.574757+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T15:44:12.573384+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T15:39:12.571177+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T15:34:12.571207+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T15:29:12.570686+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T15:24:12.571013+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T15:19:12.568989+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T15:14:12.553043+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-20T14:59:12.563485+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T14:18:44.358120+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T14:13:44.415180+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T14:08:44.358780+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T14:03:44.402638+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:58:44.401759+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:53:44.372328+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:48:44.350505+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:43:44.345664+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:38:44.376181+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:33:44.345966+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:28:44.368700+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:23:44.370465+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:18:44.324365+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:13:44.378151+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:08:44.353982+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T13:03:44.361368+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:58:44.406698+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:53:44.322831+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:48:44.347802+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:43:44.385721+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:38:44.368047+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:33:44.403064+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:28:44.363752+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:23:44.410574+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:18:44.382238+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:13:44.382474+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:08:44.375721+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T12:03:44.408899+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:58:44.371661+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:53:44.431855+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:48:44.365271+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:43:44.391536+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:38:44.411280+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:33:44.373892+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:28:44.370046+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:23:44.336395+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:18:44.403356+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:13:44.393421+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:08:44.419778+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T11:03:44.404723+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:58:44.332787+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:53:44.378842+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:48:44.360943+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:43:44.381259+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:38:44.362844+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:33:44.400149+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:28:44.390420+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:23:44.391032+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:18:44.376637+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:13:44.368660+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:08:44.358625+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T10:03:44.350590+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:58:44.394344+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:53:44.357344+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:48:44.389616+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:43:44.380151+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:38:44.383015+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:33:44.377461+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:28:44.397134+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:23:44.394689+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:18:44.396278+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:13:44.363800+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:08:44.415669+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T09:03:44.398530+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:58:44.322655+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:53:44.403172+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:48:44.408907+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:43:44.366536+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:38:44.357353+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:33:44.389961+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:28:44.393849+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:23:44.354363+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:18:44.353800+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:13:44.402244+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:08:44.386998+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T08:03:44.353664+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:58:44.375444+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:53:44.399988+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:48:44.329742+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:43:44.386014+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:38:44.394120+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:33:44.375986+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:28:44.383348+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:23:44.336634+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:18:44.385086+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:13:44.396640+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:08:44.357295+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T07:03:44.397993+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:58:44.386436+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:53:44.365231+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:48:44.372023+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:43:44.325852+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:38:44.372023+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:33:44.408775+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:28:44.414286+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:23:44.353304+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:18:44.398843+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:13:44.401429+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:08:44.366104+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T06:03:44.417618+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T05:58:44.380428+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T05:53:44.384831+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T05:48:44.374945+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T05:43:44.353886+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T05:38:44.389257+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T05:33:44.425564+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T05:28:44.324771+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T05:23:44.335776+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T05:18:44.357965+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T05:13:44.354512+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T05:08:44.255521+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T04:19:45.779626+00:00",
+      "level": "warning",
+      "message": "Some live data endpoints failed during this run.",
+      "details": {
+        "errors": [
+          "recent-matches: Failed to load http://localhost:5001/api/recent-matches: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /api/recent-matches?tour=both&limit=120 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x789c83dcb100>: Failed to establish a new connection: [Errno 111] Connection refused'))"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-02-19T04:06:20.211977+00:00",
+      "level": "warning",
+      "message": "Some live data endpoints failed during this run.",
+      "details": {
+        "errors": [
+          "live-scores: Failed to load http://localhost:5001/api/live-scores: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /api/live-scores?tour=both (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x789c903b4130>, 'Connection to localhost timed out. (connect timeout=40)'))"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-02-19T04:03:44.393513+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T03:58:44.380380+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T03:38:54.478196+00:00",
+      "level": "warning",
+      "message": "Some live data endpoints failed during this run.",
+      "details": {
+        "errors": [
+          "live-scores: Failed to load http://localhost:5001/api/live-scores: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /api/live-scores?tour=both (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x789c90267790>, 'Connection to localhost timed out. (connect timeout=40)'))",
+          "upcoming-matches: Failed to load http://localhost:5001/api/upcoming-matches: HTTPConnectionPool(host='localhost', port=5001): Max retries exceeded with url: /api/upcoming-matches?tour=both&days=7 (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x789c90378ac0>, 'Connection to localhost timed out. (connect timeout=40)'))"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-02-19T03:33:44.367149+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T03:28:44.364956+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T03:23:44.369661+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T03:18:44.341446+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T03:13:44.332935+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T03:08:44.396350+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T03:03:44.374641+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:58:44.335787+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:53:44.403918+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:48:44.320626+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:43:44.410870+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:38:44.393770+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:33:44.399858+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:28:44.271545+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:23:44.339041+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:18:44.321145+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:13:44.391669+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:08:44.376155+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T02:03:44.416433+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:58:44.406457+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:53:44.368996+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:48:44.381986+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:43:44.377396+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:38:44.332436+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:33:44.387047+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:28:44.304494+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:23:44.397070+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:18:44.384033+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:13:44.374745+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:08:44.343274+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T01:03:44.380265+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:58:44.342422+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:53:44.331720+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:48:44.306109+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:43:44.313137+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:38:44.355210+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:33:44.387838+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:28:44.288214+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:23:44.296003+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:18:44.368819+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:13:44.347202+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:08:44.351246+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-19T00:03:44.386070+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:58:44.362355+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:53:44.398812+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:48:44.385665+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:43:44.307034+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:38:44.383173+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:33:44.376975+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:28:44.423796+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:23:44.362530+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:18:44.381874+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:13:44.373619+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:08:44.403801+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T23:03:44.368951+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:58:44.373770+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:53:44.360034+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:48:44.346200+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:43:44.366106+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:38:44.366073+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:33:44.385139+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:28:44.396020+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:23:44.382308+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:18:44.371418+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:13:44.397227+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:08:44.346442+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T22:03:44.320920+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T21:58:44.396949+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T21:53:44.395731+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T21:48:44.351065+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T21:43:44.361973+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T21:38:44.375700+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    },
+    {
+      "timestamp": "2026-02-18T21:33:44.381928+00:00",
+      "level": "error",
+      "message": "Notification run failed: Tennis API is unavailable or too slow right now. Please try again.",
+      "details": {}
+    }
+  ],
+  "updated_at": "2026-02-22T01:54:12.582117+00:00"
+}
