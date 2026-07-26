@@ -732,6 +732,117 @@ def get_update_status():
     return jsonify(update_state)
 
 
+# --- WTA historic season refresh (tennisdata.app) ---
+# The download is gated behind a Cloudflare human check, so the fetch step opens
+# a browser and waits for one click. Everything after that is automatic.
+wta_season_state = {
+    "status": "idle",          # idle, running, completed, error
+    "step": "",
+    "log": [],
+    "year": None,
+    "finished_at": None,
+}
+wta_season_lock = threading.Lock()
+wta_season_thread = None
+
+
+def _wta_season_log(message):
+    with wta_season_lock:
+        wta_season_state["log"].append(str(message))
+        del wta_season_state["log"][:-40]
+
+
+def _run_wta_season_update(year):
+    global wta_season_state
+    with wta_season_lock:
+        wta_season_state.update({
+            "status": "running", "step": "fetch", "log": [], "year": year, "finished_at": None,
+        })
+
+    scripts_root = os.path.join(REPO_ROOT, "scripts")
+    steps = [
+        ("fetch", "wta_fetch_season_csv.py", "Opening browser - complete the check and click Download CSV"),
+        ("import", "wta_import_season_csv.py", "Converting and importing into the archive"),
+    ]
+
+    try:
+        for step_name, script_name, description in steps:
+            with wta_season_lock:
+                wta_season_state["step"] = step_name
+            _wta_season_log(description)
+
+            result = subprocess.run(
+                [PYTHON_EXE, os.path.join(scripts_root, script_name), str(year)],
+                cwd=REPO_ROOT,
+                capture_output=True,
+                text=True,
+                timeout=900,
+            )
+            for line in (result.stdout or "").splitlines():
+                if line.strip():
+                    _wta_season_log(line.rstrip())
+
+            if result.returncode != 0:
+                for line in (result.stderr or "").splitlines()[-6:]:
+                    if line.strip():
+                        _wta_season_log(line.rstrip())
+                raise RuntimeError(f"{script_name} exited with code {result.returncode}")
+
+        with wta_season_lock:
+            wta_season_state["status"] = "completed"
+            wta_season_state["step"] = "done"
+            wta_season_state["finished_at"] = time.time()
+        _wta_season_log(f"{year} season updated.")
+
+    except Exception as exc:
+        _wta_season_log(f"Failed: {exc}")
+        with wta_season_lock:
+            wta_season_state["status"] = "error"
+            wta_season_state["finished_at"] = time.time()
+
+
+@app.route('/api/analysis/wta/season/refresh', methods=['POST'])
+def refresh_wta_season():
+    """Fetch + import the latest WTA season CSV from tennisdata.app."""
+    global wta_season_thread
+
+    payload = request.get_json(silent=True) or {}
+    try:
+        year = int(payload.get('year') or datetime.now().year)
+    except (TypeError, ValueError):
+        return jsonify({'success': False, 'error': 'Invalid year'}), 400
+
+    if wta_season_state["status"] == "running":
+        if wta_season_thread and wta_season_thread.is_alive():
+            return jsonify({'success': False, 'error': 'Update already in progress'}), 409
+        with wta_season_lock:
+            wta_season_state["status"] = "error"
+
+    wta_season_thread = threading.Thread(target=_run_wta_season_update, args=(year,), daemon=True)
+    wta_season_thread.start()
+    return jsonify({'success': True, 'status': 'started', 'year': year})
+
+
+@app.route('/api/analysis/wta/season/status', methods=['GET'])
+def get_wta_season_status():
+    """Progress of the WTA season refresh, plus when the archive last changed."""
+    updated_at = None
+    try:
+        newest = 0
+        for name in os.listdir(HISTORIC_DATA_WTA_DIR):
+            if not name.endswith('.csv'):
+                continue
+            newest = max(newest, os.path.getmtime(os.path.join(HISTORIC_DATA_WTA_DIR, name)))
+        updated_at = newest or None
+    except Exception:
+        pass
+
+    with wta_season_lock:
+        state = dict(wta_season_state)
+    state['archive_updated_at'] = updated_at
+    return jsonify({'success': True, 'data': state})
+
+
 
 # Dedicated live-score background loop state
 live_scores_thread_started = False

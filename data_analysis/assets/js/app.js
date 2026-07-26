@@ -527,7 +527,12 @@ function renderPlayerMatches() {
 
   const shown = rows.slice(0, 350);
   const latestDatasetYear = getDatasetLatestYear();
-  const tableRows = shown.map((row) => {
+  let previousEventKey = '';
+  const tableRows = shown.map((row, rowIndex) => {
+    // Mark where one tournament ends and the next begins.
+    const eventKey = row.tourneyId || `${row.tournament}|${row.year}`;
+    const startsEvent = rowIndex > 0 && eventKey !== previousEventKey;
+    previousEventKey = eventKey;
     const opponent = service.getPlayerByKey(row.opponentKey);
     const opponentInactive = isLikelyInactivePlayer(opponent, latestDatasetYear);
     const opponentAvatar = renderAvatarImage(opponent, {
@@ -537,7 +542,7 @@ function renderPlayerMatches() {
     });
 
     return `
-      <tr>
+      <tr class="${startsEvent ? 'event-start' : ''}">
         <td>${escapeHtml(formatDate(row.dateIso))}</td>
         <td>${escapeHtml(cappedText(row.tournament, 28))}</td>
         <td><span class="category-badge ${row.category}">${escapeHtml(row.categoryLabel)}</span></td>

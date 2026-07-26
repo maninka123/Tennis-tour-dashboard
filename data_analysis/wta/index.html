@@ -18,11 +18,16 @@
       <div class="hero-content">
         <p class="hero-tag">Separate Module • WTA Historic Engine</p>
         <h1>🎾 WTA Historic Data Analysis Lab</h1>
-        <p id="heroSubtitle" class="hero-subtitle">Player Explorer, Tournament Explorer, and Records Book powered by your local WTA CSV archive (1968-2024 static).</p>
+        <p id="heroSubtitle" class="hero-subtitle">Player Explorer, Tournament Explorer, and Records Book powered by your local WTA CSV archive (1968-2026, refreshed from tennisdata.app).</p>
       </div>
       <div class="hero-actions">
         <button id="loadDataBtn" class="primary-btn">⚡ Load Historic Dataset</button>
+        <button id="updateSeasonBtn" class="season-update-btn" type="button"
+                title="Download the newest matches from tennisdata.app and import them. Needs one click in the browser window that opens.">
+          <span id="updateSeasonLabel">⟳ Update current season</span>
+        </button>
         <div class="load-status" id="loadStatus">Waiting to load data…</div>
+        <div class="season-update-status" id="seasonUpdateStatus"></div>
         <div class="progress-wrap">
           <div id="loadProgress" class="progress-bar"></div>
         </div>

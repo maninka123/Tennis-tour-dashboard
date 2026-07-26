@@ -6,7 +6,7 @@ Standalone WTA app built from local yearly match CSV files in:
 
 Dataset scope:
 
-- `1968-2024` (static archive)
+- `1968-2026` (1968-2024 static archive; 2025-2026 imported from tennisdata.app)
 - no live refresh/update during load
 
 Features mirror the ATP analysis app:

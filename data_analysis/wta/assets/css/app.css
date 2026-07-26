@@ -142,6 +142,46 @@ body.modal-open {
   min-height: 1.2rem;
 }
 
+/* Current-season refresh button (WTA app) */
+.season-update-btn {
+  align-self: flex-start;
+  border: 1px solid #cbd9e8;
+  border-radius: 999px;
+  background: #fff;
+  color: #2f5f91;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.season-update-btn:hover:not(:disabled) {
+  background: #eef5fd;
+  border-color: #9fc2e8;
+}
+
+.season-update-btn:disabled {
+  cursor: progress;
+  opacity: 0.65;
+}
+
+.season-update-status {
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--muted);
+  min-height: 0;
+}
+
+.season-update-status:empty {
+  display: none;
+}
+
+.season-update-status.busy { color: #2f5f91; font-weight: 600; }
+.season-update-status.ok { color: #1f7a4d; font-weight: 600; }
+.season-update-status.error { color: #b3261e; font-weight: 600; }
+
 .progress-wrap {
   width: 100%;
   height: 10px;
@@ -971,6 +1011,12 @@ select:focus {
 
 .data-table tr:hover td {
   background: #f8fbff;
+}
+
+/* First row of a new tournament block - a slightly heavier rule so the
+   boundary between two tournaments is readable at a glance. */
+.data-table tbody tr.event-start > td {
+  border-top: 2px solid #c3d3e4;
 }
 
 #tournamentTable .data-table th:first-child,

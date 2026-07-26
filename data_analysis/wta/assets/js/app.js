@@ -58,6 +58,9 @@ const state = {
 
 const dom = {
   loadButton: document.getElementById('loadDataBtn'),
+  updateSeasonBtn: document.getElementById('updateSeasonBtn'),
+  updateSeasonLabel: document.getElementById('updateSeasonLabel'),
+  seasonUpdateStatus: document.getElementById('seasonUpdateStatus'),
   loadStatus: document.getElementById('loadStatus'),
   loadProgress: document.getElementById('loadProgress'),
   heroSubtitle: document.getElementById('heroSubtitle'),
@@ -132,10 +135,10 @@ function renderHeroSubtitle() {
 
   const coverage = service.getCoverageSummary();
   const minYear = Number.isFinite(coverage?.minYear) ? coverage.minYear : 1968;
-  const maxYear = Number.isFinite(coverage?.maxYear) ? coverage.maxYear : 2024;
+  const maxYear = Number.isFinite(coverage?.maxYear) ? coverage.maxYear : 2026;
   const liveRefreshEnabled = APP_CONFIG.enableLiveYearRefresh !== false;
   if (!liveRefreshEnabled) {
-    dom.heroSubtitle.textContent = `${HERO_SUBTITLE_BASE} (${minYear}-${maxYear}, static dataset).`;
+    dom.heroSubtitle.textContent = `${HERO_SUBTITLE_BASE} (${minYear}-${maxYear}; 2025+ imported from tennisdata.app).`;
     return;
   }
 
@@ -534,7 +537,12 @@ function renderPlayerMatches() {
 
   const shown = rows.slice(0, 350);
   const latestDatasetYear = getDatasetLatestYear();
-  const tableRows = shown.map((row) => {
+  let previousEventKey = '';
+  const tableRows = shown.map((row, rowIndex) => {
+    // Mark where one tournament ends and the next begins.
+    const eventKey = row.tourneyId || `${row.tournament}|${row.year}`;
+    const startsEvent = rowIndex > 0 && eventKey !== previousEventKey;
+    previousEventKey = eventKey;
     const opponent = service.getPlayerByKey(row.opponentKey);
     const opponentInactive = isLikelyInactivePlayer(opponent, latestDatasetYear);
     const opponentAvatar = renderAvatarImage(opponent, {
@@ -544,7 +552,7 @@ function renderPlayerMatches() {
     });
 
     return `
-      <tr>
+      <tr class="${startsEvent ? 'event-start' : ''}">
         <td>${escapeHtml(formatDate(row.dateIso))}</td>
         <td>${escapeHtml(cappedText(row.tournament, 28))}</td>
         <td><span class="category-badge ${row.category}">${escapeHtml(row.categoryLabel)}</span></td>
@@ -3190,7 +3198,7 @@ async function loadDataset() {
         if (!liveRefreshEnabled) {
           setLoadProgress(100);
           setLoadStatus(
-            `Loaded ${formatNumber(progress.totalRows)} matches, ${formatNumber(progress.totalPlayers)} players, ${formatNumber(progress.totalTournaments)} tournaments from static ${TOUR_NAME} archive.`
+            `Loaded ${formatNumber(progress.totalRows)} matches, ${formatNumber(progress.totalPlayers)} players, ${formatNumber(progress.totalTournaments)} tournaments from the local ${TOUR_NAME} archive.`
           );
           return;
         }
@@ -3229,6 +3237,108 @@ async function loadDataset() {
     state.loading = false;
     dom.loadButton.disabled = false;
     dom.loadButton.textContent = state.loaded ? '♻️ Reload Historic Dataset' : '⚡ Load Historic Dataset';
+  }
+}
+
+// --- Current-season refresh (tennisdata.app) -----------------------------
+// The download is behind a Cloudflare human check, so the backend opens a
+// browser and waits for one click; everything else runs automatically.
+const SEASON_UPDATE_YEAR = new Date().getFullYear();
+
+function setSeasonUpdateStatus(message, tone) {
+  if (!dom.seasonUpdateStatus) return;
+  dom.seasonUpdateStatus.textContent = message || '';
+  dom.seasonUpdateStatus.className = `season-update-status${tone ? ` ${tone}` : ''}`;
+}
+
+function setSeasonUpdateBusy(busy) {
+  if (dom.updateSeasonBtn) dom.updateSeasonBtn.disabled = Boolean(busy);
+  if (dom.updateSeasonLabel) {
+    dom.updateSeasonLabel.textContent = busy
+      ? `⟳ Updating ${SEASON_UPDATE_YEAR}…`
+      : `⟳ Update ${SEASON_UPDATE_YEAR} data`;
+  }
+}
+
+async function readJsonResponse(response, label) {
+  const body = await response.text();
+  let payload = null;
+  try {
+    payload = JSON.parse(body);
+  } catch (_error) {
+    // A 404/500 from Flask returns an HTML page, not JSON.
+    if (response.status === 404 || response.status === 405) {
+      throw new Error(`${label} endpoint not found (HTTP ${response.status}) — restart the backend so the new routes load`);
+    }
+    throw new Error(`${label} returned a non-JSON response (HTTP ${response.status})`);
+  }
+  if (!response.ok) {
+    throw new Error(payload?.error || `${label} failed (HTTP ${response.status})`);
+  }
+  return payload;
+}
+
+function pollSeasonUpdate() {
+  const tick = async () => {
+    let payload;
+    try {
+      const response = await fetch('/api/analysis/wta/season/status', { cache: 'no-store' });
+      payload = (await readJsonResponse(response, 'Status'))?.data;
+    } catch (error) {
+      setSeasonUpdateStatus(`Status check failed: ${error.message}`, 'error');
+      setSeasonUpdateBusy(false);
+      return;
+    }
+
+    const log = Array.isArray(payload?.log) ? payload.log : [];
+    const last = log[log.length - 1] || '';
+
+    if (payload?.status === 'running') {
+      setSeasonUpdateStatus(
+        payload.step === 'fetch'
+          ? 'Complete the check in the browser window, then click “Download CSV”…'
+          : `Importing… ${last}`,
+        'busy',
+      );
+      window.setTimeout(tick, 2000);
+      return;
+    }
+
+    if (payload?.status === 'completed') {
+      setSeasonUpdateStatus('Updated — reloading dataset…', 'ok');
+      setSeasonUpdateBusy(false);
+      loadDataset();
+      return;
+    }
+
+    if (payload?.status === 'error') {
+      setSeasonUpdateStatus(`Failed: ${last || 'unknown error'}`, 'error');
+      setSeasonUpdateBusy(false);
+      return;
+    }
+
+    window.setTimeout(tick, 2000);
+  };
+  tick();
+}
+
+async function startSeasonUpdate() {
+  setSeasonUpdateBusy(true);
+  setSeasonUpdateStatus('Starting…', 'busy');
+  try {
+    const response = await fetch('/api/analysis/wta/season/refresh', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ year: SEASON_UPDATE_YEAR }),
+    });
+    const payload = await readJsonResponse(response, 'Update');
+    if (!payload?.success) {
+      throw new Error(payload?.error || `HTTP ${response.status}`);
+    }
+    pollSeasonUpdate();
+  } catch (error) {
+    setSeasonUpdateStatus(`Failed: ${error.message}`, 'error');
+    setSeasonUpdateBusy(false);
   }
 }
 
@@ -3496,11 +3606,16 @@ function bindEvents() {
   dom.loadButton.addEventListener('click', () => {
     loadDataset();
   });
+
+  if (dom.updateSeasonBtn) {
+    dom.updateSeasonBtn.addEventListener('click', startSeasonUpdate);
+  }
 }
 
 function init() {
   ensureImageViewer();
   bindEvents();
+  setSeasonUpdateBusy(false);
   if (dom.rankingSeriesFilter) {
     dom.rankingSeriesFilter.value = state.rankingFilters.series;
   }

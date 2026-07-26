@@ -709,6 +709,7 @@ export class DataService {
     const opponentStats = isWinner ? match.stats?.loser : match.stats?.winner;
     return {
       id: match.id,
+      tourneyId: match.tourneyId,
       dateIso: match.dateIso,
       dateSort: match.dateSort,
       year: match.year,
