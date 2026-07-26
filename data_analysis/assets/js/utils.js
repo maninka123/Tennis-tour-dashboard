@@ -181,14 +181,14 @@ function pushUnique(target, source) {
 function analysisImageFallbackCandidates(playerName) {
   const slug = slugifyName(playerName);
   if (!slug) return [];
-  const base = `./images/atp/${slug}`;
+  const base = `/analysis/images/atp/${slug}`;
   return [`${base}.jpg`, `${base}.jpeg`, `${base}.png`, `${base}.webp`];
 }
 
 function mainDataImageCandidates(playerMeta) {
   const folder = String(playerMeta?.folder || '').trim();
   if (!folder) return [];
-  const base = `../data/atp/${folder}/image`;
+  const base = `/analysis/data/atp/${folder}/image`;
   return [`${base}.jpg`, `${base}.jpeg`, `${base}.png`, `${base}.webp`];
 }
 

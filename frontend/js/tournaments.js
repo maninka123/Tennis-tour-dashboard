@@ -149,29 +149,28 @@ const TournamentsModule = {
         const { AppState, Utils, DOM } = window.TennisApp;
         const tour = AppState.currentTour;
         
-        // Get data (use demo if empty)
-        let tournaments = AppState.tournaments[tour];
-        if (!tournaments || tournaments.length === 0) {
-            tournaments = this.demoTournaments[tour] || [];
-        }
+        const tournaments = AppState.tournaments[tour] || [];
 
         if (tournaments.length === 0) {
             DOM.tournamentCalendar.innerHTML = `
-                <div class="loading-placeholder">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span>No tournament data available</span>
+                <div class="data-state-card">
+                    <i class="fas fa-calendar-xmark"></i>
+                    <strong>No tournament calendar available</strong>
+                    <span>Use the calendar update button to try again.</span>
                 </div>
             `;
             return;
         }
 
         // Sort tournaments by date
-        tournaments.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
+        const sortedTournaments = [...tournaments].sort(
+            (a, b) => new Date(a.start_date) - new Date(b.start_date)
+        );
 
         // Split into finished, in progress, and upcoming
-        const finished = tournaments.filter(t => t.status === 'finished');
-        const inProgress = tournaments.filter(t => t.status === 'in_progress');
-        const upcoming = tournaments.filter(t => t.status === 'upcoming');
+        const finished = sortedTournaments.filter(t => t.status === 'finished');
+        const inProgress = sortedTournaments.filter(t => t.status === 'in_progress');
+        const upcoming = sortedTournaments.filter(t => t.status === 'upcoming');
 
         let html = '';
 
@@ -259,6 +258,7 @@ const TournamentsModule = {
         };
 
         if (tournament.status === 'finished' && tournament.winner) {
+            const runnerUp = tournament.runner_up;
             resultsHTML = `
                 <div class="tournament-results">
                     <div class="result-label">Champion</div>
@@ -266,10 +266,12 @@ const TournamentsModule = {
                         <i class="fas fa-trophy"></i>
                         <span class="result-name">${Utils.getFlag(tournament.winner.country)} ${formatShortName(tournament.winner.name)}</span>
                     </div>
+                    ${runnerUp?.name ? `
                     <div class="result-player runner-up">
                         <i class="fas fa-medal"></i>
-                        <span class="result-name">${Utils.getFlag(tournament.runner_up.country)} ${formatShortName(tournament.runner_up.name)}</span>
+                        <span class="result-name">${Utils.getFlag(runnerUp.country)} ${formatShortName(runnerUp.name)}</span>
                     </div>
+                    ` : ''}
                 </div>
             `;
         } else if (tournament.status === 'upcoming' && tournament.winner) {
@@ -370,6 +372,12 @@ const TournamentsModule = {
                 
                 // Show bracket panel
                 DOM.tournamentDetailsPanel.classList.add('visible');
+                // The draw owns its scroll position. A newly selected tournament
+                // should always open at the title and first round, regardless of
+                // where the previous draw was viewed.
+                if (DOM.tournamentBracket) {
+                    DOM.tournamentBracket.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+                }
                 
                 // Load and render bracket (special handling for finals)
                 await BracketModule.loadAndRender(tournamentId, category, tournamentName, tournamentSurface, tournamentStatus);

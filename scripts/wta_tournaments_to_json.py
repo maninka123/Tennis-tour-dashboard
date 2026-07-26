@@ -69,6 +69,12 @@ def _is_complete_tournament_tree(record: dict, today: date) -> bool:
     if not is_finished:
         return False
 
+    record_year = record.get("year")
+    shared_draw = record.get("shared_draw_source") == "atp_united_cup"
+    draw_year = record.get("draw_year")
+    scores_year = record.get("scores_year")
+    current_scores = shared_draw or scores_year in {record_year, str(record_year)}
+
     champion = record.get("champion") or {}
     champion_name = _clean_text((champion or {}).get("name") if isinstance(champion, dict) else "")
     if not champion_name:
@@ -84,7 +90,13 @@ def _is_complete_tournament_tree(record: dict, today: date) -> bool:
                 has_results = True
                 break
     has_matches = isinstance(matches, list) and len(matches) > 0
-    return has_draw and (has_results or has_matches)
+    current_draw = shared_draw or draw_year in {record_year, str(record_year)}
+    current_tree = (
+        shared_draw
+        or (current_draw and (has_draw or has_results))
+        or (current_scores and has_matches)
+    )
+    return current_tree
 
 
 def _load_existing_records(output_dir: Path, year: int) -> Dict[str, dict]:
@@ -130,19 +142,22 @@ def _parse_draw_json(draw_info_entry: object) -> Optional[dict]:
 
 
 def _pick_singles_event(events: List[dict]) -> Optional[dict]:
-    if not events:
+    valid_events = [event for event in (events or []) if isinstance(event, dict)]
+    if not valid_events:
         return None
-    for event in events:
+    for event in valid_events:
         title = _clean_text(event.get("DrawTypeTitle", "")).lower()
         code = _clean_text(event.get("EventTypeCode", "")).upper()
         if "singles" in title or code.endswith("S"):
             return event
-    return events[0]
+    return valid_events[0]
 
 
 def _extract_draw(event: dict) -> dict:
     draw_lines = []
     for line in event.get("Draw", {}).get("DrawLine", []) or []:
+        if not isinstance(line, dict):
+            continue
         player = line.get("Players", {}).get("Player")
         if isinstance(player, list):
             # Singles events usually have a single player object.
@@ -352,18 +367,27 @@ def fetch_draw(
     session: requests.Session, tournament_group_id: int, year: int
 ) -> Optional[dict]:
     url = f"{API_BASE}/tournaments/{tournament_group_id}/{year}/draw"
-    resp = session.get(url, headers={"User-Agent": USER_AGENT}, timeout=30)
-    if resp.status_code == 404:
+    try:
+        resp = session.get(url, headers={"User-Agent": USER_AGENT}, timeout=30)
+        if resp.status_code == 404:
+            return None
+        resp.raise_for_status()
+        payload = resp.json()
+    except (requests.RequestException, ValueError):
         return None
-    resp.raise_for_status()
-    payload = resp.json()
     draw_info = payload.get("drawInfo", []) or []
+    if isinstance(draw_info, dict):
+        draw_info = [draw_info]
     events = []
     for entry in draw_info:
         parsed = _parse_draw_json(entry)
         if not parsed:
             continue
-        events.extend(parsed.get("Draws", {}).get("Events", {}).get("Event", []) or [])
+        raw_events = parsed.get("Draws", {}).get("Events", {}).get("Event", []) or []
+        if isinstance(raw_events, dict):
+            events.append(raw_events)
+        elif isinstance(raw_events, list):
+            events.extend(event for event in raw_events if isinstance(event, dict))
     event = _pick_singles_event(events)
     if not event:
         return None
@@ -374,22 +398,39 @@ def fetch_matches(
     session: requests.Session, tournament_group_id: int, year: int
 ) -> Optional[dict]:
     url = f"{API_BASE}/tournaments/{tournament_group_id}/{year}/matches"
-    resp = session.get(url, headers={"User-Agent": USER_AGENT}, timeout=30)
-    if resp.status_code == 404:
+    try:
+        resp = session.get(url, headers={"User-Agent": USER_AGENT}, timeout=30)
+        if resp.status_code == 404:
+            return None
+        resp.raise_for_status()
+        payload = resp.json()
+    except (requests.RequestException, ValueError):
         return None
-    resp.raise_for_status()
-    return resp.json()
+    return payload if isinstance(payload, dict) else None
 
 
 def _normalize_status(value: Optional[str]) -> str:
     raw = _status_normalized(value)
     if raw in {"future", "upcoming", "scheduled"}:
         return "upcoming"
-    if raw in {"current", "live", "in_progress", "in progress", "running"}:
+    if raw in {"current", "live", "inprogress", "in_progress", "in progress", "running"}:
         return "in_progress"
     if raw in {"past", "finished", "completed", "complete", "ended", "final"}:
         return "finished"
     return raw or "upcoming"
+
+
+def _load_shared_united_cup_result() -> Tuple[Optional[dict], Optional[dict]]:
+    """United Cup is one combined event; reuse its official ATP team result."""
+    atp_dir = Path(__file__).resolve().parent.parent / "data" / "atp" / "tournaments"
+    for path in sorted(atp_dir.glob("*.json")):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if _clean_text(payload.get("name")).upper() == "UNITED CUP":
+            return payload.get("champion"), payload.get("runner_up")
+    return None, None
 
 
 def main() -> int:
@@ -508,7 +549,8 @@ def main() -> int:
         draw_year = t.get("year", args.year)
         if group_id and should_fetch_draw:
             draw = fetch_draw(session, group_id, t.get("year", args.year))
-        if not draw and group_id and args.fallback_year:
+        allow_previous_season = normalized_status == "upcoming"
+        if not draw and group_id and args.fallback_year and allow_previous_season:
             if should_fetch_draw:
                 draw = fetch_draw(session, group_id, args.fallback_year)
                 draw_year = args.fallback_year if draw else draw_year
@@ -517,15 +559,33 @@ def main() -> int:
             fetch_matches(session, group_id, t.get("year", args.year)) if group_id else None
         )
         matches_year = t.get("year", args.year)
-        if (not matches_payload or not matches_payload.get("matches")) and group_id and args.fallback_year:
+        if (
+            (not matches_payload or not matches_payload.get("matches"))
+            and group_id
+            and args.fallback_year
+            and allow_previous_season
+        ):
             alt_payload = fetch_matches(session, group_id, args.fallback_year)
             if alt_payload and alt_payload.get("matches"):
                 matches_payload = alt_payload
                 matches_year = args.fallback_year
 
         matches = _extract_matches(matches_payload) if matches_payload else []
+
+        # For active/finished events, never replace current-season partial data
+        # with a previous-season tree. If the source is temporarily empty,
+        # retain only an existing tree that is already tagged with this year.
+        if normalized_status in {"in_progress", "finished"} and existing_data:
+            record_year = t.get("year", args.year)
+            if not draw and existing_data.get("draw_year") in {record_year, str(record_year)}:
+                draw = existing_data.get("draw")
+                draw_year = record_year
+            if not matches and existing_data.get("scores_year") in {record_year, str(record_year)}:
+                matches = existing_data.get("matches") or []
+                matches_year = record_year
+
         champion, runner_up = _extract_finalists(matches)
-        if not champion:
+        if not champion and normalized_status in {"finished", "upcoming"}:
             for winner in (t.get("winners") or []):
                 singles = winner.get("singles") or {}
                 player = singles.get("player") or {}
@@ -575,10 +635,26 @@ def main() -> int:
             stats["draw_missing"] += 1
         time.sleep(0.15)
 
-    for group_key, entry in existing.items():
-        if group_key in seen_group_ids:
+    # A complete season response is authoritative: remove renamed/withdrawn
+    # duplicates instead of carrying them forever. Limited/partial runs keep
+    # unmatched local records.
+    source_is_complete = not args.limit and len(tournaments) >= 50
+    if not source_is_complete:
+        for group_key, entry in existing.items():
+            if group_key in seen_group_ids:
+                continue
+            output_records.append(entry["data"])
+
+    shared_champion, shared_runner_up = _load_shared_united_cup_result()
+    for tournament in output_records:
+        if _clean_text(tournament.get("name")).upper() != "UNITED CUP":
             continue
-        output_records.append(entry["data"])
+        if not (tournament.get("champion") or {}).get("name") and shared_champion:
+            tournament["champion"] = shared_champion
+        if not (tournament.get("runner_up") or {}).get("name") and shared_runner_up:
+            tournament["runner_up"] = shared_runner_up
+        if shared_champion:
+            tournament["shared_draw_source"] = "atp_united_cup"
 
     output_records.sort(key=lambda x: ((x.get("start_date") or "9999-12-31"), _clean_text(x.get("name"))))
     for order, tournament in enumerate(output_records, start=1):

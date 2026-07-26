@@ -803,16 +803,17 @@ const PlayerModule = {
         if (upper === 'Q') return raw;
 
         const patterns = [
-            /^Q\s*([1-9])$/,
-            /^QUALIF(?:YING|IER)\s+R\s*([1-9])$/,
-            /^QUALIF(?:YING|IER)\s+ROUND\s*([1-9])$/,
-            /^([1-9])(?:ST|ND|RD|TH)\s+ROUND\s+QUALIF(?:YING|IER)$/,
-            /^ROUND\s*([1-9])\s+QUALIF(?:YING|IER)$/
+            /^Q\s*(\d+)$/,
+            /^QUALIF(?:YING|IER)\s+R\s*(\d+)$/,
+            /^QUALIF(?:YING|IER)\s+ROUND\s*(\d+)$/,
+            /^(\d+)(?:ST|ND|RD|TH)\s+ROUND\s+QUALIF(?:YING|IER)$/,
+            /^ROUND\s*(\d+)\s+QUALIF(?:YING|IER)$/
         ];
         for (const pattern of patterns) {
             const match = upper.match(pattern);
             if (match) {
-                return `Qualifier R${Number(match[1])}`;
+                const number = Number(match[1]);
+                return number >= 1 && number <= 3 ? `Qualifier R${number}` : 'Qualifying';
             }
         }
         return raw;

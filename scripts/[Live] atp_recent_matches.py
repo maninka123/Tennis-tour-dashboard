@@ -13,6 +13,7 @@ from atp_scores_common import (
     build_results_url,
     fetch_tour_tournaments,
     make_scraper,
+    parse_recent_matches_from_gateway,
     parse_recent_matches_from_results_page,
 )
 
@@ -33,17 +34,20 @@ def main() -> int:
         scraper = make_scraper()
         tournaments = fetch_tour_tournaments(scraper=scraper, timeout=args.timeout)
 
-        recent: List[Dict[str, Any]] = []
-        for tournament in tournaments:
-            try:
-                url = build_results_url(tournament)
-                response = scraper.get(url, timeout=args.timeout)
-                if response.status_code != 200:
+        # Completed matches are already included in ATP's live gateway. Using
+        # them first avoids opening a slow results page for every tournament.
+        recent: List[Dict[str, Any]] = parse_recent_matches_from_gateway(tournaments)
+        if len(recent) < max(1, args.limit):
+            for tournament in tournaments:
+                try:
+                    url = build_results_url(tournament)
+                    response = scraper.get(url, timeout=args.timeout)
+                    if response.status_code != 200:
+                        continue
+                    parsed = parse_recent_matches_from_results_page(response.text, tournament)
+                    recent.extend(parsed)
+                except Exception:
                     continue
-                parsed = parse_recent_matches_from_results_page(response.text, tournament)
-                recent.extend(parsed)
-            except Exception:
-                continue
 
         deduped: Dict[str, Dict[str, Any]] = {}
         for match in recent:

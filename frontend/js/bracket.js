@@ -563,6 +563,10 @@ const BracketModule = {
         const { DOM, API, AppState } = window.TennisApp;
         const requestToken = ++this.loadToken;
         const selectedId = `${tournamentId}`;
+
+        if (DOM.tournamentBracket) {
+            DOM.tournamentBracket.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        }
         
         // Show loading
         DOM.tournamentBracket.innerHTML = `
@@ -588,14 +592,17 @@ const BracketModule = {
                 }
             }
             
-            // Fall back to demo data
             if (!bracket || !Array.isArray(bracket.matches) || bracket.matches.length === 0) {
-                if (bracket && bracket.source === 'wta') {
-                    this.currentBracket = bracket;
-                    this.render();
-                    return;
-                }
-                bracket = this.generateDemoBracket(tournamentId, category);
+                bracket = bracket || {
+                    tournament_id: tournamentId,
+                    tournament_name: tournamentName || 'Tournament',
+                    tournament_category: category || 'other',
+                    tournament_surface: tournamentSurface || '',
+                    tournament_status: tournamentStatus || 'unavailable',
+                    matches: [],
+                    rounds: [],
+                    source: 'unavailable'
+                };
             } else {
                 bracket.tournament_name = tournamentName || bracket.tournament_name || `Tournament ${tournamentId}`;
                 bracket.tournament_surface = tournamentSurface || bracket.tournament_surface || '';
@@ -614,8 +621,16 @@ const BracketModule = {
             if (requestToken !== this.loadToken || `${AppState.selectedTournament}` !== selectedId) {
                 return;
             }
-            // Use demo data on error
-            this.currentBracket = this.generateDemoBracket(tournamentId, category);
+            this.currentBracket = {
+                tournament_id: tournamentId,
+                tournament_name: tournamentName || 'Tournament',
+                tournament_category: category || 'other',
+                tournament_surface: tournamentSurface || '',
+                tournament_status: 'unavailable',
+                matches: [],
+                rounds: [],
+                source: 'unavailable'
+            };
             this.render();
         }
     },
@@ -626,13 +641,14 @@ const BracketModule = {
     render() {
         const { DOM, Utils } = window.TennisApp;
         
-        if (!this.currentBracket || !this.currentBracket.matches) {
+        if (!this.currentBracket || !Array.isArray(this.currentBracket.matches) || this.currentBracket.matches.length === 0) {
             DOM.tournamentBracket.innerHTML = `
                 <div class="placeholder-message">
                     <i class="fas fa-exclamation-circle"></i>
                     <p>No bracket data available</p>
                 </div>
             `;
+            DOM.tournamentBracket.scrollTo({ top: 0, left: 0, behavior: 'auto' });
             return;
         }
 
@@ -648,7 +664,9 @@ const BracketModule = {
         const finalWinner = finalMatch ? this.resolveMatchWinner(finalMatch, category) : null;
         const championFromCalendar = this.resolveChampionFromTournamentRecord(bracket);
         const championCandidate = finalWinner || bracket.champion || championFromCalendar || null;
-        const hasChampion = !!championCandidate;
+        const bracketStatus = (bracket.tournament_status || '').toLowerCase();
+        const tournamentStillRunning = ['in_progress', 'inprogress', 'live', 'current', 'running'].includes(bracketStatus);
+        const hasChampion = !!championCandidate && !tournamentStillRunning;
         
         const tourLabel = bracket.tournament_tour || window.TennisApp?.AppState?.currentTour || 'atp';
         const categoryNames = {
@@ -671,7 +689,6 @@ const BracketModule = {
             : `${daLabel}${drawMeta.seeds ? ` (${drawMeta.seeds} seeds)` : ''}, ${drawMeta.qualifiers} Q, ${drawMeta.wildcards} WC`;
         const surfaceClass = this.getSurfaceClass(bracket.tournament_surface || '');
         const rawYear = bracket.tournament_year;
-        const bracketStatus = (bracket.tournament_status || '').toLowerCase();
         let displayYear = rawYear;
         if (rawYear && bracketStatus === 'upcoming') {
             const parsedYear = parseInt(rawYear, 10);
@@ -729,6 +746,7 @@ const BracketModule = {
         html += this.renderColumnBracket(bracket);
 
         DOM.tournamentBracket.innerHTML = html;
+        DOM.tournamentBracket.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 
         this.ensureFullscreenModal();
         const expandBtn = document.querySelector('.bracket-expand-btn');
@@ -1355,6 +1373,29 @@ const BracketModule = {
         return 'surface-hard';
     },
 
+    getRoundPathBadge(roundValue) {
+        const raw = String(roundValue || '').trim();
+        if (!raw) return '';
+        const upper = raw.toUpperCase();
+
+        if (/^R\d+$/.test(upper) || ['QF', 'SF', 'F', 'RR'].includes(upper)) {
+            return upper;
+        }
+        if (/QUALIF(?:YING|IER)\s*R?\s*(\d+)/i.test(raw)) {
+            const m = raw.match(/QUALIF(?:YING|IER)\s*R?\s*(\d+)/i);
+            const number = m ? Number(m[1]) : 0;
+            return number >= 1 && number <= 3 ? `Q${number}` : 'Q';
+        }
+        if (/^ROUND OF\s+(\d+)$/i.test(raw)) {
+            const m = raw.match(/^ROUND OF\s+(\d+)$/i);
+            return m ? `R${m[1]}` : '';
+        }
+        if (upper === 'FINAL') return 'F';
+        if (upper === 'SEMI FINAL' || upper === 'SEMIFINAL') return 'SF';
+        if (upper === 'QUARTER FINAL' || upper === 'QUARTERFINAL') return 'QF';
+        return upper;
+    },
+
     normalizePlayerPathName(name) {
         return String(name || '')
             .toLowerCase()
@@ -1545,7 +1586,7 @@ const BracketModule = {
         const p2PathKey = this.getPlayerPathKey(p2);
 
         return `
-            <div class="bracket-match clickable ${match.status}" data-match-id="${match.id}" data-round="${match.round}" data-match-number="${match.match_number}" data-points="${this.getPointsForRound(match.round, category)}">
+            <div class="bracket-match clickable ${match.status}" data-match-id="${match.id}" data-round="${match.round}" data-round-badge="${this.getRoundPathBadge(match.round)}" data-match-number="${match.match_number}" data-points="${this.getPointsForRound(match.round, category)}">
                 <div class="match-content">
                     <div class="player-row ${isP1Winner ? 'winner' : ''}" data-player-path-key="${p1PathKey}">
                         <span class="player-name">${p1DisplayName}</span>

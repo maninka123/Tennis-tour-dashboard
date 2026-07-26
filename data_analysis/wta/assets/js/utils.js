@@ -185,14 +185,14 @@ function pushUnique(target, source) {
 function analysisImageFallbackCandidates(playerName) {
   const slug = slugifyName(playerName);
   if (!slug) return [];
-  const base = `../images/wta/${slug}`;
+  const base = `/analysis/images/wta/${slug}`;
   return [`${base}.jpg`, `${base}.jpeg`, `${base}.png`, `${base}.webp`];
 }
 
 function mainDataImageCandidates(playerMeta) {
   const folder = String(playerMeta?.folder || '').trim();
   if (!folder) return [];
-  const base = `../../data/wta/${folder}/image`;
+  const base = `/analysis/data/wta/${folder}/image`;
   return [`${base}.jpg`, `${base}.jpeg`, `${base}.png`, `${base}.webp`];
 }
 

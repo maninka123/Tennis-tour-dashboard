@@ -5,7 +5,12 @@ from __future__ import annotations
 
 import re
 import unicodedata
+import json
+import fcntl
+import os
+import time
 from datetime import datetime, timedelta
+from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 from urllib.parse import urljoin
 
@@ -19,6 +24,10 @@ from bs4 import BeautifulSoup
 BASE_URL = "https://www.atptour.com"
 SCORES_CURRENT_URL = f"{BASE_URL}/en/scores/current"
 ATP_GATEWAY_LIVE_URL = "https://app.atptour.com/api/v2/gateway/livematches/website"
+RJINA_HTTP_PREFIX = "https://r.jina.ai/http://"
+ATP_GATEWAY_CACHE = (
+    Path(__file__).resolve().parent.parent / "data" / "cache" / "atp_gateway_tournaments.json"
+)
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
@@ -157,32 +166,323 @@ def make_scraper() -> Any:
 
 
 def fetch_tour_tournaments(scraper: Any, timeout: int = 30) -> List[Dict[str, Any]]:
-    payload = None
-    attempts = 3
-
-    for _ in range(attempts):
+    def _load_cache(max_age_seconds: int) -> List[Dict[str, Any]]:
         try:
-            scraper.get(SCORES_CURRENT_URL, timeout=timeout)
+            if time.time() - ATP_GATEWAY_CACHE.stat().st_mtime > max_age_seconds:
+                return []
+            cached = json.loads(ATP_GATEWAY_CACHE.read_text(encoding="utf-8"))
+            if isinstance(cached, list):
+                return [item for item in cached if _is_tour_tournament(item)]
+        except Exception:
+            pass
+        return []
+
+    # One shared snapshot feeds live, recent and upcoming requests. A short
+    # five-minute TTL avoids three concurrent Cloudflare/mirror handshakes at
+    # page load while keeping the match panels reasonably fresh.
+    cached = _load_cache(5 * 60)
+    if cached:
+        return cached
+
+    ATP_GATEWAY_CACHE.parent.mkdir(parents=True, exist_ok=True)
+    lock_path = ATP_GATEWAY_CACHE.with_suffix(".lock")
+    with lock_path.open("a+", encoding="utf-8") as lock_file:
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        cached = _load_cache(5 * 60)
+        if cached:
+            return cached
+
+        payload = None
+        try:
             response = scraper.get(
                 ATP_GATEWAY_LIVE_URL,
                 params={"scoringTournamentLevel": "tour"},
                 timeout=timeout,
             )
             response.raise_for_status()
-            payload = response.json()
-            break
+            candidate = response.json()
+            if isinstance(candidate, dict) and candidate.get("Data"):
+                payload = candidate
         except Exception:
             payload = None
+
+        if payload is None:
+            # ATP's public hosts are frequently protected by a Cloudflare
+            # challenge. The read-only mirror exposes the official payload.
+            mirror_url = (
+                f"{RJINA_HTTP_PREFIX}app.atptour.com/api/v2/gateway/"
+                "livematches/website?scoringTournamentLevel=tour"
+            )
+            for attempt in range(3):
+                try:
+                    response = requests.get(mirror_url, headers=HEADERS, timeout=timeout)
+                    if response.status_code == 429:
+                        retry_after = int(response.json().get("retryAfter") or 1)
+                        time.sleep(min(3, max(1, retry_after)))
+                        continue
+                    response.raise_for_status()
+                    text = response.text or ""
+                    json_start = text.find("{")
+                    if json_start >= 0:
+                        candidate = json.loads(text[json_start:])
+                        if isinstance(candidate, dict) and candidate.get("Data"):
+                            payload = candidate
+                            break
+                except Exception:
+                    if attempt < 2:
+                        time.sleep(attempt + 1)
+
+        data = payload.get("Data") if isinstance(payload, dict) else {}
+        tournaments = data.get("LiveMatchesTournamentsOrdered") if isinstance(data, dict) else []
+        if isinstance(tournaments, list) and tournaments:
+            filtered = [item for item in tournaments if _is_tour_tournament(item)]
+            temp_path = ATP_GATEWAY_CACHE.with_name(
+                f".{ATP_GATEWAY_CACHE.name}.{os.getpid()}.tmp"
+            )
+            temp_path.write_text(json.dumps(filtered, ensure_ascii=False), encoding="utf-8")
+            temp_path.replace(ATP_GATEWAY_CACHE)
+            return filtered
+
+        # A recent snapshot is preferable to empty panels when the source is
+        # temporarily challenged. Match-level time filters still prevent stale
+        # live/upcoming rows from appearing.
+        return _load_cache(30 * 60)
+
+
+def parse_recent_matches_from_gateway(
+    tournaments: Iterable[Dict[str, Any]],
+) -> List[Dict[str, Any]]:
+    """Parse completed singles matches already present in the ATP gateway."""
+    recent: List[Dict[str, Any]] = []
+
+    for tournament in tournaments:
+        event_id = _clean_text(tournament.get("EventId"))
+        event_year = _clean_text(tournament.get("EventYear"))
+        event_title = _clean_text(tournament.get("EventTitle")) or "Tournament"
+        category = _event_category(tournament.get("EventType"))
+
+        for match in (tournament.get("LiveMatches") or []):
+            if not isinstance(match, dict):
+                continue
+            if _clean_text(match.get("Type")).lower() != "singles":
+                continue
+            if _clean_text(match.get("MatchStatus")).upper() != "F":
+                continue
+
+            p1 = _build_player_from_team(match.get("PlayerTeam") or {})
+            p2 = _build_player_from_team(match.get("OpponentTeam") or {})
+            sets = _parse_gateway_sets(match)
+            winning_id = _clean_text(match.get("WinningPlayerId")).upper()
+            p1_id = _clean_text(p1.get("id")).upper()
+            p2_id = _clean_text(p2.get("id")).upper()
+            winner = (
+                1
+                if winning_id and winning_id == p1_id
+                else 2
+                if winning_id and winning_id == p2_id
+                else _winner_from_sets(sets)
+            )
+            match_id = _clean_text(match.get("MatchId"))
+
+            recent.append(
+                {
+                    "id": _compose_match_id(event_year, event_id, match_id),
+                    "tour": "ATP",
+                    "tournament": event_title,
+                    "tournament_category": category,
+                    "atp_event_id": event_id or None,
+                    "atp_event_year": event_year or None,
+                    "atp_match_id": match_id or None,
+                    "location": _build_location(tournament),
+                    "surface": "",
+                    "round": _clean_text(match.get("RoundName")),
+                    "court": _clean_text(match.get("CourtName"))
+                    if _clean_text(match.get("CourtName")) != "0"
+                    else "",
+                    "player1": p1,
+                    "player2": p2,
+                    "status": "finished",
+                    "winner": winner,
+                    "final_score": {"sets": sets},
+                    "match_duration": _format_duration(match.get("MatchTimeTotal")),
+                    "scheduled_time": _clean_text(match.get("LastUpdated")) or None,
+                    "atp_stats_url": (
+                        f"{BASE_URL}/en/scores/stats-centre/archive/"
+                        f"{event_year}/{event_id}/{match_id.lower()}"
+                        if event_year and event_id and match_id
+                        else None
+                    ),
+                }
+            )
+
+    return recent
+
+
+def fetch_schedule_page(scraper: Any, url: str, timeout: int = 30) -> Tuple[str, str]:
+    """Fetch an ATP schedule, falling back to a read-only official-page mirror."""
+    try:
+        response = scraper.get(url, timeout=timeout)
+        response.raise_for_status()
+        text = response.text or ""
+        if "Just a moment" not in text:
+            return text, "html"
+    except Exception:
+        pass
+
+    parsed = requests.utils.urlparse(url)
+    mirror_url = f"{RJINA_HTTP_PREFIX}{parsed.netloc}{parsed.path}"
+    if parsed.query:
+        mirror_url += f"?{parsed.query}"
+    try:
+        response = requests.get(mirror_url, headers=HEADERS, timeout=timeout)
+        response.raise_for_status()
+        text = response.text or ""
+        if "requiring CAPTCHA" not in text:
+            return text, "markdown"
+    except Exception:
+        pass
+    return "", ""
+
+
+def parse_upcoming_matches_from_schedule_markdown(
+    markdown_text: str,
+    tournament: Dict[str, Any],
+    days: int,
+    now: Optional[datetime] = None,
+) -> List[Dict[str, Any]]:
+    """Parse confirmed ATP fixtures from a Jina-rendered daily schedule."""
+    lines = [line.strip() for line in str(markdown_text or "").splitlines()]
+    if not lines:
+        return []
+
+    now_dt = now or datetime.now()
+    cutoff = now_dt + timedelta(days=max(0, int(days)))
+    day_dt: Optional[datetime] = None
+    for line in lines:
+        header_match = re.search(
+            r"(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun),\s+(\d{1,2}\s+[A-Za-z]+,\s+\d{4})",
+            line,
+            flags=re.IGNORECASE,
+        )
+        if header_match:
+            try:
+                day_dt = datetime.strptime(header_match.group(1), "%d %B, %Y")
+            except Exception:
+                day_dt = None
+            break
+    if day_dt and (day_dt.date() < now_dt.date() or day_dt > cutoff):
+        return []
+
+    player_link_re = re.compile(
+        r"^\[([^\]]+)\]\((https?://www\.atptour\.com/en/players/[^)]+)\)$",
+        flags=re.IGNORECASE,
+    )
+
+    def _player_from_line(line: str) -> Optional[Dict[str, Any]]:
+        player_match = player_link_re.match(line)
+        if not player_match:
+            return None
+        return {
+            "id": _player_id_from_profile_link(player_match.group(2)),
+            "name": _clean_text(player_match.group(1)),
+            "country": None,
+            "rank": None,
+            "image_url": None,
+        }
+
+    event_id = _clean_text(tournament.get("EventId"))
+    event_year = _clean_text(tournament.get("EventYear"))
+    event_title = _clean_text(tournament.get("EventTitle")) or "Tournament"
+    category = _event_category(tournament.get("EventType"))
+    parsed_matches: List[Dict[str, Any]] = []
+
+    for idx, line in enumerate(lines):
+        if line.lower() != "vs":
             continue
 
-    if payload is None:
-        return []
+        before = lines[max(0, idx - 18):idx]
+        after = lines[idx + 1:min(len(lines), idx + 18)]
+        # "A or B vs C" is not a confirmed fixture yet.
+        if any(item.lower() == "or" for item in before[-12:]) or any(
+            item.lower() == "or" for item in after[:12]
+        ):
+            continue
 
-    data = payload.get("Data") if isinstance(payload, dict) else {}
-    tournaments = data.get("LiveMatchesTournamentsOrdered") if isinstance(data, dict) else []
-    if not isinstance(tournaments, list):
-        return []
-    return [t for t in tournaments if _is_tour_tournament(t)]
+        p1 = next(
+            (candidate for item in reversed(before) if (candidate := _player_from_line(item))),
+            None,
+        )
+        p2 = next(
+            (candidate for item in after if (candidate := _player_from_line(item))),
+            None,
+        )
+        if not p1 or not p2:
+            # Mixed ATP/WTA schedules render WTA names without ATP player links.
+            continue
+
+        round_text = ""
+        for item in reversed(before):
+            upper = item.upper()
+            if re.fullmatch(r"Q[1-3]|R(?:128|64|32|16)|QF|SF|F", upper):
+                round_text = upper
+                break
+            if "FINAL" in upper or "ROUND OF" in upper:
+                round_text = _clean_text(item)
+                break
+
+        court = ""
+        time_text = ""
+        for item in reversed(lines[max(0, idx - 45):idx]):
+            court_match = re.match(
+                r"^\*\*(.+?)\*\*(?:Starts At|Not Before)\s+(.+)$",
+                item,
+                flags=re.IGNORECASE,
+            )
+            if court_match:
+                court = _clean_text(court_match.group(1))
+                time_text = _clean_text(court_match.group(2))
+                break
+
+        match_dt = day_dt or now_dt
+        clock_match = re.search(
+            r"(\d{1,2}):(\d{2})\s*(AM|PM)?", time_text, flags=re.IGNORECASE
+        )
+        if clock_match:
+            hour = int(clock_match.group(1))
+            minute = int(clock_match.group(2))
+            am_pm = (clock_match.group(3) or "").upper()
+            if am_pm == "PM" and hour < 12:
+                hour += 12
+            elif am_pm == "AM" and hour == 12:
+                hour = 0
+            match_dt = match_dt.replace(
+                hour=hour, minute=minute, second=0, microsecond=0
+            )
+
+        p1_id = _clean_text(p1.get("id")) or _slugify(p1.get("name") or "p1")
+        p2_id = _clean_text(p2.get("id")) or _slugify(p2.get("name") or "p2")
+        match_code = f"UP_{p1_id}_{p2_id}_{match_dt.strftime('%Y%m%d%H%M')}"
+        parsed_matches.append(
+            {
+                "id": _compose_match_id(event_year, event_id, match_code),
+                "tour": "ATP",
+                "tournament": event_title,
+                "tournament_category": category,
+                "atp_event_id": event_id or None,
+                "atp_event_year": event_year or None,
+                "atp_match_id": match_code,
+                "location": _build_location(tournament),
+                "surface": "",
+                "round": round_text,
+                "court": court,
+                "player1": p1,
+                "player2": p2,
+                "status": "upcoming",
+                "scheduled_time": match_dt.strftime("%Y-%m-%dT%H:%M:%S"),
+            }
+        )
+
+    return parsed_matches
 
 
 def _build_player_from_team(team: Dict[str, Any]) -> Dict[str, Any]:

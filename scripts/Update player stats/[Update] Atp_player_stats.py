@@ -219,7 +219,10 @@ def update_player_folder(
             new_tournaments = recent.get("tournaments") or []
             # Avoid replacing good existing data with an empty parse.
             if len(new_tournaments) == 0 and len(previous_tournaments) > 0:
-                print(yellow(f"[WARN] {folder.name}: parsed empty recent matches; keeping previous recent_matches_tab"))
+                # This is a successful safe fallback, not a user-actionable
+                # warning. Keep the previous data and let the normal single
+                # "updated" progress line represent this player, matching WTA.
+                pass
             else:
                 merged["recent_matches_tab"] = recent
         else:

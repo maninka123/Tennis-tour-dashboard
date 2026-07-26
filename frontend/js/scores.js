@@ -391,11 +391,7 @@ const ScoresModule = {
         const { AppState, DOM } = window.TennisApp;
         const tour = AppState.currentTour;
         
-        // Get data (demo fallback only for WTA to avoid synthetic ATP history)
-        let matches = this.filterMatchesForActiveTour(AppState.recentMatches[tour], tour);
-        if ((!matches || matches.length === 0) && tour === 'wta') {
-            matches = this.filterMatchesForActiveTour(this.demoRecentMatches[tour] || [], tour);
-        }
+        const matches = this.filterMatchesForActiveTour(AppState.recentMatches[tour], tour);
 
         if (matches.length === 0) {
             DOM.recentMatchesWrapper.innerHTML = `
@@ -510,16 +506,17 @@ const ScoresModule = {
             if (!value || value === 'Q') return null;
 
             const patterns = [
-                /^Q\s*([1-9])$/,
-                /^QUALIF(?:YING|IER)\s+R\s*([1-9])$/,
-                /^QUALIF(?:YING|IER)\s+ROUND\s*([1-9])$/,
-                /^([1-9])(?:ST|ND|RD|TH)\s+ROUND\s+QUALIF(?:YING|IER)$/,
-                /^ROUND\s*([1-9])\s+QUALIF(?:YING|IER)$/
+                /^Q\s*(\d+)$/,
+                /^QUALIF(?:YING|IER)\s+R\s*(\d+)$/,
+                /^QUALIF(?:YING|IER)\s+ROUND\s*(\d+)$/,
+                /^(\d+)(?:ST|ND|RD|TH)\s+ROUND\s+QUALIF(?:YING|IER)$/,
+                /^ROUND\s*(\d+)\s+QUALIF(?:YING|IER)$/
             ];
             for (const pattern of patterns) {
                 const match = value.match(pattern);
                 if (match) {
-                    return Number(match[1]);
+                    const number = Number(match[1]);
+                    return number >= 1 && number <= 3 ? number : null;
                 }
             }
             return null;
@@ -612,13 +609,8 @@ const ScoresModule = {
     renderUpcomingMatches() {
         const { AppState, Utils } = window.TennisApp;
         const tour = AppState.currentTour;
-        const isWtaTour = tour === 'wta';
         
-        // Get data (keep demo fallback only for WTA)
         let matches = this.filterMatchesForActiveTour(AppState.upcomingMatches[tour], tour);
-        if (isWtaTour && (!matches || matches.length === 0)) {
-            matches = this.filterMatchesForActiveTour(this.demoUpcomingMatches[tour] || [], tour);
-        }
 
         // Remove matches that are already showing as live or recently finished
         const liveMatches = AppState.liveScores[tour] || [];
@@ -734,7 +726,6 @@ const ScoresModule = {
     showUpcomingInsights(matchId, matchOverride = null, context = {}) {
         const { AppState, Utils } = window.TennisApp;
         const tour = AppState.currentTour;
-        const demoUpcoming = tour === 'wta' ? (this.demoUpcomingMatches[tour] || []) : [];
         const key = String(context?.matchKey || '').trim();
         const findByKey = (list) => {
             if (!key || !Array.isArray(list)) return null;
@@ -742,9 +733,7 @@ const ScoresModule = {
         };
         const match = matchOverride
             || findByKey(AppState.upcomingMatches[tour])
-            || AppState.upcomingMatches[tour]?.find((m) => String(m?.id) === String(matchId))
-            || findByKey(demoUpcoming)
-            || demoUpcoming.find((m) => String(m?.id) === String(matchId));
+            || AppState.upcomingMatches[tour]?.find((m) => String(m?.id) === String(matchId));
         if (!match) return;
 
         const winEdge = this.calculateWinEdge(match);
@@ -1460,15 +1449,12 @@ const ScoresModule = {
             const live = AppState.liveScores[tour] || [];
             const recent = AppState.recentMatches[tour] || [];
             const upcoming = AppState.upcomingMatches[tour] || [];
-            const demoLive = this.demoLiveMatches[tour] || [];
-            const demoRecent = this.demoRecentMatches[tour] || [];
-            const demoUpcoming = tour === 'wta' ? (this.demoUpcomingMatches[tour] || []) : [];
-            const allMatches = [...live, ...recent, ...upcoming, ...demoLive, ...demoRecent, ...demoUpcoming];
+            const allMatches = [...live, ...recent, ...upcoming];
             const source = String(context?.source || '').trim().toLowerCase();
             const sourceMap = {
-                live: [...live, ...demoLive],
-                recent: [...recent, ...demoRecent],
-                upcoming: [...upcoming, ...demoUpcoming],
+                live,
+                recent,
+                upcoming,
             };
 
             const key = String(context?.matchKey || '').trim();
@@ -1486,10 +1472,7 @@ const ScoresModule = {
                 match = sourceList.find((m) => String(m.id) === String(matchId))
                     || live.find((m) => String(m.id) === String(matchId))
                     || recent.find((m) => String(m.id) === String(matchId))
-                    || upcoming.find((m) => String(m.id) === String(matchId))
-                    || demoLive.find((m) => String(m.id) === String(matchId))
-                    || demoRecent.find((m) => String(m.id) === String(matchId))
-                    || demoUpcoming.find((m) => String(m.id) === String(matchId));
+                    || upcoming.find((m) => String(m.id) === String(matchId));
             }
         }
         

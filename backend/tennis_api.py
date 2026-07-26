@@ -1234,6 +1234,8 @@ class TennisDataFetcher:
         exists = csv_path.exists()
         updated_at = None
         created_at = None
+        data_fetched_at = None
+        warning = None
         size_bytes = 0
         if exists:
             stat = csv_path.stat()
@@ -1241,6 +1243,17 @@ class TennisDataFetcher:
             updated_at = self._to_iso_utc(stat.st_mtime)
             birth_ts = getattr(stat, 'st_birthtime', None) or stat.st_ctime
             created_at = self._to_iso_utc(birth_ts)
+            try:
+                with csv_path.open('r', encoding='utf-8', newline='') as handle:
+                    first_row = next(csv.DictReader(handle), None) or {}
+                data_fetched_at = (first_row.get('fetched_at_utc') or '').strip() or None
+                if data_fetched_at:
+                    fetched_dt = datetime.fromisoformat(data_fetched_at.replace('Z', '+00:00'))
+                    now_dt = datetime.now(fetched_dt.tzinfo)
+                    if now_dt - fetched_dt > timedelta(days=7):
+                        warning = 'ATP stats are cached because the official stats page is not currently returning data rows.'
+            except Exception:
+                data_fetched_at = None
         outdated_dir = self._atp_stats_outdated_dir()
         outdated_count = len(list(outdated_dir.glob('atp_stats_leaderboard_*.csv'))) if outdated_dir.exists() else 0
         return {
@@ -1248,29 +1261,18 @@ class TennisDataFetcher:
             'path': str(csv_path),
             'updated_at': updated_at,
             'created_at': created_at,
+            'data_fetched_at': data_fetched_at,
             'size_bytes': size_bytes,
-            'outdated_count': outdated_count
+            'outdated_count': outdated_count,
+            'warning': warning,
         }
-
     def refresh_atp_stats_csv(self):
         csv_path = self._atp_stats_csv_path()
         csv_path.parent.mkdir(parents=True, exist_ok=True)
         outdated_dir = self._atp_stats_outdated_dir()
         outdated_dir.mkdir(parents=True, exist_ok=True)
         archived_path = None
-
-        if csv_path.exists():
-            stat = csv_path.stat()
-            birth_ts = getattr(stat, 'st_birthtime', None) or stat.st_ctime
-            timestamp = datetime.fromtimestamp(birth_ts).strftime('%Y%m%d_%H%M%S')
-            base_name = f"atp_stats_leaderboard_{timestamp}"
-            archive_path = outdated_dir / f"{base_name}.csv"
-            suffix = 1
-            while archive_path.exists():
-                archive_path = outdated_dir / f"{base_name}_{suffix}.csv"
-                suffix += 1
-            shutil.copy2(csv_path, archive_path)
-            archived_path = str(archive_path)
+        refresh_path = csv_path.parent / f".{csv_path.stem}.{os.getpid()}.refresh.csv"
 
         scripts_dir = Path(__file__).resolve().parent.parent / 'scripts'
         script_candidates = [
@@ -1296,16 +1298,16 @@ class TennisDataFetcher:
 
         try:
             result = subprocess.run(
-                [sys.executable, str(script_path), "--out", str(csv_path)],
+                [sys.executable, str(script_path), "--out", str(refresh_path)],
                 capture_output=True,
                 text=True,
                 timeout=240
             )
         except Exception as exc:
+            refresh_path.unlink(missing_ok=True)
             # Keep the app usable when refresh tooling/network is flaky.
             status = self.get_atp_stats_status()
             if status.get('exists'):
-                status['archived_path'] = archived_path
                 status['used_cached_file'] = True
                 status['warning'] = f"ATP stats refresh failed; using existing CSV. {exc}"
                 return status
@@ -1315,14 +1317,44 @@ class TennisDataFetcher:
             stderr = (result.stderr or '').strip()
             stdout = (result.stdout or '').strip()
             message = stderr or stdout or "Failed to refresh ATP stats CSV."
+            refresh_path.unlink(missing_ok=True)
             status = self.get_atp_stats_status()
             if status.get('exists'):
-                status['archived_path'] = archived_path
                 status['stdout'] = stdout
                 status['used_cached_file'] = True
                 status['warning'] = message
                 return status
             raise RuntimeError(message)
+
+        has_rows = False
+        if refresh_path.exists() and refresh_path.stat().st_size > 0:
+            try:
+                with refresh_path.open('r', encoding='utf-8', newline='') as handle:
+                    has_rows = next(csv.DictReader(handle), None) is not None
+            except Exception:
+                has_rows = False
+        if not has_rows:
+            refresh_path.unlink(missing_ok=True)
+            status = self.get_atp_stats_status()
+            if status.get('exists'):
+                status['used_cached_file'] = True
+                status['warning'] = 'ATP stats source returned no rows; using the existing CSV.'
+                return status
+            raise RuntimeError('ATP stats source returned no rows.')
+
+        if csv_path.exists():
+            stat = csv_path.stat()
+            birth_ts = getattr(stat, 'st_birthtime', None) or stat.st_ctime
+            timestamp = datetime.fromtimestamp(birth_ts).strftime('%Y%m%d_%H%M%S')
+            base_name = f"atp_stats_leaderboard_{timestamp}"
+            archive_path = outdated_dir / f"{base_name}.csv"
+            suffix = 1
+            while archive_path.exists():
+                archive_path = outdated_dir / f"{base_name}_{suffix}.csv"
+                suffix += 1
+            shutil.copy2(csv_path, archive_path)
+            archived_path = str(archive_path)
+        refresh_path.replace(csv_path)
 
         self.invalidate_atp_stats_cache()
         status = self.get_atp_stats_status()
@@ -1444,9 +1476,61 @@ class TennisDataFetcher:
         exists = output_dir.exists()
         json_files = sorted(output_dir.glob('*.json')) if exists else []
         latest_ts = 0.0
+        finished_count = 0
+        finished_with_winner = 0
+        finished_with_draw = 0
+        missing_finished_details = []
+        in_progress_count = 0
+        in_progress_with_draw = 0
         for path in json_files:
             try:
                 latest_ts = max(latest_ts, path.stat().st_mtime)
+                payload = json.loads(path.read_text(encoding='utf-8'))
+                status = str(payload.get('status') or '').strip().lower()
+                champion = payload.get('champion') or {}
+                has_winner = bool(
+                    isinstance(champion, dict)
+                    and str(champion.get('name') or '').strip()
+                )
+                bracket = payload.get('bracket') or {}
+                has_draw = bool(
+                    payload.get('matches')
+                    or (bracket.get('matches') if isinstance(bracket, dict) else None)
+                    or ((payload.get('draw') or {}).get('results'))
+                    or payload.get('shared_draw_source')
+                )
+                record_year = payload.get('year')
+                if status in {'finished', 'in_progress', 'inprogress'}:
+                    if str(tour or '').strip().lower() == 'wta':
+                        shared_draw = payload.get('shared_draw_source') == 'atp_united_cup'
+                        current_scores = payload.get('scores_year') in {record_year, str(record_year)}
+                        current_draw = payload.get('draw_year') in {record_year, str(record_year)}
+                        has_winner = has_winner and (shared_draw or current_scores)
+                        has_draw = shared_draw or (
+                            (current_scores and bool(payload.get('matches')))
+                            or (current_draw and bool((payload.get('draw') or {}).get('results')))
+                        )
+                    else:
+                        current_tree = (
+                            isinstance(bracket, dict)
+                            and bracket.get('source_year') in {record_year, str(record_year)}
+                        )
+                        has_winner = has_winner and current_tree
+                        has_draw = has_draw and current_tree
+                if status == 'finished':
+                    finished_count += 1
+                    finished_with_winner += int(has_winner)
+                    finished_with_draw += int(has_draw)
+                    if not has_winner or not has_draw:
+                        missing_finished_details.append({
+                            'id': payload.get('id') or payload.get('tournament_group_id'),
+                            'name': payload.get('name') or payload.get('title') or path.stem,
+                            'winner_missing': not has_winner,
+                            'draw_missing': not has_draw,
+                        })
+                elif status == 'in_progress':
+                    in_progress_count += 1
+                    in_progress_with_draw += int(has_draw)
             except Exception:
                 continue
 
@@ -1463,7 +1547,15 @@ class TennisDataFetcher:
             'path': str(output_dir),
             'file_count': len(json_files),
             'updated_at': self._to_iso_utc(latest_ts) if latest_ts else None,
-            'outdated_count': outdated_count
+            'outdated_count': outdated_count,
+            'finished_count': finished_count,
+            'finished_with_winner': finished_with_winner,
+            'finished_with_draw': finished_with_draw,
+            'missing_finished_count': len(missing_finished_details),
+            'missing_finished_details': missing_finished_details[:20],
+            'in_progress_count': in_progress_count,
+            'in_progress_with_draw': in_progress_with_draw,
+            'data_complete': len(missing_finished_details) == 0,
         }
 
     def refresh_tournaments_json(self, tour='wta', year=None, full_refresh=False):
@@ -2386,12 +2478,29 @@ class TennisDataFetcher:
                     player2.get('id')
                 )
             elif tour_name == 'ATP':
-                out['h2h_text'] = self._format_atp_h2h_text_for_match_order(
+                # Do not block the schedule endpoint on a separate protected ATP
+                # page for every fixture. Reuse H2H data if the dedicated H2H
+                # view has already loaded it; otherwise that view remains the
+                # on-demand source of truth.
+                c1 = self._resolve_atp_player_code(
                     player1.get('player_code') or player1.get('id'),
-                    player2.get('player_code') or player2.get('id'),
-                    player1.get('name') or '',
-                    player2.get('name') or ''
+                    fallback_name=player1.get('name') or ''
                 )
+                c2 = self._resolve_atp_player_code(
+                    player2.get('player_code') or player2.get('id'),
+                    fallback_name=player2.get('name') or ''
+                )
+                cached_summary = (
+                    atp_h2h_summary_cache.get(tuple(sorted((c1, c2))))
+                    if c1 and c2 and c1 != c2
+                    else None
+                )
+                if cached_summary and c1 == cached_summary.get('first_code'):
+                    out['h2h_text'] = f"{cached_summary.get('first_wins', 0)}-{cached_summary.get('second_wins', 0)}"
+                elif cached_summary and c1 == cached_summary.get('second_code'):
+                    out['h2h_text'] = f"{cached_summary.get('second_wins', 0)}-{cached_summary.get('first_wins', 0)}"
+                else:
+                    out['h2h_text'] = 'N/A'
             else:
                 out['h2h_text'] = 'N/A'
             enriched.append(out)
@@ -3439,8 +3548,10 @@ class TennisDataFetcher:
                 return 'Qualifying R3'
             if round_id.isdigit():
                 rid = int(round_id)
-                if rid > 0:
+                if 0 < rid <= 3:
                     return f'Qualifying R{rid}'
+                return 'Qualifying'
+            return 'Qualifying'
 
         if round_upper in ('F', 'SF', 'QF', 'RR', 'R128', 'R64', 'R32', 'R16'):
             return round_upper
@@ -4104,9 +4215,7 @@ class TennisDataFetcher:
         live_matches = []
         if tour in ('wta', 'both'):
             wta_raw = self._run_wta_matches_script('[Live] wta_live_matches.py')
-            if wta_raw is None:
-                live_matches.extend(self._generate_sample_live_matches('wta'))
-            else:
+            if wta_raw is not None:
                 wta_live = [
                     self._parse_wta_match(match)
                     for match in wta_raw
@@ -4150,9 +4259,7 @@ class TennisDataFetcher:
                 '[Live] wta_recent_matches.py',
                 args=['--limit', str(limit)]
             )
-            if wta_raw is None:
-                matches.extend(self._generate_sample_recent_matches('wta', limit))
-            else:
+            if wta_raw is not None:
                 parsed = [self._parse_wta_match(match) for match in wta_raw if isinstance(match, dict)]
                 matches.extend(parsed)
 
@@ -4203,12 +4310,9 @@ class TennisDataFetcher:
                 args=['--days', str(days)]
             )
             if wta_raw is None:
-                print(f"WTA upcoming: script failed, using generated matches")
-                matches.extend(self._generate_sample_upcoming_matches('wta', days))
+                print("WTA upcoming: script failed, returning empty")
             elif len(wta_raw) == 0:
-                # Scraper ran successfully but found no matches - use generated matches as fallback
-                print(f"WTA upcoming: scraper returned empty, using generated matches")
-                matches.extend(self._generate_sample_upcoming_matches('wta', days))
+                print("WTA upcoming: scraper returned no confirmed fixtures")
             else:
                 parsed = [self._parse_wta_match(match) for match in wta_raw if isinstance(match, dict)]
                 # Filter out matches with TBD/empty player names
@@ -4217,7 +4321,14 @@ class TennisDataFetcher:
                 matches.extend(parsed)
 
         if tour in ('atp', 'both'):
-            atp_raw = self._run_atp_matches_script(
+            cached_atp = self._filter_upcoming_matches(
+                self._load_recent_atp_matches_cache(
+                    'upcoming',
+                    max_age_seconds=10 * 60
+                ),
+                days=days
+            )
+            atp_raw = None if cached_atp else self._run_atp_matches_script(
                 '[Live] atp_upcoming_matches.py',
                 args=['--days', str(days)],
                 timeout=90
@@ -4233,7 +4344,10 @@ class TennisDataFetcher:
 
                 print(f"ATP upcoming: {reason_label}, returning empty")
 
-            if atp_raw is None:
+            if cached_atp:
+                print(f"ATP upcoming: using fresh schedule cache ({len(cached_atp)} matches)")
+                matches.extend(cached_atp)
+            elif atp_raw is None:
                 _fallback_atp_upcoming('script failed')
             elif len(atp_raw) == 0:
                 _fallback_atp_upcoming('scraper returned empty')
@@ -4272,9 +4386,8 @@ class TennisDataFetcher:
         elif tour == 'atp':
             rankings = self._load_atp_rankings_csv()
 
-        # Generate sample rankings data
         if not rankings:
-            rankings = self._generate_sample_rankings(tour, limit)
+            rankings = []
 
         rankings_cache[cache_key] = rankings
         return rankings[:limit]
@@ -4294,8 +4407,6 @@ class TennisDataFetcher:
         elif tour == 'atp':
             tournaments = self._load_atp_tournaments_from_files(year)
 
-        if not tournaments:
-            tournaments = self._generate_sample_tournaments(tour, year)
         tournaments_cache[cache_key] = tournaments
         return tournaments
     
@@ -4309,7 +4420,26 @@ class TennisDataFetcher:
             bracket = self._build_atp_bracket_from_files(tournament_id)
             if bracket:
                 return bracket
-        return self._generate_sample_bracket(tournament_id, tour)
+        tournament = next(
+            (
+                item for item in self.fetch_tournaments(tour)
+                if str(item.get('id')) == str(tournament_id)
+                or str(item.get('tournament_group_id')) == str(tournament_id)
+            ),
+            {}
+        )
+        return {
+            'tournament_id': tournament_id,
+            'tournament_name': tournament.get('name') or tournament.get('title') or 'Tournament',
+            'tournament_tour': tour,
+            'tournament_category': tournament.get('category') or 'other',
+            'tournament_surface': tournament.get('surface') or '',
+            'tournament_status': tournament.get('status') or 'unavailable',
+            'rounds': [],
+            'matches': [],
+            'champion': None,
+            'source': 'unavailable',
+        }
     
     def fetch_player_details(self, player_id):
         """Fetch player details"""
@@ -4471,6 +4601,15 @@ class TennisDataFetcher:
 
         bracket = tournament.get('bracket') or {}
         if isinstance(bracket, dict) and bracket.get('matches'):
+            status_raw = str(tournament.get('status') or '').strip().lower()
+            current_or_finished = status_raw in {
+                'current', 'live', 'inprogress', 'in_progress', 'in progress',
+                'running', 'past', 'completed', 'complete', 'finished'
+            }
+            source_year = bracket.get('source_year')
+            tournament_year = tournament.get('year')
+            if current_or_finished and source_year not in {tournament_year, str(tournament_year)}:
+                return None
             payload = dict(bracket)
             payload.setdefault('tournament_id', tournament.get('tournament_group_id') or tournament.get('id') or tournament_id)
             payload.setdefault('tournament_name', tournament.get('name') or tournament.get('title') or f'Tournament {tournament_id}')
@@ -4492,7 +4631,41 @@ class TennisDataFetcher:
             return None
 
         matches = tournament.get('matches') or []
+        if not matches and str(tournament.get('name') or '').strip().upper() == 'UNITED CUP':
+            # United Cup is one combined ATP/WTA team event. WTA does not
+            # publish a separate singles draw payload, so reuse the same
+            # official team bracket already loaded for ATP.
+            atp_index = self._load_atp_tournaments_index()
+            shared = next(
+                (
+                    item for item in atp_index.values()
+                    if str(item.get('name') or '').strip().upper() == 'UNITED CUP'
+                ),
+                None
+            )
+            shared_bracket = (shared or {}).get('bracket') or {}
+            if shared_bracket.get('matches'):
+                payload = dict(shared_bracket)
+                payload['tournament_id'] = tournament_id
+                payload['tournament_name'] = tournament.get('name') or 'United Cup'
+                payload['tournament_tour'] = 'wta'
+                payload['tournament_status'] = tournament.get('status') or payload.get('tournament_status')
+                payload['champion'] = tournament.get('champion') or shared.get('champion') or payload.get('champion')
+                payload['source'] = 'shared_atp_united_cup'
+                payload['source_year'] = tournament.get('year')
+                return payload
         draw = tournament.get('draw') or {}
+        tournament_year = tournament.get('year')
+        raw_status = str(tournament.get('status') or '').strip().lower()
+        active_or_finished = raw_status in {
+            'current', 'live', 'inprogress', 'in_progress', 'in progress',
+            'running', 'past', 'completed', 'complete', 'finished'
+        }
+        if active_or_finished:
+            if tournament.get('scores_year') not in {tournament_year, str(tournament_year)}:
+                matches = []
+            if tournament.get('draw_year') not in {tournament_year, str(tournament_year)}:
+                draw = {}
         draw_size = draw.get('draw_size') or tournament.get('draw_size_singles') or 0
         if not draw_size:
             draw_lines = draw.get('draw_lines') or []
@@ -4675,7 +4848,7 @@ class TennisDataFetcher:
             status_raw = (tournament.get('status') or '').lower()
             if status_raw in ['past', 'completed', 'complete', 'finished']:
                 return 'finished'
-            if status_raw in ['current', 'in_progress', 'in progress', 'live', 'running']:
+            if status_raw in ['current', 'inprogress', 'in_progress', 'in progress', 'live', 'running']:
                 return 'in_progress'
             start_dt = _parse_date(tournament.get('start_date') or '')
             end_dt = _parse_date(tournament.get('end_date') or '')
@@ -4687,7 +4860,11 @@ class TennisDataFetcher:
                     return 'in_progress'
                 return 'upcoming'
             return 'upcoming'
+        resolved_status = _tournament_status()
+        current_scores = tournament.get('scores_year') in {tournament_year, str(tournament_year)}
         champion_info = tournament.get('champion') or {}
+        if resolved_status == 'in_progress' or (resolved_status == 'finished' and not current_scores):
+            champion_info = {}
         champion_name = champion_info.get('name') if isinstance(champion_info, dict) else None
         champion_entry = self._match_wta_scraped(champion_name) if champion_name else None
         champion = None
@@ -4872,7 +5049,8 @@ class TennisDataFetcher:
                 'round_points': round_points,
                 'round_prize': round_prize,
                 'champion': champion,
-                'source': 'wta'
+                'source': 'wta',
+                'source_year': tournament.get('draw_year') or tournament.get('scores_year')
             }
 
         filtered = []
@@ -4895,7 +5073,9 @@ class TennisDataFetcher:
                 'draw_size': draw_size,
                 'rounds': [],
                 'matches': [],
-                'source': 'wta'
+                'champion': None,
+                'source': 'wta',
+                'source_year': tournament.get('draw_year') or tournament.get('scores_year')
             }
 
         grouped = {}
@@ -4969,7 +5149,8 @@ class TennisDataFetcher:
             'round_points': round_points,
             'round_prize': round_prize,
             'champion': champion,
-            'source': 'wta'
+            'source': 'wta',
+            'source_year': tournament.get('scores_year') or tournament.get('draw_year')
         }
 
     def _normalize_wta_level(self, level):
@@ -5055,7 +5236,7 @@ class TennisDataFetcher:
             status_raw = (tournament.get('status') or '').lower()
             if status_raw in ['past', 'completed', 'complete', 'finished']:
                 status = 'finished'
-            elif status_raw in ['current', 'in_progress', 'in progress', 'live', 'running']:
+            elif status_raw in ['current', 'inprogress', 'in_progress', 'in progress', 'live', 'running']:
                 status = 'in_progress'
             else:
                 if start_dt and end_dt:
@@ -5078,6 +5259,12 @@ class TennisDataFetcher:
 
             champion = tournament.get('champion') or {}
             runner_up = tournament.get('runner_up') or {}
+            current_scores = tournament.get('scores_year') in {
+                tournament.get('year'), str(tournament.get('year'))
+            }
+            if status == 'in_progress' or (status == 'finished' and not current_scores):
+                champion = {}
+                runner_up = {}
 
             tournaments.append({
                 'id': tournament.get('tournament_group_id') or tournament.get('order'),
@@ -5136,7 +5323,7 @@ class TennisDataFetcher:
             status_raw = str(tournament.get('status') or '').strip().lower()
             if status_raw in {'past', 'completed', 'complete', 'finished'}:
                 status = 'finished'
-            elif status_raw in {'current', 'in_progress', 'in progress', 'live', 'running'}:
+            elif status_raw in {'current', 'inprogress', 'in_progress', 'in progress', 'live', 'running'}:
                 status = 'in_progress'
             else:
                 if start_dt and end_dt:
@@ -5156,6 +5343,13 @@ class TennisDataFetcher:
 
             champion = tournament.get('champion') or {}
             runner_up = tournament.get('runner_up') or {}
+            bracket = tournament.get('bracket') or {}
+            current_tree = bracket.get('source_year') in {
+                tournament.get('year'), str(tournament.get('year'))
+            }
+            if status == 'in_progress' or (status == 'finished' and not current_tree):
+                champion = {}
+                runner_up = {}
             location = tournament.get('location')
             if not location:
                 city = (tournament.get('city') or '').strip()

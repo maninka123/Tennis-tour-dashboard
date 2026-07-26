@@ -583,6 +583,12 @@ const StatZoneModule = {
                     <span class="stats-zone-updated">${this.formatRelativeTime(updatedAt)}</span>
                     <span class="stats-zone-badge">${cfg.updatedBadge}</span>
                 </div>
+                ${status.warning ? `
+                    <div class="stats-zone-warning" role="status">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <span>Showing the last valid ATP stats snapshot because the official source is temporarily unavailable.</span>
+                    </div>
+                ` : ''}
 
                 ${this.infoVisible ? `
                     <section class="stats-zone-info">

@@ -12,8 +12,10 @@ from typing import Any, Dict, List
 from atp_scores_common import (
     build_schedule_day_numbers,
     build_schedule_url,
+    fetch_schedule_page,
     fetch_tour_tournaments,
     make_scraper,
+    parse_upcoming_matches_from_schedule_markdown,
     parse_upcoming_matches_from_schedule_page,
 )
 
@@ -40,29 +42,37 @@ def main() -> int:
             try:
                 event_name = tournament.get('EventTitle', '?')
                 day_numbers = build_schedule_day_numbers(tournament, now=now)
-                # Build list of URLs to try: specific day pages first, then default
-                urls_to_try: List[str] = []
-                for day_num in day_numbers:
-                    urls_to_try.append(build_schedule_url(tournament, day=day_num))
-                urls_to_try.append(build_schedule_url(tournament))
+                # The default page normally resolves to today's schedule. Try
+                # only one explicit day after it to keep refreshes responsive.
+                urls_to_try: List[str] = [build_schedule_url(tournament)]
+                if day_numbers:
+                    urls_to_try.append(build_schedule_url(tournament, day=day_numbers[0]))
 
                 seen_ids: set = set()
                 for url in urls_to_try:
                     print(f"[DEBUG] Fetching {event_name} from {url}", file=sys.stderr)
-                    try:
-                        response = scraper.get(url, timeout=args.timeout)
-                    except Exception as req_err:
-                        print(f"[DEBUG] Request failed for {url}: {req_err}", file=sys.stderr)
-                        continue
-                    if response.status_code != 200:
-                        print(f"[DEBUG] Skipping {url} with status {response.status_code}", file=sys.stderr)
-                        continue
-                    parsed = parse_upcoming_matches_from_schedule_page(
-                        html_text=response.text,
-                        tournament=tournament,
-                        days=max(0, int(args.days)),
-                        now=now,
+                    page_text, page_format = fetch_schedule_page(
+                        scraper=scraper,
+                        url=url,
+                        timeout=args.timeout,
                     )
+                    if not page_text:
+                        print(f"[DEBUG] Could not load {url}", file=sys.stderr)
+                        continue
+                    if page_format == "markdown":
+                        parsed = parse_upcoming_matches_from_schedule_markdown(
+                            markdown_text=page_text,
+                            tournament=tournament,
+                            days=max(0, int(args.days)),
+                            now=now,
+                        )
+                    else:
+                        parsed = parse_upcoming_matches_from_schedule_page(
+                            html_text=page_text,
+                            tournament=tournament,
+                            days=max(0, int(args.days)),
+                            now=now,
+                        )
                     new_count = 0
                     for match in parsed:
                         mid = str(match.get("id") or "")
@@ -71,6 +81,8 @@ def main() -> int:
                             upcoming.append(match)
                             new_count += 1
                     print(f"[DEBUG] Parsed {new_count} new matches from {url}", file=sys.stderr)
+                    if new_count > 0:
+                        break
             except Exception as e:
                 print(f"[ERROR] Failed to fetch tournament {tournament.get('EventTitle')}: {e}", file=sys.stderr)
                 continue

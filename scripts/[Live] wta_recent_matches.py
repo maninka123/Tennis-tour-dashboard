@@ -278,15 +278,21 @@ def main() -> int:
         default=str(DEFAULT_CACHE_FILE),
         help="Cache file for match stats snapshots",
     )
+    parser.add_argument(
+        "--with-stats",
+        action="store_true",
+        help="Eagerly fetch detailed stats (the app normally loads them on demand)",
+    )
     args = parser.parse_args()
 
     try:
         payload = filter_recent_singles(fetch_global_matches(args.timeout), args.limit)
-        payload = enrich_recent_matches_with_stats(
-            matches=payload,
-            timeout=args.timeout,
-            cache_path=Path(args.cache_file),
-        )
+        if args.with_stats:
+            payload = enrich_recent_matches_with_stats(
+                matches=payload,
+                timeout=args.timeout,
+                cache_path=Path(args.cache_file),
+            )
     except Exception as exc:
         print(f"[wta_recent_matches] {exc}", file=sys.stderr)
         return 1

@@ -257,9 +257,9 @@ const RankingsModule = {
                     </div>
                     <div class="ranking-details">
                         <span>Age: ${ageValue}</span>
-                        <span>•</span>
+                        <span class="ranking-detail-divider" aria-hidden="true"></span>
                         <span>Pts: <span class="ranking-points-value ${pointsClass}">${pointsValue !== null ? pointsValue.toLocaleString() : '-'}</span></span>
-                        <span>•</span>
+                        <span class="ranking-detail-divider" aria-hidden="true"></span>
                         <span>CH: <span class="${careerHighClass}">${player.career_high}</span></span>
                     </div>
                 </div>

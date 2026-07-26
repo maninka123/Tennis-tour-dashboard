@@ -13,8 +13,10 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import re
 import sys
+import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -29,8 +31,13 @@ CATEGORY_MAP = {
     "pressure": "Under Pressure",
 }
 
-BASE_URL = "https://www.atptour.com/en/stats/leaderboard?boardType={board_type}"
+BASE_URL = (
+    "https://www.atptour.com/en/stats/leaderboard?"
+    "boardType={board_type}&formerNo1=false&surface=all&"
+    "timeFrame=52Weeks&versusRank=all"
+)
 R_JINA_PREFIX = "https://r.jina.ai/http://"
+MARKDOWN_CACHE_DIR = Path(__file__).resolve().parent.parent / "data" / "cache"
 
 PLAYER_CELL_RE = re.compile(
     r"!\[[^\]]*\]\((?P<image>[^)]+)\)\s*\[(?P<name>[^\]]+)\]\((?P<profile>[^)]+)\)",
@@ -131,12 +138,32 @@ def _split_markdown_row(line: str) -> List[str]:
 def _fetch_markdown(board_type: str, timeout: int) -> str:
     source_url = BASE_URL.format(board_type=board_type)
     proxy_url = f"{R_JINA_PREFIX}{source_url.replace('https://', '')}"
-    response = requests.get(proxy_url, timeout=timeout)
-    response.raise_for_status()
-    text = response.text or ""
-    if "| Rank | Player |" not in text:
-        raise RuntimeError(f"Leaderboard table not found for boardType={board_type}")
-    return text
+    cache_path = MARKDOWN_CACHE_DIR / f"atp_stats_{board_type}.md"
+    for attempt in range(3):
+        try:
+            response = requests.get(proxy_url, timeout=timeout)
+            if response.status_code == 429:
+                retry_after = int(response.json().get("retryAfter") or 1)
+                time.sleep(min(3, max(1, retry_after)))
+                continue
+            response.raise_for_status()
+            text = response.text or ""
+            if "| Rank | Player |" in text:
+                MARKDOWN_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+                temp_path = cache_path.with_name(f".{cache_path.name}.{os.getpid()}.tmp")
+                temp_path.write_text(text, encoding="utf-8")
+                temp_path.replace(cache_path)
+                return text
+        except Exception:
+            if attempt < 2:
+                time.sleep(attempt + 1)
+    try:
+        cached = cache_path.read_text(encoding="utf-8")
+        if "| Rank | Player |" in cached:
+            return cached
+    except Exception:
+        pass
+    raise RuntimeError(f"Leaderboard table not found for boardType={board_type}")
 
 
 def _parse_leaderboard(markdown: str, category_key: str, fetched_at_utc: str, min_matches: int) -> List[LeaderRow]:

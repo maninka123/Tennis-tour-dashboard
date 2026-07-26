@@ -1095,11 +1095,30 @@ const EventHandlers = {
         });
         this.syncTourTabsVisual(AppState.currentTour);
 
-        // Close bracket panel
-        DOM.closeBracket?.addEventListener('click', () => {
+        const resetBracketPanel = () => {
             DOM.tournamentDetailsPanel.classList.remove('visible');
             AppState.selectedTournament = null;
-        });
+            AppState.selectedTournamentName = null;
+            if (window.BracketModule) {
+                window.BracketModule.currentBracket = null;
+                window.BracketModule.loadToken = (window.BracketModule.loadToken || 0) + 1;
+            }
+            const bracketTitle = document.getElementById('bracketTitle');
+            if (bracketTitle) bracketTitle.textContent = 'Tournament Draw';
+            if (DOM.tournamentBracket) {
+                DOM.tournamentBracket.innerHTML = `
+                    <div class="placeholder-message">
+                        <i class="fas fa-hand-pointer"></i>
+                        <p>Select a tournament to view its draw</p>
+                    </div>
+                `;
+                DOM.tournamentBracket.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+            }
+            document.querySelectorAll('.tournament-item.selected').forEach(el => el.classList.remove('selected'));
+        };
+
+        // Close bracket panel
+        DOM.closeBracket?.addEventListener('click', resetBracketPanel);
 
         // Rankings manual refresh (ATP/WTA based on current tab)
         DOM.rankingsUpdateBtn?.addEventListener('click', async () => {
@@ -1219,7 +1238,7 @@ const EventHandlers = {
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                DOM.tournamentDetailsPanel.classList.remove('visible');
+                resetBracketPanel();
                 DOM.matchPopup.classList.remove('visible');
                 ScoresModule.closeMatchStats();
                 PlayerModule.close();
@@ -1745,25 +1764,27 @@ const App = {
         // Initialize WebSocket connection
         Socket.init();
         
-        // Load initial data
-        await this.loadInitialData();
+        // Let the page become interactive while independent data sections
+        // continue filling in progressively.
+        const initialLoad = this.loadInitialData();
+        setTimeout(() => {
+            DOM.loadingOverlay.classList.add('hidden');
+        }, 650);
+        await initialLoad;
         this.setupAnalysisLaunchers();
         this.renderSeasonProgress();
-        await this.refreshAtpRankingsStatus();
-        await this.refreshWtaRankingsStatus();
-        await this.refreshAtpStatsStatus();
-        await this.refreshWtaStatsStatus();
-        await this.refreshTournamentsStatus('atp');
-        await this.refreshTournamentsStatus('wta');
+        await Promise.allSettled([
+            this.refreshAtpRankingsStatus(),
+            this.refreshWtaRankingsStatus(),
+            this.refreshAtpStatsStatus(),
+            this.refreshWtaStatsStatus(),
+            this.refreshTournamentsStatus('atp'),
+            this.refreshTournamentsStatus('wta')
+        ]);
         this.syncTournamentHeaderState();
         this.startLiveScoreRefreshLoop();
         this.startPeriodicRefresh();
         this.syncMatchSectionReloadButtons();
-        
-        // Hide loading overlay
-        setTimeout(() => {
-            DOM.loadingOverlay.classList.add('hidden');
-        }, 500);
         
         console.log('Dashboard initialized successfully');
     },
@@ -1793,128 +1814,112 @@ const App = {
      * Load all initial data
      */
     async loadInitialData() {
-        try {
-            console.log('Fetching initial data from API...');
-            // Load data in parallel; do not fail whole screen if one endpoint is down.
-            const requests = [
-                API.getLiveScores('atp'),
-                API.getLiveScores('wta'),
-                API.getUpcomingMatches('atp'),
-                API.getUpcomingMatches('wta'),
-                API.getRecentMatches('atp', 15),
-                API.getRecentMatches('wta', 15),
-                API.getRankings('atp', 200),
-                API.getRankings('wta', 400),
-                API.getTournaments('atp'),
-                API.getTournaments('wta')
-            ];
-            const keys = [
-                'atpScores', 'wtaScores',
-                'atpUpcoming', 'wtaUpcoming',
-                'atpRecent', 'wtaRecent',
-                'atpRankings', 'wtaRankings',
-                'atpTournaments', 'wtaTournaments'
-            ];
-            const settled = await Promise.allSettled(requests);
-            const resultMap = {};
-            settled.forEach((result, index) => {
-                const key = keys[index];
-                if (result.status === 'fulfilled') {
-                    resultMap[key] = result.value;
-                } else {
-                    resultMap[key] = [];
-                    console.error(`Initial load failed for ${key}:`, result.reason);
-                }
-            });
-            const atpScores = resultMap.atpScores;
-            const wtaScores = resultMap.wtaScores;
-            const atpUpcoming = resultMap.atpUpcoming;
-            const wtaUpcoming = resultMap.wtaUpcoming;
-            const atpRecent = resultMap.atpRecent;
-            const wtaRecent = resultMap.wtaRecent;
-            const atpRankings = resultMap.atpRankings;
-            const wtaRankings = resultMap.wtaRankings;
-            const atpTournaments = resultMap.atpTournaments;
-            const wtaTournaments = resultMap.wtaTournaments;
-
-            console.log('Data fetched successfully.', {
-                atpLive: Array.isArray(atpScores) ? atpScores.length : 0,
-                wtaLive: Array.isArray(wtaScores) ? wtaScores.length : 0,
-                atpUpcoming: Array.isArray(atpUpcoming) ? atpUpcoming.length : 0,
-                wtaUpcoming: Array.isArray(wtaUpcoming) ? wtaUpcoming.length : 0,
-                atpRecent: Array.isArray(atpRecent) ? atpRecent.length : 0,
-                wtaRecent: Array.isArray(wtaRecent) ? wtaRecent.length : 0,
-                atpRankings: Array.isArray(atpRankings) ? atpRankings.length : 0,
-                wtaRankings: Array.isArray(wtaRankings) ? wtaRankings.length : 0,
-                atpTournaments: Array.isArray(atpTournaments) ? atpTournaments.length : 0,
-                wtaTournaments: Array.isArray(wtaTournaments) ? wtaTournaments.length : 0
-            });
-
-            let atpUpcomingFinal = Array.isArray(atpUpcoming) ? atpUpcoming : [];
-            let atpRecentFinal = Array.isArray(atpRecent) ? atpRecent : [];
-
-            // ATP scripts are heavier and can transiently return empty when startup calls run in parallel.
-            // Retry once sequentially before rendering empty ATP upcoming/recent sections.
-            if (atpUpcomingFinal.length === 0) {
-                try {
-                    const retryUpcoming = await API.getUpcomingMatches('atp');
-                    if (Array.isArray(retryUpcoming) && retryUpcoming.length > 0) {
-                        atpUpcomingFinal = retryUpcoming;
-                    }
-                } catch (retryErr) {
-                    console.warn('ATP upcoming retry failed:', retryErr);
-                }
-            }
-            if (atpRecentFinal.length === 0) {
-                try {
-                    const retryRecent = await API.getRecentMatches('atp', 15);
-                    if (Array.isArray(retryRecent) && retryRecent.length > 0) {
-                        atpRecentFinal = retryRecent;
-                    }
-                } catch (retryErr) {
-                    console.warn('ATP recent retry failed:', retryErr);
-                }
-            }
-
-            // Update state
-            AppState.liveScores.atp = atpScores || [];
-            AppState.liveScores.wta = wtaScores || [];
-            AppState.upcomingMatches.atp = atpUpcomingFinal;
-            AppState.upcomingMatches.wta = wtaUpcoming || [];
-            AppState.recentMatches.atp = atpRecentFinal;
-            AppState.recentMatches.wta = wtaRecent || [];
-            AppState.upcomingMatchesUpdatedAt = new Date().toISOString();
-            AppState.recentMatchesUpdatedAt = new Date().toISOString();
-            AppState.rankings.atp = atpRankings || [];
-            AppState.rankings.wta = wtaRankings || [];
-            AppState.tournaments.atp = atpTournaments || [];
-            AppState.tournaments.wta = wtaTournaments || [];
-
-            console.log('Application state updated.');
-
-            // Compute Elo ratings for both tours (must happen after rankings are populated)
+        console.log('Fetching initial data from API...');
+        const asArray = (value) => Array.isArray(value) ? value : [];
+        const renderSafely = (label, render) => {
             try {
-                if (window.TennisApp?.EloModule?.init) {
-                    window.TennisApp.EloModule.init();
-                    console.log('Elo ratings computed for ATP and WTA.');
-                }
-            } catch (eloErr) { console.error('Elo init failed:', eloErr); }
+                render();
+            } catch (error) {
+                console.error(`${label} render failed:`, error);
+            }
+        };
+        const jobs = [
+            {
+                key: 'ATP live',
+                request: () => API.getLiveScores('atp'),
+                apply: (data) => { AppState.liveScores.atp = asArray(data); },
+                render: () => ScoresModule.renderLiveScores()
+            },
+            {
+                key: 'WTA live',
+                request: () => API.getLiveScores('wta'),
+                apply: (data) => { AppState.liveScores.wta = asArray(data); },
+                render: () => ScoresModule.renderLiveScores()
+            },
+            {
+                key: 'ATP upcoming',
+                request: () => API.getUpcomingMatches('atp'),
+                apply: (data) => {
+                    AppState.upcomingMatches.atp = asArray(data);
+                    AppState.upcomingMatchesUpdatedAt = new Date().toISOString();
+                },
+                render: () => ScoresModule.renderUpcomingMatches()
+            },
+            {
+                key: 'WTA upcoming',
+                request: () => API.getUpcomingMatches('wta'),
+                apply: (data) => {
+                    AppState.upcomingMatches.wta = asArray(data);
+                    AppState.upcomingMatchesUpdatedAt = new Date().toISOString();
+                },
+                render: () => ScoresModule.renderUpcomingMatches()
+            },
+            {
+                key: 'ATP recent',
+                request: () => API.getRecentMatches('atp', 15),
+                apply: (data) => {
+                    AppState.recentMatches.atp = asArray(data);
+                    AppState.recentMatchesUpdatedAt = new Date().toISOString();
+                },
+                render: () => ScoresModule.renderRecentMatches()
+            },
+            {
+                key: 'WTA recent',
+                request: () => API.getRecentMatches('wta', 15),
+                apply: (data) => {
+                    AppState.recentMatches.wta = asArray(data);
+                    AppState.recentMatchesUpdatedAt = new Date().toISOString();
+                },
+                render: () => ScoresModule.renderRecentMatches()
+            },
+            {
+                key: 'ATP rankings',
+                request: () => API.getRankings('atp', 200),
+                apply: (data) => { AppState.rankings.atp = asArray(data); },
+                render: () => RankingsModule.render()
+            },
+            {
+                key: 'WTA rankings',
+                request: () => API.getRankings('wta', 400),
+                apply: (data) => { AppState.rankings.wta = asArray(data); },
+                render: () => RankingsModule.render()
+            },
+            {
+                key: 'ATP tournaments',
+                request: () => API.getTournaments('atp'),
+                apply: (data) => { AppState.tournaments.atp = asArray(data); },
+                render: () => TournamentsModule.render()
+            },
+            {
+                key: 'WTA tournaments',
+                request: () => API.getTournaments('wta'),
+                apply: (data) => { AppState.tournaments.wta = asArray(data); },
+                render: () => TournamentsModule.render()
+            }
+        ];
 
-            // Render all components
-            console.log('Rendering all modules...');
-            try { ScoresModule.renderLiveScores(); } catch (e) { console.error('renderLiveScores failed:', e); }
-            try { ScoresModule.renderUpcomingMatches(); } catch (e) { console.error('renderUpcomingMatches failed:', e); }
-            try { ScoresModule.renderRecentMatches(); } catch (e) { console.error('renderRecentMatches failed:', e); }
-            try { RankingsModule.render(); } catch (e) { console.error('Rankings render failed:', e); }
-            try { TournamentsModule.render(); } catch (e) { console.error('Tournaments render failed:', e); }
-            console.log('All modules rendered.');
+        await Promise.allSettled(jobs.map(async (job) => {
+            try {
+                const data = await job.request();
+                job.apply(data);
+                renderSafely(job.key, job.render);
+                console.log(`${job.key}: ${asArray(data).length} rows`);
+            } catch (error) {
+                job.apply([]);
+                renderSafely(job.key, job.render);
+                console.error(`Initial load failed for ${job.key}:`, error);
+            }
+        }));
 
-            Socket.updateLastUpdated();
+        try {
+            window.TennisApp?.EloModule?.init?.();
         } catch (error) {
-            console.error('Error loading initial data:', error);
-            // Show demo data even if API fails
-            this.loadDemoData();
+            console.error('Elo init failed:', error);
         }
+        renderSafely('live scores', () => ScoresModule.renderLiveScores());
+        renderSafely('upcoming matches', () => ScoresModule.renderUpcomingMatches());
+        renderSafely('recent matches', () => ScoresModule.renderRecentMatches());
+        Socket.updateLastUpdated();
     },
 
     async refreshAtpRankingsStatus() {
@@ -2114,7 +2119,19 @@ const App = {
         const tour = AppState.currentTour;
         const status = AppState.tournamentsStatus[tour] || {};
         if (DOM.tournamentsUpdatedAgo) {
-            DOM.tournamentsUpdatedAgo.textContent = this.formatRelativeTime(status.updated_at, 'Updated --');
+            const updatedText = this.formatRelativeTime(status.updated_at, 'Updated --');
+            const pending = Number(status.missing_finished_count || 0);
+            DOM.tournamentsUpdatedAgo.textContent = pending > 0
+                ? `${updatedText} • ${pending} result${pending === 1 ? '' : 's'} pending`
+                : status.data_complete === true
+                    ? `${updatedText} • draws complete`
+                    : updatedText;
+            DOM.tournamentsUpdatedAgo.classList.toggle('has-warning', pending > 0);
+            DOM.tournamentsUpdatedAgo.title = pending > 0
+                ? `${pending} finished tournament${pending === 1 ? '' : 's'} still missing a winner or draw`
+                : status.data_complete === true
+                    ? 'All finished tournaments have winners and draw data'
+                    : updatedText;
         }
     },
 

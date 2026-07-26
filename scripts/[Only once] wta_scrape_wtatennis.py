@@ -652,7 +652,7 @@ def _format_date_range(start_date: str, end_date: str) -> str:
 
 def _qualifying_round_number(round_name: str, tourn_round: Any) -> Optional[int]:
     round_num = _to_int(tourn_round)
-    if round_num is not None and round_num > 0:
+    if round_num is not None and 0 < round_num <= 3:
         return round_num
 
     upper = str(round_name or "").strip().upper()
@@ -666,7 +666,7 @@ def _qualifying_round_number(round_name: str, tourn_round: Any) -> Optional[int]
     m_qual = re.search(r"(?:QUALIFYING\s*)?R\s*(\d+)$", upper)
     if m_qual:
         parsed = _to_int(m_qual.group(1))
-        if parsed is not None and 0 < parsed <= 9:
+        if parsed is not None and 0 < parsed <= 3:
             return parsed
     return None
 
