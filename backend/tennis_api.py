@@ -4162,14 +4162,16 @@ class TennisDataFetcher:
                 args=['--limit', str(limit)],
                 timeout=90
             )
-            if atp_raw is None:
+            if not atp_raw:
                 cached = self._load_recent_atp_matches_cache('recent', max_age_seconds=8 * 60 * 60)
                 cached = self._filter_recent_completed_matches(cached)
                 if cached:
-                    print(f'ATP recent: script failed, using recent cached snapshot ({len(cached)} matches)')
+                    reason = 'script failed' if atp_raw is None else 'scraper returned empty'
+                    print(f'ATP recent: {reason}, using recent cached snapshot ({len(cached)} matches)')
                     matches.extend(cached[:max(1, int(limit) if isinstance(limit, int) else 20)])
                 else:
-                    print('ATP recent: script failed, returning empty')
+                    reason = 'script failed' if atp_raw is None else 'scraper returned empty'
+                    print(f'ATP recent: {reason}, returning empty')
             else:
                 parsed = []
                 for match in atp_raw:
