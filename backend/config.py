@@ -14,7 +14,12 @@ class Config:
     
     # API Keys (if needed for premium data sources)
     RAPID_API_KEY = os.getenv('RAPID_API_KEY', '')
-    
+
+    # Optional live-score fallback (Live Tennis API). Empty = disabled, which is
+    # the default; the ATP/WTA scrapers stay the primary source either way. Only
+    # consulted for a tour whose own scraper has already failed.
+    LIVETENNISAPI_KEY = os.getenv('LIVETENNISAPI_KEY', '')
+
     # Cache settings (seconds)
     CACHE_LIVE_SCORES = 30  # Update live scores every 30 seconds
     CACHE_RANKINGS = 3600   # Update rankings every hour
