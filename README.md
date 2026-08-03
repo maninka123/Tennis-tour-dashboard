@@ -108,6 +108,27 @@ Default local URLs:
 - Backend: `http://localhost:5001`
 - Notification app: `http://localhost:5090`
 
+#### 3. Option: live-score fallback
+
+Live scores come from the ATP and WTA scrapers. If you want a backstop for the
+times those are blocked or time out (the ATP gateway sits behind Cloudflare, and
+today's fallback is an on-disk snapshot up to 45 minutes old), set an optional
+key in `backend/.env`:
+
+```bash
+# omit this line to keep the scrapers as the only source
+LIVETENNISAPI_KEY=your_key_here
+```
+
+Unset, nothing changes. Set, a tour whose scraper *fails* falls back to
+[Live Tennis API](https://livetennisapi.com) for that request; a scraper that
+succeeds is never second-guessed. Live scores are on its free tier. The mapper
+has offline checks that need no key:
+
+```bash
+python3 "scripts/[Live] test_livetennisapi_live_matches.py"
+```
+
 ---
 
 ## 🛠️ Tech Stack

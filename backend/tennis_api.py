@@ -3356,6 +3356,28 @@ class TennisDataFetcher:
             label='ATP match'
         )
 
+    def _fetch_livetennisapi_live(self, tour):
+        """Optional live-score fallback via Live Tennis API.
+
+        Returns None when the fallback is disabled or fails, so the caller keeps
+        whatever behaviour it already had. With LIVETENNISAPI_KEY unset this is
+        a no-op and the scrapers remain the only source.
+
+        The key reaches the subprocess through the inherited environment, which
+        config.py has already populated via load_dotenv().
+        """
+        if not str(getattr(Config, 'LIVETENNISAPI_KEY', '') or '').strip():
+            return None
+        rows = self._run_matches_script(
+            script_name='[Live] livetennisapi_live_matches.py',
+            args=['--tour', tour],
+            timeout=25,
+            label=f'{tour.upper()} live-tennis-api match'
+        )
+        if not rows:
+            return None
+        return [row for row in rows if isinstance(row, dict)]
+
     def _atp_matches_cache_path(self, kind):
         raw_kind = str(kind).lower().strip()
         if raw_kind == 'upcoming':
@@ -4222,17 +4244,29 @@ class TennisDataFetcher:
                     if isinstance(match, dict)
                 ]
                 live_matches.extend(wta_live)
+            else:
+                fallback = self._fetch_livetennisapi_live('wta')
+                if fallback:
+                    print(f'WTA live: script failed, using Live Tennis API fallback ({len(fallback)} matches)')
+                    live_matches.extend(fallback)
 
         if tour in ('atp', 'both'):
             atp_raw = self._run_atp_matches_script('[Live] atp_live_matches.py')
             if atp_raw is None:
-                cached = self._load_recent_atp_matches_cache('live', max_age_seconds=45 * 60)
-                cached = self._filter_active_live_matches(cached)
-                if cached:
-                    print(f"ATP live: script failed, using recent cached snapshot ({len(cached)} matches)")
-                    live_matches.extend(cached)
+                # Prefer the optional API fallback over the stale disk snapshot:
+                # it is current, where the snapshot can be up to 45 minutes old.
+                fallback = self._fetch_livetennisapi_live('atp')
+                if fallback:
+                    print(f'ATP live: script failed, using Live Tennis API fallback ({len(fallback)} matches)')
+                    live_matches.extend(fallback)
                 else:
-                    print('ATP live: script failed, returning empty')
+                    cached = self._load_recent_atp_matches_cache('live', max_age_seconds=45 * 60)
+                    cached = self._filter_active_live_matches(cached)
+                    if cached:
+                        print(f"ATP live: script failed, using recent cached snapshot ({len(cached)} matches)")
+                        live_matches.extend(cached)
+                    else:
+                        print('ATP live: script failed, returning empty')
             else:
                 atp_live = []
                 for match in atp_raw:
